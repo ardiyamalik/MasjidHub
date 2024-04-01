@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "org.d3if0140.masjidhub"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "org.d3if0140.masjidhub"
