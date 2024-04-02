@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "677415871810",
+    "project_id": "masjidhub-c953b",
+    "storage_bucket": "masjidhub-c953b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:677415871810:android:143bc443aa5382b17c94db",
+        "android_client_info": {
+          "package_name": "org.d3if0140.masjidhub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRTT6sA8nz6UiuKbwHePPAPkgwYia3_1Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

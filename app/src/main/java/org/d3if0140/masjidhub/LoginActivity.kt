@@ -8,11 +8,14 @@ import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import org.d3if0140.masjidhub.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
     // Deklarasi variabel binding untuk menggunakan ViewBinding
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +23,9 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        // Initialize FirebaseAuth instance
+        mAuth = FirebaseAuth.getInstance()
 
         // Menambahkan onClickListener pada button backButton untuk kembali ke WelcomeActivity
         binding.backButton.setOnClickListener {
@@ -53,7 +59,25 @@ class LoginActivity : AppCompatActivity() {
             }
             binding.passwordEditText.setSelection(binding.passwordEditText.text?.length ?: 0)
         }
+
+        // Menambahkan onClickListener pada button login
+        binding.loginButton.setOnClickListener {
+            val email = binding.namaEditText.text.toString()
+            val password = binding.passwordEditText.text.toString()
+
+            // Melakukan proses login dengan FirebaseAuth
+            mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Login berhasil
+                        Toast.makeText(this, "Login berhasil", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, HomeActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        // Login gagal
+                        Toast.makeText(this, "Login gagal, silakan coba lagi", Toast.LENGTH_SHORT).show()
+                    }
+                }
+        }
     }
 }
-
-

@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_light"
             android:background="@drawable/stroke_white"
-            android:hint="@string/nama"
+            android:hint="@string/email"
             android:inputType="text"
             android:padding="12dp" />
     </com.google.android.material.textfield.TextInputLayout>
