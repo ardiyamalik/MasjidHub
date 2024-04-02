@@ -15,5 +15,11 @@ class WelcomeActivity : AppCompatActivity() {
             val intent = Intent(this,LoginActivity::class.java)
             startActivity(intent)
         }
+
+        val registerButton = findViewById<Button>(R.id.registerButton)
+        registerButton.setOnClickListener {
+            val intent = Intent(this,RegistActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

@@ -11,4 +11,6 @@
     <string name="password_toggle_description">pass</string>
     <string name="datang">Selamat Datang di MasjidHub</string>
     <string name="slogan">Kesejahteraan Bersama, Membangun Bersama</string>
+    <string name="email">Email</string>
+    <string name="sudah">Sudah punya akun? Login</string>
 </resources>
