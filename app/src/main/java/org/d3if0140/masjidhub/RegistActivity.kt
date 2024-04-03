@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import org.d3if0140.masjidhub.databinding.ActivityRegistBinding
 
 class RegistActivity : AppCompatActivity() {
@@ -52,7 +53,12 @@ class RegistActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
-        spannableString.setSpan(clickableSpan, startIndex, startIndex + 4, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(
+            clickableSpan,
+            startIndex,
+            startIndex + 4,
+            SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
         binding.textLogin.text = spannableString
         binding.textLogin.movementMethod = LinkMovementMethod.getInstance()
 
@@ -111,18 +117,42 @@ class RegistActivity : AppCompatActivity() {
                             .setDisplayName(nama)
                             .build()
 
-                        user?.updateProfile(profileUpdates)
-                            ?.addOnCompleteListener { }
-                        Toast.makeText(this, "Registrasi berhasil", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this, HomeActivity::class.java)
+                        // Mengirim email verifikasi
+                        user?.sendEmailVerification()
+                            ?.addOnCompleteListener { emailTask ->
+                                if (emailTask.isSuccessful) {
+                                    Toast.makeText(
+                                        this,
+                                        "Email verifikasi telah dikirim",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                } else {
+                                    Toast.makeText(
+                                        this,
+                                        "Gagal mengirim email verifikasi",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                        val intent = Intent(this, KonfirmasiActivity::class.java)
                         startActivity(intent)
+
                     } else {
                         // Registrasi gagal
-                        Toast.makeText(
-                            this,
-                            "Registrasi gagal, silakan coba lagi",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        // Cek apakah registrasi gagal karena email sudah digunakan sebelumnya
+                        if (task.exception is FirebaseAuthUserCollisionException) {
+                            Toast.makeText(
+                                this,
+                                "Email telah digunakan untuk registrasi. Silakan gunakan email lain.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Toast.makeText(
+                                this,
+                                "Registrasi gagal, silakan coba lagi",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
         }
