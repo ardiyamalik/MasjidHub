@@ -6,7 +6,7 @@
         android:icon="@drawable/baseline_home" />
 
     <item
-        android:id="@+id/menu_search"
+        android:id="@+id/search_masjid"
         android:title="@string/carimasjid"
         android:icon="@drawable/baseline_mosque" />
 

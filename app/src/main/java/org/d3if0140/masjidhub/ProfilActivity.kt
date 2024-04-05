@@ -4,30 +4,22 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import org.d3if0140.masjidhub.databinding.ActivityHomeBinding
+import org.d3if0140.masjidhub.databinding.ActivityKeuanganBinding
+import org.d3if0140.masjidhub.databinding.ActivityProfilBinding
 
-class HomeActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityHomeBinding
-
+class ProfilActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityProfilBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHomeBinding.inflate(layoutInflater)
+        binding = ActivityProfilBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //gambar untuk carousel
-        val imageList = listOf(
-            R.drawable.masjidhublogo,
-            R.drawable.masjidhublogo,
-            R.drawable.masjidhublogo
-        )
-
-        val adapter = CarouselAdapter(imageList)
-        binding.viewPager.adapter = adapter
-
-        // Atur listener untuk bottom navigation view
         binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_home -> {
-
+                    // Arahkan ke HomeActivity
+                    val intent = Intent(this, HomeActivity::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.search_masjid -> {
@@ -43,14 +35,14 @@ class HomeActivity : AppCompatActivity() {
                     true
                 }
                 R.id.menu_profile -> {
-                    // Arahkan ke ProfilActivity
-                    val intent = Intent(this, ProfilActivity::class.java)
-                    startActivity(intent)
+
                     true
                 }
                 // Tambahkan case untuk item lain jika diperlukan
                 else -> false
             }
         }
+
+
     }
 }
