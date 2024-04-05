@@ -13,4 +13,8 @@
     <string name="slogan">Kesejahteraan Bersama, Membangun Bersama</string>
     <string name="email">Email</string>
     <string name="sudah">Sudah punya akun? Login</string>
+    <string name="home">Beranda</string>
+    <string name="carimasjid">Cari Masjid</string>
+    <string name="keuangan">Keuangan</string>
+    <string name="profil">Profil</string>
 </resources>
