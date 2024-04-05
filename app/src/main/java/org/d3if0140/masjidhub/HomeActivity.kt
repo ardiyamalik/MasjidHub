@@ -12,7 +12,12 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val imageList = listOf(R.drawable.masjidhublogo, R.drawable.masjidhublogo, R.drawable.masjidhublogo) // Ganti dengan gambar-gambar yang ingin Anda tampilkan
+        //gambar untuk carousel
+        val imageList = listOf(
+            R.drawable.masjidhublogo,
+            R.drawable.masjidhublogo,
+            R.drawable.masjidhublogo
+        )
 
         val adapter = CarouselAdapter(imageList)
         binding.viewPager.adapter = adapter
