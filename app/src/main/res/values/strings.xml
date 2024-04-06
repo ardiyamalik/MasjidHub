@@ -17,4 +17,6 @@
     <string name="carimasjid">Cari Masjid</string>
     <string name="keuangan">Keuangan</string>
     <string name="profil">Profil</string>
+    <string name="verify">Verifikasi Sudah terkirim</string>
+    <string name="total_keuangan">Rp.xxx.xxx.xxx</string>
 </resources>

@@ -15,9 +15,9 @@ class HomeActivity : AppCompatActivity() {
 
         //gambar untuk carousel
         val imageList = listOf(
-            R.drawable.masjidhublogo,
-            R.drawable.masjidhublogo,
-            R.drawable.masjidhublogo
+            R.drawable.banner1,
+            R.drawable.banner2,
+            R.drawable.banner3
         )
 
         val adapter = CarouselAdapter(imageList)

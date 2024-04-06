@@ -4,19 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".KeuanganActivity">
 
-    <TextView
-        android:id="@+id/textView3"
+    <!-- Bottom Navigation View -->
+
+    <ImageButton
+        android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Halaman Keuangan"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@null"
+        android:padding="12dp"
+        android:src="@drawable/baseline_arrow_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Bottom Navigation View -->
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/keuangan"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.214"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.043" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/total_keuangan"
+        android:textSize="25dp"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.097"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.413" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"
@@ -27,5 +62,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu"
         app:labelVisibilityMode="labeled" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="464dp"
+        android:layout_height="207dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.141"
+        app:srcCompat="@drawable/banner_infaq" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="340dp"
+        android:layout_height="352dp"
+        app:layout_constraintBottom_toBottomOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.849"
+        app:srcCompat="@drawable/qris" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

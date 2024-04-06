@@ -10,20 +10,57 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="296dp"
-        android:text="verif nya sudah di kirim"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/verify"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.635"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.67" />
 
-    <Button
-        android:id="@+id/buttonLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
-        android:text="Login"
+
+    <TextView
+        android:id="@+id/slogan"
+        android:layout_width="362dp"
+        android:layout_height="32dp"
+        android:fontFamily="@font/poppins_light"
+        android:text="@string/slogan"
+        android:textAlignment="center"
+        android:textColor="@color/grey"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.716" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="393dp"
+        android:layout_height="391dp"
+        android:layout_marginTop="76dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/verify" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonLogin"
+        android:layout_width="380dp"
+        android:layout_height="53dp"
+        android:background="@drawable/rounded_button_background"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/login"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.786" />
 </androidx.constraintlayout.widget.ConstraintLayout>
