@@ -19,4 +19,8 @@
     <string name="profil">Profil</string>
     <string name="verify">Verifikasi Sudah terkirim</string>
     <string name="total_keuangan">Rp.xxx.xxx.xxx</string>
+    <string name="reg_dkm">Daftar Sebagai DKM</string>
+    <string name="regist">Daftar Sebagai DKM</string>
+    <string name="subhead">Kami akan mengarahkan ke kontak admin untuk proses lebih lanjut</string>
+    <string name="hubungi_admin">Hubungi Admin</string>
 </resources>
