@@ -64,20 +64,28 @@ class LoginActivity : AppCompatActivity() {
         binding.loginButton.setOnClickListener {
             val email = binding.namaEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
+            loginUser(email, password)
+        }
+    }
 
-            // Melakukan proses login dengan FirebaseAuth
-            mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // Login berhasil
+    private fun loginUser(email: String, password: String) {
+        mAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val user = mAuth.currentUser
+                    if (user != null && user.isEmailVerified) {
+                        // Email sudah diverifikasi, izinkan login
                         Toast.makeText(this, "Login berhasil", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, HomeActivity::class.java)
                         startActivity(intent)
                     } else {
-                        // Login gagal
-                        Toast.makeText(this, "Login gagal, silakan coba lagi", Toast.LENGTH_SHORT).show()
+                        // Email belum diverifikasi, tolak login
+                        Toast.makeText(this, "Email Anda belum diverifikasi. Silakan periksa email Anda untuk melakukan verifikasi.", Toast.LENGTH_LONG).show()
                     }
+                } else {
+                    // Login gagal
+                    Toast.makeText(this, "Login gagal, silakan coba lagi", Toast.LENGTH_SHORT).show()
                 }
-        }
+            }
     }
 }
