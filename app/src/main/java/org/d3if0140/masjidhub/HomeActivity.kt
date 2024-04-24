@@ -35,30 +35,35 @@ class HomeActivity : AppCompatActivity() {
         binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_home -> {
+                    // Tidak perlu lakukan apa pun jika pengguna sudah berada di halaman utama
                     true
                 }
                 R.id.search_masjid -> {
                     // Arahkan ke CariMasjidActivity
                     val intent = Intent(this, CariMasjidActivity::class.java)
                     startActivity(intent)
+                    finish() // Akhiri aktivitas saat ini
                     true
                 }
                 R.id.menu_finance -> {
                     // Arahkan ke KeuanganActivity
                     val intent = Intent(this, KeuanganActivity::class.java)
                     startActivity(intent)
+                    finish() // Akhiri aktivitas saat ini
                     true
                 }
                 R.id.menu_profile -> {
                     // Arahkan ke ProfilActivity
                     val intent = Intent(this, ProfilActivity::class.java)
                     startActivity(intent)
+                    finish() // Akhiri aktivitas saat ini
                     true
                 }
                 // Tambahkan case untuk item lain jika diperlukan
                 else -> false
             }
         }
+
 
         // Menampilkan foto profil default berdasarkan email pengguna
         displayDefaultProfileImage()

@@ -3,6 +3,7 @@ package org.d3if0140.masjidhub
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.service.autofill.UserData
 import android.text.InputType
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
@@ -126,6 +127,8 @@ class RegistActivity : AppCompatActivity() {
                                         "Email verifikasi telah dikirim",
                                         Toast.LENGTH_SHORT
                                     ).show()
+
+
                                 } else {
                                     Toast.makeText(
                                         this,
