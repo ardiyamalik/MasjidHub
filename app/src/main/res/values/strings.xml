@@ -25,4 +25,7 @@
     <string name="hubungi_admin">Hubungi Admin</string>
     <string name="jamaah">Jamaah Masjid</string>
     <string name="program">Program</string>
+    <string name="masjid_terdekat">Masjid Terdekat</string>
+    <string name="infaq">Infaq</string>
+    <string name="event">Event</string>
 </resources>
