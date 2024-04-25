@@ -115,10 +115,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.068"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.078" />
+            app:layout_constraintVertical_bias="0.084" />
 
         <LinearLayout
             android:id="@+id/buttonInfaq"
@@ -137,7 +137,7 @@
             <ImageView
                 android:layout_width="114dp"
                 android:layout_height="91dp"
-                android:src="@drawable/infaqq" />
+                android:src="@drawable/infaq" />
 
 
             <TextView
@@ -168,7 +168,7 @@
             <ImageView
                 android:layout_width="114dp"
                 android:layout_height="91dp"
-                android:src="@drawable/eventt" />
+                android:src="@drawable/event" />
 
 
             <TextView
