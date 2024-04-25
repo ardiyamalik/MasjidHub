@@ -51,4 +51,21 @@
         app:layout_constraintTop_toBottomOf="@+id/profileImageView"
         app:layout_constraintVertical_bias="0.035" />
 
+    <TextView
+        android:id="@+id/dkm"
+        android:layout_width="351dp"
+        android:layout_height="50dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/jamaah"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/namaUser"
+        app:layout_constraintVertical_bias="0.034" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
