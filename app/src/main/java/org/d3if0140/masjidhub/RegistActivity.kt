@@ -3,7 +3,6 @@ package org.d3if0140.masjidhub
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.service.autofill.UserData
 import android.text.InputType
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
@@ -12,14 +11,16 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ImageButton
 import android.widget.Spinner
-import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.databinding.ActivityRegistBinding
+
 
 class RegistActivity : AppCompatActivity() {
     // Deklarasi variabel binding untuk menggunakan ViewBinding
@@ -27,6 +28,7 @@ class RegistActivity : AppCompatActivity() {
     private lateinit var passwordEditText: TextInputEditText
     private lateinit var passwordToggle: ImageButton
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore // Tambahkan deklarasi variabel firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +37,14 @@ class RegistActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        // Inisialisasi Firebase
+        FirebaseApp.initializeApp(this)
+
         // Initialize FirebaseAuth instance
         mAuth = FirebaseAuth.getInstance()
+
+        // Initialize Firestore instance
+        firestore = FirebaseFirestore.getInstance() // Inisialisasi firestore di sini
 
         // Menambahkan onClickListener pada button backButton untuk kembali ke WelcomeActivity
         binding.backButton.setOnClickListener {
@@ -127,8 +135,6 @@ class RegistActivity : AppCompatActivity() {
                                         "Email verifikasi telah dikirim",
                                         Toast.LENGTH_SHORT
                                     ).show()
-
-
                                 } else {
                                     Toast.makeText(
                                         this,
@@ -137,8 +143,30 @@ class RegistActivity : AppCompatActivity() {
                                     ).show()
                                 }
                             }
-                        val intent = Intent(this, KonfirmasiActivity::class.java)
-                        startActivity(intent)
+
+                        // Menyimpan data ke Firestore
+                        val userData = hashMapOf(
+                            "nama" to nama,
+                            "email" to email,
+                            "dkm" to dkm
+                        )
+                        firestore.collection("users")
+                            .document(user!!.uid)
+                            .set(userData)
+                            .addOnSuccessListener {
+                                // Data berhasil disimpan ke Firestore
+                                val intent = Intent(this, KonfirmasiActivity::class.java)
+                                startActivity(intent)
+                            }
+                            .addOnFailureListener { e ->
+                                // Gagal menyimpan data ke Firestore
+                                Toast.makeText(
+                                    this,
+                                    "Gagal menyimpan data ke database",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+
 
                     } else {
                         // Registrasi gagal
@@ -161,4 +189,3 @@ class RegistActivity : AppCompatActivity() {
         }
     }
 }
-
