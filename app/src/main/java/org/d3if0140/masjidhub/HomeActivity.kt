@@ -64,6 +64,13 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
+        // Menambahkan onClickListener ke ImageView foto profil
+        binding.profileImageView.setOnClickListener {
+            // Membuat Intent untuk memulai ProfileActivity
+            val intent = Intent(this, ProfilActivity::class.java)
+            startActivity(intent)
+        }
+
 
         // Menampilkan foto profil default berdasarkan email pengguna
         displayDefaultProfileImage()
