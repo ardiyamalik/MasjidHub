@@ -6,10 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ProfilActivity">
 
-    <!-- ImageView untuk Foto Profil -->
-
-    <!-- Bottom Navigation View -->
-
     <ImageView
         android:id="@+id/profileImageView"
         android:layout_width="153dp"

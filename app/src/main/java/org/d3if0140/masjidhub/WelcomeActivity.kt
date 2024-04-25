@@ -27,5 +27,9 @@ class WelcomeActivity : AppCompatActivity() {
             val intent = Intent(this, RegistActivity::class.java)
             startActivity(intent)
         }
+        binding.regDkmButton.setOnClickListener {
+            val intent = Intent(this, RegisterDkmActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
