@@ -28,11 +28,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/blue"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navigation_menu"
-        app:labelVisibilityMode="labeled" />
+        app:menu="@menu/bottom_navigation_menu" />
 
     <TextView
         android:id="@+id/namaUser"

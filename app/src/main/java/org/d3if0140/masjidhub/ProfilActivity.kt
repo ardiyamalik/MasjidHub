@@ -48,6 +48,7 @@ class ProfilActivity : AppCompatActivity() {
 
                             // Tampilkan jamaah masjid
                             binding.dkm.text = dkm
+
                         }
                     }
                 }
