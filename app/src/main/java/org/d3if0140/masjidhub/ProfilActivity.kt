@@ -10,7 +10,9 @@ import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.databinding.ActivityProfilBinding
 
@@ -19,6 +21,7 @@ class ProfilActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore // Deklarasi firestore
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfilBinding.inflate(layoutInflater)
@@ -26,7 +29,19 @@ class ProfilActivity : AppCompatActivity() {
 
         // Inisialisasi Firebase
         mAuth = FirebaseAuth.getInstance()
-        firestore = FirebaseFirestore.getInstance() // Inisialisasi firestore
+        // Inisialisasi firestore
+        firestore = FirebaseFirestore.getInstance()
+
+        // Atur listener untuk tombol logout
+        binding.buttonLogout.setOnClickListener {
+            // Lakukan logout pengguna
+            mAuth.signOut()
+            // Arahkan ke halaman welcome
+            val intent = Intent(this, WelcomeActivity::class.java)
+            startActivity(intent)
+            finish() // Hentikan aktivitas ProfilActivity saat ini
+        }
+
 
         // Dapatkan email pengguna yang saat ini masuk
         val currentUserEmail = mAuth.currentUser?.email

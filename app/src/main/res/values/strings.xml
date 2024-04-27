@@ -29,4 +29,5 @@
     <string name="infaq">Infaq</string>
     <string name="event">Event</string>
     <string name="cari_masjid">Cari Masjid</string>
+    <string name="logout">Keluar</string>
 </resources>
