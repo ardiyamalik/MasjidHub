@@ -3,6 +3,7 @@ package org.d3if0140.masjidhub
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.google.firebase.auth.FirebaseAuth
 import org.d3if0140.masjidhub.databinding.ActivityWelcomeBinding
 
 class WelcomeActivity : AppCompatActivity() {
@@ -15,6 +16,15 @@ class WelcomeActivity : AppCompatActivity() {
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        // Memeriksa apakah pengguna sudah login sebelumnya
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            // Jika sudah login, langsung navigasikan ke halaman home
+            navigateToHome()
+            // Selesai agar tidak lanjut ke bagian bawah onCreate
+            return
+        }
 
         // Menambahkan onClickListener pada button login untuk memulai LoginActivity
         binding.loginButton.setOnClickListener {
@@ -31,5 +41,11 @@ class WelcomeActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterDkmActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun navigateToHome() {
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+        finish() //agar pengguna tidak dapat kembali ke halaman welcome dengan menekan tombol back
     }
 }
