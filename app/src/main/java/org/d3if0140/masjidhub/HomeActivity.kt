@@ -1,6 +1,8 @@
 package org.d3if0140.masjidhub
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -9,17 +11,29 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.content.ContextCompat
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
 import org.d3if0140.masjidhub.databinding.ActivityHomeBinding
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityHomeBinding
+    private lateinit var googleMap: GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Inisialisasi SupportMapFragment
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
 
         // Gambar untuk carousel
         val imageList = listOf(
@@ -71,9 +85,35 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
         // Menampilkan foto profil default berdasarkan email pengguna
         displayDefaultProfileImage()
+    }
+
+    override fun onMapReady(map: GoogleMap?) {
+        map?.let {
+            googleMap = it
+
+            // Check permission
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+                return
+            }
+
+            // Enable user's current location
+            googleMap.isMyLocationEnabled = true
+
+            // Move camera to user's current location
+            val myLocation = LatLng(-7.025986985493635, 107.54172813940146)
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15f))
+
+            // Add marker for user's current location
+            val markerOptions = MarkerOptions()
+                .position(myLocation)
+                .title("My Location")
+            googleMap.addMarker(markerOptions)
+        }
     }
 
     private fun displayDefaultProfileImage() {
