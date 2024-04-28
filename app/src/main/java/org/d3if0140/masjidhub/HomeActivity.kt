@@ -13,28 +13,28 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
-
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.model.TypeFilter
-import com.google.firebase.auth.FirebaseAuth
 import org.d3if0140.masjidhub.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var googleMap: GoogleMap
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var placesClient: PlacesClient
-    private val DEFAULT_LATITUDE = -6.2088
-    private val DEFAULT_LONGITUDE = 106.8456
     private val DEFAULT_ZOOM = 12f
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +49,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         // Initialize SupportMapFragment
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        // Initialize FusedLocationProviderClient
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         // Set up carousel
         val imageList = listOf(
@@ -117,51 +120,84 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
                 return
             }
 
-            // Pastikan perangkat mendukung lokasi
-            if (googleMap.isMyLocationEnabled) {
-                // Jika lokasi pengguna dapat digunakan, pindahkan kamera ke lokasi pengguna
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE), DEFAULT_ZOOM))
-            } else {
-                // Jika fitur lokasi tidak aktif di perangkat, tampilkan pesan atau ajak pengguna untuk mengaktifkannya
-                Toast.makeText(this, "Fitur lokasi tidak aktif. Aktifkan fitur lokasi untuk menggunakan fitur ini.", Toast.LENGTH_LONG).show()
-            }
+            // Tampilkan marker lokasi pengguna saat ini
+            showCurrentLocation()
+        }
+    }
 
+    private fun showCurrentLocation() {
+        // Cek izin lokasi lagi
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            // Dapatkan lokasi pengguna saat ini
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    val currentLatLng = LatLng(location.latitude, location.longitude)
+                    googleMap.addMarker(
+                        MarkerOptions().position(currentLatLng).title("Lokasi Anda")
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                    )
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, DEFAULT_ZOOM))
 
-            // Request tempat (place) saat ini dari Places API
-            val request = FindCurrentPlaceRequest.newInstance(
-                listOf(
-                    Place.Field.NAME,
-                    Place.Field.LAT_LNG
-                )
-            )
-            val placeResponse = placesClient.findCurrentPlace(request)
-            placeResponse.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val likelyPlaces = task.result?.placeLikelihoods
-                    likelyPlaces?.let { places ->
-                        for (placeLikelihood in places) {
-                            val place = placeLikelihood.place
-                            val types = place.types ?: continue // Melanjutkan iterasi jika types null
-
-                            // Tambahkan marker untuk tempat (place) yang merupakan masjid
-                            if (types.contains(Place.Type.MOSQUE)) { // Periksa apakah tempat tersebut masjid
-                                val mosqueLocation = LatLng(
-                                    place.latLng!!.latitude,
-                                    place.latLng!!.longitude
-                                )
-                                googleMap.addMarker(
-                                    MarkerOptions().position(mosqueLocation).title(
-                                        place.name
-                                    )
-                                )
-                            }
-                        }
-                    }
+                    // Tampilkan masjid terdekat
+                    showNearestMosque(currentLatLng)
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Tidak dapat menemukan lokasi Anda saat ini",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
     }
 
+    private fun showNearestMosque(currentLatLng: LatLng) {
+        // Buat request untuk mencari masjid terdekat
+        val request = FindCurrentPlaceRequest.newInstance(
+            listOf(Place.Field.NAME, Place.Field.LAT_LNG)
+        )
+        val placeResponse = placesClient.findCurrentPlace(request)
+        placeResponse.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val likelyPlaces = task.result?.placeLikelihoods
+                likelyPlaces?.let { places ->
+                    for (placeLikelihood in places) {
+                        val place = placeLikelihood.place
+                        val types = place.types ?: continue // Melanjutkan iterasi jika types null
+
+                        // Tambahkan marker untuk tempat (place) yang merupakan masjid
+                        if (types.contains(Place.Type.MOSQUE)) { // Periksa apakah tempat tersebut masjid
+                            val mosqueLocation = LatLng(
+                                place.latLng!!.latitude,
+                                place.latLng!!.longitude
+                            )
+
+                            // Tambahkan marker untuk masjid dengan ikon dan judul
+                            googleMap.addMarker(
+                                MarkerOptions()
+                                    .position(mosqueLocation)
+                                    .title(place.name)
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                            )
+                        }
+                    }
+                }
+            } else {
+                Toast.makeText(
+                    this,
+                    "Gagal mendapatkan tempat-tempat terdekat.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
 
     private fun displayDefaultProfileImage() {
         // Get current user
