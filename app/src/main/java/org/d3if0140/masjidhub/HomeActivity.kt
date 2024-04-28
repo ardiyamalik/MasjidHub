@@ -11,81 +11,87 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
+import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.firebase.auth.FirebaseAuth
 import org.d3if0140.masjidhub.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var googleMap: GoogleMap
+    private lateinit var placesClient: PlacesClient
+    private val DEFAULT_LATITUDE = -6.2088
+    private val DEFAULT_LONGITUDE = 106.8456
+    private val DEFAULT_ZOOM = 12f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Inisialisasi SupportMapFragment
+        // Initialize Places API
+        Places.initialize(applicationContext, getString(R.string.google_maps_key))
+        placesClient = Places.createClient(this)
+
+        // Initialize SupportMapFragment
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        // Gambar untuk carousel
+        // Set up carousel
         val imageList = listOf(
             R.drawable.banner1,
             R.drawable.banner2,
             R.drawable.banner3
         )
-
         val adapter = CarouselAdapter(imageList)
         binding.viewPager.adapter = adapter
 
-        // Atur listener untuk bottom navigation view
+        // Bottom navigation listener
         binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.menu_home -> {
-                    // Tidak perlu lakukan apa pun jika pengguna sudah berada di halaman utama
-                    true
-                }
+                R.id.menu_home -> true
                 R.id.search_masjid -> {
-                    // Arahkan ke CariMasjidActivity
                     val intent = Intent(this, CariMasjidActivity::class.java)
                     startActivity(intent)
-                    finish() // Akhiri aktivitas saat ini
+                    finish()
                     true
                 }
                 R.id.menu_finance -> {
-                    // Arahkan ke KeuanganActivity
                     val intent = Intent(this, KeuanganActivity::class.java)
                     startActivity(intent)
-                    finish() // Akhiri aktivitas saat ini
+                    finish()
                     true
                 }
                 R.id.menu_profile -> {
-                    // Arahkan ke ProfilActivity
                     val intent = Intent(this, ProfilActivity::class.java)
                     startActivity(intent)
-                    finish() // Akhiri aktivitas saat ini
+                    finish()
                     true
                 }
-                // Tambahkan case untuk item lain jika diperlukan
                 else -> false
             }
         }
 
-        // Menambahkan onClickListener ke ImageView foto profil
+        // Profile image click listener
         binding.profileImageView.setOnClickListener {
-            // Membuat Intent untuk memulai ProfileActivity
             val intent = Intent(this, ProfilActivity::class.java)
             startActivity(intent)
         }
 
-        // Menampilkan foto profil default berdasarkan email pengguna
+        // Display default profile image based on user's email
         displayDefaultProfileImage()
     }
 
@@ -93,38 +99,78 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         map?.let {
             googleMap = it
 
-            // Check permission
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+            // Pastikan izin lokasi diberikan
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // Jika izin lokasi belum diberikan, minta izin
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    1
+                )
                 return
             }
 
-            // Enable user's current location
-            googleMap.isMyLocationEnabled = true
+            // Pastikan perangkat mendukung lokasi
+            if (googleMap.isMyLocationEnabled) {
+                // Jika lokasi pengguna dapat digunakan, pindahkan kamera ke lokasi pengguna
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE), DEFAULT_ZOOM))
+            } else {
+                // Jika fitur lokasi tidak aktif di perangkat, tampilkan pesan atau ajak pengguna untuk mengaktifkannya
+                Toast.makeText(this, "Fitur lokasi tidak aktif. Aktifkan fitur lokasi untuk menggunakan fitur ini.", Toast.LENGTH_LONG).show()
+            }
 
-            // Move camera to user's current location
-            val myLocation = LatLng(-7.025986985493635, 107.54172813940146)
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLocation, 15f))
 
-            // Add marker for user's current location
-            val markerOptions = MarkerOptions()
-                .position(myLocation)
-                .title("My Location")
-            googleMap.addMarker(markerOptions)
+            // Request tempat (place) saat ini dari Places API
+            val request = FindCurrentPlaceRequest.newInstance(
+                listOf(
+                    Place.Field.NAME,
+                    Place.Field.LAT_LNG
+                )
+            )
+            val placeResponse = placesClient.findCurrentPlace(request)
+            placeResponse.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val likelyPlaces = task.result?.placeLikelihoods
+                    likelyPlaces?.let { places ->
+                        for (placeLikelihood in places) {
+                            val place = placeLikelihood.place
+                            val types = place.types ?: continue // Melanjutkan iterasi jika types null
+
+                            // Tambahkan marker untuk tempat (place) yang merupakan masjid
+                            if (types.contains(Place.Type.MOSQUE)) { // Periksa apakah tempat tersebut masjid
+                                val mosqueLocation = LatLng(
+                                    place.latLng!!.latitude,
+                                    place.latLng!!.longitude
+                                )
+                                googleMap.addMarker(
+                                    MarkerOptions().position(mosqueLocation).title(
+                                        place.name
+                                    )
+                                )
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
-    private fun displayDefaultProfileImage() {
-        // Mendapatkan pengguna yang saat ini masuk (login).
-        val user = FirebaseAuth.getInstance().currentUser
 
+    private fun displayDefaultProfileImage() {
+        // Get current user
+        val user = FirebaseAuth.getInstance().currentUser
         user?.let {
-            // Mendapatkan alamat email pengguna.
+            // Get user's email address
             val email = user.email
             email?.let {
-                // Ubah alamat email menjadi avatar dan tampilkan di ImageView
+                // Create avatar based on email address and display it in profile image view
                 val avatarDrawable = createAvatar(it)
                 binding.profileImageView.setImageDrawable(avatarDrawable)
             }
@@ -132,19 +178,19 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun createAvatar(email: String): Drawable {
-        // Mendapatkan warna dari hashcode alamat email.
+        // Get color from email hashcode
         val color = getColorFromEmail(email)
 
-        // Membuat bitmap kosong untuk avatar.
+        // Create blank bitmap for avatar
         val bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
 
-        // Menggambar latar belakang berwarna.
+        // Draw colored background
         val paint = Paint()
         paint.color = color
         canvas.drawCircle(50f, 50f, 50f, paint)
 
-        // Menggambar huruf pertama dari alamat email.
+        // Draw first letter of email address
         val textPaint = Paint()
         textPaint.color = Color.WHITE
         textPaint.textSize = 40f
@@ -152,12 +198,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         val initial = email.substring(0, 1).toUpperCase()
         canvas.drawText(initial, 50f, 65f, textPaint)
 
-        // Mengembalikan Drawable dari bitmap yang dibuat.
+        // Return Drawable from created bitmap
         return BitmapDrawable(resources, bitmap)
     }
 
     private fun getColorFromEmail(email: String): Int {
-        // Menggunakan hashcode dari alamat email untuk mendapatkan warna.
+        // Get color from email hashcode
         val hashCode = email.hashCode()
         return Color.HSVToColor(floatArrayOf(
             (hashCode and 0xFF) % 360.toFloat(),  // Hue
