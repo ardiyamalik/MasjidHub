@@ -35,6 +35,9 @@
             android:name=".HomeActivity"
             android:exported="false" />
         <activity
+            android:name=".RegisterDkmActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegistActivity"
             android:exported="true" />
         <activity

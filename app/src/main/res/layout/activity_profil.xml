@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ProfilActivity">
 
     <ImageView
@@ -38,14 +39,14 @@
         android:text="@string/nama"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="32dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileImageView"
-        app:layout_constraintVertical_bias="0.035" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/dkm"
@@ -56,23 +57,66 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/namaUser"
-        app:layout_constraintVertical_bias="0.034" />
+        app:layout_constraintVertical_bias="0.02" />
 
-    <Button
-        android:id="@+id/buttonLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="41dp"
-        android:text="@string/logout"
-        app:layout_constraintBottom_toBottomOf="@+id/bottom_navigation"
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dkm" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.492" />
+
+
+    <!--        android:id="@+id/buttonLogout"-->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ubahProfile"
+        android:layout_width="375dp"
+        android:layout_height="52dp"
+        android:background="@drawable/stroke_white"
+        android:drawableLeft="@drawable/baseline_edit_off_24"
+        android:drawablePadding="8dp"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="start|center_vertical"
+        android:paddingLeft="18dp"
+        android:text="UBAH PROFIL"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.58" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonLogout"
+        android:layout_width="375dp"
+        android:layout_height="52dp"
+        android:background="@drawable/stroke_white"
+        android:drawableLeft="@drawable/baseline_logout_blue"
+        android:drawablePadding="8dp"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="start|center_vertical"
+        android:paddingLeft="18dp"
+        android:text="@string/logout"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.677" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
