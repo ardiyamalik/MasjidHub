@@ -19,32 +19,22 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
-import com.google.android.libraries.places.api.net.PlacesClient
-import com.google.android.libraries.places.api.model.Place
 import org.d3if0140.masjidhub.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var googleMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var placesClient: PlacesClient
     private val DEFAULT_ZOOM = 12f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // Initialize Places API
-        Places.initialize(applicationContext, getString(R.string.google_maps_key))
-        placesClient = Places.createClient(this)
 
         // Initialize SupportMapFragment
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
@@ -120,6 +110,9 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
                 return
             }
 
+            // Aktifkan tombol "My Location"
+            googleMap.isMyLocationEnabled = true
+
             // Tampilkan marker lokasi pengguna saat ini
             showCurrentLocation()
         }
@@ -139,14 +132,7 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                 if (location != null) {
                     val currentLatLng = LatLng(location.latitude, location.longitude)
-                    googleMap.addMarker(
-                        MarkerOptions().position(currentLatLng).title("Lokasi Anda")
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                    )
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, DEFAULT_ZOOM))
-
-                    // Tampilkan masjid terdekat
-                    showNearestMosque(currentLatLng)
                 } else {
                     Toast.makeText(
                         this,
@@ -158,46 +144,6 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun showNearestMosque(currentLatLng: LatLng) {
-        // Buat request untuk mencari masjid terdekat
-        val request = FindCurrentPlaceRequest.newInstance(
-            listOf(Place.Field.NAME, Place.Field.LAT_LNG)
-        )
-        val placeResponse = placesClient.findCurrentPlace(request)
-        placeResponse.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val likelyPlaces = task.result?.placeLikelihoods
-                likelyPlaces?.let { places ->
-                    for (placeLikelihood in places) {
-                        val place = placeLikelihood.place
-                        val types = place.types ?: continue // Melanjutkan iterasi jika types null
-
-                        // Tambahkan marker untuk tempat (place) yang merupakan masjid
-                        if (types.contains(Place.Type.MOSQUE)) { // Periksa apakah tempat tersebut masjid
-                            val mosqueLocation = LatLng(
-                                place.latLng!!.latitude,
-                                place.latLng!!.longitude
-                            )
-
-                            // Tambahkan marker untuk masjid dengan ikon dan judul
-                            googleMap.addMarker(
-                                MarkerOptions()
-                                    .position(mosqueLocation)
-                                    .title(place.name)
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-                            )
-                        }
-                    }
-                }
-            } else {
-                Toast.makeText(
-                    this,
-                    "Gagal mendapatkan tempat-tempat terdekat.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-    }
 
     private fun displayDefaultProfileImage() {
         // Get current user
