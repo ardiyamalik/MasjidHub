@@ -16,9 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MasjidHub"
         tools:targetApi="31">
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD-WYRtwI_zR34ick-8tCz8aYcVwL-nQ_k" />
+
         <activity
             android:name=".ProfilActivity"
             android:exported="true" />
