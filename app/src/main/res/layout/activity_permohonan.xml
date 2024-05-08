@@ -13,7 +13,7 @@
         android:layout_height="202dp"
 
         android:layout_marginBottom="60dp"
-        app:layout_constraintBottom_toBottomOf="@+id/masuk"
+        app:layout_constraintBottom_toBottomOf="@+id/reqDana"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -155,11 +155,12 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
+        android:id="@+id/reqDana"
         android:layout_width="344dp"
         android:layout_height="40dp"
         android:layout_marginTop="156dp"
         android:fontFamily="@font/poppins_bold"
-        android:text="PERMOHONAN DANA"
+        android:text="Permohonan Dana"
         android:textColor="@color/blue"
         android:textSize="24sp"
         android:textStyle="bold"
