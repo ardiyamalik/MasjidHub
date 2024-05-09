@@ -69,7 +69,10 @@
                 android:hint="@string/nama"
                 android:inputType="text"
                 android:padding="12dp" />
+
         </com.google.android.material.textfield.TextInputLayout>
+
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailInputLayout"

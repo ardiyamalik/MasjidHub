@@ -148,7 +148,8 @@ class RegistActivity : AppCompatActivity() {
                         val userData = hashMapOf(
                             "nama" to nama,
                             "email" to email,
-                            "dkm" to dkm
+                            "dkm" to dkm,
+                            "password" to password
                         )
                         firestore.collection("users")
                             .document(user!!.uid)
