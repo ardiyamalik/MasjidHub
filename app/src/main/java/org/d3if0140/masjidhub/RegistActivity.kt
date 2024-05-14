@@ -144,14 +144,18 @@ class RegistActivity : AppCompatActivity() {
                                 }
                             }
 
+                        // Set default role as "jamaah"
+                        val role = "jamaah"
+
                         // Menyimpan data ke Firestore
                         val userData = hashMapOf(
                             "nama" to nama,
                             "email" to email,
                             "dkm" to dkm,
-                            "password" to password
+                            "password" to password,
+                            "role" to role
                         )
-                        firestore.collection("users")
+                        firestore.collection("user")
                             .document(user!!.uid)
                             .set(userData)
                             .addOnSuccessListener {
