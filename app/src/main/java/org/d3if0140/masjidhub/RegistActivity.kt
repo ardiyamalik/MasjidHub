@@ -38,13 +38,13 @@ class RegistActivity : AppCompatActivity() {
         setContentView(view)
 
         // Inisialisasi Firebase
-        FirebaseApp.initializeApp(this)
+        //FirebaseApp.initializeApp(this)
 
         // Initialize FirebaseAuth instance
         mAuth = FirebaseAuth.getInstance()
 
         // Initialize Firestore instance
-        firestore = FirebaseFirestore.getInstance() // Inisialisasi firestore di sini
+        firestore = FirebaseFirestore.getInstance()
 
         // Menambahkan onClickListener pada button backButton untuk kembali ke WelcomeActivity
         binding.backButton.setOnClickListener {
@@ -94,6 +94,7 @@ class RegistActivity : AppCompatActivity() {
         val emailEditText: TextInputEditText = binding.emailEditText
         val spinner: Spinner = binding.DkmSpinner
         val namaEditText: TextInputEditText = binding.namaEditText
+        val passwordEditText: TextInputEditText = binding.passwordEditText
 
         // Data untuk opsi dropdown pada spinner
         val dkmOptions = arrayOf(
@@ -144,16 +145,13 @@ class RegistActivity : AppCompatActivity() {
                                 }
                             }
 
-                        // Set default role as "jamaah"
-                        val role = "jamaah"
-
                         // Menyimpan data ke Firestore
                         val userData = hashMapOf(
                             "nama" to nama,
                             "email" to email,
                             "dkm" to dkm,
                             "password" to password,
-                            "role" to role
+                            "role" to "jamaah"
                         )
                         firestore.collection("user")
                             .document(user!!.uid)

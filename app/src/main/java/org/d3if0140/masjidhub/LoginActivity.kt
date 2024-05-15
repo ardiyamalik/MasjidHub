@@ -1,7 +1,6 @@
 package org.d3if0140.masjidhub
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
 import android.text.SpannableString
@@ -9,31 +8,29 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
-    // Deklarasi variabel binding untuk menggunakan ViewBinding
     private lateinit var binding: ActivityLoginBinding
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Menggunakan inflate pada binding untuk menghubungkan layout XML dengan Activity
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
-        // Initialize FirebaseAuth instance
         mAuth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
 
-        // Menambahkan onClickListener pada button backButton untuk kembali ke WelcomeActivity
         binding.backButton.setOnClickListener {
             val intent = Intent(this, WelcomeActivity::class.java)
             startActivity(intent)
         }
 
-        // Set teks pada textDaftar menjadi "Belum punya akun? Daftar" dengan tautan ke RegistActivity
         val text = "Belum punya akun? Daftar"
         val spannableString = SpannableString(text)
         val startIndex = text.indexOf("Daftar")
@@ -47,7 +44,6 @@ class LoginActivity : AppCompatActivity() {
         binding.textDaftar.text = spannableString
         binding.textDaftar.movementMethod = LinkMovementMethod.getInstance()
 
-        // Menambahkan onClickListener pada passwordToggle untuk mengubah visibilitas password
         binding.passwordToggle.setOnClickListener {
             val inputType = binding.passwordEditText.inputType
             if (inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
@@ -60,7 +56,6 @@ class LoginActivity : AppCompatActivity() {
             binding.passwordEditText.setSelection(binding.passwordEditText.text?.length ?: 0)
         }
 
-        // Menambahkan onClickListener pada button login
         binding.loginButton.setOnClickListener {
             val email = binding.namaEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
@@ -73,19 +68,64 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     val user = mAuth.currentUser
-                    if (user != null && user.isEmailVerified) {
-                        // Email sudah diverifikasi, izinkan login
-                        Toast.makeText(this, "Login berhasil", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this, HomeActivity::class.java)
-                        startActivity(intent)
-                    } else {
-                        // Email belum diverifikasi, tolak login
-                        Toast.makeText(this, "Email Anda belum diverifikasi. Silakan periksa email Anda untuk melakukan verifikasi.", Toast.LENGTH_LONG).show()
+                    if (user != null) {
+                        checkAdminEmail(user.email)
                     }
                 } else {
-                    // Login gagal
                     Toast.makeText(this, "Login gagal, silakan coba lagi", Toast.LENGTH_SHORT).show()
                 }
             }
     }
+
+    private fun checkAdminEmail(email: String?) {
+        if (email != null && isAdminEmail(email)) {
+            // Email adalah email admin, langsung arahkan ke halaman AdminDashboard
+            val intent = Intent(this, AdminDashboard::class.java)
+            startActivity(intent)
+            finish()
+        } else {
+            // Bukan email admin, lanjutkan proses login seperti biasa
+            val user = mAuth.currentUser
+            if (user != null && user.isEmailVerified) {
+                Toast.makeText(this, "Login berhasil", Toast.LENGTH_SHORT).show()
+                checkUserRole(user.uid)
+            } else {
+                Toast.makeText(this, "Email Anda belum diverifikasi. Silakan periksa email Anda untuk melakukan verifikasi.", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun isAdminEmail(email: String): Boolean {
+        // Anda dapat menentukan aturan atau kondisi untuk menentukan email admin di sini
+        // Contoh: Jika email admin memiliki domain tertentu
+        return email.endsWith("@gmail.com")
+    }
+
+    private fun checkUserRole(userId: String) {
+        firestore.collection("user")
+            .document(userId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val userData = document.data
+                    if (userData != null) {
+                        val role = userData["role"] as String
+                        if (role == "admin") {
+                            val intent = Intent(this, AdminDashboard::class.java)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            val intent = Intent(this, HomeActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Gagal memeriksa peran pengguna: ${exception.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
 }
+
+
