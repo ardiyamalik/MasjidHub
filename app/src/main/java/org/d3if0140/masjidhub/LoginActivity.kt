@@ -40,14 +40,20 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
-        spannableString.setSpan(clickableSpan, startIndex, startIndex + 4, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(
+            clickableSpan,
+            startIndex,
+            startIndex + 4,
+            SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
         binding.textDaftar.text = spannableString
         binding.textDaftar.movementMethod = LinkMovementMethod.getInstance()
 
         binding.passwordToggle.setOnClickListener {
             val inputType = binding.passwordEditText.inputType
             if (inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
-                binding.passwordEditText.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                binding.passwordEditText.inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
                 binding.passwordToggle.setImageResource(R.drawable.baseline_visibility_off)
             } else {
                 binding.passwordEditText.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
@@ -69,36 +75,13 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val user = mAuth.currentUser
                     if (user != null) {
-                        checkAdminEmail(user.email)
+                        checkUserRole(user.uid)
                     }
                 } else {
-                    Toast.makeText(this, "Login gagal, silakan coba lagi", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Login gagal, silakan coba lagi", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
-    }
-
-    private fun checkAdminEmail(email: String?) {
-        if (email != null && isAdminEmail(email)) {
-            // Email adalah email admin, langsung arahkan ke halaman AdminDashboard
-            val intent = Intent(this, AdminDashboard::class.java)
-            startActivity(intent)
-            finish()
-        } else {
-            // Bukan email admin, lanjutkan proses login seperti biasa
-            val user = mAuth.currentUser
-            if (user != null && user.isEmailVerified) {
-                Toast.makeText(this, "Login berhasil", Toast.LENGTH_SHORT).show()
-                checkUserRole(user.uid)
-            } else {
-                Toast.makeText(this, "Email Anda belum diverifikasi. Silakan periksa email Anda untuk melakukan verifikasi.", Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    private fun isAdminEmail(email: String): Boolean {
-        // Anda dapat menentukan aturan atau kondisi untuk menentukan email admin di sini
-        // Contoh: Jika email admin memiliki domain tertentu
-        return email.endsWith("@gmail.com")
     }
 
     private fun checkUserRole(userId: String) {
@@ -109,23 +92,42 @@ class LoginActivity : AppCompatActivity() {
                 if (document != null && document.exists()) {
                     val userData = document.data
                     if (userData != null) {
-                        val role = userData["role"] as String
-                        if (role == "admin") {
-                            val intent = Intent(this, AdminDashboard::class.java)
-                            startActivity(intent)
+                        val role = userData["role"] as? String
+                        if (role != null) {
+                            when (role) {
+                                "admin" -> {
+                                    val intent = Intent(this, AdminDashboard::class.java)
+                                    startActivity(intent)
+                                }
+                                "pengurus_dkm" -> {
+                                    val intent = Intent(this, DkmDashboard::class.java)
+                                    startActivity(intent)
+                                }
+                                else -> {
+                                    val intent = Intent(this, HomeActivity::class.java)
+                                    startActivity(intent)
+                                }
+                            }
                             finish()
-                        } else {
-                            val intent = Intent(this, HomeActivity::class.java)
-                            startActivity(intent)
-                            finish()
+                            return@addOnSuccessListener // Keluar dari fungsi setelah mengarahkan pengguna
                         }
                     }
                 }
+                // Jika tidak ada role atau ada kesalahan lain, arahkan ke halaman default (biasanya HomeActivity)
+                val intent = Intent(this, WelcomeActivity::class.java)
+                startActivity(intent)
+                finish()
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(this, "Gagal memeriksa peran pengguna: ${exception.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Gagal memeriksa peran pengguna: ${exception.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+                // Jika gagal, arahkan ke halaman default (biasanya HomeActivity)
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
             }
     }
 }
-
-

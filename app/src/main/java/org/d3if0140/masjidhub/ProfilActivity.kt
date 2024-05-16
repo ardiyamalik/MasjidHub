@@ -45,17 +45,18 @@ class ProfilActivity : AppCompatActivity() {
                 .document(currentUserId)
                 .get()
                 .addOnSuccessListener { document ->
-                    if (document != null) {
+                    if (document != null && document.exists()) {
                         val userData = document.data
                         if (userData != null) {
-                            val nama = userData["nama"] as String
-                            val dkm = userData["dkm"] as String
+                            val nama = userData["nama"] as? String
+                            val dkm = userData["dkm"] as? String
 
-                            // Tampilkan nama pengguna
-                            binding.namaUser.text = nama
+                            // Tampilkan nama pengguna jika tidak null
+                            nama?.let { binding.namaUser.text = it }
 
-                            // Tampilkan jamaah masjid
-                            binding.dkm.text = dkm
+                            // Tampilkan jamaah masjid jika tidak null
+                            dkm?.let { binding.dkm.text = it }
+
                         }
                     }
                 }
@@ -95,7 +96,7 @@ class ProfilActivity : AppCompatActivity() {
 
     private fun displayDefaultProfileImage() {
         val user = mAuth.currentUser
-        user?.let {
+        if (user != null && user.email != null) { // Tambahkan pengecekan nullability di sini
             val email = user.email
             email?.let {
                 val avatarDrawable = createAvatar(it)

@@ -17,6 +17,9 @@
         android:theme="@style/Theme.MasjidHub"
         tools:targetApi="31">
         <activity
+            android:name=".DkmDashboard"
+            android:exported="true" />
+        <activity
             android:name=".UnggahActivity"
             android:exported="true" />
         <activity
