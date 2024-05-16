@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editTextNama"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nama" />
+
+    <!--Tambahkan bidang lainnya seperti alamat, nomor telepon, dll. sesuai kebutuhan-->
+
+    <Spinner
+        android:id="@+id/DkmSpinnerUbah"
+        android:layout_width="385dp"
+        android:layout_height="66dp"
+        android:background="@drawable/stroke_white"
+        android:fontFamily="@font/poppins_light"
+        android:padding="2dp" />
+
+    <Button
+        android:id="@+id/buttonSimpan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Simpan" />
+
+    <Button
+        android:id="@+id/buttonUbahFotoProfil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ubah Foto Profil" />
+
+</LinearLayout>

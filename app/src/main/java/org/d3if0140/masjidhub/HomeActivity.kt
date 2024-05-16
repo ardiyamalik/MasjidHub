@@ -9,16 +9,19 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -122,11 +125,22 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
             // Aktifkan tombol "My Location"
             googleMap.isMyLocationEnabled = true
 
-            // Tampilkan marker lokasi pengguna saat ini
-            showCurrentLocation()
+            // Dapatkan lokasi pengguna saat ini
+            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                if (location != null) {
+                    val currentLatLng = LatLng(location.latitude, location.longitude)
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, DEFAULT_ZOOM))
 
-            // Tampilkan marker untuk lokasi masjid terdekat
-            showNearbyMosques()
+                    // Tampilkan marker untuk lokasi masjid terdekat
+                    showNearbyMosques(location)
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Tidak dapat menemukan lokasi Anda saat ini",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
     }
 
@@ -156,19 +170,38 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun showNearbyMosques() {
+    private fun showNearbyMosques(currentLocation: Location) {
         // Misalkan Anda memiliki data lokasi masjid yang disimpan dalam sebuah list
         val masjidLocations: List<MasjidLocation> = getNearbyMosques()
 
         // Loop melalui data lokasi masjid dan tambahkan marker untuk setiap lokasi
         for (location in masjidLocations) {
             val masjidLatLng = LatLng(location.latitude, location.longitude)
-            val markerOptions = MarkerOptions()
-                .position(masjidLatLng)
-                .title(location.name)
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE)) // Mengatur ikon marker menjadi biru (opsional)
-            googleMap.addMarker(markerOptions)
+            val masjidLocation = Location("Masjid")
+            masjidLocation.latitude = location.latitude
+            masjidLocation.longitude = location.longitude
+
+            // Hitung jarak antara lokasi perangkat dan lokasi masjid
+            val distance = currentLocation.distanceTo(masjidLocation)
+
+            // Tambahkan marker hanya untuk lokasi masjid yang berjarak kurang dari 5 km dari lokasi perangkat
+            if (distance < 5000) {
+                val markerOptions = MarkerOptions()
+                    .position(masjidLatLng)
+                    .title(location.name)
+                    .icon(bitmapDescriptorFromVector(R.drawable.baseline_mosque)) // Mengatur ikon marker menjadi ikon masjid (opsional)
+                googleMap.addMarker(markerOptions)
+            }
         }
+    }
+
+    private fun bitmapDescriptorFromVector(vectorResId: Int): BitmapDescriptor {
+        val vectorDrawable = ContextCompat.getDrawable(this, vectorResId)
+        vectorDrawable!!.setBounds(0, 0, vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight)
+        val bitmap = Bitmap.createBitmap(vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        vectorDrawable.draw(canvas)
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 
     private fun getNearbyMosques(): List<MasjidLocation> {

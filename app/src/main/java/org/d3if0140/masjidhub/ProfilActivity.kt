@@ -36,6 +36,13 @@ class ProfilActivity : AppCompatActivity() {
             finish()
         }
 
+        // Atur listener untuk tombol ubah profil
+        binding.ubahProfile.setOnClickListener {
+            // Panggil aktivitas atau dialog untuk mengubah profil di sini
+            val intent = Intent(this, UbahProfil::class.java)
+            startActivity(intent)
+        }
+
         // Dapatkan ID pengguna yang saat ini masuk
         val currentUserId = mAuth.currentUser?.uid
 
@@ -130,3 +137,4 @@ class ProfilActivity : AppCompatActivity() {
         ))
     }
 }
+
