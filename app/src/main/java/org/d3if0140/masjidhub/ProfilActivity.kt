@@ -7,9 +7,10 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.databinding.ActivityProfilBinding
@@ -38,7 +39,6 @@ class ProfilActivity : AppCompatActivity() {
 
         // Atur listener untuk tombol ubah profil
         binding.ubahProfile.setOnClickListener {
-            // Panggil aktivitas atau dialog untuk mengubah profil di sini
             val intent = Intent(this, UbahProfil::class.java)
             startActivity(intent)
         }
@@ -57,6 +57,7 @@ class ProfilActivity : AppCompatActivity() {
                         if (userData != null) {
                             val nama = userData["nama"] as? String
                             val dkm = userData["dkm"] as? String
+                            val imageUrl = userData["imageUrl"] as? String
 
                             // Tampilkan nama pengguna jika tidak null
                             nama?.let { binding.namaUser.text = it }
@@ -64,6 +65,8 @@ class ProfilActivity : AppCompatActivity() {
                             // Tampilkan jamaah masjid jika tidak null
                             dkm?.let { binding.dkm.text = it }
 
+                            // Tampilkan foto profil jika URL tidak null
+                            imageUrl?.let { loadProfileImage(it) } ?: run { displayDefaultProfileImage() }
                         }
                     }
                 }
@@ -97,13 +100,18 @@ class ProfilActivity : AppCompatActivity() {
                 else -> false
             }
         }
+    }
 
-        displayDefaultProfileImage()
+    private fun loadProfileImage(imageUrl: String) {
+        Glide.with(this)
+            .load(imageUrl)
+            .placeholder(createAvatar(mAuth.currentUser?.email ?: ""))
+            .into(binding.profileImageView)
     }
 
     private fun displayDefaultProfileImage() {
         val user = mAuth.currentUser
-        if (user != null && user.email != null) { // Tambahkan pengecekan nullability di sini
+        if (user != null && user.email != null) {
             val email = user.email
             email?.let {
                 val avatarDrawable = createAvatar(it)
@@ -137,4 +145,3 @@ class ProfilActivity : AppCompatActivity() {
         ))
     }
 }
-

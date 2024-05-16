@@ -15,6 +15,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -30,6 +31,7 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
 import com.google.android.libraries.places.api.net.PlacesClient
 import com.google.android.libraries.places.api.model.Place
+import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -38,11 +40,17 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var placesClient: PlacesClient
     private val DEFAULT_ZOOM = 12f
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Inisialisasi Firebase
+        mAuth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
 
         // Initialize Places API
         Places.initialize(applicationContext, getString(R.string.google_maps_key))
@@ -63,6 +71,30 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         )
         val adapter = CarouselAdapter(imageList)
         binding.viewPager.adapter = adapter
+
+        // Dapatkan ID pengguna yang saat ini masuk
+        val currentUserId = mAuth.currentUser?.uid
+
+        // Ambil data pengguna dari Firestore berdasarkan ID
+        if (currentUserId != null) {
+            firestore.collection("user")
+                .document(currentUserId)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        val userData = document.data
+                        if (userData != null) {
+                            val imageUrl = userData["imageUrl"] as? String
+
+                            // Tampilkan foto profil jika URL tidak null
+                            imageUrl?.let { loadProfileImage(it) } ?: run { displayDefaultProfileImage() }
+                        }
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(this, "Gagal mengambil data pengguna: ${exception.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
 
         // Bottom navigation listener
         binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
@@ -215,14 +247,18 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
         )
     }
 
+    private fun loadProfileImage(imageUrl: String) {
+        Glide.with(this)
+            .load(imageUrl)
+            .placeholder(createAvatar(mAuth.currentUser?.email ?: ""))
+            .into(binding.profileImageView)
+    }
+
     private fun displayDefaultProfileImage() {
-        // Get current user
-        val user = FirebaseAuth.getInstance().currentUser
-        user?.let {
-            // Get user's email address
+        val user = mAuth.currentUser
+        if (user != null && user.email != null) {
             val email = user.email
             email?.let {
-                // Create avatar based on email address and display it in profile image view
                 val avatarDrawable = createAvatar(it)
                 binding.profileImageView.setImageDrawable(avatarDrawable)
             }
@@ -230,37 +266,27 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun createAvatar(email: String): Drawable {
-        // Get color from email hashcode
         val color = getColorFromEmail(email)
-
-        // Create blank bitmap for avatar
         val bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
-
-        // Draw colored background
-        val paint = Paint()
-        paint.color = color
+        val paint = Paint().apply { this.color = color }
         canvas.drawCircle(50f, 50f, 50f, paint)
-
-        // Draw first letter of email address
-        val textPaint = Paint()
-        textPaint.color = Color.WHITE
-        textPaint.textSize = 40f
-        textPaint.textAlign = Paint.Align.CENTER
-        val initial = email.substring(0, 1).toUpperCase()
+        val textPaint = Paint().apply {
+            this.color = Color.WHITE
+            this.textSize = 40f
+            this.textAlign = Paint.Align.CENTER
+        }
+        val initial = email.substring(0, 1).uppercase()
         canvas.drawText(initial, 50f, 65f, textPaint)
-
-        // Return Drawable from created bitmap
         return BitmapDrawable(resources, bitmap)
     }
 
     private fun getColorFromEmail(email: String): Int {
-        // Get color from email hashcode
         val hashCode = email.hashCode()
         return Color.HSVToColor(floatArrayOf(
-            (hashCode and 0xFF) % 360.toFloat(),  // Hue
-            0.6f,                                  // Saturation
-            0.9f                                   // Value
+            (hashCode and 0xFF).toFloat() % 360,
+            0.6f,
+            0.9f
         ))
     }
 }

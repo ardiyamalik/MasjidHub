@@ -9,16 +9,49 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.databinding.ActivityCariMasjidBinding
 import org.d3if0140.masjidhub.databinding.ActivityHomeBinding
 
 class CariMasjidActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCariMasjidBinding
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCariMasjidBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Inisialisasi Firebase
+        mAuth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
+
+        // Dapatkan ID pengguna yang saat ini masuk
+        val currentUserId = mAuth.currentUser?.uid
+
+        // Ambil data pengguna dari Firestore berdasarkan ID
+        if (currentUserId != null) {
+            firestore.collection("user")
+                .document(currentUserId)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        val userData = document.data
+                        if (userData != null) {
+                            val imageUrl = userData["imageUrl"] as? String
+
+                            // Tampilkan foto profil jika URL tidak null
+                            imageUrl?.let { loadProfileImage(it) } ?: run { displayDefaultProfileImage() }
+                        }
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(this, "Gagal mengambil data pengguna: ${exception.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
 
 // Atur listener untuk bottom navigation view
         binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
@@ -64,15 +97,18 @@ class CariMasjidActivity : AppCompatActivity() {
         displayDefaultProfileImage()
     }
 
-    private fun displayDefaultProfileImage() {
-        // Mendapatkan pengguna yang saat ini masuk (login).
-        val user = FirebaseAuth.getInstance().currentUser
+    private fun loadProfileImage(imageUrl: String) {
+        Glide.with(this)
+            .load(imageUrl)
+            .placeholder(createAvatar(mAuth.currentUser?.email ?: ""))
+            .into(binding.profileImageView)
+    }
 
-        user?.let {
-            // Mendapatkan alamat email pengguna.
+    private fun displayDefaultProfileImage() {
+        val user = mAuth.currentUser
+        if (user != null && user.email != null) {
             val email = user.email
             email?.let {
-                // Ubah alamat email menjadi avatar dan tampilkan di ImageView
                 val avatarDrawable = createAvatar(it)
                 binding.profileImageView.setImageDrawable(avatarDrawable)
             }
@@ -80,37 +116,27 @@ class CariMasjidActivity : AppCompatActivity() {
     }
 
     private fun createAvatar(email: String): Drawable {
-        // Mendapatkan warna dari hashcode alamat email.
         val color = getColorFromEmail(email)
-
-        // Membuat bitmap kosong untuk avatar.
         val bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
-
-        // Menggambar latar belakang berwarna.
-        val paint = Paint()
-        paint.color = color
+        val paint = Paint().apply { this.color = color }
         canvas.drawCircle(50f, 50f, 50f, paint)
-
-        // Menggambar huruf pertama dari alamat email.
-        val textPaint = Paint()
-        textPaint.color = Color.WHITE
-        textPaint.textSize = 40f
-        textPaint.textAlign = Paint.Align.CENTER
-        val initial = email.substring(0, 1).toUpperCase()
+        val textPaint = Paint().apply {
+            this.color = Color.WHITE
+            this.textSize = 40f
+            this.textAlign = Paint.Align.CENTER
+        }
+        val initial = email.substring(0, 1).uppercase()
         canvas.drawText(initial, 50f, 65f, textPaint)
-
-        // Mengembalikan Drawable dari bitmap yang dibuat.
         return BitmapDrawable(resources, bitmap)
     }
 
     private fun getColorFromEmail(email: String): Int {
-        // Menggunakan hashcode dari alamat email untuk mendapatkan warna.
         val hashCode = email.hashCode()
         return Color.HSVToColor(floatArrayOf(
-            (hashCode and 0xFF) % 360.toFloat(),  // Hue
-            0.6f,                                  // Saturation
-            0.9f                                   // Value
+            (hashCode and 0xFF).toFloat() % 360,
+            0.6f,
+            0.9f
         ))
     }
 }
