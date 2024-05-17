@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_home"
+        android:title="@string/home"
+        android:icon="@drawable/baseline_home" />
+
+    <item
+        android:id="@+id/uploadEvent"
+        android:title="@string/upload"
+        android:icon="@drawable/baseline_upload_24" />
+
+    <item
+        android:id="@+id/menu_finance"
+        android:title="@string/keuangan"
+        android:icon="@drawable/baseline_finance" />
+
+    <item
+        android:id="@+id/menu_profile"
+        android:title="@string/profil"
+        android:icon="@drawable/baseline_mosque" />
+</menu>
