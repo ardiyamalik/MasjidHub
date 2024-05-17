@@ -4,6 +4,104 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfilDkmActivity">
+    android:background="@color/white"
+    tools:context=".ProfilActivity">
+
+    <ImageView
+        android:id="@+id/profileImageView"
+        android:layout_width="153dp"
+        android:layout_height="121dp"
+        android:layout_gravity="end"
+        android:contentDescription="Foto Profil"
+        android:src="@drawable/baseline_person_black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.131" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation_menu_dkm" />
+
+    <TextView
+        android:id="@+id/namaUserDkm"
+        android:layout_width="340dp"
+        android:layout_height="88dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Nama Dkm"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileImageView"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.492" />
+
+
+    <!--        android:id="@+id/buttonLogout"-->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ubahProfileDkm"
+        android:layout_width="375dp"
+        android:layout_height="52dp"
+        android:background="@drawable/stroke_white"
+        android:drawableLeft="@drawable/baseline_edit_off_24"
+        android:drawablePadding="8dp"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="start|center_vertical"
+        android:paddingLeft="18dp"
+        android:text="UBAH PROFIL"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.58" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonLogoutDkm"
+        android:layout_width="375dp"
+        android:layout_height="52dp"
+        android:background="@drawable/stroke_white"
+        android:drawableLeft="@drawable/baseline_logout_blue"
+        android:drawablePadding="8dp"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="start|center_vertical"
+        android:paddingLeft="18dp"
+        android:text="@string/logout"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.677" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

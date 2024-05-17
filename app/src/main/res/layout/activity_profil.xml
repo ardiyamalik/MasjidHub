@@ -33,13 +33,13 @@
 
     <TextView
         android:id="@+id/namaUser"
-        android:layout_width="149dp"
-        android:layout_height="37dp"
+        android:layout_width="286dp"
+        android:layout_height="53dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/nama"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="32dp"
+        android:textSize="24dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +61,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/namaUser"
-        app:layout_constraintVertical_bias="0.02" />
+        app:layout_constraintVertical_bias="0.015" />
 
     <View
         android:id="@+id/divider"
