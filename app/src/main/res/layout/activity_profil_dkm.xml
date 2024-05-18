@@ -8,7 +8,7 @@
     tools:context=".ProfilDkmActivity">
 
     <ImageView
-        android:id="@+id/profileImageView"
+        android:id="@+id/profileImageDkm"
         android:layout_width="153dp"
         android:layout_height="121dp"
         android:layout_gravity="end"
@@ -45,7 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImageView"
+        app:layout_constraintTop_toBottomOf="@+id/profileImageDkm"
         app:layout_constraintVertical_bias="0.0" />
 
     <View
@@ -53,8 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"
-
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_dkm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
