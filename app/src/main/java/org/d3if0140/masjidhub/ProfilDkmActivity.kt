@@ -38,7 +38,7 @@ class ProfilDkmActivity : AppCompatActivity() {
 
         // Atur listener untuk tombol ubah profil
         binding.ubahProfileDkm.setOnClickListener {
-            val intent = Intent(this, UbahProfil::class.java)
+            val intent = Intent(this, UbahProfilDkm::class.java)
             startActivity(intent)
         }
 

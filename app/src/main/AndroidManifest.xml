@@ -18,6 +18,9 @@
         android:theme="@style/Theme.MasjidHub"
         tools:targetApi="31">
         <activity
+            android:name=".UbahProfilDkm"
+            android:exported="false" />
+        <activity
             android:name=".ProfilDkmActivity"
             android:exported="true" />
         <activity
