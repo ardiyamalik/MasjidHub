@@ -19,10 +19,10 @@
         tools:targetApi="31">
         <activity
             android:name=".ProfilDkmActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".EventActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".UbahProfil"
             android:exported="true" />

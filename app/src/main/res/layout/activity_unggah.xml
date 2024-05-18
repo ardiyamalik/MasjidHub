@@ -1,16 +1,26 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    tools:context=".DkmDashboard">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="56dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_dkm"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:padding="16dp">
-
 
         <ImageButton
             android:id="@+id/backButton"
@@ -24,11 +34,39 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/unggahEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Unggah Kegiatan"
+            android:textColor="@color/blue"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/backButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/subHeadDesk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/poppins_light"
+            android:text="Deskripsi"
+            android:textColor="@color/blue"
+            android:textSize="21sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/unggahEvent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <EditText
             android:id="@+id/editDesk"
-            android:layout_width="378dp"
+            android:layout_width="0dp"
             android:layout_height="141dp"
-            android:layout_marginTop="184dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/stroke_white"
             android:gravity="left"
             android:hint="Masukkan Deskripsi"
@@ -36,105 +74,79 @@
             android:paddingLeft="9dp"
             android:paddingTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.515"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/insertImage"
-            android:layout_width="378dp"
-            android:layout_height="51dp"
-            android:background="@drawable/stroke_white"
-            android:drawableLeft="@drawable/baseline_insert_photo_24"
-            android:drawablePadding="8dp"
-            android:gravity="start|center_vertical"
-            android:inputType="textMultiLine"
-            android:paddingLeft="13dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.515"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editDesk"
-            app:layout_constraintVertical_bias="0.194" />
-
-        <TextView
-            android:id="@+id/unggahEvent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="48dp"
-            android:text="Unggah Kegiatan"
-            android:textColor="@color/blue"
-            android:fontFamily="@font/poppins_bold"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/editDesk"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.808" />
-
-        <TextView
-            android:id="@+id/subHeadDesk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Deskripsi"
-            android:fontFamily="@font/poppins_light"
-            android:textColor="@color/blue"
-            android:textSize="21sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/editDesk"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.049"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/subHeadDesk" />
 
         <TextView
             android:id="@+id/subHeadInsertImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Masukkan Gambar"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins_light"
+            android:text="Masukkan Gambar"
             android:textColor="@color/blue"
             android:textSize="21sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/insertImage"
+            app:layout_constraintTop_toBottomOf="@id/editDesk"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.049"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/opsional"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="9dp"
-            android:text="(Opsional)"
+            android:layout_marginStart="8dp"
             android:fontFamily="@font/poppins_light"
+            android:text="(Opsional)"
             android:textColor="@color/grey"
             android:textSize="19sp"
-            android:textStyle="normal"
-            app:layout_constraintBottom_toTopOf="@+id/insertImage"
+            app:layout_constraintTop_toBottomOf="@id/editDesk"
+            app:layout_constraintStart_toEndOf="@id/subHeadInsertImage" />
+
+        <EditText
+            android:id="@+id/insertImage"
+            android:layout_width="0dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/stroke_white"
+            android:drawableLeft="@drawable/baseline_insert_photo_24"
+            android:drawablePadding="8dp"
+            android:gravity="start|center_vertical"
+            android:inputType="textMultiLine"
+            android:paddingLeft="13dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.108"
-            app:layout_constraintStart_toEndOf="@+id/subHeadInsertImage" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/subHeadInsertImage" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/submitButton"
-            android:layout_width="378dp"
+            android:layout_width="0dp"
             android:layout_height="53dp"
-            android:layout_marginBottom="184dp"
+            android:layout_marginTop="32dp"
             android:background="@drawable/rounded_button_background"
+            android:fontFamily="@font/poppins_bold"
             android:gravity="center"
             android:text="Unggah"
-            android:fontFamily="@font/poppins_bold"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.606"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/insertImage" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
+
+<com.google.android.material.bottomnavigation.BottomNavigationView
+android:id="@+id/bottom_navigation_dkm"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:background="@color/blue"
+app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintEnd_toEndOf="parent"
+app:layout_constraintStart_toStartOf="parent"
+app:menu="@menu/bottom_navigation_menu_dkm"
+app:labelVisibilityMode="labeled" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
