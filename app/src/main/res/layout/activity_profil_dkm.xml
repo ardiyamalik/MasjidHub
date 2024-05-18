@@ -48,6 +48,24 @@
         app:layout_constraintTop_toBottomOf="@+id/profileImageDkm"
         app:layout_constraintVertical_bias="0.0" />
 
+    <TextView
+        android:id="@+id/alamat_masjid"
+        android:layout_width="338dp"
+        android:layout_height="74dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/alamat"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/namaUserDkm"
+        app:layout_constraintVertical_bias="0.015" />
+
+
+    <!--        android:id="@+id/buttonLogout"-->
+
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
@@ -58,10 +76,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.492" />
+        app:layout_constraintVertical_bias="0.578" />
 
-
-    <!--        android:id="@+id/buttonLogout"-->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ubahProfileDkm"
         android:layout_width="375dp"
@@ -80,7 +96,7 @@
         app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.58" />
+        app:layout_constraintVertical_bias="0.692" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonLogoutDkm"
@@ -100,7 +116,7 @@
         app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.677" />
+        app:layout_constraintVertical_bias="0.801" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

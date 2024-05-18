@@ -62,7 +62,7 @@ class ProfilActivity : AppCompatActivity() {
                             // Tampilkan nama pengguna jika tidak null
                             nama?.let { binding.namaUser.text = it }
 
-                            // Tampilkan jamaah masjid jika tidak null
+                            // Tampilkan alamat masjid jika tidak null
                             dkm?.let { binding.dkm.text = it }
 
                             // Tampilkan foto profil jika URL tidak null

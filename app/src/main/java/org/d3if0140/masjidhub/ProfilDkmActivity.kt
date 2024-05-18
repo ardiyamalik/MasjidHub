@@ -55,10 +55,14 @@ class ProfilDkmActivity : AppCompatActivity() {
                         val userData = document.data
                         if (userData != null) {
                             val nama = userData["nama"] as? String
+                            val alamat = userData["alamat"] as? String
                             val imageUrl = userData["imageUrl"] as? String
 
                             // Tampilkan nama pengguna jika tidak null
                             nama?.let { binding.namaUserDkm.text = it }
+
+                            //Tampilkan alamat masjid
+                            alamat?.let { binding.alamatMasjid.text = it }
 
                             // Tampilkan foto profil jika URL tidak null
                             imageUrl?.let { loadProfileImage(it) } ?: run { displayDefaultProfileImage() }
