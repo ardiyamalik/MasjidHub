@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DkmDashboard">
+    tools:context=".DkmDashboard"
+    android:background="@color/white">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -87,21 +88,23 @@
             android:textColor="@color/blue"
             android:textSize="21sp"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@id/editDesk"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.314"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editDesk" />
 
         <TextView
             android:id="@+id/opsional"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="18dp"
             android:fontFamily="@font/poppins_light"
             android:text="(Opsional)"
             android:textColor="@color/grey"
             android:textSize="19sp"
-            app:layout_constraintTop_toBottomOf="@id/editDesk"
-            app:layout_constraintStart_toEndOf="@id/subHeadInsertImage" />
+            app:layout_constraintStart_toEndOf="@id/subHeadInsertImage"
+            app:layout_constraintTop_toBottomOf="@id/editDesk" />
 
         <EditText
             android:id="@+id/insertImage"

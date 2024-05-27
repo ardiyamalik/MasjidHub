@@ -155,5 +155,28 @@
             app:layout_constraintStart_toStartOf="@+id/eventImageView"
             app:layout_constraintTop_toTopOf="@+id/eventImageView" />
 
+        <ImageView
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:layout_constraintBottom_toBottomOf="@+id/cardEvent"
+            app:layout_constraintEnd_toEndOf="@+id/cardEvent"
+            app:layout_constraintHorizontal_bias="0.888"
+            app:layout_constraintStart_toStartOf="@+id/cardEvent"
+            app:srcCompat="@drawable/baseline_delete_24" />
+
+        <ImageView
+            android:id="@+id/deleteButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="12dp"
+            app:layout_constraintEnd_toEndOf="@+id/imageView4"
+            app:layout_constraintHorizontal_bias="0.898"
+            app:layout_constraintStart_toStartOf="@+id/imageView4"
+            app:layout_constraintTop_toBottomOf="@+id/eventImageView"
+            app:srcCompat="@drawable/baseline_delete_24" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

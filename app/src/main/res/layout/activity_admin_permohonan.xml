@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".AdminPermohonan">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
+        android:background="@null"
+        android:padding="12dp"
+        android:src="@drawable/baseline_arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/masjidTerdaftar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Permohonan"
+        android:textColor="@color/blue"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/cardEvent"
+        android:layout_width="356dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="120dp"
+        android:background="@drawable/stroke_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/descriptionTextView"
+        android:layout_width="225dp"
+        android:layout_height="37dp"
+        android:layout_marginBottom="52dp"
+        android:text="Perihal Permohonan"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/cardEvent"
+        app:layout_constraintEnd_toEndOf="@+id/cardEvent"
+        app:layout_constraintHorizontal_bias="0.732"
+        app:layout_constraintStart_toStartOf="@+id/cardEvent" />
+
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="225dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="28dp"
+        android:text="Profil"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/cardEvent"
+        app:layout_constraintHorizontal_bias="0.255"
+        app:layout_constraintStart_toEndOf="@+id/profileImageView"
+        app:layout_constraintTop_toTopOf="@+id/cardEvent" />
+
+    <ImageView
+        android:id="@+id/profileImageView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="148dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.148"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_person_black" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/detailsButton"
+        android:layout_width="93dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/rounded_button_background"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Lihat"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/cardEvent"
+        app:layout_constraintEnd_toEndOf="@+id/cardEvent"
+        app:layout_constraintHorizontal_bias="0.866"
+        app:layout_constraintStart_toStartOf="@+id/cardEvent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
