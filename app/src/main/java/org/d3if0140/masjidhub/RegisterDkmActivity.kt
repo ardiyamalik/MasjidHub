@@ -21,7 +21,7 @@ class RegisterDkmActivity : AppCompatActivity() {
         // Tambahkan OnClickListener pada hubungiAdminButton
         binding.hubungiAdminButton.setOnClickListener {
             // Nomor telepon tujuan (contoh: +6281234567890)
-            val phoneNumber = "+6281234567890"
+            val phoneNumber = "+6282115340053"
             // Buat URI untuk membuka WhatsApp
             val uri = Uri.parse("https://wa.me/$phoneNumber")
             // Buat Intent dengan ACTION_VIEW dan URI yang sudah dibuat
