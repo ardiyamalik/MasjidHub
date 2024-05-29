@@ -1,8 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/white"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -15,14 +16,12 @@
             android:id="@+id/backButton"
             android:layout_width="39dp"
             android:layout_height="43dp"
-            android:layout_marginBottom="60dp"
+            android:layout_marginTop="16dp"
             android:background="@null"
             android:padding="12dp"
             android:src="@drawable/baseline_arrow_back"
-            app:layout_constraintBottom_toTopOf="@+id/cardEvent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.074"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView2"
@@ -33,127 +32,57 @@
             android:textColor="@color/blue"
             android:textSize="25dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/cardEvent"
+            app:layout_constraintBottom_toTopOf="@id/nameTextView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.048"
-            app:layout_constraintStart_toEndOf="@+id/backButton"
+            app:layout_constraintStart_toEndOf="@id/backButton"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.333" />
-
-        <ImageView
-            android:id="@+id/cardEvent"
-            android:layout_width="356dp"
-            android:layout_height="175dp"
-            android:layout_marginTop="124dp"
-            android:background="@drawable/stroke_white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.49"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/profileImageView"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginTop="148dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.148"
+            android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView2"
             app:srcCompat="@drawable/baseline_person_black" />
 
         <TextView
             android:id="@+id/nameTextView"
-            android:layout_width="225dp"
-            android:layout_height="22dp"
-            android:layout_marginTop="148dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="Nama Profil"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.655"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/profileImageView"
+            app:layout_constraintTop_toBottomOf="@id/textView2" />
 
         <TextView
             android:id="@+id/descriptionTextView"
-            android:layout_width="224dp"
-            android:layout_height="78dp"
+            android:layout_width="271dp"
+            android:layout_height="37dp"
             android:layout_marginTop="8dp"
             android:text="Deskripsi event"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.652"
+            app:layout_constraintHorizontal_bias="0.714"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
-
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="350dp"
-            android:layout_height="293dp"
-            android:layout_marginTop="340dp"
-            android:background="@drawable/stroke_white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.49"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/profileImage"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="356dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.148"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/baseline_person_black" />
-
-        <TextView
-            android:id="@+id/nameTextView2"
-            android:layout_width="225dp"
-            android:layout_height="22dp"
-            android:layout_marginTop="356dp"
-            android:text="Nama Profil"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.655"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/descriptionTextView2"
-            android:layout_width="224dp"
-            android:layout_height="78dp"
-            android:layout_marginTop="8dp"
-            android:text="Deskripsi event"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.652"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nameTextView2" />
+            app:layout_constraintTop_toBottomOf="@id/nameTextView" />
 
         <ImageView
             android:id="@+id/eventImageView"
-            android:layout_width="293dp"
-            android:layout_height="114dp"
-            android:layout_marginBottom="40dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
             android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-            app:layout_constraintEnd_toEndOf="@+id/imageView4"
-            app:layout_constraintHorizontal_bias="0.631"
-            app:layout_constraintStart_toStartOf="@+id/imageView4" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gambar"
-            app:layout_constraintBottom_toBottomOf="@+id/eventImageView"
-            app:layout_constraintEnd_toEndOf="@+id/eventImageView"
-            app:layout_constraintStart_toStartOf="@+id/eventImageView"
-            app:layout_constraintTop_toTopOf="@+id/eventImageView" />
-
+            android:visibility="gone"
+            app:layout_constraintDimensionRatio="H,1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/descriptionTextView"
+            app:layout_constraintWidth_percent="0.9"
+            app:layout_constraintHeight_default="wrap" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
