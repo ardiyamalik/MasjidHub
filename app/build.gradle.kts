@@ -64,6 +64,11 @@ dependencies {
 
     implementation ("com.android.volley:volley:1.2.1")
 
+    implementation ("com.google.firebase:firebase-appcheck-playintegrity:18.0.0")
+    implementation ("com.google.firebase:firebase-appcheck-debug:18.0.0")
+    implementation ("com.google.firebase:firebase-appcheck-safetynet:16.1.2")
+
+
 
 
 

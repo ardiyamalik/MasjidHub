@@ -17,6 +17,8 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.FirebaseApp
+import com.google.firebase.appcheck.FirebaseAppCheck
+import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.databinding.ActivityRegistBinding
@@ -36,6 +38,11 @@ class RegistActivity : AppCompatActivity() {
         binding = ActivityRegistBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        // Inisialisasi Firebase App Check
+        FirebaseAppCheck.getInstance().installAppCheckProviderFactory(
+            PlayIntegrityAppCheckProviderFactory.getInstance()
+        )
 
         // Inisialisasi Firebase
         //FirebaseApp.initializeApp(this)
