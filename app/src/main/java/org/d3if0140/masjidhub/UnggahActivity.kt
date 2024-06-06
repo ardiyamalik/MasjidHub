@@ -3,11 +3,15 @@ package org.d3if0140.masjidhub
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.appcheck.FirebaseAppCheck
+import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
 import org.d3if0140.masjidhub.databinding.ActivityUnggahBinding
 import java.util.*
 
@@ -15,11 +19,18 @@ class UnggahActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUnggahBinding
     private var selectedImageUri: Uri? = null
     private val storageReference = FirebaseStorage.getInstance().reference
+    private val firestore = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUnggahBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Inisialisasi Firebase App Check
+        FirebaseAppCheck.getInstance().installAppCheckProviderFactory(
+            PlayIntegrityAppCheckProviderFactory.getInstance()
+        )
 
         binding.bottomNavigationDkm.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -51,11 +62,7 @@ class UnggahActivity : AppCompatActivity() {
         }
 
         binding.submitButton.setOnClickListener {
-            if (selectedImageUri != null) {
-                uploadImage()
-            } else {
-                submitPost(null)
-            }
+            uploadImage()
         }
     }
 
@@ -84,23 +91,45 @@ class UnggahActivity : AppCompatActivity() {
                         submitPost(imageUrl)
                     }
                 }
-                .addOnFailureListener {
+                .addOnFailureListener { exception ->
+                    Log.e("UnggahActivity", "Error uploading image", exception)
                     Toast.makeText(this, "Upload gagal", Toast.LENGTH_SHORT).show()
                 }
         }
     }
 
     private fun submitPost(imageUrl: String?) {
-        val description = binding.editDesk.text.toString()
-        if (description.isBlank()) {
+        val deskripsi = binding.editDesk.text.toString()
+        if (deskripsi.isBlank()) {
             Toast.makeText(this, "Deskripsi tidak boleh kosong", Toast.LENGTH_SHORT).show()
             return
         }
 
-        val intent = Intent(this, EventActivity::class.java).apply {
-            putExtra("description", description)
-            putExtra("imageUrl", imageUrl)
+        val currentUser = auth.currentUser
+        if (currentUser == null) {
+            Toast.makeText(this, "User tidak terautentikasi", Toast.LENGTH_SHORT).show()
+            return
         }
-        startActivity(intent)
+
+        val postData= hashMapOf(
+            "deskripsi" to deskripsi,
+            "imageUrl" to imageUrl,
+            "userId" to currentUser.uid,
+            "timestamp" to System.currentTimeMillis()
+        )
+
+        firestore.collection("posts")
+            .add(postData)
+            .addOnSuccessListener { documentReference ->
+                val intent = Intent(this, EventActivity::class.java).apply {
+                    putExtra("deskripsi", deskripsi)
+                    putExtra("imageUrl", imageUrl)
+                }
+                startActivity(intent)
+            }
+            .addOnFailureListener { e ->
+                Log.e("UnggahActivity", "Error adding document", e)
+                Toast.makeText(this, "Gagal menyimpan postingan", Toast.LENGTH_SHORT).show()
+            }
     }
 }
