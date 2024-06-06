@@ -61,13 +61,13 @@
 
         <TextView
             android:id="@+id/descriptionTextView"
-            android:layout_width="271dp"
-            android:layout_height="37dp"
+            android:layout_width="282dp"
+            android:layout_height="0dp"
             android:layout_marginTop="8dp"
             android:text="Deskripsi event"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.714"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/nameTextView" />
 
@@ -84,5 +84,17 @@
             app:layout_constraintTop_toBottomOf="@id/descriptionTextView"
             app:layout_constraintWidth_percent="0.9"
             app:layout_constraintHeight_default="wrap" />
+
+        <!-- RecyclerView for displaying list of posts -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/eventImageView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

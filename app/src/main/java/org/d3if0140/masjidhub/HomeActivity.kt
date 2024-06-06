@@ -135,6 +135,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
             startActivity(intent)
         }
 
+        // Event button
+        binding.buttonEvent.setOnClickListener {
+            val intent = Intent(this, EventActivity::class.java)
+            startActivity(intent)
+        }
+
         // Display default profile image based on user's email
         displayDefaultProfileImage()
     }

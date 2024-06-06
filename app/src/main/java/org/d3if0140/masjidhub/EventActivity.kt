@@ -7,8 +7,8 @@ import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -18,6 +18,8 @@ class EventActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEventBinding
     private lateinit var mAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var postAdapter: PostAdapter
+    private val postList = mutableListOf<Post>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,20 +30,24 @@ class EventActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
-        // Dapatkan ID pengguna yang saat ini masuk
+        // Inisialisasi RecyclerView
+        postAdapter = PostAdapter(postList)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = postAdapter
+
         val currentUserId = mAuth.currentUser?.uid
 
         // Ambil data pengguna dari Firestore berdasarkan ID
-        if (currentUserId != null) {
-            firestore.collection("user")
-                .document(currentUserId)
+        currentUserId?.let {
+            firestore.collection("users")
+                .document(it)
                 .get()
                 .addOnSuccessListener { document ->
                     if (document != null && document.exists()) {
                         val userData = document.data
-                        if (userData != null) {
-                            val nama = userData["nama"] as? String
-                            val imageUrl = userData["imageUrl"] as? String
+                        userData?.let {
+                            val nama = it["nama"] as? String
+                            val imageUrl = it["imageUrl"] as? String
 
                             // Tampilkan nama pengguna jika tidak null
                             nama?.let { binding.nameTextView.text = it }
@@ -54,16 +60,20 @@ class EventActivity : AppCompatActivity() {
                 }
         }
 
-        val description = intent.getStringExtra("description")
-        val imageUrl = intent.getStringExtra("imageUrl")
-
-        binding.descriptionTextView.text = description
-        if (imageUrl != null) {
-            binding.eventImageView.visibility = View.VISIBLE
-            Glide.with(this).load(imageUrl).into(binding.eventImageView)
-        } else {
-            binding.eventImageView.visibility = View.GONE
-        }
+        // Ambil data postingan dari Firestore
+        firestore.collection("posts")
+            .orderBy("timestamp")
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val post = document.toObject(Post::class.java)
+                    postList.add(post)
+                }
+                postAdapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener { exception ->
+                exception.printStackTrace()
+            }
 
         binding.backButton.setOnClickListener {
             finish()
