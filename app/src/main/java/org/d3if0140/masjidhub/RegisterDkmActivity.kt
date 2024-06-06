@@ -18,6 +18,12 @@ class RegisterDkmActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+        //Menambahkan onClickListener pada button backButton untuk kembali ke WelcomeActivity
+        binding.backButton.setOnClickListener {
+            val intent = Intent(this, WelcomeActivity::class.java)
+            startActivity(intent)
+        }
+
         // Tambahkan OnClickListener pada hubungiAdminButton
         binding.hubungiAdminButton.setOnClickListener {
             // Nomor telepon tujuan (contoh: +6281234567890)
