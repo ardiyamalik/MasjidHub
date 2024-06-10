@@ -18,7 +18,7 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = postList[position]
         holder.descriptionTextView.text = post.deskripsi
-        holder.usernameTextView.text = post.userId
+        holder.usernameTextView.text = post.nama
         Glide.with(holder.itemView.context)
             .load(post.imageUrl)
             .placeholder(R.drawable.placeholder_image)
@@ -35,3 +35,4 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
         val usernameTextView: TextView = itemView.findViewById(R.id.usernameTextView)
     }
 }
+
