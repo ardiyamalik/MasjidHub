@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import org.d3if0140.masjidhub.databinding.ActivityEventBinding
 
 class EventActivity : AppCompatActivity() {
@@ -37,9 +38,9 @@ class EventActivity : AppCompatActivity() {
         // Ambil ID pengguna saat ini
         val currentUserId = mAuth.currentUser?.uid
 
-        // Ambil data postingan dari Firestore
+        // Ambil data postingan dari Firestore dengan urutan terbaru ke lama
         firestore.collection("posts")
-            .orderBy("timestamp")
+            .orderBy("timestamp", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
@@ -69,4 +70,3 @@ class EventActivity : AppCompatActivity() {
             }
     }
 }
-
