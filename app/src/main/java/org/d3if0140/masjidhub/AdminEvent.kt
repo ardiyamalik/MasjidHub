@@ -12,10 +12,10 @@ class AdminEvent : AppCompatActivity() {
         binding = ActivityAdminEventBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Menambahkan onClickListener pada button backButton untuk kembali ke AdminDashboard
-        binding.backButton.setOnClickListener {
-            val intent = Intent(this, AdminDashboard::class.java)
-            startActivity(intent)
-        }
+//        // Menambahkan onClickListener pada button backButton untuk kembali ke AdminDashboard
+//        binding.backButton.setOnClickListener {
+//            val intent = Intent(this, AdminDashboard::class.java)
+//            startActivity(intent)
+//        }
     }
 }

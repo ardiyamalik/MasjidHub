@@ -49,7 +49,7 @@
         android:id="@+id/content_frame"
         android:layout_width="414dp"
         android:layout_height="164dp"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_dkm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.695"
         app:layout_constraintStart_toStartOf="parent"

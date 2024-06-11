@@ -68,6 +68,11 @@ dependencies {
     implementation ("com.google.firebase:firebase-appcheck-debug:18.0.0")
     implementation ("com.google.firebase:firebase-appcheck-safetynet:16.1.2")
 
+    implementation ("com.google.android.material:material:1.4.0")
+
+
+
+
 
 
 
