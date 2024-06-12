@@ -3,7 +3,6 @@ package org.d3if0140.masjidhub
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,7 +11,8 @@ import com.bumptech.glide.Glide
 
 class DkmPostAdapter(
     private val postList: MutableList<Post>,
-    private val onEditCaption: (Post) -> Unit
+    private val onEditCaption: (Post) -> Unit,
+    private val onDelete: (Post) -> Unit
 ) : RecyclerView.Adapter<DkmPostAdapter.DkmPostViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DkmPostViewHolder {
@@ -38,6 +38,10 @@ class DkmPostAdapter(
         holder.editButton.setOnClickListener {
             onEditCaption(post)
         }
+
+        holder.deleteButton.setOnClickListener {
+            onDelete(post)
+        }
     }
 
     override fun getItemCount(): Int = postList.size
@@ -48,5 +52,6 @@ class DkmPostAdapter(
         val userProfileImageView: ImageView = itemView.findViewById(R.id.profileImageDkm)
         val usernameTextView: TextView = itemView.findViewById(R.id.usernameTextView)
         val editButton: ImageButton = itemView.findViewById(R.id.editButton)
+        val deleteButton: ImageView = itemView.findViewById(R.id.deleteButton)
     }
 }

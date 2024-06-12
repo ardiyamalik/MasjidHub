@@ -39,7 +39,7 @@ class ProfilDkmActivity : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
 
         // Setup RecyclerView
-        dkmPostAdapter = DkmPostAdapter(postList) { post -> showEditCaptionDialog(post) }
+        dkmPostAdapter = DkmPostAdapter(postList, { post -> showEditCaptionDialog(post) }, { post -> showDeleteConfirmationDialog(post) })
         binding.recyclerViewPost.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewPost.adapter = dkmPostAdapter
 
@@ -226,6 +226,37 @@ class ProfilDkmActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.e("updateCaption", "Failed to update caption for post ID: ${post.id}", exception)
                 Toast.makeText(this, "Gagal mengupdate caption: ${exception.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun showDeleteConfirmationDialog(post: Post) {
+        AlertDialog.Builder(this)
+            .setTitle("Hapus Postingan")
+            .setMessage("Apakah Anda yakin ingin menghapus postingan ini?")
+            .setPositiveButton("Hapus") { _, _ ->
+                deletePost(post)
+            }
+            .setNegativeButton("Batal", null)
+            .show()
+    }
+
+    private fun deletePost(post: Post) {
+        if (post.id.isNullOrEmpty()) {
+            Log.e("AdminEvent", "Post ID is null or empty")
+            Toast.makeText(this, "Invalid post ID", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        Log.d("AdminEvent", "Attempting to delete post with ID: ${post.id}")
+        firestore.collection("posts").document(post.id)
+            .delete()
+            .addOnSuccessListener {
+                postList.remove(post)
+                dkmPostAdapter.notifyDataSetChanged()
+                Toast.makeText(this, "Post deleted", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Failed to delete post", Toast.LENGTH_SHORT).show()
             }
     }
 }

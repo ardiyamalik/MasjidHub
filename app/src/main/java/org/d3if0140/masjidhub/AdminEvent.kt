@@ -1,9 +1,11 @@
 package org.d3if0140.masjidhub
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -32,7 +34,7 @@ class AdminEvent : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
 
         // Inisialisasi RecyclerView
-        adminPostAdapter = AdminPostAdapter(postList) { post -> deletePost(post) }
+        adminPostAdapter = AdminPostAdapter(postList) { post -> showDeleteConfirmationDialog(post) }
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adminPostAdapter
 
@@ -70,18 +72,35 @@ class AdminEvent : AppCompatActivity() {
             }
     }
 
+    private fun showDeleteConfirmationDialog(post: Post) {
+        AlertDialog.Builder(this)
+            .setTitle("Hapus Postingan")
+            .setMessage("Apakah Anda yakin ingin menghapus postingan ini?")
+            .setPositiveButton("Hapus") { _, _ ->
+                deletePost(post)
+            }
+            .setNegativeButton("Batal", null)
+            .show()
+    }
+
     private fun deletePost(post: Post) {
-        // Hapus dari Firestore menggunakan ID dokumen yang benar
+        if (post.id.isNullOrEmpty()) {
+            Log.e("AdminEvent", "Post ID is null or empty")
+            Toast.makeText(this, "Invalid post ID", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        Log.d("AdminEvent", "Attempting to delete post with ID: ${post.id}")
         firestore.collection("posts").document(post.id)
             .delete()
             .addOnSuccessListener {
-                // Hapus dari postList dan beri tahu adapter
                 postList.remove(post)
                 adminPostAdapter.notifyDataSetChanged()
+                Log.d("AdminEvent", "Post deleted successfully: ${post.id}")
                 Toast.makeText(this, "Post deleted", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { exception ->
-                Log.e("AdminEvent", "Error deleting post", exception)
+                Log.e("AdminEvent", "Error deleting post: ${post.id}", exception)
                 Toast.makeText(this, "Failed to delete post", Toast.LENGTH_SHORT).show()
             }
     }
