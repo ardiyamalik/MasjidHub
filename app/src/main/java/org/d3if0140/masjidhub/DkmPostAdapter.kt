@@ -1,5 +1,6 @@
 package org.d3if0140.masjidhub
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,15 @@ class DkmPostAdapter(
 
         holder.deleteButton.setOnClickListener {
             onDelete(post)
+        }
+
+        // Set click listener for post image
+        holder.postImageView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, FullScreenImageActivity::class.java).apply {
+                putExtra("IMAGE_URL", post.imageUrl)
+                putExtra("CAPTION", post.deskripsi)
+            }
+            holder.itemView.context.startActivity(intent)
         }
     }
 

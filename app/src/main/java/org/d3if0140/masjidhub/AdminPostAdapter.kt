@@ -1,9 +1,9 @@
 package org.d3if0140.masjidhub
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +15,7 @@ class AdminPostAdapter(
 ) : RecyclerView.Adapter<AdminPostAdapter.AdminPostViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdminPostViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_post_dkm, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_post_admin, parent, false)
         return AdminPostViewHolder(view)
     }
 
@@ -36,6 +36,15 @@ class AdminPostAdapter(
 
         holder.deleteButton.setOnClickListener {
             onDelete(post)
+        }
+
+        // Set click listener for post image
+        holder.postImageView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, FullScreenImageActivity::class.java).apply {
+                putExtra("IMAGE_URL", post.imageUrl)
+                putExtra("CAPTION", post.deskripsi)
+            }
+            holder.itemView.context.startActivity(intent)
         }
     }
 
