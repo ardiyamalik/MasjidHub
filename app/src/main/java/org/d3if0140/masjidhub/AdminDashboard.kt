@@ -33,7 +33,7 @@ class AdminDashboard : AppCompatActivity() {
             startActivity(Intent(this, AdminListMasjid::class.java))
         }
 
-        binding.buttonAgenda.setOnClickListener{
+        binding.buttonEvent.setOnClickListener{
             startActivity(Intent(this, AdminEvent::class.java))
         }
 

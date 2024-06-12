@@ -95,7 +95,7 @@
         android:textStyle="bold" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonAgenda"
+        android:id="@+id/buttonEvent"
         android:layout_width="149dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"

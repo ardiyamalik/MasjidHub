@@ -1,5 +1,6 @@
 package org.d3if0140.masjidhub
 data class Post(
+    var id: String = "",
     val userId: String = "",
     var nama: String = "",
     var userImageUrl: String = "",
