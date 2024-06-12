@@ -1,5 +1,6 @@
 package org.d3if0140.masjidhub
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,10 +20,27 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
         val post = postList[position]
         holder.descriptionTextView.text = post.deskripsi
         holder.usernameTextView.text = post.nama
+
+        // Load profile image
+        Glide.with(holder.itemView.context)
+            .load(post.userImageUrl)
+            .placeholder(R.drawable.placeholder_image)
+            .into(holder.userProfileImageView)
+
+        // Load post image
         Glide.with(holder.itemView.context)
             .load(post.imageUrl)
             .placeholder(R.drawable.placeholder_image)
             .into(holder.postImageView)
+
+        // Set click listener for post image
+        holder.postImageView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, FullScreenImageActivity::class.java).apply {
+                putExtra("IMAGE_URL", post.imageUrl)
+                putExtra("CAPTION", post.deskripsi)
+            }
+            holder.itemView.context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -32,7 +50,7 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
     class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val descriptionTextView: TextView = itemView.findViewById(R.id.descriptionTextView)
         val postImageView: ImageView = itemView.findViewById(R.id.postImageView)
+        val userProfileImageView: ImageView = itemView.findViewById(R.id.profileImageDkm)
         val usernameTextView: TextView = itemView.findViewById(R.id.usernameTextView)
     }
 }
-

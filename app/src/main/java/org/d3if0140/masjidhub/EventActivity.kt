@@ -2,8 +2,10 @@ package org.d3if0140.masjidhub
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -35,9 +37,6 @@ class EventActivity : AppCompatActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = postAdapter
 
-        // Ambil ID pengguna saat ini
-        val currentUserId = mAuth.currentUser?.uid
-
         // Ambil data postingan dari Firestore dengan urutan terbaru ke lama
         firestore.collection("posts")
             .orderBy("timestamp", Query.Direction.DESCENDING)
@@ -51,7 +50,7 @@ class EventActivity : AppCompatActivity() {
                         .addOnSuccessListener { userDocument ->
                             if (userDocument != null) {
                                 post.nama = userDocument.getString("nama") ?: ""
-                                post.userImageUrl = userDocument.getString("userImageUrl") ?: ""
+                                post.userImageUrl = userDocument.getString("imageUrl") ?: ""
                                 Log.d(
                                     "EventActivity",
                                     "User data: ${post.nama}, ${post.userImageUrl}"

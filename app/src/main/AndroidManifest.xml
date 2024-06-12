@@ -18,8 +18,11 @@
         android:theme="@style/Theme.MasjidHub"
         tools:targetApi="31">
         <activity
+            android:name=".FullScreenImageActivity"
+            android:exported="true" />
+        <activity
             android:name=".DkmKeuangan"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".AdminKeuangan"
             android:exported="true" />
