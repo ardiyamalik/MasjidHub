@@ -63,9 +63,6 @@
         app:layout_constraintTop_toBottomOf="@+id/namaUserDkm"
         app:layout_constraintVertical_bias="0.015" />
 
-
-    <!--        android:id="@+id/buttonLogout"-->
-
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
@@ -78,10 +75,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.578" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewPost"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_dkm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alamat_masjid" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ubahProfileDkm"
-        android:layout_width="375dp"
-        android:layout_height="52dp"
+        android:layout_width="73dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="332dp"
         android:background="@drawable/stroke_white"
         android:drawableLeft="@drawable/baseline_edit_off_24"
         android:drawablePadding="8dp"
@@ -91,17 +99,15 @@
         android:text="UBAH PROFIL"
         android:textColor="@color/blue"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_dkm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.692" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonLogoutDkm"
-        android:layout_width="375dp"
-        android:layout_height="52dp"
+        android:layout_width="72dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="330dp"
         android:background="@drawable/stroke_white"
         android:drawableLeft="@drawable/baseline_logout_blue"
         android:drawablePadding="8dp"
@@ -111,12 +117,8 @@
         android:text="@string/logout"
         android:textColor="@color/blue"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_dkm"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.801" />
-
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,7 @@ data class Post(
     val userId: String = "",
     var nama: String = "",
     var userImageUrl: String = "",
-    val deskripsi: String = "",
+    var deskripsi: String = "",
     val imageUrl: String = "",
     val timestamp: Long = 0L
 )
