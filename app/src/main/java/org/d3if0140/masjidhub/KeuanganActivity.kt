@@ -3,8 +3,6 @@ package org.d3if0140.masjidhub
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import org.d3if0140.masjidhub.databinding.ActivityCariMasjidBinding
-import org.d3if0140.masjidhub.databinding.ActivityHomeBinding
 import org.d3if0140.masjidhub.databinding.ActivityKeuanganBinding
 
 class KeuanganActivity : AppCompatActivity() {

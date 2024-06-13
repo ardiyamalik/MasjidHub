@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InfaqActivity">
+
+    <EditText
+        android:id="@+id/editTextJumlahInfaq"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Jumlah Infaq"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:inputType="numberDecimal" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupMetode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/editTextJumlahInfaq"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <RadioButton
+            android:id="@+id/radioButtonBankTransfer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bank Transfer" />
+
+        <RadioButton
+            android:id="@+id/radioButtonQR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="QR" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textViewRekening"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bank: BCA, No. Rek: 1234567890, a.n Masjid"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupMetode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageViewQR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/qris"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupMetode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageViewBuktiPembayaran"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Bukti Pembayaran"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRekening"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/buttonPilihFoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pilih Foto Bukti Pembayaran"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewBuktiPembayaran"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/buttonBayar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bayar"
+        app:layout_constraintTop_toBottomOf="@+id/buttonPilihFoto"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -141,6 +141,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
             startActivity(intent)
         }
 
+        // infaq button
+        binding.buttonInfaq.setOnClickListener{
+            val intent = Intent(this, InfaqActivity::class.java)
+            startActivity(intent)
+        }
+
         // Display default profile image based on user's email
         displayDefaultProfileImage()
     }
