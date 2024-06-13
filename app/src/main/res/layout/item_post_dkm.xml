@@ -64,21 +64,29 @@
                 android:textSize="14sp"
                 android:layout_marginTop="10dp"/>
 
-            <ImageButton
-                android:id="@+id/editButton"
-                android:layout_width="wrap_content"
+            <!-- LinearLayout for edit and delete buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:src="@drawable/baseline_edit"
-                android:contentDescription="Edit Caption" />
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="end">
 
-            <ImageView
-                android:id="@+id/deleteButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
-                android:layout_gravity="left"
-                app:srcCompat="@drawable/baseline_delete_24" />
+                <ImageButton
+                    android:id="@+id/editButton"
+                    android:layout_width="33dp"
+                    android:layout_height="30dp"
+                    android:contentDescription="Edit Caption"
+                    android:src="@drawable/baseline_edit" />
+
+                <ImageView
+                    android:id="@+id/deleteButton"
+                    android:layout_width="33dp"
+                    android:layout_height="30dp"
+                    android:contentDescription="Delete"
+                    android:layout_marginStart="10dp"
+                    app:srcCompat="@drawable/baseline_delete_24" />
+            </LinearLayout>
 
         </LinearLayout>
 
