@@ -3,21 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@color/white"
     android:padding="16dp">
 
     <EditText
         android:id="@+id/captionEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Edit Caption"
-        android:inputType="textMultiLine"
+        android:background="@drawable/edittext_border"
         android:gravity="start|top"
-        android:padding="10dp"
+        android:hint="Ubah Deskripsi"
+        android:inputType="textMultiLine"
         android:minHeight="100dp"
-        android:background="@android:color/white"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+        android:padding="10dp"
         android:paddingStart="12dp"
+        android:paddingTop="8dp"
         android:paddingEnd="12dp"
+        android:paddingBottom="8dp"
         android:textSize="16sp" />
+
 </LinearLayout>
