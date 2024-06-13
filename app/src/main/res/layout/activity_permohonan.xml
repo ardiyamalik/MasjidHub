@@ -74,26 +74,26 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/namaInputLayout"
-            android:layout_width="380dp"
-            android:layout_height="53dp"
-            android:layout_marginTop="64dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.516"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/namaInputLayout"
+                android:layout_width="380dp"
+                android:layout_height="53dp"
+                android:layout_marginTop="64dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.516"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/namaEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/stroke_white"
-                android:fontFamily="@font/poppins_light"
-                android:hint="@string/nama"
-                android:inputType="text"
-                android:padding="12dp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/namaEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/stroke_white"
+                    android:fontFamily="@font/poppins_light"
+                    android:hint="@string/nama"
+                    android:inputType="text"
+                    android:padding="12dp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/masjidInput"
