@@ -36,6 +36,26 @@
         android:textStyle="bold" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonInfaqAdmin"
+        android:layout_width="149dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="46dp"
+        android:layout_marginEnd="216dp"
+        android:layout_marginBottom="270dp"
+        android:background="@drawable/stroke_white"
+
+        android:drawablePadding="8dp"
+        android:fontFamily="@font/poppins_bold"
+        android:paddingStart="10sp"
+        android:text="Infaq"
+        android:textColor="@color/blue"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonMasjid"
         android:layout_width="149dp"
         android:layout_height="wrap_content"

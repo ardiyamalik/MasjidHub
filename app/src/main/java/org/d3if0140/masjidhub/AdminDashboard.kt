@@ -44,5 +44,9 @@ class AdminDashboard : AppCompatActivity() {
         binding.buttonAjuan.setOnClickListener{
             startActivity(Intent(this, AdminIsiPermohonan::class.java))
         }
+
+        binding.buttonInfaqAdmin.setOnClickListener{
+            startActivity(Intent(this, AdminInfaqActivity::class.java))
+        }
     }
 }

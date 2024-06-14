@@ -3,10 +3,10 @@ package org.d3if0140.masjidhub
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.databinding.ActivityInfaqBinding
 
@@ -14,6 +14,7 @@ class InfaqActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityInfaqBinding
     private val db = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
     private val getImageFromGallery = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
@@ -27,7 +28,6 @@ class InfaqActivity : AppCompatActivity() {
         binding = ActivityInfaqBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Menambahkan listener untuk RadioGroup
         binding.radioGroupMetode.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.radioButtonBankTransfer -> {
@@ -54,10 +54,17 @@ class InfaqActivity : AppCompatActivity() {
             }
 
             if (jumlahInfaq != null && metodePembayaran != null) {
+                val currentUser = auth.currentUser
+                val userId = currentUser?.uid ?: ""
+                val userEmail = currentUser?.email ?: "Unknown"
+
                 val infaqData = hashMapOf(
+                    "userId" to userId,
+                    "userEmail" to userEmail,
                     "jumlahInfaq" to jumlahInfaq,
                     "metodePembayaran" to metodePembayaran,
-                    "buktiPembayaran" to binding.imageViewBuktiPembayaran.drawable.toString()
+                    "buktiPembayaran" to binding.imageViewBuktiPembayaran.drawable.toString(),
+                    "status" to "pending"
                 )
 
                 db.collection("infaq_masjid")
