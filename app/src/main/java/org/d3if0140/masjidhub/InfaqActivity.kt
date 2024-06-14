@@ -3,6 +3,7 @@ package org.d3if0140.masjidhub
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -26,11 +27,8 @@ class InfaqActivity : AppCompatActivity() {
         binding = ActivityInfaqBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.buttonPilihFoto.setOnClickListener {
-            getImageFromGallery.launch("image/*")
-        }
-
-        binding.radioGroupMetode.setOnCheckedChangeListener { _, checkedId ->
+        // Menambahkan listener untuk RadioGroup
+        binding.radioGroupMetode.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.radioButtonBankTransfer -> {
                     binding.textViewRekening.visibility = android.view.View.VISIBLE
@@ -41,6 +39,10 @@ class InfaqActivity : AppCompatActivity() {
                     binding.imageViewQR.visibility = android.view.View.VISIBLE
                 }
             }
+        }
+
+        binding.buttonPilihFoto.setOnClickListener {
+            getImageFromGallery.launch("image/*")
         }
 
         binding.buttonBayar.setOnClickListener {
@@ -61,6 +63,7 @@ class InfaqActivity : AppCompatActivity() {
                 db.collection("infaq_masjid")
                     .add(infaqData)
                     .addOnSuccessListener {
+                        saveNotificationToFirestore(jumlahInfaq)
                         Toast.makeText(this, "Infaq berhasil disimpan!", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, KeuanganActivity::class.java)
                         startActivity(intent)
@@ -72,5 +75,23 @@ class InfaqActivity : AppCompatActivity() {
                 Toast.makeText(this, "Harap lengkapi form pembayaran", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun saveNotificationToFirestore(jumlahInfaq: Double) {
+        val notificationData = hashMapOf(
+            "title" to "Infaq sedang diproses",
+            "message" to "Infaq sebesar Rp $jumlahInfaq sedang diproses oleh aplikasi.",
+            "timestamp" to System.currentTimeMillis()
+        )
+
+        db.collection("notifikasi")
+            .add(notificationData)
+            .addOnSuccessListener {
+                // Notifikasi berhasil disimpan
+            }
+            .addOnFailureListener { e ->
+                // Gagal menyimpan notifikasi
+                e.printStackTrace()
+            }
     }
 }

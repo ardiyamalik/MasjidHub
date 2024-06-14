@@ -147,6 +147,12 @@ class HomeActivity : AppCompatActivity(), OnMapReadyCallback {
             startActivity(intent)
         }
 
+        // Notification Button
+        binding.buttonNotif.setOnClickListener{
+            val intent = Intent(this, NotificationActivity::class.java)
+            startActivity(intent)
+        }
+
         // Display default profile image based on user's email
         displayDefaultProfileImage()
     }
