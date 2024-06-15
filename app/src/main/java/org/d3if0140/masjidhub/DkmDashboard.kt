@@ -140,6 +140,18 @@ class DkmDashboard : AppCompatActivity(), OnMapReadyCallback {
             startActivity(intent)
         }
 
+        // Pengajuan Dana Button
+        binding.buttonPengajuan.setOnClickListener {
+            val intent = Intent(this, PengajuanDanaActivity::class.java)
+            startActivity(intent)
+        }
+
+        //Button Notif
+        binding.buttonNotif.setOnClickListener {
+            val intent = Intent(this, NotificationDkmActivity::class.java)
+            startActivity(intent)
+        }
+
         // Display default profile image based on user's email
         displayDefaultProfileImage()
     }

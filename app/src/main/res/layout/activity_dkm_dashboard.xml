@@ -144,7 +144,7 @@
             tools:viewBindingIgnore="true" />
 
         <LinearLayout
-            android:id="@+id/buttonInfaq"
+            android:id="@+id/buttonPengajuan"
             android:layout_width="141dp"
             android:layout_height="131dp"
             android:background="@drawable/stroke_white"
@@ -167,7 +167,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
-                android:text="@string/infaq"
+                android:text="ajukan uang"
                 android:textColor="@color/blue"
                 android:textStyle="bold" />
 
@@ -204,6 +204,16 @@
 
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonNotif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/buttonEvent"
+            app:layout_constraintTop_toBottomOf="@+id/map" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -42,7 +42,7 @@ class AdminDashboard : AppCompatActivity() {
         }
 
         binding.buttonAjuan.setOnClickListener{
-            startActivity(Intent(this, AdminIsiPermohonan::class.java))
+            startActivity(Intent(this, AdminPermohonan::class.java))
         }
 
         binding.buttonInfaqAdmin.setOnClickListener{
