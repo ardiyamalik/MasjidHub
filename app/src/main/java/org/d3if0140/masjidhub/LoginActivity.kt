@@ -6,6 +6,7 @@ import android.text.InputType
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -72,6 +73,7 @@ class LoginActivity : AppCompatActivity() {
         binding.loginButton.setOnClickListener {
             val email = binding.namaEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
+            Log.d("LoginActivity", "Attempting to log in with email: $email")
             loginUser(email, password)
         }
     }
@@ -82,16 +84,18 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val user = mAuth.currentUser
                     if (user != null) {
+                        Log.d("LoginActivity", "Login successful for user: ${user.uid}")
                         checkUserRole(user.uid)
                     }
                 } else {
-                    Toast.makeText(this, "Login gagal, silakan coba lagi", Toast.LENGTH_SHORT)
-                        .show()
+                    Log.e("LoginActivity", "Login failed: ${task.exception?.message}")
+                    Toast.makeText(this, "Login gagal, silakan coba lagi", Toast.LENGTH_SHORT).show()
                 }
             }
     }
 
     private fun checkUserRole(userId: String) {
+        Log.d("LoginActivity", "Checking role for user: $userId")
         firestore.collection("user")
             .document(userId)
             .get()
@@ -100,7 +104,15 @@ class LoginActivity : AppCompatActivity() {
                     val userData = document.data
                     if (userData != null) {
                         val role = userData["role"] as? String
-                        if (role != null) {
+                        val verified = userData["verified"] as? Boolean
+
+                        Log.d("LoginActivity", "User role: $role, Verified: $verified")
+
+                        if (role == "pengurus_dkm" && verified == false) {
+                            // Akun pengurus_dkm yang belum diverifikasi
+                            Toast.makeText(this, "Akun Anda belum diverifikasi oleh admin", Toast.LENGTH_SHORT).show()
+                        } else {
+                            // Akun telah diverifikasi atau bukan pengurus_dkm, arahkan sesuai role
                             when (role) {
                                 "admin" -> {
                                     val intent = Intent(this, AdminDashboard::class.java)
@@ -116,16 +128,18 @@ class LoginActivity : AppCompatActivity() {
                                 }
                             }
                             finish()
-                            return@addOnSuccessListener // Keluar dari fungsi setelah mengarahkan pengguna
                         }
                     }
+                } else {
+                    // Jika tidak ada data pengguna atau dokumen tidak ada, arahkan ke WelcomeActivity
+                    Log.d("LoginActivity", "No user data found, redirecting to WelcomeActivity")
+                    val intent = Intent(this, WelcomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 }
-                // Jika tidak ada role atau ada kesalahan lain, arahkan ke halaman default (biasanya HomeActivity)
-                val intent = Intent(this, WelcomeActivity::class.java)
-                startActivity(intent)
-                finish()
             }
             .addOnFailureListener { exception ->
+                Log.e("LoginActivity", "Failed to check user role: ${exception.message}")
                 Toast.makeText(
                     this,
                     "Gagal memeriksa peran pengguna: ${exception.message}",
@@ -137,4 +151,5 @@ class LoginActivity : AppCompatActivity() {
                 finish()
             }
     }
+
 }

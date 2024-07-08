@@ -2,17 +2,17 @@ package org.d3if0140.masjidhub
 
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
+import org.d3if0140.masjidhub.databinding.ActivityAdminVerifBinding
 
 class AdminVerifActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityAdminVerifBinding
     private lateinit var firestore: FirebaseFirestore
-    private lateinit var masjidListView: ListView
     private lateinit var masjidListAdapter: ArrayAdapter<String>
     private val masjidList = mutableListOf<String>()
     private val masjidIdList = mutableListOf<String>()
@@ -20,18 +20,16 @@ class AdminVerifActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_admin_verif)
+        binding = ActivityAdminVerifBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         firestore = FirebaseFirestore.getInstance()
-        masjidListView = findViewById(R.id.masjidListView)
-
         masjidListAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, masjidList)
-        masjidListView.adapter = masjidListAdapter
+        binding.masjidListView.adapter = masjidListAdapter
 
         fetchMasjidData()
 
-        masjidListView.setOnItemClickListener { _, _, position, _ ->
-            val masjidId = masjidIdList[position]
+        binding.masjidListView.setOnItemClickListener { _, _, position, _ ->
             val masjidData = masjidDataList[position]
             showVerificationDialog(masjidData)
         }
@@ -45,7 +43,8 @@ class AdminVerifActivity : AppCompatActivity() {
                 handleMasjidData(result)
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Gagal mengambil data: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Gagal mengambil data: ${e.message}", Toast.LENGTH_SHORT)
+                    .show()
             }
     }
 
@@ -54,16 +53,18 @@ class AdminVerifActivity : AppCompatActivity() {
         masjidIdList.clear()
         masjidDataList.clear()
         for (document in result) {
-            val namaMasjid = document.getString("namaMasjid") ?: "Tidak diketahui"
+            val masjidId = document.id
+            val masjidData = document.data
+            val namaMasjid = masjidData["nama"] as? String ?: "Tidak diketahui"
             masjidList.add(namaMasjid)
-            masjidIdList.add(document.id)
-            masjidDataList.add(document.data)
+            masjidIdList.add(masjidId)
+            masjidDataList.add(masjidData)
         }
         masjidListAdapter.notifyDataSetChanged()
     }
 
     private fun showVerificationDialog(masjidData: Map<String, Any?>) {
-        val masjidName = masjidData["namaMasjid"] as? String ?: "Tidak diketahui"
+        val masjidName = masjidData["nama"] as? String ?: "Tidak diketahui"
         val alamat = masjidData["alamat"] as? String ?: "Alamat tidak tersedia"
         val kodePos = masjidData["kodePos"] as? String ?: "Kode Pos tidak tersedia"
         val teleponMasjid = masjidData["teleponMasjid"] as? String ?: "Telepon tidak tersedia"
@@ -72,7 +73,7 @@ class AdminVerifActivity : AppCompatActivity() {
         val email = masjidData["email"] as? String ?: "Email tidak tersedia"
 
         val message = """
-        Nama Masjid: $masjidName
+        Nama : $masjidName
         Alamat: $alamat
         Kode Pos: $kodePos
         Telepon Masjid: $teleponMasjid
@@ -81,31 +82,54 @@ class AdminVerifActivity : AppCompatActivity() {
         Email: $email
         
         Apakah Anda yakin ingin memverifikasi masjid ini?
+        
+        Informasi Pengurus DKM:
+        Nama: ${masjidData["namaKetua"]}
+        Alamat: ${masjidData["alamat"]}
+        Telepon: ${masjidData["teleponKetua"]}
     """.trimIndent()
 
         AlertDialog.Builder(this)
             .setTitle("Verifikasi Masjid")
             .setMessage(message)
             .setPositiveButton("Verifikasi") { _, _ ->
-                val masjidId = masjidData["id"] as? String ?: ""
-                verifyMasjid(masjidId)
+                val namaMasjid = masjidData["namaMasjid"] as? String ?: ""
+                verifyMasjid(namaMasjid)
             }
             .setNegativeButton("Batal", null)
             .show()
     }
 
-
-    private fun verifyMasjid(masjidId: String) {
+    private fun verifyMasjid(namaMasjid: String) {
         firestore.collection("user")
-            .document(masjidId)
-            .update("verified", true)
-            .addOnSuccessListener {
-                Toast.makeText(this, "Masjid berhasil diverifikasi", Toast.LENGTH_SHORT).show()
-                fetchMasjidData()
+            .whereEqualTo("nama", namaMasjid)
+            .get()
+            .addOnSuccessListener { result ->
+                if (!result.isEmpty) {
+                    val doc = result.documents.first()
+                    val masjidId = doc.id
+                    firestore.collection("user")
+                        .document(masjidId)
+                        .update("verified", true)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "Masjid berhasil diverifikasi", Toast.LENGTH_SHORT)
+                                .show()
+                            fetchMasjidData() // Ambil ulang data setelah berhasil diverifikasi
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(
+                                this,
+                                "Gagal memverifikasi masjid: ${e.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                } else {
+                    Toast.makeText(this, "Masjid tidak ditemukan", Toast.LENGTH_SHORT).show()
+                }
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Gagal memverifikasi masjid: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Gagal mencari masjid: ${e.message}", Toast.LENGTH_SHORT)
+                    .show()
             }
     }
 }
-
