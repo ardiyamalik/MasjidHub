@@ -1,95 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".RegisterDkmActivity">
+    android:background="@color/white">
 
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="405dp"
-        android:layout_height="256dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.39"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/masjidhub_long" />
-
-    <ImageButton
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@null"
-        android:padding="12dp"
-        android:src="@drawable/baseline_arrow_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:context=".RegisterDkmActivity">
 
-    <ImageView
-        android:id="@+id/imageView47"
-        android:layout_width="297dp"
-        android:layout_height="282dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.367"
-        app:srcCompat="@drawable/admin" />
+        <!-- Nama Masjid -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/namaMasjidInputLayout"
+            android:layout_width="380dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/hubungiAdminButton"
-        android:layout_width="380dp"
-        android:layout_height="53dp"
-        android:background="@drawable/rounded_button_background"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/hubungi_admin"
-        android:textAllCaps="false"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.768" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/namaMasjidEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/stroke_white"
+                android:fontFamily="@font/poppins_light"
+                android:hint="Nama Masjid"
+                android:inputType="text"
+                android:padding="12dp" />
 
-    <TextView
-        android:id="@+id/textxt"
-        android:layout_width="410dp"
-        android:layout_height="53dp"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/hubungi_admin"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.659" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <TextView
-        android:id="@+id/slogan"
-        android:layout_width="362dp"
-        android:layout_height="32dp"
-        android:fontFamily="@font/poppins_light"
-        android:text="@string/subhead"
-        android:textAlignment="center"
-        android:textColor="@color/grey"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.673" />
+        <!-- Alamat Masjid -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/alamatInputLayout"
+            android:layout_width="380dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/namaMasjidInputLayout">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/alamatEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/stroke_white"
+                android:fontFamily="@font/poppins_light"
+                android:hint="Alamat"
+                android:inputType="textPostalAddress"
+                android:padding="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Kode Pos -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/kodePosInputLayout"
+            android:layout_width="380dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/alamatInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/kodePosEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/stroke_white"
+                android:fontFamily="@font/poppins_light"
+                android:hint="Kode Pos"
+                android:inputType="number"
+                android:padding="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Nomor Telepon Masjid -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/teleponMasjidInputLayout"
+            android:layout_width="380dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/kodePosInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/teleponMasjidEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/stroke_white"
+                android:fontFamily="@font/poppins_light"
+                android:hint="Nomor Telepon"
+                android:inputType="phone"
+                android:padding="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Nama Ketua/Pengurus -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/namaKetuaInputLayout"
+            android:layout_width="380dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/teleponMasjidInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/namaKetuaEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/stroke_white"
+                android:fontFamily="@font/poppins_light"
+                android:hint="Nama Ketua/Pengurus"
+                android:inputType="text"
+                android:padding="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Nomor Telepon Ketua/Pengurus -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/teleponKetuaInputLayout"
+            android:layout_width="380dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/namaKetuaInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/teleponKetuaEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/stroke_white"
+                android:fontFamily="@font/poppins_light"
+                android:hint="Nomor Telepon Ketua/Pengurus"
+                android:inputType="phone"
+                android:padding="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Email Ketua/Pengurus -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailKetuaInputLayout"
+            android:layout_width="380dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/teleponKetuaInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/stroke_white"
+                android:fontFamily="@font/poppins_light"
+                android:hint="Email untuk di daftarkan"
+                android:inputType="textEmailAddress"
+                android:padding="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Password -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordInputLayout"
+            android:layout_width="380dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailKetuaInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/stroke_white"
+                android:fontFamily="@font/poppins_light"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Register Button -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/registButton"
+            android:layout_width="380dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="36dp"
+            android:background="@drawable/rounded_button_background"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Register"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordInputLayout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
