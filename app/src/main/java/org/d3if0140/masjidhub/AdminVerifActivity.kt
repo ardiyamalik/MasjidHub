@@ -2,9 +2,14 @@ package org.d3if0140.masjidhub
 
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.ScrollView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import org.d3if0140.masjidhub.databinding.ActivityAdminVerifBinding
@@ -43,8 +48,7 @@ class AdminVerifActivity : AppCompatActivity() {
                 handleMasjidData(result)
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Gagal mengambil data: ${e.message}", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this, "Gagal mengambil data: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -71,29 +75,60 @@ class AdminVerifActivity : AppCompatActivity() {
         val namaKetua = masjidData["namaKetua"] as? String ?: "Nama Ketua tidak tersedia"
         val teleponKetua = masjidData["teleponKetua"] as? String ?: "Telepon Ketua tidak tersedia"
         val email = masjidData["email"] as? String ?: "Email tidak tersedia"
+        val ktpUrl = masjidData["ktpKetuaUrl"] as? String ?: ""
 
         val message = """
-        Nama : $masjidName
-        Alamat: $alamat
-        Kode Pos: $kodePos
-        Telepon Masjid: $teleponMasjid
-        Nama Ketua: $namaKetua
-        Telepon Ketua: $teleponKetua
-        Email: $email
-        
-        Apakah Anda yakin ingin memverifikasi masjid ini?
-        
-        Informasi Pengurus DKM:
-        Nama: ${masjidData["namaKetua"]}
-        Alamat: ${masjidData["alamat"]}
-        Telepon: ${masjidData["teleponKetua"]}
-    """.trimIndent()
+            Nama : $masjidName
+            Alamat: $alamat
+            Kode Pos: $kodePos
+            Telepon Masjid: $teleponMasjid
+            Nama Ketua: $namaKetua
+            Telepon Ketua: $teleponKetua
+            Email: $email
+            
+            Apakah Anda yakin ingin memverifikasi masjid ini?
+            
+            Informasi Pengurus DKM:
+            Nama: ${masjidData["namaKetua"]}
+            Alamat: ${masjidData["alamat"]}
+            Telepon: ${masjidData["teleponKetua"]}
+        """.trimIndent()
+
+        val dialogView = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(32, 32, 32, 32)
+
+            // Add a ScrollView to contain the message TextView
+            val scrollView = ScrollView(context).apply {
+                addView(TextView(context).apply {
+                    text = message
+                    setPadding(0, 0, 0, 16)
+                })
+            }
+            addView(scrollView)
+
+            // Add an ImageView to display the KTP image
+            val imageView = ImageView(context).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    400
+                ).apply {
+                    setMargins(0, 16, 0, 16)
+                }
+                if (ktpUrl.isNotEmpty()) {
+                    Glide.with(context)
+                        .load(ktpUrl)
+                        .into(this)
+                }
+            }
+            addView(imageView)
+        }
 
         AlertDialog.Builder(this)
             .setTitle("Verifikasi Masjid")
-            .setMessage(message)
+            .setView(dialogView)
             .setPositiveButton("Verifikasi") { _, _ ->
-                val namaMasjid = masjidData["namaMasjid"] as? String ?: ""
+                val namaMasjid = masjidData["nama"] as? String ?: ""
                 verifyMasjid(namaMasjid)
             }
             .setNegativeButton("Batal", null)
@@ -128,8 +163,7 @@ class AdminVerifActivity : AppCompatActivity() {
                 }
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Gagal mencari masjid: ${e.message}", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this, "Gagal mencari masjid: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 }

@@ -224,28 +224,50 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/stroke_white"
                 android:fontFamily="@font/poppins_light"
-                android:hint="Password"
+                android:hint="Password untuk di daftarkan"
                 android:inputType="textPassword"
                 android:padding="12dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Register Button -->
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/registButton"
+        <!-- Tombol Upload KTP -->
+        <Button
+            android:id="@+id/uploadKtpButton"
             android:layout_width="380dp"
-            android:layout_height="53dp"
-            android:layout_marginTop="36dp"
-            android:layout_marginBottom="36dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:background="@drawable/rounded_button_background"
-            android:fontFamily="@font/poppins_bold"
-            android:text="Daftar"
-            android:textAllCaps="false"
+            android:text="Unggah KTP Ketua DKM"
             android:textColor="@color/white"
+            android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordInputLayout" />
+
+        <!-- Kotak untuk menampilkan foto KTP yang dipilih -->
+        <ImageView
+            android:id="@+id/ktpImageView"
+            android:layout_width="380dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="20dp"
+            android:contentDescription="Foto KTP Ketua DKM"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/uploadKtpButton" />
+
+        <!-- Tombol Register -->
+        <Button
+            android:id="@+id/registButton"
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/rounded_button_background"
+            android:text="Daftar"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ktpImageView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

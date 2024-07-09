@@ -1,33 +1,61 @@
 package org.d3if0140.masjidhub
 
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import org.d3if0140.masjidhub.databinding.ActivityRegistDkmBinding
 
 class RegisterDkmActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegistDkmBinding
     private lateinit var firestore: FirebaseFirestore
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var storage: FirebaseStorage
+    private var ktpUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegistDkmBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Inisialisasi Firestore dan Firebase Authentication
+        // Inisialisasi Firestore, Firebase Authentication, dan Firebase Storage
         firestore = FirebaseFirestore.getInstance()
         mAuth = FirebaseAuth.getInstance()
-        Log.d("RegisterDkmActivity", "Firestore and FirebaseAuth initialized")
+        storage = FirebaseStorage.getInstance()
+        Log.d("RegisterDkmActivity", "Firestore, FirebaseAuth, and FirebaseStorage initialized")
 
         // Set onClickListener untuk tombol register
         binding.registButton.setOnClickListener {
             Log.d("RegisterDkmActivity", "Register button clicked")
             registerMasjid()
+        }
+
+        // Set onClickListener untuk tombol upload KTP
+        binding.uploadKtpButton.setOnClickListener {
+            selectKtpImage()
+        }
+    }
+
+    private fun selectKtpImage() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, 1000)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1000 && resultCode == Activity.RESULT_OK) {
+            ktpUri = data?.data
+            binding.ktpImageView.setImageURI(ktpUri)
+            Toast.makeText(this, "Foto KTP berhasil dipilih", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -51,6 +79,12 @@ class RegisterDkmActivity : AppCompatActivity() {
             return
         }
 
+        if (ktpUri == null) {
+            Log.w("RegisterDkmActivity", "Validation failed: KTP image not selected")
+            Toast.makeText(this, "Harap unggah foto KTP Ketua DKM", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         // Register ke Firebase Authentication
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { authTask ->
@@ -59,42 +93,58 @@ class RegisterDkmActivity : AppCompatActivity() {
                     if (user != null) {
                         val uid = user.uid
 
-                        // Buat data masjid
-                        val masjidData = hashMapOf(
-                            "nama" to nama,
-                            "alamat" to alamat,
-                            "kodePos" to kodePos,
-                            "teleponMasjid" to teleponMasjid,
-                            "namaKetua" to namaKetua,
-                            "teleponKetua" to teleponKetua,
-                            "email" to email,
-                            "role" to "pengurus_dkm",
-                            "verified" to false  // Awalnya belum terverifikasi
-                        )
-
-                        Log.d("RegisterDkmActivity", "Data prepared for Firestore: $masjidData")
-
-                        // Simpan data ke Firestore dengan UID sebagai ID dokumen
-                        firestore.collection("user")
-                            .document(uid)
-                            .set(masjidData)
+                        // Upload KTP to Firebase Storage
+                        val ktpRef = storage.reference.child("ktp_ketua_dkm/$uid.jpg")
+                        ktpRef.putFile(ktpUri!!)
                             .addOnSuccessListener {
-                                Log.i("RegisterDkmActivity", "Registration successful")
-                                Toast.makeText(
-                                    this,
-                                    "Registrasi berhasil, menunggu verifikasi admin",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                ktpRef.downloadUrl.addOnSuccessListener { uri ->
+                                    // Buat data masjid dengan URL KTP
+                                    val masjidData = hashMapOf(
+                                        "nama" to nama,
+                                        "alamat" to alamat,
+                                        "kodePos" to kodePos,
+                                        "teleponMasjid" to teleponMasjid,
+                                        "namaKetua" to namaKetua,
+                                        "teleponKetua" to teleponKetua,
+                                        "email" to email,
+                                        "role" to "pengurus_dkm",
+                                        "verified" to false,  // Awalnya belum terverifikasi
+                                        "ktpKetuaUrl" to uri.toString()
+                                    )
+
+                                    Log.d("RegisterDkmActivity", "Data prepared for Firestore: $masjidData")
+
+                                    // Simpan data ke Firestore dengan UID sebagai ID dokumen
+                                    firestore.collection("user")
+                                        .document(uid)
+                                        .set(masjidData)
+                                        .addOnSuccessListener {
+                                            Log.i("RegisterDkmActivity", "Registration successful")
+                                            Toast.makeText(
+                                                this,
+                                                "Registrasi berhasil, menunggu verifikasi admin",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                        .addOnFailureListener { e ->
+                                            Log.e(
+                                                "RegisterDkmActivity",
+                                                "Failed to save user data to Firestore",
+                                                e
+                                            )
+                                            Toast.makeText(
+                                                this,
+                                                "Registrasi gagal: ${e.message}",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                }
                             }
                             .addOnFailureListener { e ->
-                                Log.e(
-                                    "RegisterDkmActivity",
-                                    "Failed to save user data to Firestore",
-                                    e
-                                )
+                                Log.e("RegisterDkmActivity", "Failed to upload KTP image", e)
                                 Toast.makeText(
                                     this,
-                                    "Registrasi gagal: ${e.message}",
+                                    "Gagal mengunggah foto KTP: ${e.message}",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
@@ -117,6 +167,4 @@ class RegisterDkmActivity : AppCompatActivity() {
                 }
             }
     }
-
-
 }
