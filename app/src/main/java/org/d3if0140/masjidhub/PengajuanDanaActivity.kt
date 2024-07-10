@@ -19,17 +19,29 @@ class PengajuanDanaActivity : AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
     private val storage = FirebaseStorage.getInstance()
-    private var imageUri: Uri? = null
+    private var ktpUri: Uri? = null
+    private var buktiUri: Uri? = null
     private val TAG = "PengajuanDanaActivity"
 
-    private val getImageFromGallery = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+    private val getKtpFromGallery = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
             binding.imageViewKTP.setImageURI(it)
             binding.imageViewKTP.visibility = android.view.View.VISIBLE
-            imageUri = it
-            Log.d(TAG, "Image selected: $imageUri")
+            ktpUri = it
+            Log.d(TAG, "KTP Image selected: $ktpUri")
         } ?: run {
-            Log.d(TAG, "Image selection failed or canceled")
+            Log.d(TAG, "KTP Image selection failed or canceled")
+        }
+    }
+
+    private val getBuktiFromGallery = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            binding.imageViewFotoPendukung.setImageURI(it)
+            binding.imageViewFotoPendukung.visibility = android.view.View.VISIBLE
+            buktiUri = it
+            Log.d(TAG, "Bukti Image selected: $buktiUri")
+        } ?: run {
+            Log.d(TAG, "Bukti Image selection failed or canceled")
         }
     }
 
@@ -39,8 +51,13 @@ class PengajuanDanaActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.buttonUploadKTP.setOnClickListener {
-            getImageFromGallery.launch("image/*")
+            getKtpFromGallery.launch("image/*")
             Log.d(TAG, "Button 'Upload KTP' clicked")
+        }
+
+        binding.buttonUploadFotoPendukung.setOnClickListener {
+            getBuktiFromGallery.launch("image/*")
+            Log.d(TAG, "Button 'Upload Foto Bukti Pendukung' clicked")
         }
 
         binding.buttonSubmit.setOnClickListener {
@@ -54,45 +71,70 @@ class PengajuanDanaActivity : AppCompatActivity() {
         val jumlahStr = binding.editTextJumlah.text.toString()
         val alasan = binding.editTextAlasan.text.toString()
         val tanggal = binding.editTextTanggal.text.toString()
+        val kontak = binding.editTextKontak.text.toString()
+        val lokasi = binding.editTextLokasi.text.toString()
 
-        if (nama.isEmpty() || jumlahStr.isEmpty() || alasan.isEmpty() || tanggal.isEmpty() || imageUri == null) {
+        if (nama.isEmpty() || jumlahStr.isEmpty() || alasan.isEmpty() || tanggal.isEmpty() || kontak.isEmpty() || lokasi.isEmpty() || ktpUri == null || buktiUri == null) {
             Toast.makeText(this, "Semua field harus diisi", Toast.LENGTH_SHORT).show()
             Log.d(TAG, "Field validation failed")
             return
         }
 
         val jumlah = jumlahStr.toDouble()
-        val fileName = UUID.randomUUID().toString()
-        val storageRef = storage.reference.child("ktp/$fileName")
+        val ktpFileName = UUID.randomUUID().toString()
+        val buktiFileName = UUID.randomUUID().toString()
+        val ktpStorageRef = storage.reference.child("ktp/$ktpFileName")
+        val buktiStorageRef = storage.reference.child("bukti/$buktiFileName")
 
-        Log.d(TAG, "Starting file upload for: $imageUri")
-        storageRef.putFile(imageUri!!)
+        Log.d(TAG, "Starting file upload for: $ktpUri and $buktiUri")
+
+        // Upload KTP
+        ktpStorageRef.putFile(ktpUri!!)
             .addOnSuccessListener {
-                storageRef.downloadUrl.addOnSuccessListener { uri ->
-                    val userId = auth.currentUser?.uid ?: return@addOnSuccessListener
-                    val userEmail = auth.currentUser?.email ?: "Unknown Email"
-                    Log.d(TAG, "File upload successful, download URL: $uri")
+                ktpStorageRef.downloadUrl.addOnSuccessListener { ktpUri ->
+                    Log.d(TAG, "KTP file upload successful, download URL: $ktpUri")
 
-                    val pengajuan = hashMapOf(
-                        "nama" to nama,
-                        "jumlah" to jumlah,
-                        "alasan" to alasan,
-                        "tanggal" to tanggal,
-                        "ktpUrl" to uri.toString(),
-                        "status" to "Pending",
-                        "userEmail" to userEmail
-                    )
+                    // Upload Bukti
+                    buktiStorageRef.putFile(buktiUri!!)
+                        .addOnSuccessListener {
+                            buktiStorageRef.downloadUrl.addOnSuccessListener { buktiUri ->
+                                Log.d(TAG, "Bukti file upload successful, download URL: $buktiUri")
 
-                    db.collection("pengajuan_dana").add(pengajuan).addOnSuccessListener {
-                        Toast.makeText(this, "Pengajuan berhasil diajukan", Toast.LENGTH_SHORT).show()
-                        Log.d(TAG, "Pengajuan data successfully submitted")
-                        saveNotificationToFirestore(userEmail, jumlah)
-                        val intent = Intent(this, NotificationDkmActivity::class.java)
-                        startActivity(intent)
-                    }.addOnFailureListener { e ->
-                        Toast.makeText(this, "Gagal mengajukan dana: ${e.message}", Toast.LENGTH_SHORT).show()
-                        Log.e(TAG, "Failed to submit pengajuan data: ${e.message}", e)
-                    }
+                                val userId = auth.currentUser?.uid ?: return@addOnSuccessListener
+                                val userEmail = auth.currentUser?.email ?: "Unknown Email"
+
+                                val pengajuan = hashMapOf(
+                                    "nama" to nama,
+                                    "jumlah" to jumlah,
+                                    "alasan" to alasan,
+                                    "tanggal" to tanggal,
+                                    "kontak" to kontak,
+                                    "lokasi" to lokasi,
+                                    "ktpUrl" to ktpUri.toString(),
+                                    "buktiUrl" to buktiUri.toString(),
+                                    "status" to "Pending",
+                                    "userEmail" to userEmail
+                                )
+
+                                db.collection("pengajuan_dana").add(pengajuan).addOnSuccessListener {
+                                    Toast.makeText(this, "Pengajuan berhasil diajukan", Toast.LENGTH_SHORT).show()
+                                    Log.d(TAG, "Pengajuan data successfully submitted")
+                                    saveNotificationToFirestore(userEmail, jumlah)
+                                    val intent = Intent(this, NotificationDkmActivity::class.java)
+                                    startActivity(intent)
+                                }.addOnFailureListener { e ->
+                                    Toast.makeText(this, "Gagal mengajukan dana: ${e.message}", Toast.LENGTH_SHORT).show()
+                                    Log.e(TAG, "Failed to submit pengajuan data: ${e.message}", e)
+                                }
+                            }.addOnFailureListener { e ->
+                                Toast.makeText(this, "Gagal mendapatkan URL unduhan: ${e.message}", Toast.LENGTH_SHORT).show()
+                                Log.e(TAG, "Failed to get download URL: ${e.message}", e)
+                            }
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(this, "Gagal mengunggah foto bukti: ${e.message}", Toast.LENGTH_SHORT).show()
+                            Log.e(TAG, "File upload failed: ${e.message}", e)
+                        }
                 }.addOnFailureListener { e ->
                     Toast.makeText(this, "Gagal mendapatkan URL unduhan: ${e.message}", Toast.LENGTH_SHORT).show()
                     Log.e(TAG, "Failed to get download URL: ${e.message}", e)

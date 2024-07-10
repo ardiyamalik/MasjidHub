@@ -1,65 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/editTextNama"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nama"
-        android:inputType="text" />
+        android:padding="16dp">
 
-    <EditText
-        android:id="@+id/editTextJumlah"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Jumlah Pengajuan (Rp)"
-        android:inputType="numberDecimal" />
+        <EditText
+            android:id="@+id/editTextNama"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Nama"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextAlasan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Alasan Pengajuan"
-        android:inputType="textMultiLine"
-        android:layout_marginTop="16dp"
-        android:gravity="top"
-        android:minLines="4" />
+        <EditText
+            android:id="@+id/editTextJumlah"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Jumlah Pengajuan (Rp)"
+            android:inputType="numberDecimal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextNama"
+            android:layout_marginTop="16dp" />
 
-    <EditText
-        android:id="@+id/editTextTanggal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Tanggal Pengajuan"
-        android:inputType="date" />
+        <EditText
+            android:id="@+id/editTextAlasan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Alasan Pengajuan"
+            android:inputType="textMultiLine"
+            android:minLines="4"
+            android:gravity="top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextJumlah"
+            android:layout_marginTop="16dp" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Unggah Foto KTP"
-        android:textSize="16sp" />
+        <EditText
+            android:id="@+id/editTextTanggal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Tanggal Pengajuan"
+            android:inputType="date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextAlasan"
+            android:layout_marginTop="16dp" />
 
-    <Button
-        android:id="@+id/buttonUploadKTP"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pilih Foto KTP" />
+        <EditText
+            android:id="@+id/editTextKontak"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Nomor Kontak"
+            android:inputType="phone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextTanggal"
+            android:layout_marginTop="16dp" />
 
-    <ImageView
-        android:id="@+id/imageViewKTP"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="8dp"
-        android:scaleType="centerCrop"
-        android:background="@android:color/darker_gray"
-        android:visibility="gone" />
+        <EditText
+            android:id="@+id/editTextLokasi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Lokasi"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextKontak"
+            android:layout_marginTop="16dp" />
 
-    <Button
-        android:id="@+id/buttonSubmit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Ajukan" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/textViewFotoPendukung"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unggah Foto Bukti Pendukung"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextLokasi"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/buttonUploadFotoPendukung"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Pilih Foto Bukti Pendukung"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewFotoPendukung"
+            android:layout_marginTop="8dp" />
+
+        <ImageView
+            android:id="@+id/imageViewFotoPendukung"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/darker_gray"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonUploadFotoPendukung" />
+
+        <TextView
+            android:id="@+id/textViewKTP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Unggah Foto KTP"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageViewFotoPendukung"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/buttonUploadKTP"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Pilih Foto KTP"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewKTP"
+            android:layout_marginTop="8dp" />
+
+        <ImageView
+            android:id="@+id/imageViewKTP"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/darker_gray"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonUploadKTP" />
+
+        <Button
+            android:id="@+id/buttonSubmit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Ajukan"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageViewKTP"
+            android:layout_marginTop="16dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
