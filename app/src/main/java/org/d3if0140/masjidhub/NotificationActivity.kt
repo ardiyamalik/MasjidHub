@@ -22,7 +22,7 @@ class NotificationActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        adapter = NotificationAdapter(emptyList())
+        adapter = NotificationAdapter(mutableListOf())
         binding.recyclerViewNotifications.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewNotifications.adapter = adapter
     }
@@ -33,13 +33,13 @@ class NotificationActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { result ->
                 val notifications = result.map { document ->
+                    val id = document.id
                     val title = document.getString("title") ?: "No Title"
                     val message = document.getString("message") ?: "No Message"
                     val timestamp = document.getLong("timestamp") ?: 0L
-                    Notification(title, message, timestamp)
+                    Notification(id, title, message, timestamp)
                 }
-                adapter = NotificationAdapter(notifications)
-                binding.recyclerViewNotifications.adapter = adapter
+                adapter.updateList(notifications)
             }
             .addOnFailureListener { exception ->
                 // Handle the error
