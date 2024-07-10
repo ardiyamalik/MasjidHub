@@ -19,7 +19,7 @@
         android:id="@+id/textViewMetodePembayaran"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bank Transfer"
+        android:text="Metode Pembayaran"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/textViewJumlahInfaq"
         app:layout_constraintStart_toStartOf="parent" />
@@ -41,25 +41,25 @@
         app:layout_constraintTop_toBottomOf="@id/textViewUserEmail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/buttonApprove"
-        app:layout_constraintVertical_bias="0" />
+        app:layout_constraintBottom_toTopOf="@id/buttonApprove"/>
 
     <Button
         android:id="@+id/buttonApprove"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Setujui"
+        android:text="Approve"
         app:layout_constraintTop_toBottomOf="@id/imageViewBuktiPembayaran"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintEnd_toStartOf="@id/buttonReject"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Button
         android:id="@+id/buttonReject"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Tolak"
+        android:text="Reject"
         app:layout_constraintTop_toBottomOf="@id/imageViewBuktiPembayaran"
+        app:layout_constraintStart_toEndOf="@id/buttonApprove"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
+        app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

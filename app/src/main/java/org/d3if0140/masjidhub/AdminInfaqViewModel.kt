@@ -1,7 +1,5 @@
 package org.d3if0140.masjidhub.viewmodel
 
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,9 +16,7 @@ class AdminInfaqViewModel : ViewModel() {
         fetchInfaqData()
     }
 
-    private val TAG = "AdminInfaqActivity"
-
-    fun fetchInfaqData() {
+    private fun fetchInfaqData() {
         firestore.collection("infaq_masjid")
             .whereEqualTo("status", "pending")
             .get()
@@ -30,36 +26,29 @@ class AdminInfaqViewModel : ViewModel() {
                 }
                 _infaqList.value = infaqList
             }
-            .addOnFailureListener { e ->
-                Log.e("AdminInfaqViewModel", "Error fetching infaq data", e)
-            }
     }
 
-
-
     fun approveInfaq(infaq: Infaq, callback: (Boolean) -> Unit) {
-        firestore.collection("infaq_masjid")
-            .document(infaq.id)
+        firestore.collection("infaq_masjid").document(infaq.id)
             .update("status", "approved")
             .addOnSuccessListener {
-                val updatedList = _infaqList.value?.filterNot { it.id == infaq.id }
-                _infaqList.value = updatedList
+                fetchInfaqData() // Refresh data
                 callback(true)
             }
-            .addOnFailureListener { e ->
-                Log.e("AdminInfaqViewModel", "Error approving infaq", e)
+            .addOnFailureListener {
                 callback(false)
             }
     }
 
-
     fun rejectInfaq(infaq: Infaq, callback: (Boolean) -> Unit) {
-        firestore.collection("infaq_masjid")
-            .document(infaq.id)
+        firestore.collection("infaq_masjid").document(infaq.id)
             .delete()
-            .addOnCompleteListener { task ->
-                callback(task.isSuccessful)
-                fetchInfaqData() // Refresh data after rejection
+            .addOnSuccessListener {
+                fetchInfaqData() // Refresh data
+                callback(true)
+            }
+            .addOnFailureListener {
+                callback(false)
             }
     }
 }

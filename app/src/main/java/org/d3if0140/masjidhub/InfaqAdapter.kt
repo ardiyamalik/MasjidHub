@@ -1,5 +1,6 @@
 package org.d3if0140.masjidhub.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,8 +54,9 @@ class InfaqAdapter(
             textViewMetodePembayaran.text = infaq.metodePembayaran
             textViewUserEmail.text = infaq.userEmail
 
-            Glide.with(imageViewBuktiPembayaran.context)
-                .load(infaq.buktiPembayaran) // Asumsikan buktiPembayaran adalah URL
+            Log.d("InfaqAdapter", "Loading image from URL: ${infaq.buktiPembayaran}")
+            Glide.with(itemView.context)
+                .load(infaq.buktiPembayaran)
                 .into(imageViewBuktiPembayaran)
 
             buttonApprove.setOnClickListener { onApproveClick(infaq) }
