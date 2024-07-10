@@ -3,45 +3,62 @@ package org.d3if0140.masjidhub.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import org.d3if0140.masjidhub.databinding.ItemInfaqBinding
+import com.bumptech.glide.Glide
+import org.d3if0140.masjidhub.R
 import org.d3if0140.masjidhub.model.Infaq
 
-class InfaqAdapter(private val onApproveClick: (Infaq) -> Unit) :
-    ListAdapter<Infaq, InfaqAdapter.InfaqViewHolder>(InfaqDiffCallback()) {
+class InfaqAdapter(
+    private val onApproveClick: (Infaq) -> Unit,
+    private val onRejectClick: (Infaq) -> Unit
+) : RecyclerView.Adapter<InfaqAdapter.InfaqViewHolder>() {
+
+    private var infaqList = listOf<Infaq>()
+
+    fun submitList(list: List<Infaq>) {
+        infaqList = list
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InfaqViewHolder {
-        val binding = ItemInfaqBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return InfaqViewHolder(binding)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_infaq, parent, false)
+        return InfaqViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: InfaqViewHolder, position: Int) {
-        holder.bind(getItem(position), onApproveClick)
+        val infaq = infaqList[position]
+        holder.bind(infaq, onApproveClick, onRejectClick)
     }
 
-    class InfaqViewHolder(private val binding: ItemInfaqBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    override fun getItemCount() = infaqList.size
 
-        fun bind(infaq: Infaq, onApproveClick: (Infaq) -> Unit) {
-            binding.textViewJumlahInfaq.text = "Rp ${infaq.jumlahInfaq}"
-            binding.textViewMetodePembayaran.text = infaq.metodePembayaran
-            binding.textViewUserEmail.text = infaq.userEmail
+    class InfaqViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val textViewJumlahInfaq: TextView = itemView.findViewById(R.id.textViewJumlahInfaq)
+        private val textViewMetodePembayaran: TextView = itemView.findViewById(R.id.textViewMetodePembayaran)
+        private val textViewUserEmail: TextView = itemView.findViewById(R.id.textViewUserEmail)
+        private val imageViewBuktiPembayaran: ImageView = itemView.findViewById(R.id.imageViewBuktiPembayaran)
+        private val buttonApprove: Button = itemView.findViewById(R.id.buttonApprove)
+        private val buttonReject: Button = itemView.findViewById(R.id.buttonReject)
 
-            binding.buttonApprove.setOnClickListener {
-                onApproveClick(infaq)
-            }
-        }
-    }
+        fun bind(
+            infaq: Infaq,
+            onApproveClick: (Infaq) -> Unit,
+            onRejectClick: (Infaq) -> Unit
+        ) {
+            textViewJumlahInfaq.text = "Rp ${infaq.jumlahInfaq}"
+            textViewMetodePembayaran.text = infaq.metodePembayaran
+            textViewUserEmail.text = infaq.userEmail
 
-    class InfaqDiffCallback : DiffUtil.ItemCallback<Infaq>() {
-        override fun areItemsTheSame(oldItem: Infaq, newItem: Infaq): Boolean {
-            return oldItem.id == newItem.id
-        }
+            Glide.with(imageViewBuktiPembayaran.context)
+                .load(infaq.buktiPembayaran) // Asumsikan buktiPembayaran adalah URL
+                .into(imageViewBuktiPembayaran)
 
-        override fun areContentsTheSame(oldItem: Infaq, newItem: Infaq): Boolean {
-            return oldItem == newItem
+            buttonApprove.setOnClickListener { onApproveClick(infaq) }
+            buttonReject.setOnClickListener { onRejectClick(infaq) }
         }
     }
 }

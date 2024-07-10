@@ -70,6 +70,8 @@ dependencies {
     implementation ("com.google.firebase:firebase-appcheck-debug:18.0.0")
     implementation ("com.google.firebase:firebase-appcheck-safetynet:16.1.2")
 
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+
 
 
 

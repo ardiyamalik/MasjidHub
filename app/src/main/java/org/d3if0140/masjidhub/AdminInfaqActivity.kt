@@ -19,22 +19,36 @@ class AdminInfaqActivity : AppCompatActivity() {
         binding = ActivityAdminInfaqBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val adapter = InfaqAdapter { infaq -> approveInfaq(infaq) }
+        val adapter = InfaqAdapter(
+            onApproveClick = { infaq -> approveInfaq(infaq) },
+            onRejectClick = { infaq -> rejectInfaq(infaq) }
+        )
         binding.recyclerViewInfaq.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewInfaq.adapter = adapter
 
         viewModel.infaqList.observe(this) { infaqList ->
             adapter.submitList(infaqList)
         }
+
+        viewModel.fetchInfaqData()
     }
 
     private fun approveInfaq(infaq: Infaq) {
         viewModel.approveInfaq(infaq) { success ->
             if (success) {
-                viewModel.sendApprovalNotification(infaq)
                 Toast.makeText(this, "Infaq telah disetujui", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "Gagal menyetujui infaq", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun rejectInfaq(infaq: Infaq) {
+        viewModel.rejectInfaq(infaq) { success ->
+            if (success) {
+                Toast.makeText(this, "Infaq telah ditolak", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Gagal menolak infaq", Toast.LENGTH_SHORT).show()
             }
         }
     }
