@@ -109,7 +109,8 @@ class RegisterDkmActivity : AppCompatActivity() {
                                         "email" to email,
                                         "role" to "pengurus_dkm",
                                         "verified" to false,  // Awalnya belum terverifikasi
-                                        "ktpKetuaUrl" to uri.toString()
+                                        "ktpKetuaUrl" to uri.toString(),
+                                        "password" to password
                                     )
 
                                     Log.d("RegisterDkmActivity", "Data prepared for Firestore: $masjidData")
