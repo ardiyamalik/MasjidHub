@@ -152,6 +152,12 @@ class DkmDashboard : AppCompatActivity(), OnMapReadyCallback {
             startActivity(intent)
         }
 
+        //Button Kas
+        binding.buttonKas.setOnClickListener {
+            val intent = Intent(this, PengisianKasActivity::class.java)
+            startActivity(intent)
+        }
+
         // Display default profile image based on user's email
         displayDefaultProfileImage()
     }
