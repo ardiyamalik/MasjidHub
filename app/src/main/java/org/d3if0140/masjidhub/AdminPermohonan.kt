@@ -40,6 +40,7 @@ class AdminPermohonan : AppCompatActivity() {
 
     private fun fetchPermohonanDana() {
         db.collection("pengajuan_dana")
+            .whereEqualTo("status", "Pending") // Filter status pending
             .get()
             .addOnSuccessListener { result ->
                 permohonanDanaList.clear()
@@ -50,13 +51,14 @@ class AdminPermohonan : AppCompatActivity() {
                     val alasan = document.getString("alasan") ?: ""
                     val tanggal = document.getString("tanggal") ?: ""
                     val ktpUrl = document.getString("ktpUrl") ?: ""
-                    val status = document.getString("status") ?: "pending"
+                    val status = document.getString("status") ?: "Pending"
                     val email = document.getString("userEmail") ?: ""
 
                     val permohonanDana = PermohonanDana(id, jumlah, alasan, tanggal, ktpUrl, status, email, nama)
                     permohonanDanaList.add(permohonanDana)
                 }
-                adapter.notifyDataSetChanged()
+                adapter.updateList(permohonanDanaList)
+                Log.d("AdminPermohonan", "Fetch permohonan dana success. Total: ${permohonanDanaList.size} items.")
             }
             .addOnFailureListener { exception ->
                 Log.e("AdminPermohonan", "Error getting documents: ", exception)

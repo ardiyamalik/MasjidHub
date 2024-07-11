@@ -36,9 +36,19 @@
     <string name="alamat">Alamat</string>
     <string name="perbarui_Keuangan">Perbarui Keuangan</string>
     <string name="post_image">Post Image</string>
-    <string name="emaildkm">Nama: %1$s</string>
+    <string name="emaildkm">Email: %1$s</string>
     <string name="tanggal_bayar">Tanggal Bayar: %1$s</string>
     <string name="metode_pembayaran">Metode Pembayaran: %1$s</string>
+    <string name="nama_label">Nama: %1$s</string>
+    <string name="email_label">Email: %1$s</string>
+    <string name="jumlah_label">Jumlah: Rp %1$.2f</string>
+    <string name="alasan_label">Alasan: %1$s</string>
+    <string name="tanggal_label">Tanggal: %1$s</string>
+    <string name="kontak_label">Kontak: %1$s</string>
+    <string name="lokasi_label">Lokasi: %1$s</string>
+    <string name="status_label">Status: %1$s</string>
+
+
 
 
 </resources>

@@ -39,14 +39,15 @@ class PermohonanDanaAdapter(private val permohonanDanaList: MutableList<Permohon
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val permohonanDana = permohonanDanaBelumDiapprove[position]
-        holder.textNama.text = "Nama: ${permohonanDana.nama}"
-        holder.textEmail.text = "Email: ${permohonanDana.email}"
-        holder.textJumlah.text = "Jumlah: Rp ${permohonanDana.jumlah}"
-        holder.textAlasan.text = "Alasan: ${permohonanDana.alasan}"
-        holder.textTanggal.text = "Tanggal: ${permohonanDana.tanggal}"
-        holder.textKontak.text = "Kontak: ${permohonanDana.kontak}"
-        holder.textLokasi.text = "Lokasi: ${permohonanDana.lokasi}"
-        holder.textStatus.text = "Status: ${permohonanDana.status}"
+        holder.textNama.text = holder.itemView.context.getString(R.string.nama_label, permohonanDana.nama)
+        holder.textEmail.text = holder.itemView.context.getString(R.string.email_label, permohonanDana.email)
+        holder.textJumlah.text = holder.itemView.context.getString(R.string.jumlah_label, permohonanDana.jumlah)
+        holder.textAlasan.text = holder.itemView.context.getString(R.string.alasan_label, permohonanDana.alasan)
+        holder.textTanggal.text = holder.itemView.context.getString(R.string.tanggal_label, permohonanDana.tanggal)
+        holder.textKontak.text = holder.itemView.context.getString(R.string.kontak_label, permohonanDana.kontak)
+        holder.textLokasi.text = holder.itemView.context.getString(R.string.lokasi_label, permohonanDana.lokasi)
+        holder.textStatus.text = holder.itemView.context.getString(R.string.status_label, permohonanDana.status)
+
 
         // Load and display foto pendukung if available
         if (permohonanDana.fotoPendukungUrl.isNotEmpty()) {
@@ -72,39 +73,39 @@ class PermohonanDanaAdapter(private val permohonanDanaList: MutableList<Permohon
 
         holder.buttonApprove.setOnClickListener {
             Log.d("PermohonanDanaAdapter", "Approve button clicked for ${permohonanDana.id}")
-            approvePermohonanDana(permohonanDana.id, holder.adapterPosition)
+            approvePermohonanDana(permohonanDana.id, holder.adapterPosition, permohonanDana.email, permohonanDana.jumlah)
         }
 
         holder.buttonReject.setOnClickListener {
             Log.d("PermohonanDanaAdapter", "Reject button clicked for ${permohonanDana.id}")
-            rejectPermohonanDana(permohonanDana.id, holder.adapterPosition)
+            rejectPermohonanDana(permohonanDana.id, holder.adapterPosition, permohonanDana.email, permohonanDana.jumlah)
         }
     }
 
     override fun getItemCount(): Int = permohonanDanaBelumDiapprove.size
 
-    private fun approvePermohonanDana(id: String, position: Int) {
+    private fun approvePermohonanDana(id: String, position: Int, email: String, jumlah: Double) {
         val db = FirebaseFirestore.getInstance()
         db.collection("pengajuan_dana").document(id)
             .update("status", "approved")
             .addOnSuccessListener {
                 Log.d("PermohonanDanaAdapter", "Pengajuan approved for $id")
                 removeItem(position)
-                sendApprovalNotification(id)
+                sendApprovalNotification(email, jumlah)
             }
             .addOnFailureListener { e ->
                 Log.e("PermohonanDanaAdapter", "Error approving pengajuan: ${e.message}", e)
             }
     }
 
-    private fun rejectPermohonanDana(id: String, position: Int) {
+    private fun rejectPermohonanDana(id: String, position: Int, email: String, jumlah: Double) {
         val db = FirebaseFirestore.getInstance()
         db.collection("pengajuan_dana").document(id)
             .update("status", "rejected")
             .addOnSuccessListener {
                 Log.d("PermohonanDanaAdapter", "Pengajuan rejected for $id")
                 removeItem(position)
-                sendRejectionNotification(id)
+                sendRejectionNotification(email, jumlah)
             }
             .addOnFailureListener { e ->
                 Log.e("PermohonanDanaAdapter", "Error rejecting pengajuan: ${e.message}", e)
@@ -116,22 +117,48 @@ class PermohonanDanaAdapter(private val permohonanDanaList: MutableList<Permohon
         notifyItemRemoved(position)
     }
 
-    private fun sendApprovalNotification(id: String) {
-        // Implement your approval notification logic here
-        // This part remains unchanged from your original implementation
+    private fun sendApprovalNotification(email: String, jumlah: Double) {
+        val db = FirebaseFirestore.getInstance()
+        val notificationData = hashMapOf(
+            "title" to "Pengajuan Dana Disetujui",
+            "message" to "Pengajuan dana Anda sebesar Rp $jumlah telah disetujui.",
+            "email" to email,
+            "timestamp" to System.currentTimeMillis()
+        )
+
+        db.collection("notifikasi_pengurus_dkm")
+            .add(notificationData)
+            .addOnSuccessListener {
+                Log.d("PermohonanDanaAdapter", "Approval notification sent successfully")
+            }
+            .addOnFailureListener { e ->
+                Log.e("PermohonanDanaAdapter", "Error sending approval notification: ${e.message}", e)
+            }
     }
 
-    private fun sendRejectionNotification(id: String) {
-        // Implement your rejection notification logic here
-        // This part remains unchanged from your original implementation
+    private fun sendRejectionNotification(email: String, jumlah: Double) {
+        val db = FirebaseFirestore.getInstance()
+        val notificationData = hashMapOf(
+            "title" to "Pengajuan Dana Ditolak",
+            "message" to "Pengajuan dana Anda sebesar Rp $jumlah telah ditolak. Silahkan cek WhatsApp untuk informasi lebih lanjut",
+            "email" to email,
+            "timestamp" to System.currentTimeMillis()
+        )
+
+        db.collection("notifikasi_pengurus_dkm")
+            .add(notificationData)
+            .addOnSuccessListener {
+                Log.d("PermohonanDanaAdapter", "Rejection notification sent successfully")
+            }
+            .addOnFailureListener { e ->
+                Log.e("PermohonanDanaAdapter", "Error sending rejection notification: ${e.message}", e)
+            }
     }
 
     fun updateList(newList: List<PermohonanDana>) {
         permohonanDanaBelumDiapprove.clear()
-        permohonanDanaBelumDiapprove.addAll(newList.filter { it.status != "approved" })
+        permohonanDanaBelumDiapprove.addAll(newList.filter { it.status != "approved" && it.status != "rejected" })
         notifyDataSetChanged()
     }
+
 }
-
-
-
