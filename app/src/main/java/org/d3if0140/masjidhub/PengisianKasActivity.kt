@@ -83,54 +83,60 @@ class PengisianKasActivity : AppCompatActivity() {
     }
 
     private fun submitKas() {
-        val jumlah = 50000.0 // Jumlah kas tetap
-        val metode = when (binding.radioGroupMetode.checkedRadioButtonId) {
-            R.id.radioButtonBankTransfer -> "Bank Transfer"
-            R.id.radioButtonQR -> "QR"
-            else -> ""
-        }
-
-        if (metode.isEmpty() || imageUri == null) {
-            Toast.makeText(this, "Harap isi semua data", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val userId = auth.currentUser?.uid ?: return
-        val kasId = UUID.randomUUID().toString()
-
-        val kasData = hashMapOf(
-            "jumlah" to jumlah,
-            "metode" to metode,
-            "status" to "pending",
-            "userId" to userId,
-            "timestamp" to System.currentTimeMillis(),
-            "buktiPembayaranUrl" to "" // Tambahkan ini untuk bukti pembayaran URL
-        )
-
-        db.collection("kas_mingguan").document(kasId)
-            .set(kasData)
-            .addOnSuccessListener {
-                Log.d(TAG, "Document successfully written!")
-                uploadBuktiPembayaran(kasId)
+            val jumlah = 50000.0 // Jumlah kas tetap
+            val metode = when (binding.radioGroupMetode.checkedRadioButtonId) {
+                R.id.radioButtonBankTransfer -> "Bank Transfer"
+                R.id.radioButtonQR -> "QR"
+                else -> ""
             }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document", e)
-                Toast.makeText(this, "Gagal mengirim kas", Toast.LENGTH_SHORT).show()
-                Log.e(TAG, "Error adding document", e)
+
+            if (metode.isEmpty() || imageUri == null) {
+                Toast.makeText(this, "Harap isi semua data", Toast.LENGTH_SHORT).show()
+                return
             }
-    }
+
+            val currentUser = auth.currentUser
+            val userId = currentUser?.uid ?: ""
+            val email = currentUser?.email ?: "Unknown"
+            val kasId = UUID.randomUUID().toString()
+            val tanggalBayar = System.currentTimeMillis()
+
+            val kasData = hashMapOf(
+                "jumlah" to jumlah,
+                "metode" to metode,
+                "email" to email,
+                "status" to "pending",
+                "userId" to userId,
+                "timestamp" to tanggalBayar,
+                "buktiPembayaranUrl" to "" // Tambahkan ini untuk bukti pembayaran URL
+            )
+
+            db.collection("kas_mingguan").document(kasId)
+                .set(kasData)
+                .addOnSuccessListener {
+                    Log.d(TAG, "Document successfully written!")
+                    uploadBuktiPembayaran(kasId)
+
+                    // Kirim notifikasi setelah data kas berhasil disimpan
+                    sendNotificationToDkm(kasId)
+                }
+                .addOnFailureListener { e ->
+                    Log.w(TAG, "Error adding document", e)
+                    Toast.makeText(this, "Gagal mengirim kas", Toast.LENGTH_SHORT).show()
+                }
+        }
 
 
     private fun uploadBuktiPembayaran(kasId: String) {
-        val buktiPembayaranRef = storage.reference.child("buktiPembayaranKas/$kasId.jpg")
+        val buktiPembayaranRef = storage.reference.child("buktiPembayaranKas").child("$kasId.jpg")
         imageUri?.let { uri ->
             buktiPembayaranRef.putFile(uri)
-                .addOnSuccessListener {
+                .addOnSuccessListener { _ ->
                     buktiPembayaranRef.downloadUrl.addOnSuccessListener { downloadUrl ->
                         db.collection("kas_mingguan").document(kasId)
                             .update(
                                 "buktiPembayaranUrl", downloadUrl.toString(),
-                                "status", "diterima"
+                                "status", "pending"
                             )
                             .addOnSuccessListener {
                                 Log.d(TAG, "Bukti pembayaran URL updated successfully.")
@@ -139,33 +145,37 @@ class PengisianKasActivity : AppCompatActivity() {
                                 Toast.makeText(this, "Kas berhasil dikirim", Toast.LENGTH_SHORT).show()
                             }
                             .addOnFailureListener { e ->
-                                Log.e(TAG, "Error updating document")
-                                Toast.makeText(this, "Gagal mengirim kas", Toast.LENGTH_SHORT).show()
                                 Log.e(TAG, "Error updating document", e)
+                                Toast.makeText(this, "Gagal mengirim kas", Toast.LENGTH_SHORT).show()
                             }
                     }
                 }
                 .addOnFailureListener { e ->
-                    Log.w(TAG, "Error uploading file", e)
-                    Toast.makeText(this, "Gagal mengunggah bukti pembayaran", Toast.LENGTH_SHORT).show()
                     Log.e(TAG, "Error uploading file", e)
+                    Toast.makeText(this, "Gagal mengunggah bukti pembayaran", Toast.LENGTH_SHORT).show()
                 }
         }
     }
 
+
     private fun sendNotificationToDkm(kasId: String) {
         val notificationData = hashMapOf(
-            "kasId" to kasId,
-            "message" to "Kas mingguan telah diterima."
+            "title" to "kas sedang diproses",
+            "message" to "Kas mingguan sedang diproses oleh aplikasi.",
+            "timestamp" to System.currentTimeMillis()
         )
 
-        db.collection("notifikasi_dkm")
+        db.collection("notifikasi_pengurus_dkm")
             .add(notificationData)
             .addOnSuccessListener {
                 Log.d(TAG, "Notification sent to DKM")
+
+                // Redirect to NotificationDkmActivity after sending notification
+                startActivity(Intent(this, NotificationDkmActivity::class.java))
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "Error sending notification", e)
+                Toast.makeText(this, "Gagal mengirim notifikasi", Toast.LENGTH_SHORT).show()
                 Log.e(TAG, "Error sending notification", e)
             }
     }

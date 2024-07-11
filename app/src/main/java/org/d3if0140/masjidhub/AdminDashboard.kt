@@ -48,9 +48,10 @@ class AdminDashboard : AppCompatActivity() {
         binding.buttonInfaqAdmin.setOnClickListener{
             startActivity(Intent(this, AdminInfaqActivity::class.java))
         }
-//        binding.buttonKas.setOnClickListener{
-//            startActivity(Intent(this, KasMingguanActivity::class.java))
-//        }
+
+        binding.buttonKas.setOnClickListener{
+            startActivity(Intent(this, KasMingguanActivity::class.java))
+        }
 
         binding.buttonVerifAdmin.setOnClickListener{
             startActivity(Intent(this, AdminVerifActivity::class.java))

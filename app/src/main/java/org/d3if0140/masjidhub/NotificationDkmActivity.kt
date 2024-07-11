@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import org.d3if0140.masjidhub.databinding.ActivityNotificationDkmBinding
 
 class NotificationDkmActivity : AppCompatActivity() {
@@ -11,6 +12,7 @@ class NotificationDkmActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNotificationDkmBinding
     private val db = FirebaseFirestore.getInstance()
     private lateinit var adapter: NotificationDkmAdapter
+    private var listenerRegistration: ListenerRegistration? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,22 +30,26 @@ class NotificationDkmActivity : AppCompatActivity() {
     }
 
     private fun loadNotifications() {
-        db.collection("notifikasi_pengurus_dkm")
+        listenerRegistration = db.collection("notifikasi_pengurus_dkm")
             .orderBy("timestamp")
-            .get()
-            .addOnSuccessListener { result ->
-                val notifications = result.map { document ->
+            .addSnapshotListener { snapshots, e ->
+                if (e != null) {
+                    return@addSnapshotListener
+                }
+                val notifications = mutableListOf<Notification>()
+                snapshots?.forEach { document ->
                     val id = document.id
                     val title = document.getString("title") ?: "No Title"
                     val message = document.getString("message") ?: "No Message"
                     val timestamp = document.getLong("timestamp") ?: 0L
-                    Notification(id, title, message, timestamp)
+                    notifications.add(Notification(id, title, message, timestamp))
                 }
                 adapter.updateList(notifications)
             }
-            .addOnFailureListener { exception ->
-                // Handle the error
-                exception.printStackTrace()
-            }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        listenerRegistration?.remove()
     }
 }

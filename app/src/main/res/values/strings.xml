@@ -36,5 +36,9 @@
     <string name="alamat">Alamat</string>
     <string name="perbarui_Keuangan">Perbarui Keuangan</string>
     <string name="post_image">Post Image</string>
+    <string name="emaildkm">Nama: %1$s</string>
+    <string name="tanggal_bayar">Tanggal Bayar: %1$s</string>
+    <string name="metode_pembayaran">Metode Pembayaran: %1$s</string>
+
 
 </resources>
