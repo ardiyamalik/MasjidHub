@@ -145,7 +145,7 @@
 
         <LinearLayout
             android:id="@+id/buttonPengajuan"
-            android:layout_width="141dp"
+            android:layout_width="120dp"
             android:layout_height="131dp"
             android:background="@drawable/stroke_white"
             android:gravity="center"
@@ -167,7 +167,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
-                android:text="ajukan uang"
+                android:text="Ajukan Dana"
                 android:textColor="@color/blue"
                 android:textStyle="bold" />
 
@@ -176,14 +176,14 @@
 
         <LinearLayout
             android:id="@+id/buttonEvent"
-            android:layout_width="141dp"
+            android:layout_width="120dp"
             android:layout_height="131dp"
             android:background="@drawable/stroke_white"
             android:gravity="center"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.656"
+            app:layout_constraintHorizontal_bias="0.564"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.913">

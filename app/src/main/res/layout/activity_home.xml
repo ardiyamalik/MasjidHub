@@ -8,15 +8,12 @@
     android:background="@color/white">
 
     <!-- Toolbar -->
-
-    <!-- Frame Layout untuk Isi Konten -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:elevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -45,29 +42,6 @@
     </androidx.appcompat.widget.Toolbar>
 
     <!-- Bottom Navigation View -->
-    <FrameLayout
-        android:id="@+id/content_frame"
-        android:layout_width="414dp"
-        android:layout_height="164dp"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.695"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintVertical_bias="0.0">
-
-        <!-- ViewPager -->
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="163dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_weight="1" />
-
-    </FrameLayout>
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="0dp"
@@ -79,144 +53,170 @@
         app:menu="@menu/bottom_navigation_menu"
         app:labelVisibilityMode="labeled" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="409dp"
-        android:layout_height="421dp"
-        android:layout_marginTop="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <!-- Scrollable Content -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/content_frame"
-        app:layout_constraintVertical_bias="0.012">
+        app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/textViewProgram"
-            android:layout_width="114dp"
-            android:layout_height="39dp"
-            android:fontFamily="@font/poppins_bold"
-            android:text="@string/program"
-            android:textAlignment="center"
-            android:textColor="@color/blue"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginTop="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.054"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.549" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/textViewTerdekat"
-            android:layout_width="176dp"
-            android:layout_height="41dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/poppins_bold"
-            android:text="@string/masjid_terdekat"
-            android:textAlignment="center"
-            android:textColor="@color/blue"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.068"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.084" />
+            <!-- Frame Layout untuk Isi Konten -->
+            <FrameLayout
+                android:id="@+id/content_frame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">1
 
-        <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="337dp"
-            android:layout_height="125dp"
-            android:layout_marginLeft="28dp"
-            android:layout_marginRight="28dp"
-            app:layout_constraintBottom_toTopOf="@+id/textViewProgram"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.222"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTerdekat"
-            app:layout_constraintVertical_bias="0.0"
-            tools:context=".HomeActivity"
-            tools:viewBindingIgnore="true" />
-
-        <LinearLayout
-            android:id="@+id/buttonInfaq"
-            android:layout_width="141dp"
-            android:layout_height="131dp"
-            android:background="@drawable/stroke_white"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.093"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.913">
-
-            <ImageView
-                android:layout_width="114dp"
-                android:layout_height="91dp"
-                android:src="@drawable/infaq" />
-
+                <!-- ViewPager -->
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPager"
+                    android:layout_width="353dp"
+                    android:layout_height="135dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewProgram" />
+            </FrameLayout>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/textViewTerdekat"
+                android:layout_width="172dp"
+                android:layout_height="31dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="14dp"
                 android:fontFamily="@font/poppins_bold"
-                android:text="@string/infaq"
+                android:text="@string/masjid_terdekat"
+                android:textAlignment="center"
                 android:textColor="@color/blue"
-                android:textStyle="bold" />
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/content_frame" />
 
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/buttonEvent"
-            android:layout_width="141dp"
-            android:layout_height="131dp"
-            android:background="@drawable/stroke_white"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.656"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.913">
-
-            <ImageView
-                android:layout_width="114dp"
-                android:layout_height="91dp"
-                android:src="@drawable/event" />
-
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="353dp"
+                android:layout_height="125dp"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="28dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewTerdekat"
+                tools:context=".HomeActivity"
+                tools:viewBindingIgnore="true" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="172dp"
+                android:layout_height="31dp"
+                android:layout_marginBottom="8dp"
                 android:fontFamily="@font/poppins_bold"
-                android:text="@string/event"
+                android:gravity="left"
+                android:text="Menu"
                 android:textColor="@color/blue"
-                android:textStyle="bold" />
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/buttonEvent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.121"
+                app:layout_constraintStart_toStartOf="parent" />
 
+            <LinearLayout
+                android:id="@+id/buttonInfaq"
+                android:layout_width="111dp"
+                android:layout_height="131dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/stroke_white"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/map"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.093">
 
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="114dp"
+                    android:layout_height="91dp"
+                    android:src="@drawable/infaq" />
 
-        <Button
-            android:id="@+id/buttonNotif"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="134dp"
-            android:layout_marginTop="86dp"
-            android:text="Button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/buttonEvent"
-            app:layout_constraintTop_toBottomOf="@+id/map" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="@string/infaq"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                android:id="@+id/buttonEvent"
+                android:layout_width="111dp"
+                android:layout_height="131dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:background="@drawable/stroke_white"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.068"
+                app:layout_constraintStart_toEndOf="@+id/buttonInfaq">
 
+                <ImageView
+                    android:layout_width="114dp"
+                    android:layout_height="91dp"
+                    android:src="@drawable/event" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="@string/event"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/buttonNotif"
+                android:layout_width="111dp"
+                android:layout_height="131dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="7dp"
+                android:background="@drawable/stroke_white"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.236"
+                app:layout_constraintStart_toEndOf="@+id/buttonEvent">
+
+                <ImageView
+                    android:layout_width="114dp"
+                    android:layout_height="91dp"
+                    android:src="@drawable/baseline_notifications_active_24" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Notifikasi"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
