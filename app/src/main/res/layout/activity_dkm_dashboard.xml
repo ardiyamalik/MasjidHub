@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -60,10 +59,10 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="163dp"
-            android:layout_marginRight="20dp"
+            android:layout_height="140dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
             android:layout_weight="1" />
 
     </FrameLayout>
@@ -73,162 +72,216 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/blue"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navigation_menu_dkm"
-        app:labelVisibilityMode="labeled" />
+        app:menu="@menu/bottom_navigation_menu_dkm" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="409dp"
-        android:layout_height="421dp"
+        android:layout_height="500dp"
         android:layout_marginTop="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/content_frame"
-        app:layout_constraintVertical_bias="0.012">
+        app:layout_constraintVertical_bias="0.0">
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/textViewProgram"-->
+        <!--            android:layout_width="93dp"-->
+        <!--            android:layout_height="27dp"-->
+        <!--            android:layout_marginTop="50dp"-->
+        <!--            android:layout_marginRight="80dp"-->
+        <!--            android:fontFamily="@font/poppins_bold"-->
+        <!--            android:text="@string/program"-->
+        <!--            android:textAlignment="center"-->
+        <!--            android:textColor="@color/blue"-->
+        <!--            android:textSize="20sp"-->
+        <!--            android:textStyle="bold"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="0.085"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"-->
+        <!--            app:layout_constraintVertical_bias="0.473" />-->
+
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/textViewTerdekat"-->
+        <!--            android:layout_width="181dp"-->
+        <!--            android:layout_height="29dp"-->
+        <!--            android:layout_marginTop="44dp"-->
+        <!--            android:layout_marginRight="75dp"-->
+        <!--            android:fontFamily="@font/poppins_bold"-->
+        <!--            android:text="@string/masjid_terdekat"-->
+        <!--            android:textAlignment="center"-->
+        <!--            android:textColor="@color/blue"-->
+        <!--            android:textSize="20sp"-->
+        <!--            android:textStyle="bold"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="0.07"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Menu"
+            android:textColor="@color/blue"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.067"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.551" />
 
         <TextView
             android:id="@+id/textViewProgram"
-            android:layout_width="114dp"
-            android:layout_height="39dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="@string/program"
-            android:textAlignment="center"
+            android:text="Masjid Terdekat"
             android:textColor="@color/blue"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginTop="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.054"
+            app:layout_constraintHorizontal_bias="0.091"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.549" />
-
-        <TextView
-            android:id="@+id/textViewTerdekat"
-            android:layout_width="176dp"
-            android:layout_height="41dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/poppins_bold"
-            android:text="@string/masjid_terdekat"
-            android:textAlignment="center"
-            android:textColor="@color/blue"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.068"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.084" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <fragment
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="337dp"
-            android:layout_height="125dp"
-            android:layout_marginRight="28dp"
-            android:layout_marginLeft="28dp"
-            app:layout_constraintBottom_toTopOf="@+id/textViewProgram"
+            android:layout_width="361dp"
+            android:layout_height="130dp"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/textView5"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.222"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTerdekat"
-            app:layout_constraintVertical_bias="0.0"
             tools:context=".HomeActivity"
             tools:viewBindingIgnore="true" />
 
-        <LinearLayout
-            android:id="@+id/buttonPengajuan"
-            android:layout_width="120dp"
-            android:layout_height="131dp"
-            android:background="@drawable/stroke_white"
-            android:gravity="center"
-            android:orientation="vertical"
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="48dp"
+            android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.093"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.913">
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
 
-            <ImageView
-                android:layout_width="114dp"
-                android:layout_height="91dp"
-                android:src="@drawable/infaq" />
-
-
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_bold"
-                android:text="Ajukan Dana"
-                android:textColor="@color/blue"
-                android:textStyle="bold" />
+                android:layout_marginLeft="28dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/map">
 
+                <LinearLayout
+                    android:id="@+id/buttonPengajuan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="131dp"
+                    android:background="@drawable/stroke_white"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-        </LinearLayout>
+                    <ImageView
+                        android:layout_width="114dp"
+                        android:layout_height="91dp"
+                        android:src="@drawable/infaq" />
 
-        <LinearLayout
-            android:id="@+id/buttonEvent"
-            android:layout_width="120dp"
-            android:layout_height="131dp"
-            android:background="@drawable/stroke_white"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.564"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.913">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/infaq"
+                        android:textColor="@color/blue"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
-            <ImageView
-                android:layout_width="114dp"
-                android:layout_height="91dp"
-                android:src="@drawable/event" />
+                <LinearLayout
+                    android:id="@+id/buttonEvent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="131dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/stroke_white"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
+                    <ImageView
+                        android:layout_width="114dp"
+                        android:layout_height="91dp"
+                        android:src="@drawable/event" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_bold"
-                android:text="@string/event"
-                android:textColor="@color/blue"
-                android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/event"
+                        android:textColor="@color/blue"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/buttonNotif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="131dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/stroke_white"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-        </LinearLayout>
+                    <ImageView
+                        android:layout_width="114dp"
+                        android:layout_height="91dp"
+                        android:src="@drawable/baseline_notifications_active_24" />
 
-        <Button
-            android:id="@+id/buttonNotif"
-            android:layout_width="82dp"
-            android:layout_height="56dp"
-            android:text="Notif"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.9"
-            app:layout_constraintStart_toEndOf="@+id/buttonEvent"
-            app:layout_constraintTop_toBottomOf="@+id/map"
-            app:layout_constraintVertical_bias="0.329" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="Notifikasi"
+                        android:textColor="@color/blue"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
-        <Button
-            android:id="@+id/buttonKas"
-            android:layout_width="70dp"
-            android:layout_height="53dp"
-            android:layout_marginTop="21dp"
-            android:text="Kas"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.409"
-            app:layout_constraintStart_toEndOf="@+id/buttonEvent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonNotif"
-            app:layout_constraintVertical_bias="0.0" />
+                <LinearLayout
+                    android:id="@+id/buttonKas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="131dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/stroke_white"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="114dp"
+                        android:layout_height="91dp"
+                        android:src="@drawable/baseline_request_page_24" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="Notifikasi"
+                        android:textColor="@color/blue"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </HorizontalScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
