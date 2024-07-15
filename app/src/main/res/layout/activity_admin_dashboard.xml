@@ -170,7 +170,7 @@
         android:drawablePadding="8dp"
         android:fontFamily="@font/poppins_bold"
         android:paddingStart="10sp"
-        android:text="Logout"
+        android:text="Keluar"
         android:textColor="@color/blue"
         android:textSize="18sp"
         android:textStyle="bold" />
