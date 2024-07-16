@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         tools:context=".RegisterDkmActivity">
 
-        <!-- Nama Masjid -->
 
         <ImageButton
             android:id="@+id/backButton"
@@ -32,8 +31,8 @@
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
             android:text="DAFTAR DKM"
-            android:textSize="20sp"
             android:textColor="@color/blue"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/namaMasjidInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
@@ -62,13 +61,13 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Alamat Masjid -->
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/alamatInputLayout"
             android:layout_width="380dp"
             android:layout_height="53dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -86,13 +85,13 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Kode Pos -->
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/kodePosInputLayout"
             android:layout_width="380dp"
             android:layout_height="53dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -110,13 +109,13 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Nomor Telepon Masjid -->
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/teleponMasjidInputLayout"
             android:layout_width="380dp"
             android:layout_height="53dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -134,13 +133,12 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Nama Ketua/Pengurus -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/namaKetuaInputLayout"
             android:layout_width="380dp"
             android:layout_height="53dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -158,13 +156,13 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Nomor Telepon Ketua/Pengurus -->
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/teleponKetuaInputLayout"
             android:layout_width="380dp"
             android:layout_height="53dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -182,13 +180,12 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Email Ketua/Pengurus -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailKetuaInputLayout"
             android:layout_width="380dp"
             android:layout_height="53dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -206,13 +203,12 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Password -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordInputLayout"
             android:layout_width="380dp"
             android:layout_height="53dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -230,44 +226,59 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Tombol Upload KTP -->
-        <Button
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/uploadKtpButton"
             android:layout_width="380dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/rounded_button_background"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/stroke_white"
+            android:drawableLeft="@drawable/placeholder_image"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
+            android:paddingStart="10dp"
             android:text="Unggah KTP Ketua DKM"
-            android:textColor="@color/white"
             android:textAllCaps="false"
+            android:textColor="@color/blue"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordInputLayout" />
 
-        <!-- Kotak untuk menampilkan foto KTP yang dipilih -->
+
         <ImageView
             android:id="@+id/ktpImageView"
             android:layout_width="380dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="8dp"
             android:contentDescription="Foto KTP Ketua DKM"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/uploadKtpButton" />
 
-        <!-- Tombol Register -->
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/registButton"
             android:layout_width="380dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/rounded_button_background"
-            android:text="Daftar"
-            android:textColor="@color/white"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
+            android:text="Unggah"
             android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ktpImageView" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
