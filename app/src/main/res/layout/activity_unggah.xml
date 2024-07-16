@@ -78,32 +78,32 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/subHeadDesk" />
 
+            <!--            <TextView-->
+<!--                android:id="@+id/opsional"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="4dp"-->
+<!--                android:layout_marginTop="18dp"-->
+<!--                android:fontFamily="@font/poppins_light"-->
+<!--                android:text="(Opsional)"-->
+<!--                android:textColor="@color/grey"-->
+<!--                android:textSize="19sp"-->
+<!--                app:layout_constraintStart_toEndOf="@id/subHeadInsertImage"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/editDesk" />-->
+
             <TextView
                 android:id="@+id/subHeadInsertImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/poppins_light"
                 android:text="Masukkan Gambar"
                 android:textColor="@color/blue"
                 android:textSize="21sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.314"
+                app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/editDesk" />
-
-            <TextView
-                android:id="@+id/opsional"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="18dp"
-                android:fontFamily="@font/poppins_light"
-                android:text="(Opsional)"
-                android:textColor="@color/grey"
-                android:textSize="19sp"
-                app:layout_constraintStart_toEndOf="@id/subHeadInsertImage"
                 app:layout_constraintTop_toBottomOf="@id/editDesk" />
 
             <ImageView
@@ -117,12 +117,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/subHeadInsertImage" />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/insertImageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_width="165dp"
+                android:layout_height="42dp"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/stroke_white"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center"
                 android:text="Pilih Gambar"
+                android:drawableLeft="@drawable/placeholder_image"
+                android:paddingLeft="10dp"
+                android:textAllCaps="false"
+                android:textColor="@color/blue"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/selectedImage" />
