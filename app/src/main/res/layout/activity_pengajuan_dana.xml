@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -11,8 +12,10 @@
 
         <EditText
             android:id="@+id/editTextNama"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="379dp"
+            android:layout_height="46dp"
+            android:background="@drawable/stroke_white"
+            android:paddingLeft="10dp"
             android:hint="Nama"
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
@@ -21,20 +24,25 @@
 
         <EditText
             android:id="@+id/editTextJumlah"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="379dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="10dp"
+            android:background="@drawable/stroke_white"
             android:hint="Jumlah Pengajuan (Rp)"
             android:inputType="numberDecimal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextNama"
-            android:layout_marginTop="16dp" />
+            app:layout_constraintTop_toBottomOf="@id/editTextNama" />
 
         <EditText
             android:id="@+id/editTextAlasan"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Alasan Pengajuan"
+            android:background="@drawable/stroke_white"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
             android:inputType="textMultiLine"
             android:minLines="4"
             android:gravity="top"
@@ -45,21 +53,25 @@
 
         <EditText
             android:id="@+id/editTextTanggal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="379dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="16dp"
+            android:paddingLeft="10dp"
+            android:background="@drawable/stroke_white"
             android:hint="Tanggal Pengajuan"
             android:inputType="date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextAlasan"
-            android:layout_marginTop="16dp" />
+            app:layout_constraintTop_toBottomOf="@id/editTextAlasan" />
 
         <EditText
             android:id="@+id/editTextKontak"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="379dp"
+            android:layout_height="46dp"
             android:hint="Nomor Kontak"
+            android:paddingLeft="10dp"
             android:inputType="phone"
+            android:background="@drawable/stroke_white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextTanggal"
@@ -67,10 +79,12 @@
 
         <EditText
             android:id="@+id/editTextLokasi"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="379dp"
+            android:layout_height="46dp"
             android:hint="Lokasi"
+            android:paddingLeft="10dp"
             android:inputType="text"
+            android:background="@drawable/stroke_white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextKontak"
@@ -82,10 +96,15 @@
             android:layout_height="wrap_content"
             android:text="Unggah Foto Bukti Pendukung"
             android:textSize="16sp"
+            android:fontFamily="@font/poppins_bold"
+            android:textStyle="bold"
+            android:textColor="@color/blue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextLokasi"
             android:layout_marginTop="16dp" />
+
+
 
         <Button
             android:id="@+id/buttonUploadFotoPendukung"
@@ -115,6 +134,9 @@
             android:layout_height="wrap_content"
             android:text="Unggah Foto KTP"
             android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/blue"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageViewFotoPendukung"
