@@ -38,6 +38,7 @@ class InfaqAdapter(
     override fun getItemCount() = infaqList.size
 
     class InfaqViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private  val textTanggalBayar: TextView = itemView.findViewById(R.id.textTanggalBayar)
         private val textViewJumlahInfaq: TextView = itemView.findViewById(R.id.textViewJumlahInfaq)
         private val textViewMetodePembayaran: TextView = itemView.findViewById(R.id.textViewMetodePembayaran)
         private val textViewUserEmail: TextView = itemView.findViewById(R.id.textViewUserEmail)
@@ -53,6 +54,7 @@ class InfaqAdapter(
             textViewJumlahInfaq.text = "Rp ${infaq.jumlahInfaq}"
             textViewMetodePembayaran.text = infaq.metodePembayaran
             textViewUserEmail.text = infaq.userEmail
+            textTanggalBayar.text = infaq.tanggal
 
             Log.d("InfaqAdapter", "Loading image from URL: ${infaq.buktiPembayaran}")
             Glide.with(itemView.context)

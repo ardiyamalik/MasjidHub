@@ -7,5 +7,6 @@ data class Infaq(
     val jumlahInfaq: Double = 0.0,
     val metodePembayaran: String = "",
     val buktiPembayaran: String = "", // Tambahkan properti ini
+    val tanggal: String = "",
     val status: String = "pending"
 )

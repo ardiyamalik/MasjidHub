@@ -5,7 +5,7 @@ data class KasMingguan(
     val userId: String = "",
     var email: String = "",
     var nominal: Double = 50000.0,
-    var tanggalBayar: Long = 0L,
+    var tanggal:String = "",
     var status: String = "pending",
     var buktiPembayaranUrl: String = "",
     var metode: String = ""
