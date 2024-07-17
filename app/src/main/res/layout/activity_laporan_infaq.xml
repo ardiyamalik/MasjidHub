@@ -10,30 +10,50 @@
         android:id="@+id/choose_date_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="showDatePickerDialog"
         android:text="Pilih Tanggal"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:onClick="showDatePickerDialog" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/selected_date_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tanggal Dipilih: "
-        app:layout_constraintTop_toBottomOf="@id/choose_date_button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/choose_date_button" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="418dp"
+        android:layout_height="581dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/selected_date_text_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/selected_date_text_view"
+        app:layout_constraintVertical_bias="0.1"
         tools:listitem="@layout/item_data_infaq" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/perbaruiButton"
+        android:layout_width="117dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/rounded_button_background"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="center"
+        android:text="Perbarui"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.945"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package org.d3if0140.masjidhub
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,6 +27,40 @@ class LaporanInfaqActivity : AppCompatActivity() {
         binding.chooseDateButton.setOnClickListener {
             showDatePickerDialog()
         }
+// Logika untuk membuat koleksi "uang_masuk" di firestore tapi masih eror di rules nya
+//        binding.perbaruiButton.setOnClickListener {
+//            // Ambil data yang sudah ditampilkan di RecyclerView
+//            val dataList = (binding.recyclerView.adapter as? DataInfaqAdapter)?.dataList ?: emptyList()
+//
+//            // Hitung total jumlah infaq dari semua item
+//            val totalJumlahInfaq = dataList.sumByDouble { it.jumlahInfaq }
+//
+//            // Ambil tanggal yang sudah dipilih
+//            val selectedDate = selectedDateCalendar.time
+//            val firestoreDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+//            val formattedDate = firestoreDateFormat.format(selectedDate)
+//
+//            // Buat koleksi baru "uang_masuk" di Firestore
+//            val uangMasukCollection = firestore.collection("uang_masuk").document(formattedDate)
+//
+//            // Buat data yang akan disimpan
+//            val data = hashMapOf(
+//                "tanggal" to formattedDate,
+//                "total_uang_masuk" to totalJumlahInfaq
+//            )
+//
+//            // Simpan data ke Firestore
+//            uangMasukCollection.set(data)
+//                .addOnSuccessListener {
+//                    Log.d(TAG, "Data berhasil disimpan di koleksi uang_masuk dengan ID $formattedDate")
+//                    Toast.makeText(this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show()
+//                }
+//                .addOnFailureListener { exception ->
+//                    Log.e(TAG, "Error saat menyimpan data ke Firestore", exception)
+//                    Toast.makeText(this, "Gagal menyimpan data: ${exception.message}", Toast.LENGTH_SHORT).show()
+//                }
+//        }
+
     }
 
     private fun showDatePickerDialog() {

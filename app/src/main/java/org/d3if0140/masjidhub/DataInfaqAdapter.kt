@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class DataInfaqAdapter(private val dataList: List<DataInfaq>) : RecyclerView.Adapter<DataInfaqAdapter.ViewHolder>() {
+class DataInfaqAdapter(val dataList: List<DataInfaq>) : RecyclerView.Adapter<DataInfaqAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_data_infaq, parent, false)

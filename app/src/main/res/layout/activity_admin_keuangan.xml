@@ -51,37 +51,16 @@
         android:id="@+id/keuangan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/total_keuangan"
         android:textColor="@color/blue"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/perbaruiKeuanganInput"
         app:layout_constraintEnd_toEndOf="@+id/cardEvent"
-        app:layout_constraintHorizontal_bias="0.121"
-        app:layout_constraintStart_toStartOf="@+id/cardEvent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/perbaruiKeuanganInput"
-        android:layout_width="309dp"
-        android:layout_height="41dp"
-        android:layout_marginBottom="68dp"
-        app:layout_constraintBottom_toBottomOf="@+id/cardEvent"
-        app:layout_constraintEnd_toEndOf="@+id/cardEvent"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="@+id/cardEvent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/perbaruiKeuanganInputEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/stroke_white"
-            android:fontFamily="@font/poppins_light"
-            android:hint="@string/perbarui_Keuangan"
-            android:inputType="text"
-            android:padding="12dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintHorizontal_bias="0.124"
+        app:layout_constraintStart_toStartOf="@+id/cardEvent"
+        app:layout_constraintTop_toTopOf="@+id/cardEvent" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/submitButton"
@@ -99,7 +78,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/cardEvent"
         app:layout_constraintEnd_toEndOf="@+id/cardEvent"
         app:layout_constraintHorizontal_bias="0.903"
-        app:layout_constraintStart_toStartOf="@+id/cardEvent" />
+        app:layout_constraintStart_toStartOf="@+id/cardEvent"
+        app:layout_constraintTop_toBottomOf="@+id/keuangan" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/infaqButton"
