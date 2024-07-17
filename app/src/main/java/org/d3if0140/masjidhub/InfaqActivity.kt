@@ -1,14 +1,19 @@
 package org.d3if0140.masjidhub
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.databinding.ActivityInfaqBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class InfaqActivity : AppCompatActivity() {
 
@@ -27,6 +32,10 @@ class InfaqActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityInfaqBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.editTextTanggal.setOnClickListener {
+            showDatePickerDialog()
+        }
 
         binding.radioGroupMetode.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
@@ -57,6 +66,7 @@ class InfaqActivity : AppCompatActivity() {
                 val currentUser = auth.currentUser
                 val userId = currentUser?.uid ?: ""
                 val userEmail = currentUser?.email ?: "Unknown"
+                val tanggal = binding.editTextTanggal.text.toString()
 
                 val infaqData = hashMapOf(
                     "userId" to userId,
@@ -64,6 +74,7 @@ class InfaqActivity : AppCompatActivity() {
                     "jumlahInfaq" to jumlahInfaq,
                     "metodePembayaran" to metodePembayaran,
                     "buktiPembayaran" to binding.imageViewBuktiPembayaran.drawable.toString(),
+                    "tanggal" to tanggal,
                     "status" to "pending"
                 )
 
@@ -100,5 +111,22 @@ class InfaqActivity : AppCompatActivity() {
                 // Gagal menyimpan notifikasi
                 e.printStackTrace()
             }
+    }
+
+    private fun showDatePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _: DatePicker, year: Int, month: Int, day: Int ->
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(year, month, day)
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                binding.editTextTanggal.setText(dateFormat.format(selectedDate.time))
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+        datePickerDialog.show()
     }
 }

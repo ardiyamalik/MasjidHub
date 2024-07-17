@@ -25,10 +25,10 @@
                 android:background="@drawable/stroke_white"
                 android:fontFamily="@font/poppins_light"
                 android:padding="12dp"
+                android:text="Countdown"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="Countdown" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/editTextJumlahKas"
@@ -43,15 +43,30 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewCountdown" />
 
+            <EditText
+                android:id="@+id/editTextTanggal"
+                android:layout_width="379dp"
+                android:layout_height="46dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/stroke_white"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:hint="Tanggal Pengajuan"
+                android:inputType="none"
+                android:paddingLeft="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextJumlahKas" />
+
             <RadioGroup
                 android:id="@+id/radioGroupMetode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/editTextJumlahKas"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTanggal">
 
                 <RadioButton
                     android:id="@+id/radioButtonBankTransfer"
@@ -70,12 +85,12 @@
                 android:id="@+id/textViewRekening"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:text="Bank: BCA, No. Rek: 1234567890, a.n Masjid"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroupMetode"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroupMetode" />
 
             <ImageView
                 android:id="@+id/imageViewQR"
@@ -93,21 +108,22 @@
                 android:id="@+id/imageViewBuktiPembayaran"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:contentDescription="Bukti Pembayaran"
-                app:layout_constraintTop_toBottomOf="@+id/textViewRekening"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:visibility="gone"
-                android:layout_marginTop="16dp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewRekening" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonPilihFoto"
                 android:layout_width="244dp"
                 android:layout_height="46dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/stroke_white"
                 android:drawableStart="@drawable/baseline_insert_photo_24"
-                android:paddingStart="10dp"
                 android:fontFamily="@font/poppins_bold"
+                android:paddingStart="10dp"
                 android:text="Bukti Pembayaran"
                 android:textAllCaps="false"
                 android:textColor="@color/blue"
@@ -115,13 +131,13 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewBuktiPembayaran"
-                android:layout_marginTop="16dp" />
+                app:layout_constraintTop_toBottomOf="@+id/imageViewBuktiPembayaran" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonBayar"
                 android:layout_width="327dp"
                 android:layout_height="53dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="72dp"
                 android:background="@drawable/rounded_button_background"
                 android:fontFamily="@font/poppins_bold"
@@ -134,7 +150,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/buttonPilihFoto"
-                android:layout_marginTop="16dp"
                 app:layout_constraintVertical_bias="0.088" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

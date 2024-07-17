@@ -1,9 +1,11 @@
 package org.d3if0140.masjidhub
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import org.d3if0140.masjidhub.databinding.ActivityPengajuanDanaBinding
+import java.text.SimpleDateFormat
 import java.util.*
 
 class PengajuanDanaActivity : AppCompatActivity() {
@@ -49,6 +52,11 @@ class PengajuanDanaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPengajuanDanaBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.editTextTanggal.setOnClickListener {
+            showDatePickerDialog()
+        }
+
 
         binding.buttonUploadKTP.setOnClickListener {
             getKtpFromGallery.launch("image/*")
@@ -161,5 +169,22 @@ class PengajuanDanaActivity : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Log.e(TAG, "Failed to save notification: ${e.message}", e)
             }
+    }
+
+    private fun showDatePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _: DatePicker, year: Int, month: Int, day: Int ->
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(year, month, day)
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                binding.editTextTanggal.setText(dateFormat.format(selectedDate.time))
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+        datePickerDialog.show()
     }
 }

@@ -1,6 +1,7 @@
 package org.d3if0140.masjidhub
 
 import android.app.AlarmManager
+import android.app.DatePickerDialog
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -8,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
+import android.widget.DatePicker
 import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
@@ -16,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import org.d3if0140.masjidhub.databinding.ActivityPengisianKasBinding
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -32,6 +35,10 @@ class PengisianKasActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPengisianKasBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.editTextTanggal.setOnClickListener {
+            showDatePickerDialog()
+        }
 
         // Mengatur countdown timer selama 7 hari
         val countdownMillis = TimeUnit.DAYS.toMillis(7)
@@ -99,7 +106,7 @@ class PengisianKasActivity : AppCompatActivity() {
             val userId = currentUser?.uid ?: ""
             val email = currentUser?.email ?: "Unknown"
             val kasId = UUID.randomUUID().toString()
-            val tanggalBayar = System.currentTimeMillis()
+            val tanggal = binding.editTextTanggal.text.toString()
 
             val kasData = hashMapOf(
                 "jumlah" to jumlah,
@@ -107,7 +114,7 @@ class PengisianKasActivity : AppCompatActivity() {
                 "email" to email,
                 "status" to "pending",
                 "userId" to userId,
-                "timestamp" to tanggalBayar,
+                "tanggal" to tanggal,
                 "buktiPembayaranUrl" to "" // Tambahkan ini untuk bukti pembayaran URL
             )
 
@@ -190,5 +197,22 @@ class PengisianKasActivity : AppCompatActivity() {
         }
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+    }
+
+    private fun showDatePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _: DatePicker, year: Int, month: Int, day: Int ->
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(year, month, day)
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                binding.editTextTanggal.setText(dateFormat.format(selectedDate.time))
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+        datePickerDialog.show()
     }
 }
