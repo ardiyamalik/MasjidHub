@@ -5,7 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp"
-    android:background="#FFFFFF"
+    android:background="@drawable/stroke_white"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
     android:layout_margin="8dp"
     android:elevation="2dp">
 
@@ -52,25 +56,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:scaleType="centerCrop" />
 
-    <Button
-        android:id="@+id/buttonApprove"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Approve"
-        app:layout_constraintTop_toBottomOf="@id/imageViewBuktiPembayaran"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/buttonReject"
-        app:layout_constraintWidth_percent="0.5" />
-
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonReject"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Reject"
-        app:layout_constraintTop_toBottomOf="@id/imageViewBuktiPembayaran"
-        app:layout_constraintStart_toEndOf="@id/buttonApprove"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.5" />
+        android:layout_width="144dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/stroke_white"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="center"
+        android:text="Tolak"
+        android:textAllCaps="false"
+        android:textColor="@color/blue"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewBuktiPembayaran" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonApprove"
+        android:layout_width="144dp"
+        android:layout_height="35dp"
+        android:background="@drawable/rounded_button_background"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="center"
+        android:text="Setujui"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
