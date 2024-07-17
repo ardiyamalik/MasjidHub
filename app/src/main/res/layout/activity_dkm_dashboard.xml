@@ -200,13 +200,13 @@
                     <ImageView
                         android:layout_width="114dp"
                         android:layout_height="91dp"
-                        android:src="@drawable/infaq" />
+                        android:src="@drawable/pengajuandana" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="@string/infaq"
+                        android:text="Ajukan Dana"
                         android:textColor="@color/blue"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -246,7 +246,7 @@
                     <ImageView
                         android:layout_width="114dp"
                         android:layout_height="91dp"
-                        android:src="@drawable/baseline_notifications_active_24" />
+                        android:src="@drawable/iconnotiff" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -269,7 +269,7 @@
                     <ImageView
                         android:layout_width="114dp"
                         android:layout_height="91dp"
-                        android:src="@drawable/baseline_request_page_24" />
+                        android:src="@drawable/duitkas" />
 
                     <TextView
                         android:layout_width="wrap_content"

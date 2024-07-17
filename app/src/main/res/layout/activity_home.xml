@@ -219,7 +219,7 @@
                     <ImageView
                         android:layout_width="114dp"
                         android:layout_height="91dp"
-                        android:src="@drawable/baseline_notifications_active_24" />
+                        android:src="@drawable/iconnotiff" />
 
                     <TextView
                         android:layout_width="wrap_content"
