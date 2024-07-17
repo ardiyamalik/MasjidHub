@@ -36,9 +36,10 @@ class AdminListMasjid : AppCompatActivity() {
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
-                    val nama = document.getString("nama") ?: ""
-                    val alamat = document.getString("alamat") ?: ""
-                    masjidList.add(Masjid(nama, alamat))
+                    val name = document.getString("nama") ?: ""
+                    val address = document.getString("alamat") ?: ""
+                    val profileImageUrl = document.getString("imageUrl") ?: ""
+                    masjidList.add(Masjid(name, address, profileImageUrl))
                 }
                 masjidAdapter.notifyDataSetChanged()
             }
