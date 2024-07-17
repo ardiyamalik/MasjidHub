@@ -81,59 +81,89 @@
         app:layout_constraintStart_toStartOf="@+id/cardEvent"
         app:layout_constraintTop_toBottomOf="@+id/keuangan" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/infaqButton"
-        android:layout_width="117dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="48dp"
-        android:background="@drawable/rounded_button_background"
-        android:fontFamily="@font/poppins_bold"
-        android:gravity="center"
-        android:text="Laporan Infaq"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.091"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardEvent" />
-
-    <androidx.appcompat.widget.AppCompatButton
+    <LinearLayout
         android:id="@+id/kasButton"
-        android:layout_width="117dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/rounded_button_background"
-        android:fontFamily="@font/poppins_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="131dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="88dp"
+        android:background="@drawable/stroke_white"
         android:gravity="center"
-        android:text="Laporan Kas"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.091"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/infaqButton" />
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/pengajuanButton"
+        app:layout_constraintStart_toEndOf="@+id/infaqButton"
+        app:layout_constraintTop_toBottomOf="@+id/cardEvent">
 
-    <androidx.appcompat.widget.AppCompatButton
+        <ImageView
+            android:layout_width="114dp"
+            android:layout_height="91dp"
+            android:src="@drawable/infaq" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Laporan Kas"
+            android:textColor="@color/blue"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/pengajuanButton"
-        android:layout_width="121dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/rounded_button_background"
-        android:fontFamily="@font/poppins_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="131dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="212dp"
+        android:background="@drawable/stroke_white"
         android:gravity="center"
-        android:text="Laporan Pengajuan"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.091"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/kasButton" />
+        app:layout_constraintTop_toBottomOf="@+id/cardEvent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <ImageView
+            android:layout_width="114dp"
+            android:layout_height="91dp"
+            android:src="@drawable/pengajuandana" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
+            android:text="Laporan Ajuan \n Dana"
+            android:textColor="@color/blue"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/infaqButton"
+        android:layout_width="wrap_content"
+        android:layout_height="131dp"
+        android:layout_marginBottom="212dp"
+        android:background="@drawable/stroke_white"
+        android:gravity="center"
+
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:layout_width="114dp"
+            android:layout_height="91dp"
+            android:src="@drawable/infaq1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Laporan Infaq"
+            android:textColor="@color/blue"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
