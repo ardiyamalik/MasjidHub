@@ -17,5 +17,20 @@ class AdminKeuangan : AppCompatActivity() {
             val intent = Intent(this, AdminDashboard::class.java)
             startActivity(intent)
         }
+
+        binding.infaqButton.setOnClickListener{
+            val intent = Intent(this, LaporanInfaqActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.kasButton.setOnClickListener{
+            val intent = Intent(this, LaporanKasActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.pengajuanButton.setOnClickListener{
+            val intent = Intent(this, LaporanPengajuanActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

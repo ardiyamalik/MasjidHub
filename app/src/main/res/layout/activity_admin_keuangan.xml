@@ -70,7 +70,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/cardEvent"
         app:layout_constraintEnd_toEndOf="@+id/cardEvent"
         app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="@+id/cardEvent" >
+        app:layout_constraintStart_toStartOf="@+id/cardEvent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/perbaruiKeuanganInputEditText"
@@ -100,6 +100,60 @@
         app:layout_constraintEnd_toEndOf="@+id/cardEvent"
         app:layout_constraintHorizontal_bias="0.903"
         app:layout_constraintStart_toStartOf="@+id/cardEvent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/infaqButton"
+        android:layout_width="117dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/rounded_button_background"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="center"
+        android:text="Laporan Infaq"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.091"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardEvent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/kasButton"
+        android:layout_width="117dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/rounded_button_background"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="center"
+        android:text="Laporan Kas"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.091"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/infaqButton" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/pengajuanButton"
+        android:layout_width="121dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_button_background"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="center"
+        android:text="Laporan Pengajuan"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.091"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/kasButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
