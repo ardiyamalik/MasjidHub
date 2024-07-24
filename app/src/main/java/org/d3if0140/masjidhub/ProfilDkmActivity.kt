@@ -45,10 +45,20 @@ class ProfilDkmActivity : AppCompatActivity() {
 
         // Atur listener untuk tombol logout
         binding.buttonLogoutDkm.setOnClickListener {
-            mAuth.signOut()
-            val intent = Intent(this, WelcomeActivity::class.java)
-            startActivity(intent)
-            finish()
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("Apakah Anda yakin ingin logout?")
+                .setCancelable(false)
+                .setPositiveButton("Ya") { dialog, id ->
+                    mAuth.signOut()
+                    val intent = Intent(this, WelcomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                .setNegativeButton("Tidak") { dialog, id ->
+                    dialog.dismiss()
+                }
+            val alert = builder.create()
+            alert.show()
         }
 
         // Atur listener untuk tombol ubah profil

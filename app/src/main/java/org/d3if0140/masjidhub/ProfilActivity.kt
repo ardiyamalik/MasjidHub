@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -31,10 +32,20 @@ class ProfilActivity : AppCompatActivity() {
 
         // Atur listener untuk tombol logout
         binding.buttonLogout.setOnClickListener {
-            mAuth.signOut()
-            val intent = Intent(this, WelcomeActivity::class.java)
-            startActivity(intent)
-            finish()
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("Apakah Anda yakin ingin logout?")
+                .setCancelable(false)
+                .setPositiveButton("Ya") { dialog, id ->
+                    mAuth.signOut()
+                    val intent = Intent(this, WelcomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                .setNegativeButton("Tidak") { dialog, id ->
+                    dialog.dismiss()
+                }
+            val alert = builder.create()
+            alert.show()
         }
 
         // Atur listener untuk tombol ubah profil

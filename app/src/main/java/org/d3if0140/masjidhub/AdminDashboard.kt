@@ -3,6 +3,7 @@ package org.d3if0140.masjidhub
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.databinding.ActivityAdminDashboardBinding
@@ -22,10 +23,20 @@ class AdminDashboard : AppCompatActivity() {
 
         // Atur listener untuk tombol logout
         binding.buttonLogout.setOnClickListener {
-            mAuth.signOut()
-            val intent = Intent(this, WelcomeActivity::class.java)
-            startActivity(intent)
-            finish()
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("Apakah Anda yakin ingin logout?")
+                .setCancelable(false)
+                .setPositiveButton("Ya") { dialog, id ->
+                    mAuth.signOut()
+                    val intent = Intent(this, WelcomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                .setNegativeButton("Tidak") { dialog, id ->
+                    dialog.dismiss()
+                }
+            val alert = builder.create()
+            alert.show()
         }
 
         //Mengarahkan ke Halaman
