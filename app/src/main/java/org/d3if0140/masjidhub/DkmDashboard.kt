@@ -113,7 +113,7 @@ class DkmDashboard : AppCompatActivity(), OnMapReadyCallback {
                     true
                 }
                 R.id.menu_finance -> {
-                    val intent = Intent(this, KeuanganActivity::class.java)
+                    val intent = Intent(this, KeuanganDkmActivity::class.java)
                     startActivity(intent)
                     finish()
                     true
@@ -130,7 +130,7 @@ class DkmDashboard : AppCompatActivity(), OnMapReadyCallback {
 
         // Profile image click listener
         binding.profileImageView.setOnClickListener {
-            val intent = Intent(this, ProfilActivity::class.java)
+            val intent = Intent(this, ProfilDkmActivity::class.java)
             startActivity(intent)
         }
 

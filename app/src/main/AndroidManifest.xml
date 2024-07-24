@@ -19,6 +19,9 @@
         android:theme="@style/Theme.MasjidHub"
         tools:targetApi="31">
         <activity
+            android:name=".KeuanganDkmActivity"
+            android:exported="true" />
+        <activity
             android:name=".LaporanPengajuanActivity"
             android:exported="true" />
         <activity
