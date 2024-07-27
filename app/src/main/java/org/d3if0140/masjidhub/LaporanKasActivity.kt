@@ -62,6 +62,8 @@ class LaporanKasActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { querySnapshot ->
                 val dataList = mutableListOf<DataKas>() // Ubah menjadi MutableList<DataKas>
+                var totalKas = 0.0  // Variable untuk menyimpan total kas
+
                 for (document in querySnapshot.documents) {
                     val email = document.getString("email")
                     val jumlah = document.getDouble("jumlah")
@@ -69,11 +71,15 @@ class LaporanKasActivity : AppCompatActivity() {
                     if (email != null && jumlah != null) {
                         val data = DataKas(email, jumlah) // Gunakan DataKas
                         dataList.add(data)
+                        totalKas += jumlah  // Menambahkan jumlahKas ke total
                     }
                 }
 
                 // Update RecyclerView with dataList
                 updateUIWithData(dataList)
+
+                // Update UI with total infaq
+                binding.textTotalKas.text = "Total Infaq: $totalKas"
             }
             .addOnFailureListener { exception ->
                 // Handle any errors
