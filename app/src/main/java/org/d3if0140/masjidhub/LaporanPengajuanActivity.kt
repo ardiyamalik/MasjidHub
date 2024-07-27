@@ -62,6 +62,7 @@ class LaporanPengajuanActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { querySnapshot ->
                 val dataList = mutableListOf<DataPengajuan>() // Ubah menjadi MutableList<DataPengajuan>
+                var totalPengajuan = 0.0  // Variable untuk menyimpan total pengajuan
                 for (document in querySnapshot.documents) {
                     val userEmail = document.getString("userEmail")
                     val jumlah = document.getDouble("jumlah")
@@ -69,11 +70,15 @@ class LaporanPengajuanActivity : AppCompatActivity() {
                     if (userEmail != null && jumlah != null) {
                         val data = DataPengajuan(userEmail, jumlah) // Gunakan DataPengajuan
                         dataList.add(data)
+                        totalPengajuan += jumlah  // Menambahkan jumlah ke total
                     }
                 }
 
                 // Update RecyclerView with dataList
                 updateUIWithData(dataList)
+
+                // Update UI with total pengajuan
+                binding.textTotalPengajuan.text = "Total Infaq: $totalPengajuan"
             }
             .addOnFailureListener { exception ->
                 // Handle any errors
