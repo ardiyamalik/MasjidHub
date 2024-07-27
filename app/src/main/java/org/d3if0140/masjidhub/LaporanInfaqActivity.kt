@@ -3,7 +3,6 @@ package org.d3if0140.masjidhub
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
@@ -27,40 +26,6 @@ class LaporanInfaqActivity : AppCompatActivity() {
         binding.chooseDateButton.setOnClickListener {
             showDatePickerDialog()
         }
-// Logika untuk membuat koleksi "uang_masuk" di firestore tapi masih eror di rules nya
-//        binding.perbaruiButton.setOnClickListener {
-//            // Ambil data yang sudah ditampilkan di RecyclerView
-//            val dataList = (binding.recyclerView.adapter as? DataInfaqAdapter)?.dataList ?: emptyList()
-//
-//            // Hitung total jumlah infaq dari semua item
-//            val totalJumlahInfaq = dataList.sumByDouble { it.jumlahInfaq }
-//
-//            // Ambil tanggal yang sudah dipilih
-//            val selectedDate = selectedDateCalendar.time
-//            val firestoreDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-//            val formattedDate = firestoreDateFormat.format(selectedDate)
-//
-//            // Buat koleksi baru "uang_masuk" di Firestore
-//            val uangMasukCollection = firestore.collection("uang_masuk").document(formattedDate)
-//
-//            // Buat data yang akan disimpan
-//            val data = hashMapOf(
-//                "tanggal" to formattedDate,
-//                "total_uang_masuk" to totalJumlahInfaq
-//            )
-//
-//            // Simpan data ke Firestore
-//            uangMasukCollection.set(data)
-//                .addOnSuccessListener {
-//                    Log.d(TAG, "Data berhasil disimpan di koleksi uang_masuk dengan ID $formattedDate")
-//                    Toast.makeText(this, "Data berhasil disimpan", Toast.LENGTH_SHORT).show()
-//                }
-//                .addOnFailureListener { exception ->
-//                    Log.e(TAG, "Error saat menyimpan data ke Firestore", exception)
-//                    Toast.makeText(this, "Gagal menyimpan data: ${exception.message}", Toast.LENGTH_SHORT).show()
-//                }
-//        }
-
     }
 
     private fun showDatePickerDialog() {
@@ -70,10 +35,9 @@ class LaporanInfaqActivity : AppCompatActivity() {
 
         val datePickerDialog = DatePickerDialog(
             this,
-            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+            { _, year, monthOfYear, dayOfMonth ->
                 selectedDateCalendar.set(year, monthOfYear, dayOfMonth)
                 binding.selectedDateTextView.text = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(selectedDateCalendar.time)
-
                 // Setelah memilih tanggal, langsung panggil fungsi untuk menampilkan data
                 showDataForSelectedDate()
             },
@@ -83,7 +47,6 @@ class LaporanInfaqActivity : AppCompatActivity() {
         )
         datePickerDialog.show()
     }
-
 
     private fun showDataForSelectedDate() {
         val selectedDate = selectedDateCalendar.time
@@ -97,6 +60,8 @@ class LaporanInfaqActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { querySnapshot ->
                 val dataList = mutableListOf<DataInfaq>()
+                var totalInfaq = 0.0  // Variable untuk menyimpan total infaq
+
                 for (document in querySnapshot.documents) {
                     val userEmail = document.getString("userEmail")
                     val jumlahInfaq = document.getDouble("jumlahInfaq")
@@ -104,11 +69,15 @@ class LaporanInfaqActivity : AppCompatActivity() {
                     if (userEmail != null && jumlahInfaq != null) {
                         val data = DataInfaq(userEmail, jumlahInfaq)
                         dataList.add(data)
+                        totalInfaq += jumlahInfaq  // Menambahkan jumlahInfaq ke total
                     }
                 }
 
                 // Update RecyclerView with dataList
                 updateUIWithData(dataList)
+
+                // Update UI with total infaq
+                binding.textTotalInfaq.text = "Total Infaq: $totalInfaq"
             }
             .addOnFailureListener { exception ->
                 // Handle any errors
@@ -117,7 +86,6 @@ class LaporanInfaqActivity : AppCompatActivity() {
                 // Toast.makeText(this, "Failed to retrieve data: ${exception.message}", Toast.LENGTH_SHORT).show()
             }
     }
-
 
     private fun updateUIWithData(dataList: List<DataInfaq>) {
         // Update UI with RecyclerView
