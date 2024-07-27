@@ -1,6 +1,8 @@
 package org.d3if0140.masjidhub
 
 import android.app.DatePickerDialog
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +16,7 @@ class LaporanInfaqActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLaporanInfaqBinding
     private lateinit var firestore: FirebaseFirestore
     private lateinit var selectedDateCalendar: Calendar
+    private var totalInfaq: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +28,11 @@ class LaporanInfaqActivity : AppCompatActivity() {
 
         binding.chooseDateButton.setOnClickListener {
             showDatePickerDialog()
+        }
+
+        binding.perbaruiButton.setOnClickListener {
+            saveTotalInSharedPreferences()
+            sendTotalToAdminKeuangan()
         }
     }
 
@@ -38,7 +46,6 @@ class LaporanInfaqActivity : AppCompatActivity() {
             { _, year, monthOfYear, dayOfMonth ->
                 selectedDateCalendar.set(year, monthOfYear, dayOfMonth)
                 binding.selectedDateTextView.text = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(selectedDateCalendar.time)
-                // Setelah memilih tanggal, langsung panggil fungsi untuk menampilkan data
                 showDataForSelectedDate()
             },
             year,
@@ -53,14 +60,13 @@ class LaporanInfaqActivity : AppCompatActivity() {
         val firestoreDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val formattedDate = firestoreDateFormat.format(selectedDate)
 
-        // Query Firestore for data matching the selected date and status approved
         firestore.collection("infaq_masjid")
             .whereEqualTo("tanggal", formattedDate)
-            .whereEqualTo("status", "approved")  // Filter by status approved
+            .whereEqualTo("status", "approved")
             .get()
             .addOnSuccessListener { querySnapshot ->
                 val dataList = mutableListOf<DataInfaq>()
-                var totalInfaq = 0.0  // Variable untuk menyimpan total infaq
+                totalInfaq = 0.0
 
                 for (document in querySnapshot.documents) {
                     val userEmail = document.getString("userEmail")
@@ -69,29 +75,36 @@ class LaporanInfaqActivity : AppCompatActivity() {
                     if (userEmail != null && jumlahInfaq != null) {
                         val data = DataInfaq(userEmail, jumlahInfaq)
                         dataList.add(data)
-                        totalInfaq += jumlahInfaq  // Menambahkan jumlahInfaq ke total
+                        totalInfaq += jumlahInfaq
                     }
                 }
 
-                // Update RecyclerView with dataList
                 updateUIWithData(dataList)
-
-                // Update UI with total infaq
                 binding.textTotalInfaq.text = "Total Infaq: $totalInfaq"
             }
             .addOnFailureListener { exception ->
-                // Handle any errors
                 Log.e(TAG, "Error getting data for date $formattedDate", exception)
-                // For example, show a Toast message or handle UI state
-                // Toast.makeText(this, "Failed to retrieve data: ${exception.message}", Toast.LENGTH_SHORT).show()
             }
     }
 
     private fun updateUIWithData(dataList: List<DataInfaq>) {
-        // Update UI with RecyclerView
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = DataInfaqAdapter(dataList)
         binding.recyclerView.adapter = adapter
+    }
+
+    private fun saveTotalInSharedPreferences() {
+        val sharedPreferences = getSharedPreferences("AdminKeuanganPrefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putFloat("totalInfaq", totalInfaq.toFloat())
+        editor.apply()
+    }
+
+    private fun sendTotalToAdminKeuangan() {
+        val intent = Intent(this, AdminKeuangan::class.java).apply {
+            putExtra("TOTAL_INFAQ", totalInfaq)
+        }
+        startActivity(intent)
     }
 
     companion object {
