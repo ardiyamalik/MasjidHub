@@ -97,9 +97,22 @@ class LaporanPengajuanActivity : AppCompatActivity() {
 
     private fun saveTotalInSharedPreferences() {
         val sharedPreferences = getSharedPreferences("AdminKeuanganPrefs", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putFloat("totalPengajuan", totalPengajuan.toFloat())
-        editor.apply()
+        val lastUpdatedDate = sharedPreferences.getString("lastUpdatedPengajuanDate", "")
+
+        val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(selectedDateCalendar.time)
+        if (lastUpdatedDate != selectedDate) {
+            val intent = Intent(this, AdminKeuangan::class.java)
+            intent.putExtra("TOTAL_PENGAJUAN", totalPengajuan)
+            startActivity(intent)
+
+            // Simpan tanggal terakhir yang diperbarui
+            val editor = sharedPreferences.edit()
+            editor.putString("lastUpdatedPengajuanDate", selectedDate)
+            editor.apply()
+        } else {
+            // Tampilkan pesan bahwa data untuk tanggal ini sudah diperbarui sebelumnya
+            Log.d(TAG, "Data dari tanggal yang dipilih sudah di perbarui.")
+        }
     }
 
     private fun sendTotalToAdminKeuangan() {

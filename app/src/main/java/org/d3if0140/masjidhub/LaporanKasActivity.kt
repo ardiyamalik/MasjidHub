@@ -95,9 +95,22 @@ class LaporanKasActivity : AppCompatActivity() {
 
     private fun saveTotalInSharedPreferences() {
         val sharedPreferences = getSharedPreferences("AdminKeuanganPrefs", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putFloat("totalKas", totalKas.toFloat())
-        editor.apply()
+        val lastUpdatedDate = sharedPreferences.getString("lastUpdatedKasDate", "")
+
+        val selectedDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(selectedDateCalendar.time)
+        if (lastUpdatedDate != selectedDate) {
+            val intent = Intent(this, AdminKeuangan::class.java)
+            intent.putExtra("TOTAL_KAS", totalKas)
+            startActivity(intent)
+
+            // Simpan tanggal terakhir yang diperbarui
+            val editor = sharedPreferences.edit()
+            editor.putString("lastUpdatedKasDate", selectedDate)
+            editor.apply()
+        } else {
+            // Tampilkan pesan bahwa data untuk tanggal ini sudah diperbarui sebelumnya
+            Log.d(TAG, "Data dari tanggal yang dipilih sudah di perbarui.")
+        }
     }
 
     private fun sendTotalToAdminKeuangan() {
