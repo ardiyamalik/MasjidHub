@@ -19,8 +19,17 @@
         android:theme="@style/Theme.MasjidHub"
         tools:targetApi="31">
         <activity
+            android:name=".LaporanPengajuanJamaah"
+            android:exported="true" />
+        <activity
+            android:name=".LaporanKasJamaah"
+            android:exported="true" />
+        <activity
+            android:name=".LaporanInfaqJamaah"
+            android:exported="true" />
+        <activity
             android:name=".ProfileSearchActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".KeuanganDkmActivity"
             android:exported="true" />
@@ -66,14 +75,10 @@
             android:name=".FullScreenImageActivity"
             android:exported="true" />
         <activity
-            android:name=".DkmKeuangan"
-            android:exported="true" />
-        <activity
             android:name=".AdminKeuangan"
-            android:exported="true" />
-<!--        <activity-->
-<!--            android:name=".AdminIsiPermohonan"-->
-<!--            android:exported="true" />-->
+            android:exported="true" /> <!-- <activity -->
+        <!-- android:name=".AdminIsiPermohonan" -->
+        <!-- android:exported="true" /> -->
         <activity
             android:name=".AdminPermohonan"
             android:exported="true" />
