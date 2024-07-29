@@ -10,18 +10,48 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp">
 
+            <ImageView
+                android:id="@id/backButton"
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/baseline_arrow_back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Kas Mingguan"
+                android:textColor="@color/blue"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.382"
+                app:layout_constraintStart_toEndOf="@+id/backButton"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/textViewCountdown"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="96dp"
                 android:background="@drawable/stroke_white"
                 android:fontFamily="@font/poppins_light"
                 android:padding="12dp"
@@ -96,11 +126,11 @@
                 android:id="@+id/imageViewQR"
                 android:layout_width="268dp"
                 android:layout_height="281dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="204dp"
                 android:src="@drawable/qris"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.496"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/radioGroupMetode" />
 
