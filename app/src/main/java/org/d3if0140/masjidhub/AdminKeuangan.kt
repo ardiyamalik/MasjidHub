@@ -3,7 +3,9 @@ package org.d3if0140.masjidhub
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import org.d3if0140.masjidhub.databinding.ActivityAdminKeuanganBinding
 
 class AdminKeuangan : AppCompatActivity() {
@@ -58,6 +60,10 @@ class AdminKeuangan : AppCompatActivity() {
         binding.resetButton.setOnClickListener {
             resetTotals()
         }
+
+        binding.submitButton.setOnClickListener {
+            updateAndSendData()
+        }
     }
 
     private fun resetTotals() {
@@ -70,5 +76,26 @@ class AdminKeuangan : AppCompatActivity() {
 
         // Update UI
         binding.keuangan.text = "Total Combined: 0.0"
+    }
+
+    private fun updateAndSendData() {
+        val sharedPreferences = getSharedPreferences("AdminKeuanganPrefs", MODE_PRIVATE)
+        val totalInfaq = sharedPreferences.getFloat("totalInfaq", 0.0f)
+        val totalKas = sharedPreferences.getFloat("totalKas", 0.0f)
+        val totalPengajuan = sharedPreferences.getFloat("totalPengajuan", 0.0f)
+
+        // Kirim data melalui broadcast
+        sendBroadcast(totalInfaq, totalKas, totalPengajuan)
+
+        // Tampilkan pesan toast
+        Toast.makeText(this, "Keuangan berhasil diperbarui", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun sendBroadcast(totalInfaq: Float, totalKas: Float, totalPengajuan: Float) {
+        val intent = Intent("org.d3if0140.masjidhub.UPDATE_KEUANGAN")
+        intent.putExtra("TOTAL_INFAQ", totalInfaq)
+        intent.putExtra("TOTAL_KAS", totalKas)
+        intent.putExtra("TOTAL_PENGAJUAN", totalPengajuan)
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
     }
 }
