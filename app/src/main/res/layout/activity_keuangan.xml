@@ -126,8 +126,8 @@
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView4"
                 app:layout_constraintEnd_toEndOf="@+id/imageView4"
-                app:layout_constraintHorizontal_bias="0.917"
-                app:layout_constraintStart_toEndOf="@+id/infaqButton">
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/buttonLaporanInfaq">
 
                 <ImageView
                     android:layout_width="50dp"
@@ -158,23 +158,6 @@
                 app:layout_constraintEnd_toEndOf="@+id/imageView4"
                 app:layout_constraintHorizontal_bias="0.078"
                 app:layout_constraintStart_toStartOf="@+id/imageView4" />
-
-
-            <!--            <androidx.appcompat.widget.AppCompatButton-->
-<!--                android:id="@+id/submitButton"-->
-<!--                android:layout_width="250dp"-->
-<!--                android:layout_height="35dp"-->
-<!--                android:layout_marginBottom="24dp"-->
-<!--                android:background="@drawable/rounded_button_background"-->
-<!--                android:gravity="center"-->
-<!--                android:text="SELENGKAPNYA"-->
-<!--                android:textAllCaps="false"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="16sp"-->
-<!--                android:textStyle="bold"-->
-<!--                app:layout_constraintBottom_toBottomOf="@+id/imageView4"-->
-<!--                app:layout_constraintEnd_toEndOf="@+id/imageView4"-->
-<!--                app:layout_constraintStart_toStartOf="@+id/imageView4" />-->
 
             <TextView
                 android:id="@+id/textView3"

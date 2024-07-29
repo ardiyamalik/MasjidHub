@@ -19,6 +19,15 @@
         android:theme="@style/Theme.MasjidHub"
         tools:targetApi="31">
         <activity
+            android:name=".LaporanPengajuanDkm"
+            android:exported="true" />
+        <activity
+            android:name=".LaporanKasDkm"
+            android:exported="true" />
+        <activity
+            android:name=".LaporanInfaqDkm"
+            android:exported="true" />
+        <activity
             android:name=".LaporanPengajuanJamaah"
             android:exported="true" />
         <activity

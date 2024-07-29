@@ -47,6 +47,8 @@
     <string name="kontak_label">Kontak: %1$s</string>
     <string name="lokasi_label">Lokasi: %1$s</string>
     <string name="status_label">Status: %1$s</string>
+    <string name="jumlah">Jumlah:</string>
+    <string name="user_email">User Email:</string>
 
 
 </resources>

@@ -47,6 +47,21 @@ class KeuanganDkmActivity : AppCompatActivity() {
 
         binding.uangTerkumpul.text = "Total Combined: $combinedTotal"
 
+        binding.buttonLaporanInfaq.setOnClickListener{
+            val intent = Intent(this, LaporanInfaqDkm::class.java)
+            startActivity(intent)
+        }
+
+        binding.buttonLaporanKas.setOnClickListener{
+            val intent = Intent(this, LaporanKasDkm::class.java)
+            startActivity(intent)
+        }
+
+        binding.buttonLaporanPengajuan.setOnClickListener{
+            val intent = Intent(this, LaporanPengajuanDkm::class.java)
+            startActivity(intent)
+        }
+
         // Bottom navigation listener
         binding.bottomNavigationDkm.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
