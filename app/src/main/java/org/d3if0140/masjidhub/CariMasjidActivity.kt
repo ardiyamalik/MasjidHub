@@ -25,32 +25,30 @@ class CariMasjidActivity : AppCompatActivity() {
         binding = ActivityCariMasjidBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Inisialisasi Firebase
         mAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
-        // Inisialisasi RecyclerView
-        userAdapter = UserAdapter(userList)
+        userAdapter = UserAdapter(userList) { user ->
+            val intent = Intent(this, ProfileSearchActivity::class.java).apply {
+                putExtra("USER_ID", user.userId)
+                putExtra("USER_NAME", user.nama)
+                putExtra("USER_ALAMAT", user.alamat)
+                putExtra("USER_IMAGE_URL", user.userImageUrl)
+            }
+            startActivity(intent)
+        }
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = userAdapter
 
-        // Setup EditText untuk pencarian
         val editTextSearch: EditText = binding.editTextSearch
         editTextSearch.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Implementasi yang diperlukan atau kosongkan jika tidak diperlukan
-            }
-
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 searchUsers(s.toString())
             }
-
-            override fun afterTextChanged(s: Editable?) {
-                // Implementasi yang diperlukan atau kosongkan jika tidak diperlukan
-            }
+            override fun afterTextChanged(s: Editable?) {}
         })
 
-        // Setup bottom navigation listener
         binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.search_masjid -> true
@@ -95,12 +93,9 @@ class CariMasjidActivity : AppCompatActivity() {
             }
             .addOnFailureListener { e ->
                 Log.w("CariMasjidActivity", "Error fetching users", e)
-            }
-
-    .addOnFailureListener { exception ->
-                Log.e("CariMasjidActivity", "Error fetching users: ${exception.message}", exception)
-                Toast.makeText(this, "Error fetching users: ${exception.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Error fetching users: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 }
+
 

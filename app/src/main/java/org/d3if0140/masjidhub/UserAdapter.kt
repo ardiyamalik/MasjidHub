@@ -6,10 +6,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.d3if0140.masjidhub.databinding.UserItemBinding
 
-class UserAdapter(private val userList: List<User>) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
+class UserAdapter(
+    private val userList: List<User>,
+    private val onItemClick: (User) -> Unit
+) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     class UserViewHolder(private val binding: UserItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(user: User) {
+        fun bind(user: User, onItemClick: (User) -> Unit) {
             binding.userNameTextView.text = user.nama
             binding.userAlamatTextView.text = user.alamat
             if (user.userImageUrl != null) {
@@ -18,6 +21,9 @@ class UserAdapter(private val userList: List<User>) : RecyclerView.Adapter<UserA
                     .into(binding.userImageView)
             } else {
                 binding.userImageView.setImageResource(R.drawable.baseline_person_black)
+            }
+            binding.root.setOnClickListener {
+                onItemClick(user)
             }
         }
     }
@@ -28,7 +34,7 @@ class UserAdapter(private val userList: List<User>) : RecyclerView.Adapter<UserA
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        holder.bind(userList[position])
+        holder.bind(userList[position], onItemClick)
     }
 
     override fun getItemCount(): Int {
