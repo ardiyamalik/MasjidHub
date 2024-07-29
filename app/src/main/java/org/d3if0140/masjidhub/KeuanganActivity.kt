@@ -47,6 +47,21 @@ class KeuanganActivity : AppCompatActivity() {
 
         binding.uangTerkumpul.text = "Total Combined: $combinedTotal"
 
+        binding.buttonLaporanInfaq.setOnClickListener{
+            val intent = Intent(this, LaporanInfaqJamaah::class.java)
+            startActivity(intent)
+        }
+
+        binding.buttonLaporanKas.setOnClickListener{
+            val intent = Intent(this, LaporanKasJamaah::class.java)
+            startActivity(intent)
+        }
+
+        binding.buttonLaporanPengajuan.setOnClickListener{
+            val intent = Intent(this, LaporanPengajuanJamaah::class.java)
+            startActivity(intent)
+        }
+
         // Atur listener untuk bottom navigation view
         binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {

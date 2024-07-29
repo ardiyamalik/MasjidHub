@@ -18,8 +18,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="36dp"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:padding="36dp">
 
             <ImageButton
                 android:id="@+id/backButton"
@@ -96,6 +96,36 @@
                 app:layout_constraintEnd_toEndOf="@+id/imageView4"
                 app:layout_constraintHorizontal_bias="0.057"
                 app:layout_constraintStart_toStartOf="@+id/imageView4" />
+
+            <Button
+                android:id="@+id/buttonLaporanInfaq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="124dp"
+                android:text="Laporan Infaq"
+                app:layout_constraintEnd_toStartOf="@+id/buttonLaporanKas"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/buttonLaporanPengajuan"
+                app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+            <Button
+                android:id="@+id/buttonLaporanKas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="16dp"
+                android:text="Laporan Kas"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+            <Button
+                android:id="@+id/buttonLaporanPengajuan"
+                android:layout_width="111dp"
+                android:layout_height="97dp"
+                android:layout_marginStart="16dp"
+                android:text="Laporan Pengajuan"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
