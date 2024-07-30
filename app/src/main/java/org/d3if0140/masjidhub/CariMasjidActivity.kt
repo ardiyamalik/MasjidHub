@@ -35,6 +35,7 @@ class CariMasjidActivity : AppCompatActivity() {
                 putExtra("USER_ALAMAT", user.alamat)
                 putExtra("USER_IMAGE_URL", user.userImageUrl)
             }
+            Log.d("CariMasjidActivity", "Sending userId: ${user.userId}, userImageUrl: ${user.userImageUrl}")
             startActivity(intent)
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -86,7 +87,8 @@ class CariMasjidActivity : AppCompatActivity() {
                 userList.clear()
                 for (document in documents) {
                     val user = document.toObject(User::class.java)
-                    Log.d("CariMasjidActivity", "User found: ${user.nama}, ID: ${document.id}")
+                    user.userId = document.id // Tambahkan ini jika userId tidak ada di dalam objek User
+                    Log.d("CariMasjidActivity", "User found: ${user.nama}, ID: ${document.id}, Image URL: ${user.userImageUrl}")
                     userList.add(user)
                 }
                 userAdapter.notifyDataSetChanged()
@@ -97,5 +99,3 @@ class CariMasjidActivity : AppCompatActivity() {
             }
     }
 }
-
-
