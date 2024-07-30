@@ -46,6 +46,7 @@ class AdminPermohonan : AppCompatActivity() {
                 permohonanDanaList.clear()
                 for (document in result) {
                     val id = document.id
+                    val userId = document.id
                     val nama = document.getString("nama") ?: ""
                     val jumlah = document.getDouble("jumlah") ?: 0.0
                     val alasan = document.getString("alasan") ?: ""
@@ -54,7 +55,7 @@ class AdminPermohonan : AppCompatActivity() {
                     val status = document.getString("status") ?: "Pending"
                     val email = document.getString("userEmail") ?: ""
 
-                    val permohonanDana = PermohonanDana(id, jumlah, alasan, tanggal, ktpUrl, status, email, nama)
+                    val permohonanDana = PermohonanDana(id,userId, jumlah, alasan, tanggal, ktpUrl, status, email, nama)
                     permohonanDanaList.add(permohonanDana)
                 }
                 adapter.updateList(permohonanDanaList)

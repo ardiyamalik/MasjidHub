@@ -2,6 +2,7 @@ package org.d3if0140.masjidhub.model
 
 data class PermohonanDana(
     var id: String = "",         // ID dari dokumen dalam Firestore
+    val userId: String = "",
     var jumlah: Double = 0.0,    // Jumlah dana yang diajukan
     var alasan: String = "",     // Alasan pengajuan dana
     var tanggal: String = "",    // Tanggal pengajuan

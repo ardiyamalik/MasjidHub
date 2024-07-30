@@ -109,6 +109,7 @@ class PengisianKasActivity : AppCompatActivity() {
             val tanggal = binding.editTextTanggal.text.toString()
 
             val kasData = hashMapOf(
+                "userId" to userId,
                 "jumlah" to jumlah,
                 "metode" to metode,
                 "email" to email,
@@ -166,7 +167,11 @@ class PengisianKasActivity : AppCompatActivity() {
 
 
     private fun sendNotificationToDkm(kasId: String) {
+        val currentUser = auth.currentUser
+        val userId = currentUser?.uid ?: "unknown_user" // Menyimpan userId dari pengguna saat ini
+
         val notificationData = hashMapOf(
+            "userId" to userId, // Tambahkan userId ke data notifikasi
             "title" to "kas sedang diproses",
             "message" to "Kas mingguan sedang diproses oleh aplikasi.",
             "timestamp" to System.currentTimeMillis()
@@ -178,7 +183,7 @@ class PengisianKasActivity : AppCompatActivity() {
                 Log.d(TAG, "Notification sent to DKM")
 
                 // Redirect to NotificationDkmActivity after sending notification
-                startActivity(Intent(this, NotificationDkmActivity::class.java))
+                startActivity(Intent(this, KeuanganDkmActivity::class.java))
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "Error sending notification", e)

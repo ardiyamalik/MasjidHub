@@ -113,6 +113,7 @@ class PengajuanDanaActivity : AppCompatActivity() {
 
                                 val pengajuan = hashMapOf(
                                     "nama" to nama,
+                                    "userId" to userId,
                                     "jumlah" to jumlah,
                                     "alasan" to alasan,
                                     "tanggal" to tanggal,
@@ -128,7 +129,7 @@ class PengajuanDanaActivity : AppCompatActivity() {
                                     Toast.makeText(this, "Pengajuan berhasil diajukan", Toast.LENGTH_SHORT).show()
                                     Log.d(TAG, "Pengajuan data successfully submitted")
                                     saveNotificationToFirestore(userEmail, jumlah)
-                                    val intent = Intent(this, NotificationDkmActivity::class.java)
+                                    val intent = Intent(this, KeuanganDkmActivity::class.java)
                                     startActivity(intent)
                                 }.addOnFailureListener { e ->
                                     Toast.makeText(this, "Gagal mengajukan dana: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -155,7 +156,11 @@ class PengajuanDanaActivity : AppCompatActivity() {
     }
 
     private fun saveNotificationToFirestore(userEmail: String, jumlah: Double) {
+        val currentUser = auth.currentUser
+        val userId = currentUser?.uid ?: "unknown_user" // Menyimpan userId dari pengguna saat ini
+
         val notificationData = hashMapOf(
+            "userId" to userId, // Tambahkan userId ke data notifikasi
             "title" to "Pengajuan Dana Baru",
             "message" to "Ada pengajuan dana baru dari $userEmail sebesar Rp $jumlah. Silakan cek aplikasi untuk detail lebih lanjut.",
             "timestamp" to System.currentTimeMillis()
