@@ -96,7 +96,11 @@ class InfaqActivity : AppCompatActivity() {
     }
 
     private fun saveNotificationToFirestore(jumlahInfaq: Double) {
+        val currentUser = auth.currentUser
+        val userId = currentUser?.uid ?: "unknown_user" // Menyimpan userId dari pengguna saat ini
+
         val notificationData = hashMapOf(
+            "userId" to userId, // Tambahkan userId ke data notifikasi
             "title" to "Infaq sedang diproses",
             "message" to "Infaq sebesar Rp $jumlahInfaq sedang diproses oleh aplikasi.",
             "timestamp" to System.currentTimeMillis()
@@ -112,6 +116,7 @@ class InfaqActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
     }
+
 
     private fun showDatePickerDialog() {
         val calendar = Calendar.getInstance()
