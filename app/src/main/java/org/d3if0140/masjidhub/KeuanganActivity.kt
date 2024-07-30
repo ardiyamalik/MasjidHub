@@ -62,6 +62,10 @@ class KeuanganActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.backButton.setOnClickListener{
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
+
         // Atur listener untuk bottom navigation view
         binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {

@@ -32,6 +32,10 @@ class UnggahActivity : AppCompatActivity() {
             PlayIntegrityAppCheckProviderFactory.getInstance()
         )
 
+        binding.backButton.setOnClickListener{
+            startActivity(Intent(this, DkmDashboard::class.java))
+        }
+
         binding.bottomNavigationDkm.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.uploadEvent -> true

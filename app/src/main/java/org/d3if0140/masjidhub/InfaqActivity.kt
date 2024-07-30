@@ -37,6 +37,10 @@ class InfaqActivity : AppCompatActivity() {
             showDatePickerDialog()
         }
 
+        binding.backButton.setOnClickListener{
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
+
         binding.radioGroupMetode.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.radioButtonBankTransfer -> {

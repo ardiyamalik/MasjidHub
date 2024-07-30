@@ -1,5 +1,6 @@
 package org.d3if0140.masjidhub
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +22,10 @@ class NotificationActivity : AppCompatActivity() {
 
         setupRecyclerView()
         loadNotifications()
+
+        binding.backButton.setOnClickListener{
+            startActivity(Intent(this, HomeActivity::class.java))
+        }
     }
 
     private fun setupRecyclerView() {

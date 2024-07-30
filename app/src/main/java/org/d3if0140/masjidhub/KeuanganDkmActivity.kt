@@ -62,6 +62,10 @@ class KeuanganDkmActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.backButton.setOnClickListener{
+            startActivity(Intent(this, DkmDashboard::class.java))
+        }
+
         // Bottom navigation listener
         binding.bottomNavigationDkm.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {

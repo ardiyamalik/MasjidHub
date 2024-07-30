@@ -1,5 +1,6 @@
 package org.d3if0140.masjidhub
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ImageView
@@ -37,6 +38,10 @@ class AdminVerifActivity : AppCompatActivity() {
         binding.masjidListView.setOnItemClickListener { _, _, position, _ ->
             val masjidData = masjidDataList[position]
             showVerificationDialog(masjidData)
+        }
+
+        binding.backButton.setOnClickListener{
+            startActivity(Intent(this, AdminDashboard::class.java))
         }
     }
 

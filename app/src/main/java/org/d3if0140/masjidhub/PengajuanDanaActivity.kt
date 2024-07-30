@@ -72,6 +72,10 @@ class PengajuanDanaActivity : AppCompatActivity() {
             submitPengajuan()
             Log.d(TAG, "Button 'Submit' clicked")
         }
+
+        binding.backButton.setOnClickListener{
+            startActivity(Intent(this, DkmDashboard::class.java))
+        }
     }
 
     private fun submitPengajuan() {

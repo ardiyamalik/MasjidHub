@@ -1,5 +1,6 @@
 package org.d3if0140.masjidhub
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +24,10 @@ class ProfileSearchActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         firestore = FirebaseFirestore.getInstance()
+
+        binding.backButton.setOnClickListener{
+            startActivity(Intent(this, CariMasjidActivity::class.java))
+        }
 
         // Setup RecyclerView for posts
         postAdapter = PostAdapter(postList)

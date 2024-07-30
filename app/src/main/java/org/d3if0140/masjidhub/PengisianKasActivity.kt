@@ -40,6 +40,10 @@ class PengisianKasActivity : AppCompatActivity() {
             showDatePickerDialog()
         }
 
+        binding.backButton.setOnClickListener{
+            startActivity(Intent(this, DkmDashboard::class.java))
+        }
+
         // Mengatur countdown timer selama 7 hari
         val countdownMillis = TimeUnit.DAYS.toMillis(7)
         val textViewCountdown = binding.textViewCountdown

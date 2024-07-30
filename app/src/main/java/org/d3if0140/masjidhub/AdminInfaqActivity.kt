@@ -1,5 +1,6 @@
 package org.d3if0140.masjidhub
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -30,6 +31,10 @@ class AdminInfaqActivity : AppCompatActivity() {
 
         viewModel.infaqList.observe(this) { infaqList ->
             adapter.submitList(infaqList)
+        }
+
+        binding.backButton.setOnClickListener{
+            startActivity(Intent(this, AdminDashboard::class.java))
         }
     }
 
