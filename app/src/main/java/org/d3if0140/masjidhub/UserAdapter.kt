@@ -12,8 +12,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 
 class UserAdapter(private val userList: List<User>, private val onUserClick: (User) -> Unit) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
@@ -27,10 +27,14 @@ class UserAdapter(private val userList: List<User>, private val onUserClick: (Us
         holder.userNameTextView.text = user.nama
         holder.userAddressTextView.text = user.alamat
 
-        if (user.userImageUrl.isNotEmpty()) {
+        Log.d("UserAdapter", "Loading image for user: ${user.nama}, URL: ${user.imageUrl}")
+
+        if (user.imageUrl.isNotEmpty()) {
             Glide.with(holder.itemView.context)
-                .load(user.userImageUrl)
-                .apply(RequestOptions().placeholder(R.drawable.baseline_person_black).error(R.drawable.baseline_person_black))
+                .load(user.imageUrl)
+                .apply(RequestOptions()
+                    .placeholder(R.drawable.baseline_person_black)
+                    .error(R.drawable.baseline_person_black))
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(
                         e: GlideException?,
@@ -38,8 +42,8 @@ class UserAdapter(private val userList: List<User>, private val onUserClick: (Us
                         target: Target<Drawable>?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        Log.e("UserAdapter", "Error loading user image: ${user.userImageUrl}", e)
-                        return false // Return false so that Glide can handle the error placeholder
+                        Log.e("UserAdapter", "Error loading user image from URL: ${user.imageUrl}", e)
+                        return false // Return false so Glide can handle the error placeholder
                     }
 
                     override fun onResourceReady(
@@ -49,11 +53,13 @@ class UserAdapter(private val userList: List<User>, private val onUserClick: (Us
                         dataSource: DataSource?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        return false // Return false so that Glide can handle the resource
+                        Log.d("UserAdapter", "Image loaded successfully for user: ${user.nama}")
+                        return false // Return false so Glide can handle the resource
                     }
                 })
                 .into(holder.userImageView)
         } else {
+            Log.d("UserAdapter", "Empty image URL for user: ${user.nama}")
             holder.userImageView.setImageResource(R.drawable.baseline_person_black)
         }
 

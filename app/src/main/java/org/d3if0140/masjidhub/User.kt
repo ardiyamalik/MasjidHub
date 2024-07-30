@@ -4,7 +4,7 @@ data class User(
     var userId: String = "",
     val nama: String = "",
     val alamat: String = "",
-    val userImageUrl: String = "",
+    val imageUrl: String = "",
     val role: String = ""
 )
 

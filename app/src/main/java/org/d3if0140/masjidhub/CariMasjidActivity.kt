@@ -6,9 +6,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.databinding.ActivityCariMasjidBinding
@@ -33,9 +36,9 @@ class CariMasjidActivity : AppCompatActivity() {
                 putExtra("USER_ID", user.userId)
                 putExtra("USER_NAME", user.nama)
                 putExtra("USER_ALAMAT", user.alamat)
-                putExtra("USER_IMAGE_URL", user.userImageUrl)
+                putExtra("USER_IMAGE_URL", user.imageUrl)
             }
-            Log.d("CariMasjidActivity", "Sending userId: ${user.userId}, userImageUrl: ${user.userImageUrl}")
+            Log.d("CariMasjidActivity", "Sending userId: ${user.userId}, userImageUrl: ${user.imageUrl}")
             startActivity(intent)
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -88,7 +91,7 @@ class CariMasjidActivity : AppCompatActivity() {
                 for (document in documents) {
                     val user = document.toObject(User::class.java)
                     user.userId = document.id // Tambahkan ini jika userId tidak ada di dalam objek User
-                    Log.d("CariMasjidActivity", "User found: ${user.nama}, ID: ${document.id}, Image URL: ${user.userImageUrl}")
+                    Log.d("CariMasjidActivity", "User found: ${user.nama}, ID: ${document.id}, Image URL: ${user.imageUrl}")
                     userList.add(user)
                 }
                 userAdapter.notifyDataSetChanged()
