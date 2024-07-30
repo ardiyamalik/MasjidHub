@@ -10,14 +10,39 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/baseline_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textInfaq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Pengajuan Dana"
+            android:textColor="@color/blue"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.408"
+            app:layout_constraintStart_toEndOf="@+id/backButton"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <EditText
             android:id="@+id/editTextNama"
             android:layout_width="379dp"
             android:layout_height="46dp"
+            android:layout_marginTop="104dp"
             android:background="@drawable/stroke_white"
-            android:paddingLeft="10dp"
             android:hint="Nama"
             android:inputType="text"
+            android:paddingLeft="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -106,13 +131,17 @@
             app:layout_constraintTop_toBottomOf="@id/editTextLokasi"
             android:layout_marginTop="16dp" />
 
-
-
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonUploadFotoPendukung"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Pilih Foto Bukti Pendukung"
+            android:background="@drawable/stroke_white"
+            android:textColor="@color/blue"
+            android:fontFamily="@font/poppins_bold"
+            android:drawableLeft="@drawable/placeholder_image"
+            android:paddingLeft="10dp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textViewFotoPendukung"
@@ -138,17 +167,22 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@color/blue"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageViewFotoPendukung"
             android:layout_marginTop="16dp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonUploadKTP"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Pilih Foto KTP"
+            android:background="@drawable/stroke_white"
+            android:textColor="@color/blue"
+            android:fontFamily="@font/poppins_bold"
+            android:textStyle="bold"
+            android:drawableLeft="@drawable/placeholder_image"
+            android:paddingLeft="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textViewKTP"
@@ -166,11 +200,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/buttonUploadKTP" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonSubmit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Ajukan"
+            android:background="@drawable/rounded_button_background"
+            android:textColor="@color/white"
+            android:fontFamily="@font/poppins_bold"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageViewKTP"
