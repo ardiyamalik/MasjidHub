@@ -7,6 +7,8 @@
     android:background="@color/white"
     tools:context=".ProfilActivity">
 
+
+
     <ImageView
         android:id="@+id/profileImageView"
         android:layout_width="153dp"

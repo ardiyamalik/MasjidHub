@@ -7,14 +7,26 @@
     android:background="@color/white"
     tools:context=".ProfilDkmActivity">
 
+    <ImageButton
+        android:id="@+id/ubahProfileDkm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/baseline_edit"
+        app:layout_constraintBottom_toTopOf="@+id/namaUserDkm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/profileImageDkm" />
+
     <ImageView
         android:id="@+id/profileImageDkm"
         android:layout_width="153dp"
         android:layout_height="121dp"
-        android:layout_gravity="end"
+        android:layout_marginTop="50dp"
         android:contentDescription="Foto Profil"
         android:src="@drawable/baseline_person_black"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/namaUserDkm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,95 +46,94 @@
     <TextView
         android:id="@+id/namaUserDkm"
         android:layout_width="340dp"
-        android:layout_height="88dp"
+        android:layout_height="58dp"
         android:fontFamily="@font/poppins_bold"
         android:text="Nama Dkm"
+        android:layout_marginTop="10dp"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="24dp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImageDkm"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@id/profileImageDkm" />
 
     <TextView
         android:id="@+id/alamat_masjid"
-        android:layout_width="338dp"
-        android:layout_height="74dp"
+        android:layout_width="363dp"
+        android:layout_height="61dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/alamat"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/namaUserDkm"
-        app:layout_constraintVertical_bias="0.015" />
+        app:layout_constraintTop_toBottomOf="@id/namaUserDkm"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/jamaahYangTerdaftar"
+        android:layout_width="166dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/stroke_white"
+        android:drawableLeft="@drawable/informasi"
+        android:drawablePadding="28dp"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="start|center_vertical"
+        android:paddingLeft="10dp"
+        android:text="Jamaah"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/buttonLogoutDkm"
+        app:layout_constraintHorizontal_bias="0.097"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/alamat_masjid" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonLogoutDkm"
+        android:layout_width="165dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/stroke_white"
+        android:drawableLeft="@drawable/baseline_logout_blue"
+        android:drawablePadding="26dp"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="start|center_vertical"
+        android:paddingLeft="10dp"
+        android:text="@string/logout"
+        android:textColor="@color/blue"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/ubahProfileDkm"
+        app:layout_constraintTop_toBottomOf="@id/alamat_masjid" />
 
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_dkm"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toTopOf="@id/recyclerViewPost"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.578" />
+        app:layout_constraintTop_toBottomOf="@id/buttonLogoutDkm" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewPost"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_dkm"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_dkm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alamat_masjid" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/ubahProfileDkm"
-        android:layout_width="149dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginBottom="332dp"
-        android:background="@drawable/stroke_white"
-        android:drawableLeft="@drawable/baseline_edit_off_24"
-        android:drawablePadding="8dp"
-        android:fontFamily="@font/poppins_bold"
-        android:gravity="start|center_vertical"
-        android:paddingLeft="18dp"
-        android:text="UBAH PROFIL"
-        android:textColor="@color/blue"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/divider"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonLogoutDkm"
-        android:layout_width="119dp"
-        android:layout_height="44dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="330dp"
-        android:background="@drawable/stroke_white"
-        android:drawableLeft="@drawable/baseline_logout_blue"
-        android:drawablePadding="8dp"
-        android:fontFamily="@font/poppins_bold"
-        android:gravity="start|center_vertical"
-        android:paddingLeft="18dp"
-        android:text="@string/logout"
-        android:textColor="@color/blue"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/divider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@id/divider" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
