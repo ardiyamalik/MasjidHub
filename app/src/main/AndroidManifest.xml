@@ -19,6 +19,9 @@
         android:theme="@style/Theme.MasjidHub"
         tools:targetApi="31">
         <activity
+            android:name=".JamaahTerdaftar"
+            android:exported="false" />
+        <activity
             android:name=".LaporanPengajuanDkm"
             android:exported="true" />
         <activity
