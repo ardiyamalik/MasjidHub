@@ -22,6 +22,9 @@
             android:name=".JamaahTerdaftar"
             android:exported="false" />
         <activity
+            android:name=".ProfileSearchAdmin"
+            android:exported="true" />
+        <activity
             android:name=".LaporanPengajuanDkm"
             android:exported="true" />
         <activity

@@ -9,7 +9,7 @@ import org.d3if0140.masjidhub.databinding.ActivityAdminListMasjidBinding
 
 class AdminListMasjid : AppCompatActivity() {
     private lateinit var binding: ActivityAdminListMasjidBinding
-    private lateinit var masjidAdapter: MasjidAdapter
+    private lateinit var masjidAdminAdapter: MasjidAdminAdapter
     private val masjidList = mutableListOf<Masjid>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,8 +23,16 @@ class AdminListMasjid : AppCompatActivity() {
         }
 
         binding.recyclerViewMasjid.layoutManager = LinearLayoutManager(this)
-        masjidAdapter = MasjidAdapter(masjidList)
-        binding.recyclerViewMasjid.adapter = masjidAdapter
+        masjidAdminAdapter = MasjidAdminAdapter(masjidList) { masjid ->
+            val intent = Intent(this, ProfileSearchAdmin::class.java).apply {
+                putExtra("USER_ID", masjid.userId)
+                putExtra("USER_NAME", masjid.nama)
+                putExtra("USER_ALAMAT", masjid.alamat)
+                putExtra("USER_IMAGE_URL", masjid.imageUrl)
+            }
+            startActivity(intent)
+        }
+        binding.recyclerViewMasjid.adapter = masjidAdminAdapter
 
         fetchMasjidData()
     }
@@ -36,12 +44,13 @@ class AdminListMasjid : AppCompatActivity() {
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
+                    val userId = document.id
                     val name = document.getString("nama") ?: ""
                     val address = document.getString("alamat") ?: ""
                     val profileImageUrl = document.getString("imageUrl") ?: ""
-                    masjidList.add(Masjid(name, address, profileImageUrl))
+                    masjidList.add(Masjid(userId, name, address, profileImageUrl))
                 }
-                masjidAdapter.notifyDataSetChanged()
+                masjidAdminAdapter.notifyDataSetChanged()
             }
             .addOnFailureListener { exception ->
                 // Handle the error

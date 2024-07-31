@@ -1,11 +1,14 @@
 package org.d3if0140.masjidhub
 
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
@@ -35,7 +38,7 @@ class AdminPostAdapter(
             .into(holder.postImageView)
 
         holder.deleteButton.setOnClickListener {
-            onDelete(post)
+            showDeleteConfirmationDialog(holder.itemView.context, post)
         }
 
         // Set click listener for post image
@@ -49,6 +52,20 @@ class AdminPostAdapter(
     }
 
     override fun getItemCount(): Int = postList.size
+
+    private fun showDeleteConfirmationDialog(context: Context, post: Post) {
+        AlertDialog.Builder(context)
+            .setTitle("Delete Post")
+            .setMessage("Are you sure you want to delete this post?")
+            .setPositiveButton("Delete") { dialog, _ ->
+                onDelete(post)
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
 
     class AdminPostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val descriptionTextView: TextView = itemView.findViewById(R.id.descriptionTextView)
