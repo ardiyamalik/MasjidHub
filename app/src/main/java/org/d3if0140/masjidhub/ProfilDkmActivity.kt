@@ -67,6 +67,12 @@ class ProfilDkmActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.jamaahYangTerdaftar.setOnClickListener {
+            val intent = Intent(this, JamaahTerdaftar::class.java)
+            startActivity(intent)
+        }
+
+
         // Dapatkan ID pengguna yang saat ini masuk
         val currentUserId = mAuth.currentUser?.uid
 
