@@ -1,5 +1,6 @@
 package org.d3if0140.masjidhub
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
@@ -27,6 +28,12 @@ class ProfileSearchAdmin : AppCompatActivity() {
 
         binding.backButton.setOnClickListener {
             finish() // Kembali ke aktivitas sebelumnya
+        }
+
+        binding.jamaahYangTerdaftar.setOnClickListener {
+            val intent = Intent(this, AdminJamaahTerdaftar::class.java)
+            intent.putExtra("nama", binding.namaUserDkm.text.toString())
+            startActivity(intent)
         }
 
         // Setup RecyclerView for posts

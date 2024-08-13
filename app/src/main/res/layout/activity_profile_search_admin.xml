@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.131" />
+        app:layout_constraintVertical_bias="0.075" />
 
     <ImageView
         android:id="@id/backButton"
@@ -63,6 +63,31 @@
         app:layout_constraintTop_toBottomOf="@+id/namaUserDkm"
         app:layout_constraintVertical_bias="0.015" />
 
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/jamaahYangTerdaftar"
+        android:layout_width="166dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/stroke_white"
+        android:drawableLeft="@drawable/informasi"
+        android:drawablePadding="28dp"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="start|center_vertical"
+        android:paddingLeft="10dp"
+        android:text="Jamaah"
+        android:textColor="@color/blue"
+
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewPost"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/alamat_masjid"
+        app:layout_constraintVertical_bias="0.0" />
+
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
@@ -75,13 +100,15 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewPost"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="412dp"
+        android:layout_height="337dp"
         android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/alamat_masjid" />
+        app:layout_constraintTop_toBottomOf="@+id/alamat_masjid"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
