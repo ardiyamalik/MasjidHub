@@ -9,9 +9,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -34,7 +32,7 @@ class ProfilDkmActivity : AppCompatActivity() {
         binding = ActivityProfilDkmBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val currentMasjidName ="Nama Masjid"
+        val currentMasjidName ="nama"
 
         // Inisialisasi Firebase
         mAuth = FirebaseAuth.getInstance()
@@ -71,7 +69,7 @@ class ProfilDkmActivity : AppCompatActivity() {
 
         binding.jamaahYangTerdaftar.setOnClickListener {
             val intent = Intent(this, JamaahTerdaftar::class.java)
-            intent.putExtra("MASJID_NAME", currentMasjidName)
+            intent.putExtra("nama", binding.namaUserDkm.text.toString())
             startActivity(intent)
         }
 

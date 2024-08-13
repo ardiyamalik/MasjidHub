@@ -25,18 +25,19 @@ class JamaahTerdaftar : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val masjidName = intent.getStringExtra("MASJID_NAME")?.trim()
+        val masjidName = intent.getStringExtra("nama")?.trim()
         Log.d("JamaahTerdaftarActivity", "Masjid Name: $masjidName")
         masjidName?.let {
             fetchJamaahList(it)
         } ?: Log.d("JamaahTerdaftarActivity", "Masjid name is null or empty")
     }
 
-    private fun fetchJamaahList(masjidName: String) {
-        Log.d("JamaahTerdaftarActivity", "Fetching Jamaah list for Masjid: $masjidName")
+    private fun fetchJamaahList(currentMasjidName: String) {
+        Log.d("JamaahTerdaftarActivity", "Fetching Jamaah list for Masjid: $currentMasjidName")
         val firestore = FirebaseFirestore.getInstance()
         firestore.collection("user")
             .whereEqualTo("role", "jamaah")
+            .whereEqualTo("dkm", currentMasjidName)
             .get()
             .addOnSuccessListener { documents ->
                 Log.d("JamaahTerdaftarActivity", "Successfully fetched documents")
