@@ -127,22 +127,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.086" />
 
-        <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="353dp"
-            android:layout_height="125dp"
-            android:layout_marginLeft="28dp"
-            android:layout_marginRight="28dp"
-            app:layout_constraintBottom_toTopOf="@+id/textViewProgram"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.222"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTerdekat"
-            app:layout_constraintVertical_bias="0.0"
-            tools:context=".HomeActivity"
-            tools:viewBindingIgnore="true" />
-
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -160,7 +144,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/map">
+                app:layout_constraintTop_toBottomOf="@id/textViewProgram">
 
                 <LinearLayout
                     android:id="@+id/buttonInfaq"
