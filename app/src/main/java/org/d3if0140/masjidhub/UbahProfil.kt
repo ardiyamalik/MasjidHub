@@ -87,6 +87,11 @@ class UbahProfil : AppCompatActivity() {
             startActivityForResult(intent, PICK_IMAGE_REQUEST)
         }
 
+        binding.backButton.setOnClickListener{
+            val intent = Intent(this, ProfilActivity::class.java)
+            startActivity(intent)
+        }
+
         // Atur listener untuk bottom navigation view
         binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {

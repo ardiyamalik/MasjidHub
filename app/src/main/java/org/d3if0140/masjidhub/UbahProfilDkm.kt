@@ -73,6 +73,11 @@ class UbahProfilDkm : AppCompatActivity() {
             startActivityForResult(intent, PICK_IMAGE_REQUEST)
         }
 
+        binding.backButton.setOnClickListener{
+            val intent = Intent(this, ProfilDkmActivity::class.java)
+            startActivity(intent)
+        }
+
         // Bottom navigation listener
         binding.bottomNavigationDkm.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
