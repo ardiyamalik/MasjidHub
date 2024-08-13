@@ -1,8 +1,6 @@
 package org.d3if0140.masjidhub
 
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import org.d3if0140.masjidhub.databinding.ActivityFullScreenImageBinding

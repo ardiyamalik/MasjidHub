@@ -1,6 +1,5 @@
 package org.d3if0140.masjidhub
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast

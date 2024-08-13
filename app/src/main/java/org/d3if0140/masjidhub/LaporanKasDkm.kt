@@ -6,10 +6,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
-import org.d3if0140.masjidhub.DataKas
-import org.d3if0140.masjidhub.DataKasAdapter
 import org.d3if0140.masjidhub.databinding.ActivityLaporanKasDkmBinding
-import org.d3if0140.masjidhub.databinding.ActivityLaporanKasJamaahBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale

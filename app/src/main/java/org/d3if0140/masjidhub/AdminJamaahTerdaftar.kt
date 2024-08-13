@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.databinding.ActivityAdminJamaahTerdaftarBinding
-import org.d3if0140.masjidhub.databinding.ActivityJamaahTerdaftarBinding
 
 class AdminJamaahTerdaftar : AppCompatActivity() {
 

@@ -32,8 +32,6 @@ class ProfilDkmActivity : AppCompatActivity() {
         binding = ActivityProfilDkmBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val currentMasjidName ="nama"
-
         // Inisialisasi Firebase
         mAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()

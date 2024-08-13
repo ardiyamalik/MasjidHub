@@ -17,7 +17,6 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import org.d3if0140.masjidhub.databinding.ActivityUbahProfilBinding
 import org.d3if0140.masjidhub.databinding.ActivityUbahProfilDkmBinding
 import java.util.UUID
 

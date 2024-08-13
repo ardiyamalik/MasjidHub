@@ -1,7 +1,6 @@
 package org.d3if0140.masjidhub
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity

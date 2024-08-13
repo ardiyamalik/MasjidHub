@@ -10,9 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
-import org.d3if0140.masjidhub.R
 import org.d3if0140.masjidhub.model.KasMingguan
-import java.util.*
 
 class KasMingguanAdapter(
     private val kasMingguanList: MutableList<KasMingguan>,

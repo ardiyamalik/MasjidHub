@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.volley.VolleyLog.TAG
 import com.google.firebase.firestore.FirebaseFirestore
-import org.d3if0140.masjidhub.databinding.ActivityLaporanInfaqBinding
 import org.d3if0140.masjidhub.databinding.ActivityLaporanInfaqJamaahBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
