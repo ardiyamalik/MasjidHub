@@ -34,6 +34,8 @@ class ProfilDkmActivity : AppCompatActivity() {
         binding = ActivityProfilDkmBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val currentMasjidName ="Nama Masjid"
+
         // Inisialisasi Firebase
         mAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
@@ -69,6 +71,7 @@ class ProfilDkmActivity : AppCompatActivity() {
 
         binding.jamaahYangTerdaftar.setOnClickListener {
             val intent = Intent(this, JamaahTerdaftar::class.java)
+            intent.putExtra("MASJID_NAME", currentMasjidName)
             startActivity(intent)
         }
 
