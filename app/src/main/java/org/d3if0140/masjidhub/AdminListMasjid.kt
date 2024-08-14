@@ -47,8 +47,8 @@ class AdminListMasjid : AppCompatActivity() {
                     val userId = document.id
                     val name = document.getString("nama") ?: ""
                     val address = document.getString("alamat") ?: ""
-                    val profileImageUrl = document.getString("imageUrl") ?: ""
-                    masjidList.add(Masjid(userId, name, address, profileImageUrl))
+                    val imageUrl = document.getString("imageUrl") ?: ""
+                    masjidList.add(Masjid(userId, name, address, imageUrl))
                 }
                 masjidAdminAdapter.notifyDataSetChanged()
             }

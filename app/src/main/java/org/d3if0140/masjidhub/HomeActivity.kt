@@ -7,9 +7,10 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.appcheck.FirebaseAppCheck
@@ -21,6 +22,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var mAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var adapter: PengurusDkmAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +46,9 @@ class HomeActivity : AppCompatActivity() {
         )
         val adapter = CarouselAdapter(imageList)
         binding.viewPager.adapter = adapter
+
+        // Set up RecyclerView untuk pengurus_dkm
+        setupPengurusDkmRecyclerView()
 
         // Dapatkan ID pengguna yang saat ini masuk
         val currentUserId = mAuth.currentUser?.uid
@@ -121,6 +126,32 @@ class HomeActivity : AppCompatActivity() {
 
         // Display default profile image based on user's email
         displayDefaultProfileImage()
+    }
+
+    private fun setupPengurusDkmRecyclerView() {
+        // Inisialisasi RecyclerView
+        binding.recyclerViewPengurus.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        adapter = PengurusDkmAdapter()
+        binding.recyclerViewPengurus.adapter = adapter
+
+        // Ambil data pengurus_dkm dari Firestore
+        firestore.collection("user")
+            .whereEqualTo("role", "pengurus_dkm")
+            .get()
+            .addOnSuccessListener { result ->
+                val pengurusDkmList = mutableListOf<PengurusDkm>()
+                for (document in result) {
+                    val nama = document.getString("nama") ?: ""
+                    val alamat = document.getString("alamat") ?: ""
+                    val imageUrl = document.getString("imageUrl") ?: ""
+
+                    pengurusDkmList.add(PengurusDkm(nama, alamat, imageUrl))
+                }
+                adapter.setData(pengurusDkmList)
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Gagal mengambil data pengurus_dkm: ${exception.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun loadProfileImage(imageUrl: String) {
