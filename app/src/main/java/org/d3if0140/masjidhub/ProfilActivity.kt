@@ -87,6 +87,7 @@ class ProfilActivity : AppCompatActivity() {
         }
 
         // Atur listener untuk bottom navigation view
+        binding.bottomNavigation.selectedItemId = R.id.menu_profile
         binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_profile -> true

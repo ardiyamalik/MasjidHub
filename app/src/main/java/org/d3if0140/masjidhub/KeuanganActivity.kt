@@ -67,6 +67,7 @@ class KeuanganActivity : AppCompatActivity() {
         }
 
         // Atur listener untuk bottom navigation view
+        binding.bottomNavigation.selectedItemId = R.id.menu_finance
         binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_finance -> {

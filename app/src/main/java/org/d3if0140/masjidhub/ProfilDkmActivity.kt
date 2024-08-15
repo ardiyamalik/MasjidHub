@@ -108,6 +108,7 @@ class ProfilDkmActivity : AppCompatActivity() {
         loadPosts(currentUserId)
 
         // Bottom navigation listener
+        binding.bottomNavigationDkm.selectedItemId = R.id.menu_profile_dkm
         binding.bottomNavigationDkm.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_profile_dkm -> true

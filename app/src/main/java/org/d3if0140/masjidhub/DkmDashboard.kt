@@ -71,6 +71,7 @@ class DkmDashboard : AppCompatActivity() {
         }
 
         // Bottom navigation listener
+        binding.bottomNavigationDkm.selectedItemId = R.id.menu_home_dkm
         binding.bottomNavigationDkm.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_home_dkm -> true

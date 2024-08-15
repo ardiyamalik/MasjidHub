@@ -75,6 +75,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         // Bottom navigation listener
+        binding.bottomNavigation.selectedItemId = R.id.menu_home
         binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_home -> true

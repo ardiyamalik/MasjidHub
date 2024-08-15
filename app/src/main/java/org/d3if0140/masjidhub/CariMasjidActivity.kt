@@ -50,6 +50,7 @@ class CariMasjidActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {}
         })
 
+        binding.bottomNavigation.selectedItemId = R.id.search_masjid
         binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.search_masjid -> true

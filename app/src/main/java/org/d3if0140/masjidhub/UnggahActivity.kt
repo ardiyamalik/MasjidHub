@@ -36,6 +36,7 @@ class UnggahActivity : AppCompatActivity() {
             startActivity(Intent(this, DkmDashboard::class.java))
         }
 
+        binding.bottomNavigationDkm.selectedItemId = R.id.uploadEvent
         binding.bottomNavigationDkm.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.uploadEvent -> true
