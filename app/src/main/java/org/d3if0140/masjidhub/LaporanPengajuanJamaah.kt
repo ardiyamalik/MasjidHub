@@ -1,6 +1,7 @@
 package org.d3if0140.masjidhub
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +24,11 @@ class LaporanPengajuanJamaah : AppCompatActivity() {
 
         firestore = FirebaseFirestore.getInstance()
         selectedDateCalendar = Calendar.getInstance()
+
+        binding.backButton.setOnClickListener{
+            intent = Intent(this, KeuanganActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.chooseDateButton.setOnClickListener {
             showDatePickerDialog()

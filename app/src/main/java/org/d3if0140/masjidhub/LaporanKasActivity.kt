@@ -25,6 +25,11 @@ class LaporanKasActivity : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
         selectedDateCalendar = Calendar.getInstance()
 
+        binding.backButton.setOnClickListener{
+            intent = Intent(this, AdminKeuangan::class.java)
+            startActivity(intent)
+        }
+
         binding.chooseDateButton.setOnClickListener {
             showDatePickerDialog()
         }
