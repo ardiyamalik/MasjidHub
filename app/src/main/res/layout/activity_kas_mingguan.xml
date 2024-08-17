@@ -8,16 +8,6 @@
     tools:context=".KasMingguanActivity">
 
 
-    <ImageView
-        android:id="@id/backButton"
-        android:layout_width="50dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/baseline_arrow_back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -18,9 +18,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MasjidHub"
         tools:targetApi="31">
+
+        <activity
+            android:name=".KasMingguanActivity"
+            android:exported="true"/>
         <activity
             android:name=".AdminJamaahTerdaftar"
-            android:exported="true" />
+            android:exported="true"/>
         <activity
             android:name=".JamaahTerdaftar"
             android:exported="true" />
@@ -72,9 +76,6 @@
             android:name=".PengisianKasActivity"
             android:exported="true" />
         <activity
-            android:name=".KasMingguanActivity"
-            android:exported="true" />
-        <activity
             android:name=".NotificationDkmActivity"
             android:exported="true" />
         <activity
@@ -94,9 +95,7 @@
             android:exported="true" />
         <activity
             android:name=".AdminKeuangan"
-            android:exported="true" /> <!-- <activity -->
-        <!-- android:name=".AdminIsiPermohonan" -->
-        <!-- android:exported="true" /> -->
+            android:exported="true" />
         <activity
             android:name=".AdminPermohonan"
             android:exported="true" />

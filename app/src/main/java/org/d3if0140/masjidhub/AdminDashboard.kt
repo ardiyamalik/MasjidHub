@@ -60,7 +60,7 @@ class AdminDashboard : AppCompatActivity() {
             startActivity(Intent(this, AdminInfaqActivity::class.java))
         }
 
-        binding.buttonKas.setOnClickListener{
+        binding.buttonKasMingguan.setOnClickListener{
             startActivity(Intent(this, KasMingguanActivity::class.java))
         }
 
