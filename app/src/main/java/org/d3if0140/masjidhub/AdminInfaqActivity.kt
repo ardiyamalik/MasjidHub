@@ -3,19 +3,19 @@ package org.d3if0140.masjidhub
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.adapter.InfaqAdapter
 import org.d3if0140.masjidhub.databinding.ActivityAdminInfaqBinding
 import org.d3if0140.masjidhub.model.Infaq
-import org.d3if0140.masjidhub.viewmodel.AdminInfaqViewModel
-import com.google.firebase.firestore.FirebaseFirestore
 
 class AdminInfaqActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityAdminInfaqBinding
-    private val viewModel: AdminInfaqViewModel by viewModels()
     private val db = FirebaseFirestore.getInstance()
+    private val infaqList = MutableLiveData<List<Infaq>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,41 +29,63 @@ class AdminInfaqActivity : AppCompatActivity() {
         binding.recyclerViewInfaq.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewInfaq.adapter = adapter
 
-        viewModel.infaqList.observe(this) { infaqList ->
-            adapter.submitList(infaqList)
+        // Observe changes to infaqList and submit to adapter
+        infaqList.observe(this) { list ->
+            adapter.submitList(list)
         }
 
-        binding.backButton.setOnClickListener{
+        fetchInfaqData()
+
+        binding.backButton.setOnClickListener {
             startActivity(Intent(this, AdminDashboard::class.java))
         }
     }
 
+    private fun fetchInfaqData() {
+        db.collection("infaq_masjid")
+            .whereEqualTo("status", "pending")
+            .get()
+            .addOnSuccessListener { result ->
+                val list = result.mapNotNull { document ->
+                    document.toObject(Infaq::class.java).copy(id = document.id)
+                }
+                infaqList.value = list
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Gagal mengambil data infaq", Toast.LENGTH_SHORT).show()
+            }
+    }
+
     private fun approveInfaq(infaq: Infaq) {
-        viewModel.approveInfaq(infaq) { success ->
-            if (success) {
+        db.collection("infaq_masjid").document(infaq.id)
+            .update("status", "approved")
+            .addOnSuccessListener {
+                fetchInfaqData() // Refresh data
                 sendNotification(infaq, "Infaq telah disetujui")
                 Toast.makeText(this, "Infaq telah disetujui", Toast.LENGTH_SHORT).show()
-            } else {
+            }
+            .addOnFailureListener {
                 Toast.makeText(this, "Gagal menyetujui infaq", Toast.LENGTH_SHORT).show()
             }
-        }
     }
 
     private fun rejectInfaq(infaq: Infaq) {
-        viewModel.rejectInfaq(infaq) { success ->
-            if (success) {
+        db.collection("infaq_masjid").document(infaq.id)
+            .delete()
+            .addOnSuccessListener {
+                fetchInfaqData() // Refresh data
                 sendNotification(infaq, "Infaq telah ditolak")
                 Toast.makeText(this, "Infaq telah ditolak", Toast.LENGTH_SHORT).show()
-            } else {
+            }
+            .addOnFailureListener {
                 Toast.makeText(this, "Gagal menolak infaq", Toast.LENGTH_SHORT).show()
             }
-        }
     }
 
     private fun sendNotification(infaq: Infaq, message: String) {
         val notificationData = hashMapOf(
-            "title" to "Infaq Disetujui",
-            "message" to "Infaq sebesar Rp ${infaq.jumlahInfaq} telah disetujui.",
+            "title" to "Infaq Diterima",
+            "message" to message,
             "timestamp" to System.currentTimeMillis(),
             "userId" to infaq.userId
         )
@@ -74,7 +96,6 @@ class AdminInfaqActivity : AppCompatActivity() {
                 // Notifikasi berhasil disimpan
             }
             .addOnFailureListener { e ->
-                // Gagal menyimpan notifikasi
                 e.printStackTrace()
             }
     }

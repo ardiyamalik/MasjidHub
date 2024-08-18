@@ -124,6 +124,15 @@ class AdminVerifActivity : AppCompatActivity() {
                     Glide.with(context)
                         .load(ktpUrl)
                         .into(this)
+
+                    // Make the image clickable
+                    setOnClickListener {
+                        val intent = Intent(context, FullScreenImageActivity::class.java).apply {
+                            putExtra("IMAGE_URL", ktpUrl)
+                        }
+                        startActivity(intent)
+                    }
+
                 }
             }
             addView(imageView)

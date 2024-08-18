@@ -1,5 +1,6 @@
 package org.d3if0140.masjidhub
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -79,6 +80,21 @@ class PermohonanDanaAdapter(private val permohonanDanaList: MutableList<Permohon
         holder.buttonReject.setOnClickListener {
             Log.d("PermohonanDanaAdapter", "Reject button clicked for ${permohonanDana.id}")
             rejectPermohonanDana(permohonanDana.id, holder.adapterPosition, permohonanDana.email, permohonanDana.jumlah)
+        }
+
+        // Set click listener for post image
+        holder.imageViewFotoPendukung.setOnClickListener {
+            val intent = Intent(holder.itemView.context, FullScreenImageActivity::class.java).apply {
+                putExtra("IMAGE_URL", permohonanDana.fotoPendukungUrl)
+            }
+            holder.itemView.context.startActivity(intent)
+        }
+
+        holder.imageViewKTP.setOnClickListener{
+            val intent = Intent(holder.itemView.context, FullScreenImageActivity::class.java).apply {
+                putExtra("IMAGE_URL", permohonanDana.ktpUrl)
+            }
+            holder.itemView.context.startActivity(intent)
         }
     }
 

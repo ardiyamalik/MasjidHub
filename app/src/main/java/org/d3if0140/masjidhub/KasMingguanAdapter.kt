@@ -1,6 +1,7 @@
 package org.d3if0140.masjidhub
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +47,14 @@ class KasMingguanAdapter(
 
         holder.buttonReject.setOnClickListener {
             updateKasMingguanStatus(kasMingguan.id, "rejected", holder.adapterPosition)
+        }
+
+        // Set click listener for post image
+        holder.imageViewBuktiPembayaran.setOnClickListener {
+            val intent = Intent(holder.itemView.context, FullScreenImageActivity::class.java).apply {
+                putExtra("IMAGE_URL", kasMingguan.buktiPembayaranUrl)
+            }
+            holder.itemView.context.startActivity(intent)
         }
     }
 
