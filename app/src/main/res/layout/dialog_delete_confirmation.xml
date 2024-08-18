@@ -11,7 +11,7 @@
         android:id="@+id/textViewMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Apakah Anda yakin ingin menghapus postingan ini?"
+        android:text="@string/apakah_hapus"
         android:textSize="16sp"
         android:paddingBottom="16dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -32,7 +32,7 @@
             android:id="@+id/buttonCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Batal"
+            android:text="@string/batal"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:textColor="@android:color/darker_gray"
             android:padding="8dp"/>
@@ -44,7 +44,7 @@
             android:layout_marginBottom="16dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:padding="8dp"
-            android:text="Hapus"
+            android:text="@string/hapus"
             android:textColor="@android:color/holo_red_dark" />
 
     </LinearLayout>
