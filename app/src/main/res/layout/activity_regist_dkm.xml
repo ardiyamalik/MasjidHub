@@ -30,7 +30,7 @@
             android:layout_marginBottom="24dp"
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
-            android:text="DAFTAR DKM"
+            android:text="@string/daftar_dkm"
             android:textColor="@color/blue"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/stroke_white"
                 android:fontFamily="@font/poppins_light"
-                android:hint="Nama Masjid"
+                android:hint="@string/nama_masjid"
                 android:inputType="text"
                 android:padding="12dp" />
 
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/stroke_white"
                 android:fontFamily="@font/poppins_light"
-                android:hint="Alamat"
+                android:hint="@string/alamat"
                 android:inputType="textPostalAddress"
                 android:padding="12dp" />
 
@@ -103,7 +103,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/stroke_white"
                 android:fontFamily="@font/poppins_light"
-                android:hint="Kode Pos"
+                android:hint="@string/kode_pos"
                 android:inputType="number"
                 android:padding="12dp" />
 
@@ -127,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/stroke_white"
                 android:fontFamily="@font/poppins_light"
-                android:hint="Nomor Telepon"
+                android:hint="@string/nomor_telepon"
                 android:inputType="phone"
                 android:padding="12dp" />
 
@@ -150,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/stroke_white"
                 android:fontFamily="@font/poppins_light"
-                android:hint="Nama Ketua/Pengurus"
+                android:hint="@string/nama_pengurus"
                 android:inputType="text"
                 android:padding="12dp" />
 
@@ -174,7 +174,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/stroke_white"
                 android:fontFamily="@font/poppins_light"
-                android:hint="Nomor Telepon Ketua/Pengurus"
+                android:hint="@string/nomor_pengurus"
                 android:inputType="phone"
                 android:padding="12dp" />
 
@@ -197,7 +197,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/stroke_white"
                 android:fontFamily="@font/poppins_light"
-                android:hint="Email untuk di daftarkan"
+                android:hint="@string/email_daftarkan"
                 android:inputType="textEmailAddress"
                 android:padding="12dp" />
 
@@ -220,7 +220,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/stroke_white"
                 android:fontFamily="@font/poppins_light"
-                android:hint="Password untuk di daftarkan"
+                android:hint="@string/password_daftarkan"
                 android:inputType="textPassword"
                 android:padding="12dp" />
 
@@ -238,7 +238,7 @@
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
             android:paddingStart="10dp"
-            android:text="Unggah KTP Ketua DKM"
+            android:text="@string/unggah_ktpdkm"
             android:textAllCaps="false"
             android:textColor="@color/blue"
             android:textSize="16sp"
@@ -269,7 +269,7 @@
             android:background="@drawable/rounded_button_background"
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
-            android:text="Unggah"
+            android:text="@string/upload"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="16sp"

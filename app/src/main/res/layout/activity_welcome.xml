@@ -68,6 +68,7 @@
         android:background="@drawable/rounded_button_background"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/login"
+        android:textStyle="bold"
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

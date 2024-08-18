@@ -26,7 +26,7 @@
         android:layout_marginTop="28dp"
         android:fontFamily="@font/poppins_bold"
         android:gravity="center"
-        android:text="Kegiatan"
+        android:text="@string/kegiatan"
         android:textColor="@color/blue"
         android:textSize="25dp"
         android:textStyle="bold"

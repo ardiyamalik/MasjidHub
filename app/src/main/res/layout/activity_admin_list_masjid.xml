@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:fontFamily="@font/poppins_bold"
-        android:text="Masjid Terdaftar"
+        android:text="@string/masjid_terdaftar"
         android:textColor="@color/blue"
         android:textSize="24sp"
         android:textStyle="bold"

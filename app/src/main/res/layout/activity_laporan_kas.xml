@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="Laporan Kas"
+                    android:text="@string/laporan_kas"
                     android:textColor="@color/blue"
                     android:textSize="24sp"
                     android:textStyle="bold"
@@ -64,7 +64,7 @@
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="center"
                 android:paddingLeft="10dp"
-                android:text="Pilih Tanggal"
+                android:text="@string/pilih_tanggal"
                 android:textAllCaps="false"
                 android:textColor="@color/blue"
                 android:textSize="16sp"
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
-                android:text="Tanggal Dipilih: " />
+                android:text="@string/tanggal_dipilih" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"

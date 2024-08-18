@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="104dp"
-                android:text="Keuangan"
+                android:text="@string/keuangan"
                 android:textColor="@color/blue"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
-                    android:text="Laporan Infaq"
+                    android:text="@string/laporan_infaq"
                     android:textColor="@color/blue"
                     android:textSize="10sp"
                     android:textStyle="bold" />
@@ -109,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
-                    android:text="Laporan Pengajuan"
+                    android:text="@string/laporan_pengajuan"
                     android:textColor="@color/blue"
                     android:textSize="10sp"
                     android:textStyle="bold" />
@@ -139,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_bold"
                     android:gravity="center"
-                    android:text="Laporan Kas"
+                    android:text="@string/laporan_kas"
                     android:textColor="@color/blue"
                     android:textSize="10sp"
                     android:textStyle="bold" />
@@ -165,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="100dp"
 
-                android:text="Yang terkumpul"
+                android:text="@string/yang_terkumpul"
                 android:textColor="@color/grey"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView4"
                 app:layout_constraintEnd_toEndOf="@+id/imageView4"

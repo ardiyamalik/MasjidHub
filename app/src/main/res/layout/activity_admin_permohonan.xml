@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
         android:fontFamily="@font/poppins_bold"
-        android:text="Permohonan"
+        android:text="@string/permohonan"
         android:textColor="@color/blue"
         android:textSize="24sp"
         android:textStyle="bold"

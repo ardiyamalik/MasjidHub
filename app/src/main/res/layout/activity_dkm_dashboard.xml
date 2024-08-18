@@ -132,7 +132,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_bold"
-            android:text="Menu"
+            android:text="@string/menu"
             android:textColor="@color/blue"
             android:textSize="20dp"
             android:textStyle="bold"
@@ -149,7 +149,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="Masjid Terdekat"
+            android:text="@string/masjid_terdekat"
             android:textColor="@color/blue"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -194,7 +194,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="Ajukan Dana"
+                        android:text="@string/ajukan_dana"
                         android:textColor="@color/blue"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -240,7 +240,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="Notifikasi"
+                        android:text="@string/notifikasi"
                         android:textColor="@color/blue"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -263,7 +263,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="Notifikasi"
+                        android:text="@string/kas"
                         android:textColor="@color/blue"
                         android:textStyle="bold" />
                 </LinearLayout>

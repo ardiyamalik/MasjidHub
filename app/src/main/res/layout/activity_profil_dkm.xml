@@ -86,7 +86,7 @@
         android:fontFamily="@font/poppins_bold"
         android:gravity="start|center_vertical"
         android:paddingLeft="10dp"
-        android:text="Jamaah"
+        android:text="@string/txtjamaah"
         android:textColor="@color/blue"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/buttonLogoutDkm"

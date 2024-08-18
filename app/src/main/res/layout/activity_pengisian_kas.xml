@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 android:fontFamily="@font/poppins_bold"
-                android:text="Kas Mingguan"
+                android:text="@string/kas_mingguan"
                 android:textColor="@color/blue"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -81,7 +81,7 @@
                 android:background="@drawable/stroke_white"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:hint="Tanggal Pengajuan"
+                android:hint="@string/tanggal_pengajuan"
                 android:inputType="none"
                 android:paddingLeft="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -102,7 +102,7 @@
                     android:id="@+id/radioButtonBankTransfer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bank Transfer" />
+                    android:text="@string/bank_transfer" />
 
                 <RadioButton
                     android:id="@+id/radioButtonQR"
@@ -154,7 +154,7 @@
                 android:drawableStart="@drawable/baseline_insert_photo_24"
                 android:fontFamily="@font/poppins_bold"
                 android:paddingStart="10dp"
-                android:text="Bukti Pembayaran"
+                android:text="@string/bukti_pembayaran"
                 android:textAllCaps="false"
                 android:textColor="@color/blue"
                 android:textSize="16sp"
@@ -171,7 +171,7 @@
                 android:layout_marginBottom="72dp"
                 android:background="@drawable/rounded_button_background"
                 android:fontFamily="@font/poppins_bold"
-                android:text="Bayar"
+                android:text="@string/bayar"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="18sp"

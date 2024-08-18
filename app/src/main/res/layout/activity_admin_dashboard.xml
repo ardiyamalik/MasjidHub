@@ -30,7 +30,7 @@
         android:drawablePadding="8dp"
         android:fontFamily="@font/poppins_bold"
         android:paddingStart="10sp"
-        android:text="Beranda"
+        android:text="@string/home"
         android:textColor="@color/blue"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -50,7 +50,7 @@
         android:drawablePadding="8dp"
         android:fontFamily="@font/poppins_bold"
         android:paddingStart="10sp"
-        android:text="Infaq"
+        android:text="@string/infaq"
         android:textColor="@color/blue"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -70,7 +70,7 @@
         android:drawablePadding="8dp"
         android:fontFamily="@font/poppins_bold"
         android:paddingStart="10sp"
-        android:text="Kas"
+        android:text="@string/kas"
         android:textColor="@color/blue"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -88,7 +88,7 @@
         android:drawablePadding="8dp"
         android:fontFamily="@font/poppins_bold"
         android:paddingStart="10sp"
-        android:text="Masjid"
+        android:text="@string/masjid"
         android:textColor="@color/blue"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -108,7 +108,7 @@
         android:drawablePadding="8dp"
         android:fontFamily="@font/poppins_bold"
         android:paddingStart="10sp"
-        android:text="Keuangan"
+        android:text="@string/keuangan"
         android:textColor="@color/blue"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -129,7 +129,7 @@
         android:drawablePadding="8dp"
         android:fontFamily="@font/poppins_bold"
         android:paddingStart="10sp"
-        android:text="Ajuan "
+        android:text="@string/ajuan"
         android:textColor="@color/blue"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -149,7 +149,7 @@
         android:drawablePadding="8dp"
         android:fontFamily="@font/poppins_bold"
         android:paddingStart="10sp"
-        android:text="Agenda"
+        android:text="@string/agenda"
         android:textColor="@color/blue"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -170,7 +170,7 @@
         android:drawablePadding="8dp"
         android:fontFamily="@font/poppins_bold"
         android:paddingStart="10sp"
-        android:text="Keluar"
+        android:text="@string/logout"
         android:textColor="@color/blue"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -202,7 +202,7 @@
         android:drawablePadding="8dp"
         android:fontFamily="@font/poppins_bold"
         android:paddingStart="10sp"
-        android:text="Verif"
+        android:text="@string/verif"
         android:textColor="@color/blue"
         android:textSize="18sp"
         android:textStyle="bold" />

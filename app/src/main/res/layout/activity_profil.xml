@@ -91,7 +91,7 @@
         android:fontFamily="@font/poppins_bold"
         android:gravity="start|center_vertical"
         android:paddingLeft="18dp"
-        android:text="UBAH PROFIL"
+        android:text="@string/ubah_profil"
         android:textColor="@color/blue"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"

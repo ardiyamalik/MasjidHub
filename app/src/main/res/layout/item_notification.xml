@@ -48,7 +48,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/rounded_button_background"
         android:fontFamily="@font/poppins_bold"
-        android:text="Hapus"
+        android:text="@string/hapus"
         android:textColor="@color/white"
         android:textSize="12sp"
         android:textStyle="bold"

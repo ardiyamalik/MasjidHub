@@ -36,7 +36,7 @@
         android:layout_width="340dp"
         android:layout_height="88dp"
         android:fontFamily="@font/poppins_bold"
-        android:text="Nama Dkm"
+        android:text="@string/nama_dkm"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="24dp"
@@ -77,7 +77,7 @@
         android:fontFamily="@font/poppins_bold"
         android:gravity="start|center_vertical"
         android:paddingLeft="10dp"
-        android:text="Jamaah"
+        android:text="@string/txtjamaah"
         android:textColor="@color/blue"
 
         android:textStyle="bold"
