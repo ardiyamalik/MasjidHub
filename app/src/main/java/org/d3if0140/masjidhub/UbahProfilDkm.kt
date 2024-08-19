@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -24,12 +25,10 @@ class UbahProfilDkm : AppCompatActivity() {
     private lateinit var binding: ActivityUbahProfilDkmBinding
     private lateinit var mAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var mapsResultLauncher: ActivityResultLauncher<Intent>
     private val MAPS_REQUEST_CODE = 2
     private var latitude: Double? = null
     private var longitude: Double? = null
-
-
-
     private val PICK_IMAGE_REQUEST = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,11 +41,11 @@ class UbahProfilDkm : AppCompatActivity() {
         // Load current profile data
         loadUserProfile()
 
+        // Set onClickListener untuk tombol pilih lokasi
         binding.selectLocationButton.setOnClickListener {
-            val intent = Intent(this, MapsUbahProfilActivity::class.java)
-            startActivityForResult(intent, MAPS_REQUEST_CODE)
+            val intent = Intent(this, MapsActivity::class.java)
+            mapsResultLauncher.launch(intent)
         }
-
 
         binding.buttonSimpan.setOnClickListener {
             val nama = binding.editTextNama.text.toString().trim()
@@ -58,9 +57,9 @@ class UbahProfilDkm : AppCompatActivity() {
                 val currentUserId = mAuth.currentUser?.uid
                 currentUserId?.let {
                     val updateData = mutableMapOf<String, Any>(
-                        "nama" to nama,
-                        "alamat" to alamat
+                        "nama" to nama
                     )
+                    if (alamat.isNotEmpty()) updateData["alamat"] = alamat
                     lat?.let { updateData["latitude"] = it }
                     lon?.let { updateData["longitude"] = it }
 
@@ -78,7 +77,7 @@ class UbahProfilDkm : AppCompatActivity() {
                         }
                 }
             } else {
-                Toast.makeText(this, "Mohon isi semua bidang dengan benar", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Nama harus diisi", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -120,7 +119,6 @@ class UbahProfilDkm : AppCompatActivity() {
             }
         }
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
@@ -138,8 +136,6 @@ class UbahProfilDkm : AppCompatActivity() {
             }
         }
     }
-
-
     private fun uploadImage(imageUri: Uri?) {
         if (imageUri != null) {
             val storageRef = FirebaseStorage.getInstance().reference.child("images/${UUID.randomUUID()}")
@@ -164,7 +160,6 @@ class UbahProfilDkm : AppCompatActivity() {
             }
         }
     }
-
     private fun saveImageUrlToFirestore(imageUrl: String) {
         val currentUserId = mAuth.currentUser?.uid
         currentUserId?.let {
@@ -181,7 +176,6 @@ class UbahProfilDkm : AppCompatActivity() {
                 }
         }
     }
-
     private fun loadUserProfile() {
         val currentUserId = mAuth.currentUser?.uid
         currentUserId?.let {
@@ -190,12 +184,16 @@ class UbahProfilDkm : AppCompatActivity() {
                     val userData = document.data
                     if (userData != null) {
                         val nama = userData["nama"] as? String
-                        val dkm = userData["alamat"] as? String
+                        val alamat = userData["alamat"] as? String
+                        val latitude = userData["latitude"] as? Double
+                        val longitude = userData["longitude"] as? Double
                         val imageUrl = userData["imageUrl"] as? String
 
                         // Update UI
-                        nama?.let { binding.namaUser.text = it }
-                        dkm?.let { binding.alamatMasjid.text = it }
+                        nama?.let { binding.editTextNama.setText(it) }
+                        alamat?.let { binding.editTextAlamat.setText(it) }
+                        latitude?.let { this.latitude = it; binding.latitudeEditText.setText(it.toString()) }
+                        longitude?.let { this.longitude = it; binding.longitudeEditText.setText(it.toString()) }
                         imageUrl?.let { loadProfileImage(it) } ?: run { displayDefaultProfileImage() }
                     }
                 }
@@ -209,7 +207,6 @@ class UbahProfilDkm : AppCompatActivity() {
             .placeholder(createAvatar(mAuth.currentUser?.email ?: ""))
             .into(binding.profileImageView)
     }
-
     private fun displayDefaultProfileImage() {
         val user = mAuth.currentUser
         if (user != null && user.email != null) {
@@ -220,7 +217,6 @@ class UbahProfilDkm : AppCompatActivity() {
             }
         }
     }
-
     private fun createAvatar(email: String): Drawable {
         val color = getColorFromEmail(email)
         val bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888)
@@ -236,7 +232,6 @@ class UbahProfilDkm : AppCompatActivity() {
         canvas.drawText(initial, 50f, 65f, textPaint)
         return BitmapDrawable(resources, bitmap)
     }
-
     private fun getColorFromEmail(email: String): Int {
         val hashCode = email.hashCode()
         return Color.HSVToColor(floatArrayOf(

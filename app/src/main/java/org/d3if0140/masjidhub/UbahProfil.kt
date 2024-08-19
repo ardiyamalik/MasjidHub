@@ -59,12 +59,16 @@ class UbahProfil : AppCompatActivity() {
             if (nama.isNotEmpty()) { // Validasi jika nama tidak kosong
                 val currentUserId = mAuth.currentUser?.uid
                 currentUserId?.let {
+                    val updateData = mutableMapOf<String, Any>(
+                        "nama" to nama
+                    )
+                    if (dkm.isNotEmpty() && dkm != "Jamaah Masjid") { // Include dkm only if it is not the default option
+                        updateData["dkm"] = dkm
+                    }
+
                     firestore.collection("user")
                         .document(it)
-                        .update(mapOf(
-                            "nama" to nama,
-                            "dkm" to dkm
-                        ))
+                        .update(updateData)
                         .addOnSuccessListener {
                             Toast.makeText(this, "Profil berhasil diubah", Toast.LENGTH_SHORT).show()
                             // Arahkan ke ProfilActivity
@@ -77,7 +81,7 @@ class UbahProfil : AppCompatActivity() {
                         }
                 }
             } else {
-                Toast.makeText(this, "Mohon isi semua bidang dengan benar", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Nama harus diisi", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -182,15 +186,23 @@ class UbahProfil : AppCompatActivity() {
                         val imageUrl = userData["imageUrl"] as? String
 
                         // Update UI
-                        nama?.let { binding.namaUser.text = it }
-                        dkm?.let { binding.dkm.text = it }
+                        binding.editTextNama.setText(nama ?: "") // Set text or empty string if null
+
+                        dkm?.let { dkmValue ->
+                            // Set default spinner value if necessary
+                            val adapter = binding.DkmSpinnerUbah.adapter as? ArrayAdapter<String>
+                            val position = adapter?.getPosition(dkmValue) ?: -1
+                            if (position != -1) {
+                                binding.DkmSpinnerUbah.setSelection(position)
+                            }
+                        }
+
                         imageUrl?.let { loadProfileImage(it) } ?: run { displayDefaultProfileImage() }
                     }
                 }
             }
         }
     }
-
     private fun loadProfileImage(imageUrl: String) {
         Glide.with(this)
             .load(imageUrl)
