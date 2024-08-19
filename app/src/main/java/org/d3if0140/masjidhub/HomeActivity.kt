@@ -1,33 +1,46 @@
 package org.d3if0140.masjidhub
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.location.Location
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
 import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.databinding.ActivityHomeBinding
+import android.Manifest
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private lateinit var mAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
     private lateinit var adapter: PengurusDkmAdapter
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var userLocation: Location? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Inisialisasi FusedLocationProviderClient
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         // Inisialisasi Firebase App Check
         FirebaseAppCheck.getInstance().installAppCheckProviderFactory(
@@ -49,6 +62,18 @@ class HomeActivity : AppCompatActivity() {
 
         // Set up RecyclerView untuk pengurus_dkm
         setupPengurusDkmRecyclerView()
+
+        // Cek izin lokasi
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationClient.lastLocation.addOnCompleteListener(OnCompleteListener<Location> { task ->
+                if (task.isSuccessful && task.result != null) {
+                    userLocation = task.result
+                    setupPengurusDkmRecyclerView()
+                }
+            })
+        } else {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+        }
 
         // Dapatkan ID pengguna yang saat ini masuk
         val currentUserId = mAuth.currentUser?.uid
@@ -132,13 +157,12 @@ class HomeActivity : AppCompatActivity() {
     private fun setupPengurusDkmRecyclerView() {
         binding.recyclerViewPengurus.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        // Inisialisasi adapter dengan onItemClick listener
         val adapter = PengurusDkmAdapter { pengurusDkm ->
             val intent = Intent(this, ProfileSearchActivity::class.java)
-            intent.putExtra("USER_ID", pengurusDkm.userId) // Kirim userId ke ProfileSearchAdmin
-            intent.putExtra("USER_NAME", pengurusDkm.nama) // Kirim nama
-            intent.putExtra("USER_ALAMAT", pengurusDkm.alamat) // Kirim alamat
-            intent.putExtra("USER_IMAGE_URL", pengurusDkm.imageUrl) // Kirim URL gambar
+            intent.putExtra("USER_ID", pengurusDkm.userId)
+            intent.putExtra("USER_NAME", pengurusDkm.nama)
+            intent.putExtra("USER_ALAMAT", pengurusDkm.alamat)
+            intent.putExtra("USER_IMAGE_URL", pengurusDkm.imageUrl)
             startActivity(intent)
         }
 
@@ -153,11 +177,28 @@ class HomeActivity : AppCompatActivity() {
                     val nama = document.getString("nama") ?: ""
                     val alamat = document.getString("alamat") ?: ""
                     val imageUrl = document.getString("imageUrl") ?: ""
-                    val userId = document.id // Ambil userId dari Firestore document ID
+                    val latitude = document.getDouble("latitude") ?: 0.0
+                    val longitude = document.getDouble("longitude") ?: 0.0
+                    val userId = document.id
 
-                    pengurusDkmList.add(PengurusDkm(nama, alamat, imageUrl, userId))
+                    // Hitung jarak
+                    val pengurusLocation = Location("").apply {
+                        this.latitude = latitude
+                        this.longitude = longitude
+                    }
+                    val distanceInMeters = userLocation?.distanceTo(pengurusLocation) ?: 0f
+
+                    // Jika jarak kurang dari 10km, tambahkan ke daftar
+                    if (distanceInMeters <= 10000) {
+                        pengurusDkmList.add(PengurusDkm(nama, alamat, imageUrl, userId))
+                    }
                 }
                 adapter.setData(pengurusDkmList)
+
+                // Jika tidak ada data yang sesuai
+                if (pengurusDkmList.isEmpty()) {
+                    binding.recyclerViewPengurus.visibility = View.GONE
+                }
             }
             .addOnFailureListener { exception ->
                 Toast.makeText(this, "Gagal mengambil data pengurus_dkm: ${exception.message}", Toast.LENGTH_SHORT).show()
