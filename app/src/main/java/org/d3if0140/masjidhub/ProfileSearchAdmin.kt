@@ -25,6 +25,29 @@ class ProfileSearchAdmin : AppCompatActivity() {
 
         firestore = FirebaseFirestore.getInstance()
 
+        // Setup RecyclerView for posts
+        adminPostAdapter = AdminPostAdapter(postList) { post ->
+            deletePost(post)
+        }
+        binding.recyclerViewPost.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewPost.adapter = adminPostAdapter
+
+        // Get userId from Intent
+        val userId = intent.getStringExtra("USER_ID")
+
+        // Logging userId for debugging
+        Log.d("ProfileSearchAdmin", "Received userId: $userId")
+
+        if (userId != null && userId.isNotEmpty()) {
+            // Load user profile data
+            loadUserProfile(userId)
+            // Load posts related to the user
+            loadPosts(userId)
+        } else {
+            Log.e("ProfileSearchAdmin", "Invalid or missing userId")
+            Toast.makeText(this, "Invalid User ID", Toast.LENGTH_SHORT).show()
+        }
+
         binding.backButton.setOnClickListener {
             finish() // Kembali ke aktivitas sebelumnya
         }
@@ -34,40 +57,30 @@ class ProfileSearchAdmin : AppCompatActivity() {
             intent.putExtra("nama", binding.namaUserDkm.text.toString())
             startActivity(intent)
         }
+    }
 
-        // Setup RecyclerView for posts
-        adminPostAdapter = AdminPostAdapter(postList) { post ->
-            deletePost(post)
-        }
-        binding.recyclerViewPost.layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewPost.adapter = adminPostAdapter
+    private fun loadUserProfile(userId: String) {
+        firestore.collection("user").document(userId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val userName = document.getString("nama") ?: "Unknown User"
+                    val userAlamat = document.getString("alamat") ?: "Unknown Address"
+                    val userImageUrl = document.getString("imageUrl") ?: ""
 
-        // Get data from Intent
-        val userId = intent.getStringExtra("USER_ID")
-        val userName = intent.getStringExtra("USER_NAME")
-        val userAlamat = intent.getStringExtra("USER_ALAMAT")
-        val userImageUrl = intent.getStringExtra("USER_IMAGE_URL")
-
-        // Logging userId for debugging
-        Log.d("ProfileSearchAdmin", "Received userId: $userId")
-
-        binding.namaUserDkm.text = userName
-        binding.alamatMasjid.text = userAlamat
-
-        // Load profile image
-        if (userImageUrl != null && userImageUrl.isNotEmpty()) {
-            loadProfileImage(userImageUrl, binding.profileImageDkm)
-        } else {
-            binding.profileImageDkm.setImageResource(R.drawable.baseline_person_black)
-        }
-
-        // Load posts related to the mosque
-        if (userId != null && userId.isNotEmpty()) {
-            loadPosts(userId)
-        } else {
-            Log.e("ProfileSearchAdmin", "Invalid User ID")
-            Toast.makeText(this, "Invalid User ID", Toast.LENGTH_SHORT).show()
-        }
+                    // Update UI with user profile data
+                    binding.namaUserDkm.text = userName
+                    binding.alamatMasjid.text = userAlamat
+                    loadProfileImage(userImageUrl, binding.profileImageDkm)
+                } else {
+                    Log.e("ProfileSearchAdmin", "User document not found for userId: $userId")
+                    Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("ProfileSearchAdmin", "Error fetching user document", e)
+                Toast.makeText(this, "Error fetching user profile: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun loadPosts(userId: String) {
@@ -81,26 +94,14 @@ class ProfileSearchAdmin : AppCompatActivity() {
                 postList.clear()
                 Log.d("ProfileSearchAdmin", "Found ${documents.size()} posts")
                 for (document in documents) {
-                    val post = document.toObject(Post::class.java)
-                    post.id = document.id // Menambahkan ID dokumen ke objek Post
-                    Log.d("ProfileSearchAdmin", "Post id: ${post.id}, userId: ${post.userId}")
-
-                    firestore.collection("user").document(post.userId)
-                        .get()
-                        .addOnSuccessListener { userDocument ->
-                            if (userDocument.exists()) {
-                                post.nama = userDocument.getString("nama") ?: "Unknown User"
-                                post.userImageUrl = userDocument.getString("imageUrl") ?: ""
-                                postList.add(post)
-                                adminPostAdapter.notifyDataSetChanged()
-                            } else {
-                                Log.e("ProfileSearchAdmin", "User document not found for userId: ${post.userId}")
-                            }
-                        }
-                        .addOnFailureListener { e ->
-                            Log.e("ProfileSearchAdmin", "Error fetching user document", e)
-                        }
+                    val post = document.toObject(Post::class.java).apply {
+                        id = document.id // Menambahkan ID dokumen ke objek Post
+                        nama = binding.namaUserDkm.text.toString() // Menambahkan nama pengguna ke Post
+                        userImageUrl = document.getString("imageUrl") ?: ""
+                    }
+                    postList.add(post)
                 }
+                adminPostAdapter.notifyDataSetChanged()
             }
             .addOnFailureListener { e ->
                 Log.e("ProfileSearchAdmin", "Error fetching posts", e)
@@ -117,8 +118,7 @@ class ProfileSearchAdmin : AppCompatActivity() {
     }
 
     private fun deletePost(post: Post) {
-        val db = FirebaseFirestore.getInstance()
-        db.collection("posts").document(post.id)
+        firestore.collection("posts").document(post.id)
             .delete()
             .addOnSuccessListener {
                 postList.remove(post)
