@@ -181,11 +181,13 @@ class HomeActivity : AppCompatActivity() {
                     val longitude = document.getDouble("longitude") ?: 0.0
                     val userId = document.id
 
-                    // Hitung jarak
+                    // Buat objek Location untuk pengurus
                     val pengurusLocation = Location("").apply {
                         this.latitude = latitude
                         this.longitude = longitude
                     }
+
+                    // Hitung jarak dari lokasi pengguna ke lokasi pengurus
                     val distanceInMeters = userLocation?.distanceTo(pengurusLocation) ?: 0f
 
                     // Jika jarak kurang dari 10km, tambahkan ke daftar
@@ -203,6 +205,8 @@ class HomeActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Toast.makeText(this, "Gagal mengambil data pengurus_dkm: ${exception.message}", Toast.LENGTH_SHORT).show()
             }
+
+
     }
 
     private fun loadProfileImage(imageUrl: String) {

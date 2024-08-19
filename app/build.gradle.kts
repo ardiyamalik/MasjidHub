@@ -59,10 +59,10 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
 
-    implementation ("com.google.android.gms:play-services-location:21.2.0")
+    implementation ("com.google.android.gms:play-services-location:21.3.0")
 
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:$1.5.31"))
-    implementation("com.google.android.libraries.places:places:3.3.0")
+    implementation("com.google.android.libraries.places:places:3.5.0")
 
     implementation ("com.android.volley:volley:1.2.1")
 

@@ -11,13 +11,22 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import org.d3if0140.masjidhub.databinding.ActivityRegistDkmBinding
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 
 class RegisterDkmActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegistDkmBinding
     private lateinit var firestore: FirebaseFirestore
     private lateinit var mAuth: FirebaseAuth
     private lateinit var storage: FirebaseStorage
+    private lateinit var mapsResultLauncher: ActivityResultLauncher<Intent>
     private var ktpUri: Uri? = null
+    private var latitude: Double? = null
+    private var longitude: Double? = null
+
+    companion object {
+        private val MAPS_REQUEST_CODE = 1001
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +39,22 @@ class RegisterDkmActivity : AppCompatActivity() {
         storage = FirebaseStorage.getInstance()
         Log.d("RegisterDkmActivity", "Firestore, FirebaseAuth, and FirebaseStorage initialized")
 
+        // Inisialisasi ActivityResultLauncher untuk MapsActivity
+        mapsResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val latitude = result.data?.getDoubleExtra("latitude", 0.0)
+                val longitude = result.data?.getDoubleExtra("longitude", 0.0)
+
+                // Periksa apakah latitude dan longitude tidak null
+                if (latitude != null && longitude != null) {
+                    binding.latitudeEditText.setText(latitude.toString())
+                    binding.longitudeEditText.setText(longitude.toString())
+                } else {
+                    Log.e("RegisterDkmActivity", "Latitude or longitude is null")
+                }
+            }
+        }
+
         // Set onClickListener untuk tombol register
         binding.registButton.setOnClickListener {
             Log.d("RegisterDkmActivity", "Register button clicked")
@@ -39,6 +64,12 @@ class RegisterDkmActivity : AppCompatActivity() {
         // Set onClickListener untuk tombol upload KTP
         binding.uploadKtpButton.setOnClickListener {
             selectKtpImage()
+        }
+
+        // Set onClickListener untuk tombol pilih lokasi
+        binding.selectLocationButton.setOnClickListener {
+            val intent = Intent(this, MapsActivity::class.java)
+            mapsResultLauncher.launch(intent)
         }
     }
 
@@ -50,10 +81,24 @@ class RegisterDkmActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1000 && resultCode == Activity.RESULT_OK) {
-            ktpUri = data?.data
-            binding.ktpImageView.setImageURI(ktpUri)
-            Toast.makeText(this, "Foto KTP berhasil dipilih", Toast.LENGTH_SHORT).show()
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                1000 -> {
+                    ktpUri = data?.data
+                    binding.ktpImageView.setImageURI(ktpUri)
+                    Toast.makeText(this, "Foto KTP berhasil dipilih", Toast.LENGTH_SHORT).show()
+                }
+                MAPS_REQUEST_CODE -> {
+                    val latitudeResult = data?.getDoubleExtra("latitude", 0.0)
+                    val longitudeResult = data?.getDoubleExtra("longitude", 0.0)
+                    if (latitudeResult != null && longitudeResult != null) {
+                        latitude = latitudeResult
+                        longitude = longitudeResult
+                        binding.latitudeEditText.setText(latitude.toString())
+                        binding.longitudeEditText.setText(longitude.toString())
+                    }
+                }
+            }
         }
     }
 
@@ -67,15 +112,22 @@ class RegisterDkmActivity : AppCompatActivity() {
         val teleponKetua = binding.teleponKetuaEditText.text.toString()
         val email = binding.emailEditText.text.toString()
         val password = binding.passwordEditText.text.toString()
+        val latitudeString = binding.latitudeEditText.text.toString()
+        val longitudeString = binding.longitudeEditText.text.toString()
 
         // Validasi data
         if (nama.isEmpty() || alamat.isEmpty() || kodePos.isEmpty() || teleponMasjid.isEmpty() ||
-            namaKetua.isEmpty() || teleponKetua.isEmpty() || email.isEmpty() || password.isEmpty()
+            namaKetua.isEmpty() || teleponKetua.isEmpty() || email.isEmpty() || password.isEmpty() ||
+            latitudeString == null || longitudeString == null
         ) {
-            Log.w("RegisterDkmActivity", "Validation failed: Some fields are empty")
-            Toast.makeText(this, "Harap isi semua field", Toast.LENGTH_SHORT).show()
+            Log.w("RegisterDkmActivity", "Validation failed: Some fields are empty or location is not set")
+            Toast.makeText(this, "Harap isi semua field dan pilih lokasi", Toast.LENGTH_SHORT).show()
             return
         }
+
+        // Parsing latitude dan longitude dari String ke Double
+        val latitude = latitudeString.toDoubleOrNull()
+        val longitude = longitudeString.toDoubleOrNull()
 
         if (ktpUri == null) {
             Log.w("RegisterDkmActivity", "Validation failed: KTP image not selected")
@@ -108,7 +160,9 @@ class RegisterDkmActivity : AppCompatActivity() {
                                         "role" to "pengurus_dkm",
                                         "verified" to false,  // Awalnya belum terverifikasi
                                         "ktpKetuaUrl" to uri.toString(),
-                                        "password" to password
+                                        "password" to password,
+                                        "latitude" to (latitude ?: 0.0),
+                                        "longitude" to (longitude ?: 0.0)
                                     )
 
                                     Log.d("RegisterDkmActivity", "Data prepared for Firestore: $masjidData")

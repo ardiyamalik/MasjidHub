@@ -61,6 +61,68 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/latitudeInputLayout"
+            android:layout_width="380dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/kodePosInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/latitudeEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/stroke_white"
+                android:fontFamily="@font/poppins_light"
+                android:hint="@string/latitude"
+                android:inputType="numberDecimal"
+                android:padding="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/longitudeInputLayout"
+            android:layout_width="380dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/latitudeInputLayout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/longitudeEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/stroke_white"
+                android:fontFamily="@font/poppins_light"
+                android:hint="@string/longitude"
+                android:inputType="numberDecimal"
+                android:padding="12dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/selectLocationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_button_background"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
+            android:text="@string/select_location"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/longitudeInputLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/alamatInputLayout"
@@ -119,7 +181,7 @@
             android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/kodePosInputLayout">
+            app:layout_constraintTop_toBottomOf="@+id/selectLocationButton">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/teleponMasjidEditText"

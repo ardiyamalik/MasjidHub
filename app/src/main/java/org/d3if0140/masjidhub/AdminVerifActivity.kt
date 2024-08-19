@@ -81,6 +81,8 @@ class AdminVerifActivity : AppCompatActivity() {
         val teleponKetua = masjidData["teleponKetua"] as? String ?: "Telepon Ketua tidak tersedia"
         val email = masjidData["email"] as? String ?: "Email tidak tersedia"
         val ktpUrl = masjidData["ktpKetuaUrl"] as? String ?: ""
+        val latitude = masjidData["latitude"] as? String ?: ""
+        val longitude = masjidData["longitude"] as? String ?: ""
 
         val message = """
             Nama : $masjidName
@@ -90,6 +92,8 @@ class AdminVerifActivity : AppCompatActivity() {
             Nama Ketua: $namaKetua
             Telepon Ketua: $teleponKetua
             Email: $email
+            latitude: $latitude
+            longitude: $longitude
             
             Apakah Anda yakin ingin memverifikasi masjid ini?
             
@@ -97,6 +101,8 @@ class AdminVerifActivity : AppCompatActivity() {
             Nama: ${masjidData["namaKetua"]}
             Alamat: ${masjidData["alamat"]}
             Telepon: ${masjidData["teleponKetua"]}
+            latitude: ${masjidData["latitude"]}
+            longitude: ${masjidData["longitude"]}
         """.trimIndent()
 
         val dialogView = LinearLayout(this).apply {
