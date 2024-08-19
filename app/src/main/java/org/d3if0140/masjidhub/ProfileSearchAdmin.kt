@@ -72,6 +72,13 @@ class ProfileSearchAdmin : AppCompatActivity() {
                     binding.namaUserDkm.text = userName
                     binding.alamatMasjid.text = userAlamat
                     loadProfileImage(userImageUrl, binding.profileImageDkm)
+
+                    // Set OnClickListener to open image in full screen
+                    binding.profileImageDkm.setOnClickListener {
+                        val intent = Intent(this, FullScreenImageActivity::class.java)
+                        intent.putExtra("IMAGE_URL", userImageUrl)
+                        startActivity(intent)
+                    }
                 } else {
                     Log.e("ProfileSearchAdmin", "User document not found for userId: $userId")
                     Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()

@@ -40,6 +40,13 @@ class ProfileSearchActivity : AppCompatActivity() {
         val userAlamat = intent.getStringExtra("USER_ALAMAT")
         val userImageUrl = intent.getStringExtra("USER_IMAGE_URL")
 
+        // Set OnClickListener to open image in full screen
+        binding.profileImageDkm.setOnClickListener {
+            val intent = Intent(this, FullScreenImageActivity::class.java)
+            intent.putExtra("IMAGE_URL", userImageUrl)
+            startActivity(intent)
+        }
+
         // Logging userId for debugging
         Log.d("ProfileSearchActivity", "Received userId: $userId")
 

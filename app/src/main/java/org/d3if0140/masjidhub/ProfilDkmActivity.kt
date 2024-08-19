@@ -88,6 +88,13 @@ class ProfilDkmActivity : AppCompatActivity() {
                             val alamat = userData["alamat"] as? String
                             val imageUrl = userData["imageUrl"] as? String
 
+                            // Set OnClickListener to open image in full screen
+                            binding.profileImageDkm.setOnClickListener {
+                                val intent = Intent(this, FullScreenImageActivity::class.java)
+                                intent.putExtra("IMAGE_URL", imageUrl)
+                                startActivity(intent)
+                            }
+
                             // Tampilkan nama pengguna jika tidak null
                             nama?.let { binding.namaUserDkm.text = it }
 
