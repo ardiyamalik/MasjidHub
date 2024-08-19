@@ -17,11 +17,15 @@ class ProfileSearchActivity : AppCompatActivity() {
     private lateinit var firestore: FirebaseFirestore
     private val postList = mutableListOf<Post>()
     private lateinit var postAdapter: PostAdapter
+    private lateinit var userId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileSearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Tangkap userId dari Intent
+        userId = intent.getStringExtra("USER_ID") ?: return
 
         firestore = FirebaseFirestore.getInstance()
 

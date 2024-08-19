@@ -130,12 +130,20 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupPengurusDkmRecyclerView() {
-        // Inisialisasi RecyclerView
         binding.recyclerViewPengurus.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        adapter = PengurusDkmAdapter()
+
+        // Inisialisasi adapter dengan onItemClick listener
+        val adapter = PengurusDkmAdapter { pengurusDkm ->
+            val intent = Intent(this, ProfileSearchActivity::class.java)
+            intent.putExtra("USER_ID", pengurusDkm.userId) // Kirim userId ke ProfileSearchAdmin
+            intent.putExtra("USER_NAME", pengurusDkm.nama) // Kirim nama
+            intent.putExtra("USER_ALAMAT", pengurusDkm.alamat) // Kirim alamat
+            intent.putExtra("USER_IMAGE_URL", pengurusDkm.imageUrl) // Kirim URL gambar
+            startActivity(intent)
+        }
+
         binding.recyclerViewPengurus.adapter = adapter
 
-        // Ambil data pengurus_dkm dari Firestore
         firestore.collection("user")
             .whereEqualTo("role", "pengurus_dkm")
             .get()
@@ -145,8 +153,9 @@ class HomeActivity : AppCompatActivity() {
                     val nama = document.getString("nama") ?: ""
                     val alamat = document.getString("alamat") ?: ""
                     val imageUrl = document.getString("imageUrl") ?: ""
+                    val userId = document.id // Ambil userId dari Firestore document ID
 
-                    pengurusDkmList.add(PengurusDkm(nama, alamat, imageUrl))
+                    pengurusDkmList.add(PengurusDkm(nama, alamat, imageUrl, userId))
                 }
                 adapter.setData(pengurusDkmList)
             }

@@ -6,9 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.d3if0140.masjidhub.databinding.ItemPengurusDkmBinding
 
-data class PengurusDkm(val nama: String, val alamat: String, val imageUrl: String)
+data class PengurusDkm(val nama: String, val alamat: String, val imageUrl: String, val userId: String)
 
-class PengurusDkmAdapter : RecyclerView.Adapter<PengurusDkmAdapter.ViewHolder>() {
+class PengurusDkmAdapter(
+    private val onItemClick: (PengurusDkm) -> Unit
+) : RecyclerView.Adapter<PengurusDkmAdapter.ViewHolder>() {
 
     private var pengurusDkmList = mutableListOf<PengurusDkm>()
 
@@ -24,7 +26,11 @@ class PengurusDkmAdapter : RecyclerView.Adapter<PengurusDkmAdapter.ViewHolder>()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(pengurusDkmList[position])
+        val pengurusDkm = pengurusDkmList[position]
+        holder.bind(pengurusDkm)
+        holder.itemView.setOnClickListener {
+            onItemClick(pengurusDkm) // Trigger the onItemClick callback
+        }
     }
 
     override fun getItemCount(): Int {
