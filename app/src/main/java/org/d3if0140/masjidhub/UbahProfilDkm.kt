@@ -24,6 +24,11 @@ class UbahProfilDkm : AppCompatActivity() {
     private lateinit var binding: ActivityUbahProfilDkmBinding
     private lateinit var mAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
+    private val MAPS_REQUEST_CODE = 2
+    private var latitude: Double? = null
+    private var longitude: Double? = null
+
+
 
     private val PICK_IMAGE_REQUEST = 1
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,22 +42,33 @@ class UbahProfilDkm : AppCompatActivity() {
         // Load current profile data
         loadUserProfile()
 
+        binding.selectLocationButton.setOnClickListener {
+            val intent = Intent(this, MapsUbahProfilActivity::class.java)
+            startActivityForResult(intent, MAPS_REQUEST_CODE)
+        }
+
+
         binding.buttonSimpan.setOnClickListener {
             val nama = binding.editTextNama.text.toString().trim()
             val alamat = binding.editTextAlamat.text.toString().trim()
+            val lat = latitude
+            val lon = longitude
 
-            if (nama.isNotEmpty()) { // Validasi jika nama tidak kosong
+            if (nama.isNotEmpty()) {
                 val currentUserId = mAuth.currentUser?.uid
                 currentUserId?.let {
+                    val updateData = mutableMapOf<String, Any>(
+                        "nama" to nama,
+                        "alamat" to alamat
+                    )
+                    lat?.let { updateData["latitude"] = it }
+                    lon?.let { updateData["longitude"] = it }
+
                     firestore.collection("user")
                         .document(it)
-                        .update(mapOf(
-                            "nama" to nama,
-                            "alamat" to alamat
-                        ))
+                        .update(updateData)
                         .addOnSuccessListener {
                             Toast.makeText(this, "Profil berhasil diubah", Toast.LENGTH_SHORT).show()
-                            // Arahkan ke ProfilActivity
                             val intent = Intent(this, ProfilDkmActivity::class.java)
                             startActivity(intent)
                             finish()
@@ -65,6 +81,7 @@ class UbahProfilDkm : AppCompatActivity() {
                 Toast.makeText(this, "Mohon isi semua bidang dengan benar", Toast.LENGTH_SHORT).show()
             }
         }
+
 
         binding.buttonUbahFotoProfil.setOnClickListener {
             // Panggil intent untuk memilih gambar dari galeri
@@ -108,10 +125,20 @@ class UbahProfilDkm : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             val imageUri = data.data
-            // Unggah gambar profil ke Firebase Storage
             uploadImage(imageUri)
+        } else if (requestCode == MAPS_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val latitude = data?.getDoubleExtra("latitude", 0.0)
+            val longitude = data?.getDoubleExtra("longitude", 0.0)
+            if (latitude != null && longitude != null) {
+                this.latitude = latitude
+                this.longitude = longitude
+                // Update UI or save to Firestore as needed
+                binding.latitudeEditText.setText(latitude.toString())
+                binding.longitudeEditText.setText(longitude.toString())
+            }
         }
     }
+
 
     private fun uploadImage(imageUri: Uri?) {
         if (imageUri != null) {
