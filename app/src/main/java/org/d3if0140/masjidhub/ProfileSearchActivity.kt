@@ -17,15 +17,11 @@ class ProfileSearchActivity : AppCompatActivity() {
     private lateinit var firestore: FirebaseFirestore
     private val postList = mutableListOf<Post>()
     private lateinit var postAdapter: PostAdapter
-    private lateinit var userId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileSearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // Tangkap userId dari Intent
-        userId = intent.getStringExtra("USER_ID") ?: return
 
         firestore = FirebaseFirestore.getInstance()
 
@@ -44,13 +40,6 @@ class ProfileSearchActivity : AppCompatActivity() {
         val userAlamat = intent.getStringExtra("USER_ALAMAT")
         val userImageUrl = intent.getStringExtra("USER_IMAGE_URL")
 
-        // Set OnClickListener to open image in full screen
-        binding.profileImageDkm.setOnClickListener {
-            val intent = Intent(this, FullScreenImageActivity::class.java)
-            intent.putExtra("IMAGE_URL", userImageUrl)
-            startActivity(intent)
-        }
-
         // Logging userId for debugging
         Log.d("ProfileSearchActivity", "Received userId: $userId")
 
@@ -66,11 +55,45 @@ class ProfileSearchActivity : AppCompatActivity() {
 
         // Load posts related to the mosque
         if (userId != null && userId.isNotEmpty()) {
+            // Load user profile data
+            loadUserProfile(userId)
+            // Load posts related to the user
             loadPosts(userId)
         } else {
-            Log.e("ProfileSearchActivity", "Invalid User ID")
+            Log.e("ProfileSearchActivity", "Invalid or missing userId")
             Toast.makeText(this, "Invalid User ID", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun loadUserProfile(userId: String) {
+        firestore.collection("user").document(userId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val userName = document.getString("nama") ?: "Unknown User"
+                    val userAlamat = document.getString("alamat") ?: "Unknown Address"
+                    val userImageUrl = document.getString("imageUrl") ?: ""
+
+                    // Update UI with user profile data
+                    binding.namaUserDkm.text = userName
+                    binding.alamatMasjid.text = userAlamat
+                    loadProfileImage(userImageUrl, binding.profileImageDkm)
+
+                    // Set OnClickListener to open image in full screen
+                    binding.profileImageDkm.setOnClickListener {
+                        val intent = Intent(this, FullScreenImageActivity::class.java)
+                        intent.putExtra("IMAGE_URL", userImageUrl)
+                        startActivity(intent)
+                    }
+                } else {
+                    Log.e("ProfileSearchAdmin", "User document not found for userId: $userId")
+                    Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("ProfileSearchAdmin", "Error fetching user document", e)
+                Toast.makeText(this, "Error fetching user profile: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun loadPosts(userId: String) {

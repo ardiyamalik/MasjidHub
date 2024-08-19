@@ -41,6 +41,17 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
             }
             holder.itemView.context.startActivity(intent)
         }
+
+        // Set click listener for user profile image and username
+        val openProfileSearch = View.OnClickListener {
+            val intent = Intent(holder.itemView.context, ProfileSearchActivity::class.java).apply {
+                putExtra("USER_ID", post.userId)
+            }
+            holder.itemView.context.startActivity(intent)
+        }
+
+        holder.userProfileImageView.setOnClickListener(openProfileSearch)
+        holder.usernameTextView.setOnClickListener(openProfileSearch)
     }
 
     override fun getItemCount(): Int {
