@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="230dp"
-    android:layout_height="240dp"
+    android:layout_height="250dp"
     android:orientation="vertical"
     android:background="@drawable/stroke_white"
     android:padding="8dp"
@@ -21,7 +21,6 @@
         android:src="@drawable/baseline_person_black" />
 
 
-
     <TextView
         android:id="@+id/textViewNama"
         android:layout_width="wrap_content"
@@ -29,6 +28,7 @@
         android:layout_gravity="left"
         android:layout_marginLeft="13dp"
         android:layout_marginTop="2dp"
+        android:fontFamily="@font/poppins_bold"
         android:text="Nama Pengurus"
         android:textColor="@color/black"
         android:textStyle="bold" />
@@ -38,6 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
+        android:fontFamily="@font/poppins_light"
         android:layout_marginTop="1dp"
         android:layout_marginLeft="13dp"
         android:textSize="11sp"
