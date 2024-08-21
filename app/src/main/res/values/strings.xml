@@ -129,5 +129,9 @@
     <string name="daftar_jamaah">Daftar Jamaah</string>
     <string name="kirim">Kirim</string>
     <string name="pengeluaran">Pengeluaran</string>
-
+    <string name="pilih_lokasi">Pilih Lokasi</string>
+    <string name="pengajuan">Pengajuan</string>
+    <string name="bukapeta">Buka Peta</string>
+    <string name="titiklokasi">Titik Lokasi Baru</string>
+    <string name="batalkan">Batalkan</string>
 </resources>
