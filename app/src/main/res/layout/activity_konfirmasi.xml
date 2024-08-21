@@ -27,7 +27,7 @@
         android:id="@+id/slogan"
         android:layout_width="362dp"
         android:layout_height="32dp"
-        android:fontFamily="@font/poppins_light"
+        android:fontFamily="@font/poppins_medium"
         android:text="@string/slogan"
         android:textAlignment="center"
         android:textColor="@color/grey"

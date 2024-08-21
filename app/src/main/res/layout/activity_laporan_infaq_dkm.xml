@@ -8,27 +8,30 @@
     tools:context=".LaporanInfaqDkm">
 
 
-    <ImageView
+    <ImageButton
         android:id="@+id/backButton"
-        android:layout_width="50dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/baseline_arrow_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="28dp"
+        android:background="@null"
+        android:padding="12dp"
+        android:src="@drawable/arrow_back_24px"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textlap"
+        android:id="@+id/textInfaq"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="36dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/laporan_infaq"
         android:textColor="@color/blue"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.408"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/backButton"
         app:layout_constraintTop_toTopOf="parent" />
 
