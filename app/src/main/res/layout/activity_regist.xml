@@ -65,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/stroke_white"
-                android:fontFamily="@font/poppins_light"
+                android:fontFamily="@font/poppins_medium"
                 android:hint="@string/nama"
                 android:inputType="text"
                 android:padding="12dp" />
@@ -91,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/stroke_white"
-                android:fontFamily="@font/poppins_light"
+                android:fontFamily="@font/poppins_medium"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:padding="12dp" />
@@ -140,7 +140,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/stroke_white"
-                android:fontFamily="@font/poppins_light"
+                android:fontFamily="@font/poppins_medium"
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:padding="12dp" />
