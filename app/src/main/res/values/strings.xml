@@ -123,5 +123,11 @@
     <string name="hapus">Hapus</string>
     <string name="longitude">Longitude</string>
     <string name="latitude">Latitude</string>
+    <string name="jamaahh">Jamaah</string>
     <string name="select_location">Buka Maps</string>
+    <string name="daftar_masjid">Daftar Masjid</string>
+    <string name="daftar_jamaah">Daftar Jamaah</string>
+    <string name="kirim">Kirim</string>
+    <string name="pengeluaran">Pengeluaran</string>
+
 </resources>
