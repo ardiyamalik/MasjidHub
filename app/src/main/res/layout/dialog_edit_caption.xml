@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/edittext_border"
         android:gravity="start|top"
+        android:fontFamily="@font/poppins_medium"
         android:hint="@string/ubah_deskripsi"
         android:inputType="textMultiLine"
         android:minHeight="100dp"

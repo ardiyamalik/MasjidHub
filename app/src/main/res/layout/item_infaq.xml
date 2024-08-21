@@ -15,6 +15,7 @@
         android:id="@+id/textViewJumlahInfaq"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:text="@string/rupiahnol"
@@ -27,6 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Metode Pembayaran"
+        android:fontFamily="@font/poppins_light"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textTanggalBayar" />
@@ -36,6 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tanggal Bayar"
+        android:fontFamily="@font/poppins_light"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewJumlahInfaq" />
@@ -45,6 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="User Email"
+        android:fontFamily="@font/poppins_light"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewMetodePembayaran" />
