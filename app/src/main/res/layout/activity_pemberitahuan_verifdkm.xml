@@ -25,8 +25,8 @@
 
     <TextView
         android:id="@+id/slogan"
-        android:layout_width="362dp"
-        android:layout_height="32dp"
+        android:layout_width="361dp"
+        android:layout_height="43dp"
         android:fontFamily="@font/poppins_light"
         android:text="Data Anda sedang diproses oleh admin untuk verifikasi."
         android:textAlignment="center"
@@ -34,18 +34,17 @@
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.716" />
+        app:layout_constraintVertical_bias="0.72" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="334dp"
         android:layout_height="377dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="84dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.311"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/verify" />
@@ -57,13 +56,13 @@
         android:background="@drawable/rounded_button_background"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/kembali_awal"
-        android:textStyle="bold"
         android:textAllCaps="false"
         android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.786" />
+        app:layout_constraintVertical_bias="0.817" />
 </androidx.constraintlayout.widget.ConstraintLayout>

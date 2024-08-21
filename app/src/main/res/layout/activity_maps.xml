@@ -11,11 +11,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/selectLocationButton"
-        android:layout_width="wrap_content"
+        android:layout_width="164dp"
         android:layout_height="wrap_content"
-        android:text="Select Location"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:drawableStart="@drawable/check_circle_24px"
+        android:paddingStart="10dp"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/rounded_button_background"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/pilih_lokasi"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
 </RelativeLayout>
