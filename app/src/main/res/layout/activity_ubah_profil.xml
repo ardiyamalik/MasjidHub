@@ -7,28 +7,30 @@
     android:background="@color/white"
     tools:context=".ProfilActivity">
 
-    <ImageView
-        android:id="@id/backButton"
-        android:layout_width="50dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/baseline_arrow_back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
+    <ImageButton
+        android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="5dp"
+        android:background="@null"
+        android:layout_marginTop="20dp"
+        android:padding="12dp"
+        android:src="@drawable/arrow_back_24px"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/ubah_profil"
         android:textColor="@color/blue"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.355"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/backButton"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,6 +39,9 @@
         android:layout_width="153dp"
         android:layout_height="121dp"
         android:layout_gravity="end"
+        android:background="@drawable/circle_image"
+        android:clipToOutline="true"
+        android:scaleType="centerCrop"
         android:contentDescription="Foto Profil"
         android:src="@drawable/baseline_person_black"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -49,16 +54,15 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonUbahFotoProfil"
-        android:layout_width="62dp"
+        android:layout_width="37dp"
         android:layout_height="37dp"
+        android:layout_marginTop="164dp"
         android:background="@drawable/baseline_edit"
         android:contentDescription="Ubah Foto Profil"
-        app:layout_constraintBottom_toBottomOf="@+id/profileImageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/profileImageView"
-        app:layout_constraintTop_toTopOf="@+id/profileImageView"
-        app:layout_constraintVertical_bias="0.523" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -75,7 +79,6 @@
         android:id="@+id/namaUser"
         android:layout_width="149dp"
         android:layout_height="37dp"
-        android:layout_marginTop="52dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/nama"
         android:textAlignment="center"
@@ -84,24 +87,26 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUbahFotoProfil"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.289" />
 
     <TextView
         android:id="@+id/dkm"
         android:layout_width="351dp"
         android:layout_height="50dp"
-        android:fontFamily="@font/poppins_bold"
+        android:fontFamily="@font/poppins_medium"
         android:text="@string/jamaah"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/namaUser"
-        app:layout_constraintVertical_bias="0.032" />
+        app:layout_constraintVertical_bias="0.02" />
 
     <View
         android:id="@+id/divider"
@@ -118,14 +123,15 @@
     <!-- EditText untuk mengubah nama profil -->
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/editTextNama"
-        android:layout_width="375dp"
-        android:layout_height="52dp"
+        android:layout_width="351dp"
+        android:layout_height="46dp"
         android:background="@drawable/stroke_white"
         android:drawablePadding="8dp"
-        android:fontFamily="@font/poppins_bold"
+        android:fontFamily="@font/poppins_medium"
         android:gravity="start|center_vertical"
         android:hint="@string/masukkan_namabaru"
         android:paddingLeft="18dp"
+        android:textSize="14sp"
         android:textColor="@color/blue"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
@@ -136,35 +142,34 @@
 
     <Spinner
         android:id="@+id/DkmSpinnerUbah"
-        android:layout_width="378dp"
-        android:layout_height="49dp"
+        android:layout_width="351dp"
+        android:layout_height="46dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/stroke_white"
         android:fontFamily="@font/poppins_light"
         android:padding="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextNama"
         app:layout_constraintVertical_bias="0.0" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonSimpan"
-        android:layout_width="380dp"
-        android:layout_height="53dp"
+        android:layout_width="351dp"
+        android:layout_height="46dp"
         android:background="@drawable/rounded_button_background"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/simpan"
-        android:textStyle="bold"
         android:textAllCaps="false"
         android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.548"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DkmSpinnerUbah"
-        app:layout_constraintVertical_bias="0.218" />
+        app:layout_constraintVertical_bias="0.072" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

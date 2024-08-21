@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/profileImageDkm"
         android:layout_width="153dp"
-        android:layout_height="121dp"
+        android:layout_height="153dp"
         android:layout_gravity="end"
         android:layout_marginTop="50dp"
         android:background="@drawable/circle_image"

@@ -12,36 +12,38 @@
         tools:context=".RegisterDkmActivity">
 
 
+
         <ImageButton
             android:id="@+id/backButton"
-            android:layout_width="44dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:background="@null"
-            android:padding="12dp"
-            android:src="@drawable/baseline_arrow_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginStart="5dp"
+            android:background="@null"
+            android:layout_marginTop="20dp"
+            android:padding="12dp"
+            android:src="@drawable/arrow_back_24px"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
             android:fontFamily="@font/poppins_bold"
-            android:gravity="center"
             android:text="@string/daftar_dkm"
             android:textColor="@color/blue"
-            android:textSize="20sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/namaMasjidInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/backButton"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/namaMasjidInputLayout"
-            android:layout_width="380dp"
-            android:layout_height="53dp"
+            android:layout_width="351dp"
+            android:layout_height="46dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="80dp"
             android:layout_marginEnd="32dp"
@@ -66,6 +68,7 @@
             android:layout_width="380dp"
             android:layout_height="53dp"
             android:layout_marginStart="32dp"
+            android:visibility="gone"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -76,6 +79,7 @@
                 android:id="@+id/latitudeEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:background="@drawable/stroke_white"
                 android:fontFamily="@font/poppins_light"
                 android:hint="@string/latitude"
@@ -90,6 +94,7 @@
             android:layout_height="53dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -102,6 +107,7 @@
                 android:background="@drawable/stroke_white"
                 android:fontFamily="@font/poppins_light"
                 android:hint="@string/longitude"
+                android:visibility="gone"
                 android:inputType="numberDecimal"
                 android:padding="12dp" />
 
@@ -109,16 +115,19 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/selectLocationButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_button_background"
+            android:layout_width="351dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/stroke_white"
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
-            android:text="@string/select_location"
-            android:textColor="@color/white"
+            android:drawableLeft="@drawable/location_on_24px"
+            android:paddingLeft="10dp"
+            android:paddingRight="20dp"
+            android:text="@string/titiklokasi"
+            android:textAllCaps="false"
+            android:textColor="@color/blue"
             android:textSize="16sp"
-            android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/longitudeInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -126,8 +135,8 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/alamatInputLayout"
-            android:layout_width="380dp"
-            android:layout_height="53dp"
+            android:layout_width="351dp"
+            android:layout_height="46dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="32dp"
@@ -150,8 +159,8 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/kodePosInputLayout"
-            android:layout_width="380dp"
-            android:layout_height="53dp"
+            android:layout_width="351dp"
+            android:layout_height="46dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="32dp"
@@ -174,8 +183,8 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/teleponMasjidInputLayout"
-            android:layout_width="380dp"
-            android:layout_height="53dp"
+            android:layout_width="351dp"
+            android:layout_height="46dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="32dp"
@@ -197,8 +206,8 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/namaKetuaInputLayout"
-            android:layout_width="380dp"
-            android:layout_height="53dp"
+            android:layout_width="351dp"
+            android:layout_height="46dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="32dp"
@@ -221,8 +230,8 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/teleponKetuaInputLayout"
-            android:layout_width="380dp"
-            android:layout_height="53dp"
+            android:layout_width="351dp"
+            android:layout_height="46dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="32dp"
@@ -244,8 +253,8 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailKetuaInputLayout"
-            android:layout_width="380dp"
-            android:layout_height="53dp"
+            android:layout_width="351dp"
+            android:layout_height="46dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="32dp"
@@ -265,21 +274,23 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordInputLayout"
             android:layout_width="380dp"
             android:layout_height="53dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="32dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.06"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/emailKetuaInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="351dp"
+                android:layout_height="46dp"
                 android:background="@drawable/stroke_white"
                 android:fontFamily="@font/poppins_light"
                 android:hint="@string/password_daftarkan"
@@ -288,17 +299,17 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/uploadKtpButton"
-            android:layout_width="380dp"
-            android:layout_height="45dp"
+            android:layout_width="351dp"
+            android:layout_height="46dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/stroke_white"
             android:drawableLeft="@drawable/placeholder_image"
             android:fontFamily="@font/poppins_bold"
             android:gravity="center"
+            android:paddingRight="10dp"
             android:paddingStart="10dp"
             android:text="@string/unggah_ktpdkm"
             android:textAllCaps="false"
@@ -313,7 +324,7 @@
 
         <ImageView
             android:id="@+id/ktpImageView"
-            android:layout_width="380dp"
+            android:layout_width="351dp"
             android:layout_height="150dp"
             android:layout_marginTop="8dp"
             android:contentDescription="Foto KTP Ketua DKM"
@@ -324,8 +335,8 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/registButton"
-            android:layout_width="380dp"
-            android:layout_height="45dp"
+            android:layout_width="351dp"
+            android:layout_height="46dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/rounded_button_background"
