@@ -8,6 +8,44 @@
     tools:context=".ProfilDkmActivity">
 
     <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:background="@null"
+        android:layout_marginTop="20dp"
+        android:padding="12dp"
+        android:src="@drawable/arrow_back_24px"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/profil"
+        android:textColor="@color/blue"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/backButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/dropdown_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="16dp"
+        android:background="@null"
+        android:src="@drawable/menu_24px"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
         android:id="@+id/ubahProfileDkm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,8 +60,11 @@
     <ImageView
         android:id="@+id/profileImageDkm"
         android:layout_width="153dp"
-        android:layout_height="121dp"
-        android:layout_marginTop="50dp"
+        android:layout_height="153dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/circle_image"
+        android:clipToOutline="true"
+        android:scaleType="centerCrop"
         android:contentDescription="Foto Profil"
         android:src="@drawable/baseline_person_black"
         app:layout_constraintBottom_toTopOf="@id/namaUserDkm"
@@ -45,11 +86,11 @@
 
     <TextView
         android:id="@+id/namaUserDkm"
-        android:layout_width="340dp"
-        android:layout_height="58dp"
+        android:layout_width="338dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/poppins_bold"
         android:text="Nama Dkm"
-        android:layout_marginTop="10dp"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -60,9 +101,9 @@
 
     <TextView
         android:id="@+id/alamat_masjid"
-        android:layout_width="363dp"
-        android:layout_height="61dp"
-        android:fontFamily="@font/poppins_bold"
+        android:layout_width="361dp"
+        android:layout_height="36dp"
+        android:fontFamily="@font/poppins_medium"
         android:text="@string/alamat"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -78,7 +119,7 @@
         android:layout_width="166dp"
         android:layout_height="35dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/stroke_white"
         android:drawableLeft="@drawable/informasi"
@@ -90,7 +131,7 @@
         android:textColor="@color/blue"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/buttonLogoutDkm"
-        app:layout_constraintHorizontal_bias="0.097"
+        app:layout_constraintHorizontal_bias="0.095"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/alamat_masjid" />
 
@@ -99,7 +140,7 @@
         android:layout_width="165dp"
         android:layout_height="33dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/stroke_white"
         android:drawableLeft="@drawable/baseline_logout_blue"
@@ -119,20 +160,21 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
         android:layout_marginTop="20dp"
+        android:background="@android:color/darker_gray"
         app:layout_constraintBottom_toTopOf="@id/recyclerViewPost"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/buttonLogoutDkm" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewPost"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_width="413dp"
+        android:layout_height="286dp"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation_dkm"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider" />
 

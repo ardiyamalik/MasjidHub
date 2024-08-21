@@ -9,12 +9,42 @@
 
 
 
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:background="@null"
+        android:layout_marginTop="20dp"
+        android:padding="12dp"
+        android:src="@drawable/arrow_back_24px"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/profil"
+        android:textColor="@color/blue"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/backButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/profileImageView"
         android:layout_width="153dp"
-        android:layout_height="121dp"
+        android:layout_height="153dp"
         android:layout_gravity="end"
         android:contentDescription="Foto Profil"
+        android:background="@drawable/circle_image"
+        android:clipToOutline="true"
+        android:scaleType="centerCrop"
         android:src="@drawable/baseline_person_black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,15 +65,15 @@
 
     <TextView
         android:id="@+id/namaUser"
-        android:layout_width="286dp"
-        android:layout_height="53dp"
+        android:layout_width="265dp"
+        android:layout_height="55dp"
         android:fontFamily="@font/poppins_bold"
+        android:gravity="center"
+        android:paddingTop="20sp"
         android:text="@string/nama"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:paddingTop="20sp"
-        android:gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
@@ -53,18 +83,19 @@
 
     <TextView
         android:id="@+id/dkm"
-        android:layout_width="351dp"
-        android:layout_height="50dp"
-        android:fontFamily="@font/poppins_bold"
+        android:layout_width="322dp"
+        android:layout_height="33dp"
+        android:fontFamily="@font/poppins_medium"
         android:text="@string/jamaah"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/namaUser"
-        app:layout_constraintVertical_bias="0.015" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <View
         android:id="@+id/divider"
@@ -91,6 +122,7 @@
         android:fontFamily="@font/poppins_bold"
         android:gravity="start|center_vertical"
         android:paddingLeft="18dp"
+        android:textAllCaps="false"
         android:text="@string/ubah_profil"
         android:textColor="@color/blue"
         android:textStyle="bold"
@@ -109,6 +141,7 @@
         android:drawableLeft="@drawable/baseline_logout_blue"
         android:drawablePadding="8dp"
         android:fontFamily="@font/poppins_bold"
+        android:textAllCaps="false"
         android:gravity="start|center_vertical"
         android:paddingLeft="18dp"
         android:text="@string/logout"
