@@ -57,6 +57,8 @@
         android:id="@+id/imageViewBuktiPembayaran"
         android:layout_width="0dp"
         android:layout_height="200dp"
+        android:background="@drawable/rounded_image"
+        android:clipToOutline="true"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
