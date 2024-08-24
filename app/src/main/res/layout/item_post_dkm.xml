@@ -111,14 +111,13 @@
 
             <ImageButton
                 android:id="@+id/editButton"
-                android:layout_width="33dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="0dp"
+                android:layout_width="35dp"
+                android:layout_height="26dp"
                 android:background="@null"
                 android:contentDescription="Edit Caption"
                 android:src="@drawable/edit_24px"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.98"
+                app:layout_constraintHorizontal_bias="0.961"
                 app:layout_constraintStart_toEndOf="@+id/usernameTextView"
                 app:layout_constraintTop_toTopOf="parent" />
 
