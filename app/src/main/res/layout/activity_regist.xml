@@ -26,13 +26,13 @@
             android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="5dp"
             android:background="@null"
+            android:layout_marginTop="20dp"
             android:padding="12dp"
-            android:src="@drawable/baseline_arrow_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:src="@drawable/arrow_back_24px"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/masuk"
@@ -64,7 +64,7 @@
                 android:id="@+id/namaEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/stroke_white"
+                android:background="@drawable/stroke_gray"
                 android:fontFamily="@font/poppins_medium"
                 android:hint="@string/nama"
                 android:inputType="text"
@@ -90,7 +90,7 @@
                 android:id="@+id/emailEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/stroke_white"
+                android:background="@drawable/stroke_gray"
                 android:fontFamily="@font/poppins_medium"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
@@ -114,7 +114,7 @@
                 android:id="@+id/DkmSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/stroke_white"
+                android:background="@drawable/stroke_gray"
                 android:fontFamily="@font/poppins_light"
                 android:padding="2dp" />
 
@@ -139,7 +139,7 @@
                 android:id="@+id/passwordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/stroke_white"
+                android:background="@drawable/stroke_gray"
                 android:fontFamily="@font/poppins_medium"
                 android:hint="@string/password"
                 android:inputType="textPassword"
