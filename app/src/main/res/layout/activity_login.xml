@@ -25,13 +25,13 @@
           android:id="@+id/backButton"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginStart="16dp"
-          android:layout_marginTop="16dp"
+          android:layout_marginStart="5dp"
           android:background="@null"
+          android:layout_marginTop="20dp"
           android:padding="12dp"
-          android:src="@drawable/baseline_arrow_back"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
+          android:src="@drawable/arrow_back_24px"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintStart_toStartOf="parent" />
 
       <TextView
           android:id="@+id/masuk"
