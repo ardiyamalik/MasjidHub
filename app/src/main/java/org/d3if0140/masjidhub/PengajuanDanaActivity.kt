@@ -60,7 +60,6 @@ class PengajuanDanaActivity : AppCompatActivity() {
             showDatePickerDialog()
         }
 
-
         binding.buttonUploadKTP.setOnClickListener {
             getKtpFromGallery.launch("image/*")
             Log.d(TAG, "Button 'Upload KTP' clicked")
@@ -76,9 +75,42 @@ class PengajuanDanaActivity : AppCompatActivity() {
             Log.d(TAG, "Button 'Submit' clicked")
         }
 
-        binding.backButton.setOnClickListener{
+        binding.backButton.setOnClickListener {
             startActivity(Intent(this, DkmDashboard::class.java))
         }
+
+        // Fetch user data and populate fields
+        fetchUserData()
+    }
+
+    private fun fetchUserData() {
+        val userId = auth.currentUser?.uid
+        if (userId == null) {
+            Log.d(TAG, "User ID is null")
+            return
+        }
+
+        Log.d(TAG, "Fetching user data for user ID: $userId")
+
+        db.collection("user").document(userId).get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    val namaKetua = document.getString("namaKetua")
+                    val lokasi = document.getString("nama")
+                    val teleponKetua = document.getString("teleponKetua")
+
+                    Log.d(TAG, "User data fetched successfully: namaKetua=$namaKetua, nama=$lokasi, teleponKetua=$teleponKetua")
+
+                    binding.editTextNama.setText(namaKetua ?: "")
+                    binding.editTextLokasi.setText(lokasi ?: "")
+                    binding.editTextKontak.setText(teleponKetua ?: "")
+                } else {
+                    Log.d(TAG, "No such document")
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e(TAG, "Error getting user data: ${e.message}", e)
+            }
     }
 
     private fun submitPengajuan() {
