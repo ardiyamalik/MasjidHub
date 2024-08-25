@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -38,12 +39,28 @@ class UbahProfilDkm : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
+        // Inisialisasi mapsResultLauncher
+        mapsResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data = result.data
+                val latitude = data?.getDoubleExtra("latitude", 0.0)
+                val longitude = data?.getDoubleExtra("longitude", 0.0)
+                if (latitude != null && longitude != null) {
+                    this.latitude = latitude
+                    this.longitude = longitude
+                    binding.latitudeEditText.setText(latitude.toString())
+                    binding.longitudeEditText.setText(longitude.toString())
+                }
+            }
+        }
+
+
         // Load current profile data
         loadUserProfile()
 
         // Set onClickListener untuk tombol pilih lokasi
         binding.selectLocationButton.setOnClickListener {
-            val intent = Intent(this, MapsActivity::class.java)
+            val intent = Intent(this, MapsUbahProfilActivity::class.java)
             mapsResultLauncher.launch(intent)
         }
 
