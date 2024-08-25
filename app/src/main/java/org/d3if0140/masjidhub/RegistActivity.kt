@@ -7,6 +7,7 @@ import android.text.InputType
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ImageButton
@@ -22,43 +23,31 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.databinding.ActivityRegistBinding
 
-
 class RegistActivity : AppCompatActivity() {
-    // Deklarasi variabel binding untuk menggunakan ViewBinding
     private lateinit var binding: ActivityRegistBinding
     private lateinit var passwordEditText: TextInputEditText
     private lateinit var passwordToggle: ImageButton
     private lateinit var mAuth: FirebaseAuth
-    private lateinit var firestore: FirebaseFirestore // Tambahkan deklarasi variabel firestore
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Menggunakan inflate pada binding untuk menghubungkan layout XML dengan Activity
         binding = ActivityRegistBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-        // Inisialisasi Firebase App Check
         FirebaseAppCheck.getInstance().installAppCheckProviderFactory(
             PlayIntegrityAppCheckProviderFactory.getInstance()
         )
 
-        // Inisialisasi Firebase
-        //FirebaseApp.initializeApp(this)
-
-        // Initialize FirebaseAuth instance
         mAuth = FirebaseAuth.getInstance()
-
-        // Initialize Firestore instance
         firestore = FirebaseFirestore.getInstance()
 
-        // Menambahkan onClickListener pada button backButton untuk kembali ke WelcomeActivity
         binding.backButton.setOnClickListener {
             val intent = Intent(this, WelcomeActivity::class.java)
             startActivity(intent)
         }
 
-        // Set teks pada textDaftar menjadi "Belum punya akun? Daftar" dengan tautan ke RegistActivity
         val text = "Sudah punya akun? Login"
         val spannableString = SpannableString(text)
         val startIndex = text.indexOf("Login")
@@ -77,12 +66,9 @@ class RegistActivity : AppCompatActivity() {
         binding.textLogin.text = spannableString
         binding.textLogin.movementMethod = LinkMovementMethod.getInstance()
 
-
-        // Menghubungkan passwordEditText dan passwordToggle dengan elemen UI yang sesuai
         passwordEditText = binding.passwordEditText
         passwordToggle = binding.passwordToggle
 
-        // Menambahkan onClickListener pada passwordToggle untuk mengubah visibilitas password
         passwordToggle.setOnClickListener {
             val inputType = passwordEditText.inputType
             if (inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
@@ -96,44 +82,52 @@ class RegistActivity : AppCompatActivity() {
             passwordEditText.setSelection(passwordEditText.text?.length ?: 0)
         }
 
-        // Menghubungkan emailEditText dan spinner dengan elemen UI yang sesuai
         val emailEditText: TextInputEditText = binding.emailEditText
         val spinner: Spinner = binding.DkmSpinner
         val namaEditText: TextInputEditText = binding.namaEditText
         val passwordEditText: TextInputEditText = binding.passwordEditText
 
-        // Data untuk opsi dropdown pada spinner
-        val dkmOptions = arrayOf(
-            "Jamaah Masjid",
-            "Masjid Nurul Hikmah",
-            "Masjid Al-Lathif",
-            "Masjid Al-Jabar"
-        )
-
-        // Membuat adapter untuk spinner dan mengatur posisi awal ke "Jamaah Masjid"
-        val adapter =
-            ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, dkmOptions)
+        // Inisialisasi adapter spinner
+        val dkmOptions = mutableListOf<String>()
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, dkmOptions)
         spinner.adapter = adapter
-        spinner.setSelection(0)
 
-        // Menambahkan onClickListener pada button register
+        // Ambil data dari Firestore
+        firestore.collection("user")
+            .whereEqualTo("role", "pengurus_dkm")
+            .get()
+            .addOnSuccessListener { documents ->
+                if (documents.isEmpty) {
+                    Log.d("Firestore", "No documents found")
+                    Toast.makeText(this, "Tidak ada data pengurus_dkm yang ditemukan", Toast.LENGTH_SHORT).show()
+                } else {
+                    for (document in documents) {
+                        val namaDkm = document.getString("nama")
+                        namaDkm?.let { dkmOptions.add(it) }
+                    }
+                    adapter.notifyDataSetChanged()
+                }
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Gagal mengambil data dari Firestore", Toast.LENGTH_SHORT).show()
+                Log.d("FirestoreError", "Error getting documents: ", exception)
+            }
+
+
         binding.registButton.setOnClickListener {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
             val nama = namaEditText.text.toString()
             val dkm = spinner.selectedItem.toString()
 
-            // Melakukan proses registrasi dengan FirebaseAuth
             mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        // Registrasi berhasil
                         val user: FirebaseUser? = mAuth.currentUser
                         val profileUpdates = UserProfileChangeRequest.Builder()
                             .setDisplayName(nama)
                             .build()
 
-                        // Mengirim email verifikasi
                         user?.sendEmailVerification()
                             ?.addOnCompleteListener { emailTask ->
                                 if (emailTask.isSuccessful) {
@@ -151,7 +145,6 @@ class RegistActivity : AppCompatActivity() {
                                 }
                             }
 
-                        // Menyimpan data ke Firestore
                         val userData = hashMapOf(
                             "nama" to nama,
                             "email" to email,
@@ -163,23 +156,17 @@ class RegistActivity : AppCompatActivity() {
                             .document(user!!.uid)
                             .set(userData)
                             .addOnSuccessListener {
-                                // Data berhasil disimpan ke Firestore
                                 val intent = Intent(this, KonfirmasiActivity::class.java)
                                 startActivity(intent)
                             }
                             .addOnFailureListener { e ->
-                                // Gagal menyimpan data ke Firestore
                                 Toast.makeText(
                                     this,
                                     "Gagal menyimpan data ke database",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
-
-
                     } else {
-                        // Registrasi gagal
-                        // Cek apakah registrasi gagal karena email sudah digunakan sebelumnya
                         if (task.exception is FirebaseAuthUserCollisionException) {
                             Toast.makeText(
                                 this,
