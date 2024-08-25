@@ -53,6 +53,9 @@ class PengajuanDanaActivity : AppCompatActivity() {
         binding = ActivityPengajuanDanaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val currentDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+        binding.editTextTanggal.setText(currentDate)
+
         binding.editTextTanggal.setOnClickListener {
             showDatePickerDialog()
         }

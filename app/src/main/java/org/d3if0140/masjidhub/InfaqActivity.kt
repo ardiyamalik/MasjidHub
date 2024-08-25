@@ -13,6 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.databinding.ActivityInfaqBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class InfaqActivity : AppCompatActivity() {
@@ -33,25 +34,20 @@ class InfaqActivity : AppCompatActivity() {
         binding = ActivityInfaqBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Mengatur tanggal saat ini ke EditText tanggal
+        val currentDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+        binding.editTextTanggal.setText(currentDate)
+
         binding.editTextTanggal.setOnClickListener {
             showDatePickerDialog()
         }
 
-        binding.backButton.setOnClickListener{
-            startActivity(Intent(this, HomeActivity::class.java))
+        binding.editTextTanggal.setOnClickListener {
+            showDatePickerDialog()
         }
 
-        binding.radioGroupMetode.setOnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
-                R.id.radioButtonBankTransfer -> {
-                    binding.textViewRekening.visibility = android.view.View.VISIBLE
-                    binding.imageViewQR.visibility = android.view.View.GONE
-                }
-                R.id.radioButtonQR -> {
-                    binding.textViewRekening.visibility = android.view.View.GONE
-                    binding.imageViewQR.visibility = android.view.View.VISIBLE
-                }
-            }
+        binding.backButton.setOnClickListener {
+            startActivity(Intent(this, HomeActivity::class.java))
         }
 
         binding.buttonPilihFoto.setOnClickListener {
@@ -60,13 +56,8 @@ class InfaqActivity : AppCompatActivity() {
 
         binding.buttonBayar.setOnClickListener {
             val jumlahInfaq = binding.editTextJumlahInfaq.text.toString().toDoubleOrNull()
-            val metodePembayaran = when {
-                binding.radioButtonBankTransfer.isChecked -> "Bank Transfer"
-                binding.radioButtonQR.isChecked -> "QR"
-                else -> null
-            }
 
-            if (jumlahInfaq != null && metodePembayaran != null) {
+            if (jumlahInfaq != null) {
                 val currentUser = auth.currentUser
                 val userId = currentUser?.uid ?: ""
                 val userEmail = currentUser?.email ?: "Unknown"
@@ -76,7 +67,7 @@ class InfaqActivity : AppCompatActivity() {
                     "userId" to userId,
                     "userEmail" to userEmail,
                     "jumlahInfaq" to jumlahInfaq,
-                    "metodePembayaran" to metodePembayaran,
+                    "metodePembayaran" to "Bank Transfer",
                     "buktiPembayaran" to binding.imageViewBuktiPembayaran.drawable.toString(),
                     "tanggal" to tanggal,
                     "status" to "pending"
@@ -101,10 +92,10 @@ class InfaqActivity : AppCompatActivity() {
 
     private fun saveNotificationToFirestore(jumlahInfaq: Double) {
         val currentUser = auth.currentUser
-        val userId = currentUser?.uid ?: "unknown_user" // Menyimpan userId dari pengguna saat ini
+        val userId = currentUser?.uid ?: "unknown_user"
 
         val notificationData = hashMapOf(
-            "userId" to userId, // Tambahkan userId ke data notifikasi
+            "userId" to userId,
             "title" to "Infaq sedang diproses",
             "message" to "Infaq sebesar Rp $jumlahInfaq sedang diproses oleh aplikasi.",
             "timestamp" to System.currentTimeMillis()
@@ -120,7 +111,6 @@ class InfaqActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
     }
-
 
     private fun showDatePickerDialog() {
         val calendar = Calendar.getInstance()
