@@ -56,6 +56,10 @@ class KeuanganActivity : AppCompatActivity() {
             val intent = Intent(this, LaporanKasJamaah::class.java)
             startActivity(intent)
         }
+        binding.kekeuangan.setOnClickListener{
+            val intent = Intent(this, LaporanKeuanganActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.buttonLaporanPengajuan.setOnClickListener{
             val intent = Intent(this, LaporanPengajuanJamaah::class.java)

@@ -134,4 +134,6 @@
     <string name="bukapeta">Buka Peta</string>
     <string name="titiklokasi">Titik Lokasi Baru</string>
     <string name="batalkan">Batalkan</string>
+    <string name="mtrl_picker_header_title">Pilih Tanggal</string>
+
 </resources>
