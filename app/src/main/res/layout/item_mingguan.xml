@@ -12,20 +12,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/rounded_button_background"
+        android:fontFamily="@font/poppins_medium"
         android:paddingHorizontal="8dp"
+        android:padding="8dp"
         android:paddingVertical="4dp"
-        android:fontFamily="@font/poppins_bold"
         android:text="Minggu 1"
-        android:textSize="10sp"
         android:textColor="@android:color/white"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Minggu 5" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/income"
+        android:id="@+id/income_mingguan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -33,12 +33,12 @@
         android:text="Rp50.000.000"
         android:textColor="@android:color/holo_green_dark"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@id/expense"
+        app:layout_constraintEnd_toStartOf="@id/expense_mingguan"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Rp50.000.000" />
 
     <TextView
-        android:id="@+id/expense"
+        android:id="@+id/expense_mingguan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
