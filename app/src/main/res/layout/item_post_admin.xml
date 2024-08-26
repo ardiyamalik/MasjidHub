@@ -59,17 +59,16 @@
 
             <ImageView
                 android:id="@+id/postImageView"
-                android:layout_width="292dp"
-                android:layout_height="216dp"
-                android:layout_marginTop="56dp"
+                android:layout_width="314dp"
+                android:layout_height="214dp"
                 android:background="@drawable/rounded_image"
                 android:clipToOutline="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/placeholder_image"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.545"
+                app:layout_constraintHorizontal_bias="0.829"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profileImageDkm" />
+                app:layout_constraintTop_toBottomOf="@+id/descriptionTextView" />
 
             <TextView
                 android:id="@+id/descriptionTextView"
@@ -79,7 +78,6 @@
                 android:fontFamily="@font/poppins_light"
                 android:text="Description"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/postImageView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.967"
                 app:layout_constraintStart_toStartOf="parent"
@@ -99,8 +97,8 @@
 
             <ImageView
                 android:id="@+id/deleteButton"
-                android:layout_width="33dp"
-                android:layout_height="30dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:layout_marginTop="12dp"
                 android:contentDescription="Delete"
                 app:layout_constraintEnd_toEndOf="parent"
