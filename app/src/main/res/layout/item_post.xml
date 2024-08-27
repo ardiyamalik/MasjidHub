@@ -23,23 +23,23 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:background="@color/white">
+            android:layout_height="390dp"
+            android:background="@color/white"
+            android:padding="16dp">
 
             <ImageView
                 android:id="@+id/profileImageDkm"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/circle_image"
                 android:clipToOutline="true"
-                android:scaleType="centerCrop"
-                android:layout_marginEnd="10dp"
                 android:contentDescription="Foto Profil"
+                android:scaleType="centerCrop"
                 android:src="@drawable/baseline_person_black"
+                app:layout_constraintBottom_toBottomOf="@+id/usernameTextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="@+id/usernameTextView"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
@@ -47,8 +47,8 @@
                 android:layout_width="188dp"
                 android:layout_height="26dp"
                 android:layout_marginLeft="10dp"
-                android:fontFamily="@font/poppins_bold"
                 android:layout_marginTop="0dp"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Username"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -57,17 +57,19 @@
                 app:layout_constraintStart_toEndOf="@+id/profileImageDkm"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
             <TextView
                 android:id="@+id/timestampTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="190dp"
+                android:layout_height="29dp"
+                android:fontFamily="@font/poppins_medium"
                 android:padding="8dp"
                 android:textColor="@android:color/black"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/usernameTextView"
-                app:layout_constraintTop_toTopOf="parent" />
-
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/postImageView" />
 
             <ImageView
                 android:id="@+id/postImageView"
@@ -103,10 +105,10 @@
                 android:id="@+id/buttonLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@+id/descriptionTextView"
-                app:layout_constraintEnd_toEndOf="parent">
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/descriptionTextView">
 
             </LinearLayout>
 
