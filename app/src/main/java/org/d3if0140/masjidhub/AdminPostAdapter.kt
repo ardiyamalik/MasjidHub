@@ -10,6 +10,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class AdminPostAdapter(
     private val postList: MutableList<Post>,
@@ -25,6 +28,10 @@ class AdminPostAdapter(
         val post = postList[position]
         holder.descriptionTextView.text = post.deskripsi
         holder.usernameTextView.text = post.nama
+
+        // Format timestamp to a readable date string
+        val formattedDate = formatTimestamp(post.timestamp)
+        holder.timestampTextView.text = formattedDate
 
         Glide.with(holder.itemView.context)
             .load(post.userImageUrl)
@@ -83,5 +90,11 @@ class AdminPostAdapter(
         val userProfileImageView: ImageView = itemView.findViewById(R.id.profileImageDkm)
         val usernameTextView: TextView = itemView.findViewById(R.id.usernameTextView)
         val deleteButton: ImageView = itemView.findViewById(R.id.deleteButton)
+        val timestampTextView: TextView = itemView.findViewById(R.id.timestampTextView)
+    }
+
+    private fun formatTimestamp(timestamp: Long): String {
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+        return sdf.format(Date(timestamp))
     }
 }

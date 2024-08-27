@@ -13,6 +13,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
 import org.d3if0140.masjidhub.databinding.ActivityUnggahBinding
+import java.text.SimpleDateFormat
 import java.util.*
 
 class UnggahActivity : AppCompatActivity() {
@@ -32,7 +33,7 @@ class UnggahActivity : AppCompatActivity() {
             PlayIntegrityAppCheckProviderFactory.getInstance()
         )
 
-        binding.backButton.setOnClickListener{
+        binding.backButton.setOnClickListener {
             startActivity(Intent(this, DkmDashboard::class.java))
         }
 
@@ -46,18 +47,21 @@ class UnggahActivity : AppCompatActivity() {
                     finish()
                     true
                 }
+
                 R.id.menu_finance -> {
                     val intent = Intent(this, KeuanganDkmActivity::class.java)
                     startActivity(intent)
                     finish()
                     true
                 }
+
                 R.id.menu_profile_dkm -> {
                     val intent = Intent(this, ProfilDkmActivity::class.java)
                     startActivity(intent)
                     finish()
                     true
                 }
+
                 else -> false
             }
         }
@@ -71,14 +75,15 @@ class UnggahActivity : AppCompatActivity() {
         }
     }
 
-    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        if (uri != null) {
-            selectedImageUri = uri
-            binding.selectedImage.setImageURI(uri)
-        } else {
-            Toast.makeText(this, "Gambar tidak dipilih", Toast.LENGTH_SHORT).show()
+    private val pickImageLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            if (uri != null) {
+                selectedImageUri = uri
+                binding.selectedImage.setImageURI(uri)
+            } else {
+                Toast.makeText(this, "Gambar tidak dipilih", Toast.LENGTH_SHORT).show()
+            }
         }
-    }
 
     private fun openFileChooser() {
         pickImageLauncher.launch("image/*")
@@ -103,6 +108,12 @@ class UnggahActivity : AppCompatActivity() {
         }
     }
 
+    private fun formatTimestamp(timestamp: Long): String {
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+        return sdf.format(Date(timestamp))
+    }
+
+
     private fun submitPost(imageUrl: String?) {
         val deskripsi = binding.editDesk.text.toString()
         if (deskripsi.isBlank()) {
@@ -116,11 +127,13 @@ class UnggahActivity : AppCompatActivity() {
             return
         }
 
-        val postData= hashMapOf(
+        val timestamp = System.currentTimeMillis()
+        val postData = hashMapOf(
             "deskripsi" to deskripsi,
             "imageUrl" to imageUrl,
             "userId" to currentUser.uid,
-            "timestamp" to System.currentTimeMillis()
+            "timestamp" to timestamp,
+            "formattedDate" to formatTimestamp(timestamp) // Menambahkan tanggal dan jam yang diformat
         )
 
         firestore.collection("posts")
@@ -129,6 +142,7 @@ class UnggahActivity : AppCompatActivity() {
                 val intent = Intent(this, EventActivity::class.java).apply {
                     putExtra("deskripsi", deskripsi)
                     putExtra("imageUrl", imageUrl)
+                    putExtra("timestamp", timestamp) // Kirim timestamp ke Activity berikutnya
                 }
                 startActivity(intent)
             }

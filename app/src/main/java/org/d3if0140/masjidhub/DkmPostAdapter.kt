@@ -9,6 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class DkmPostAdapter(
     private val postList: MutableList<Post>,
@@ -25,6 +28,10 @@ class DkmPostAdapter(
         val post = postList[position]
         holder.descriptionTextView.text = post.deskripsi
         holder.usernameTextView.text = post.nama
+
+        // Format timestamp to a readable date string
+        val formattedDate = formatTimestamp(post.timestamp)
+        holder.timestampTextView.text = formattedDate
 
         Glide.with(holder.itemView.context)
             .load(post.userImageUrl)
@@ -63,5 +70,11 @@ class DkmPostAdapter(
         val usernameTextView: TextView = itemView.findViewById(R.id.usernameTextView)
         val editButton: ImageButton = itemView.findViewById(R.id.editButton)
         val deleteButton: ImageView = itemView.findViewById(R.id.deleteButton)
+        val timestampTextView: TextView = itemView.findViewById(R.id.timestampTextView)
+    }
+
+    private fun formatTimestamp(timestamp: Long): String {
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+        return sdf.format(Date(timestamp))
     }
 }
