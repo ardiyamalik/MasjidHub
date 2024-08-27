@@ -140,4 +140,8 @@
         <item>Terlama</item>
     </string-array>
 
+    <string-array name="sort_options">
+        <item>Terbaru</item>
+        <item>Terlama</item>
+    </string-array>
 </resources>

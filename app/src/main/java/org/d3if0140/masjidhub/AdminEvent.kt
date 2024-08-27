@@ -2,6 +2,8 @@ package org.d3if0140.masjidhub
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -37,9 +39,33 @@ class AdminEvent : AppCompatActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adminPostAdapter
 
-        // Ambil data postingan dari Firestore dengan urutan terbaru ke lama
+        // Inisialisasi Spinner
+        val sortOptions = resources.getStringArray(R.array.sort_options)
+        val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, sortOptions)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinnerSort.adapter = spinnerAdapter
+
+        binding.spinnerSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
+                val sortOrder = if (position == 0) Query.Direction.DESCENDING else Query.Direction.ASCENDING
+                fetchPosts(sortOrder)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Handle case when no option is selected (if needed)
+            }
+        }
+
+        // Initial fetch with default sort order (Terbaru)
+        fetchPosts(Query.Direction.DESCENDING)
+    }
+
+    private fun fetchPosts(sortOrder: Query.Direction) {
+        postList.clear()
+        adminPostAdapter.notifyDataSetChanged()
+
         firestore.collection("posts")
-            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .orderBy("timestamp", sortOrder)
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
