@@ -74,7 +74,7 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
     }
 
     private fun formatTimestamp(timestamp: Long): String {
-        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+        val sdf = SimpleDateFormat("dd/MM/yyyy  |  HH:mm", Locale.getDefault())
         return sdf.format(Date(timestamp))
     }
 }
