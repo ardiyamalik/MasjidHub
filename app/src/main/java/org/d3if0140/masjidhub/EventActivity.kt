@@ -2,6 +2,9 @@ package org.d3if0140.masjidhub
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
@@ -21,11 +24,6 @@ class EventActivity : AppCompatActivity() {
         binding = ActivityEventBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Menambahkan onClickListener pada button backButton untuk kembali ke WelcomeActivity
-        binding.backButton.setOnClickListener {
-            finish()
-        }
-
         // Inisialisasi Firebase
         mAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
@@ -35,9 +33,39 @@ class EventActivity : AppCompatActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = postAdapter
 
-        // Ambil data postingan dari Firestore dengan urutan terbaru ke lama
+        // Setup Spinner for filtering
+        val filterOptions = resources.getStringArray(R.array.filter_options)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, filterOptions)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.filterSpinner.adapter = adapter
+
+        binding.filterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedFilter = filterOptions[position]
+                loadPosts(selectedFilter)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // Optionally handle the case when nothing is selected
+            }
+        }
+
+        // Initial load
+        loadPosts(filterOptions[0]) // Load posts with the default filter
+    }
+
+    private fun loadPosts(filter: String) {
+        postList.clear() // Clear the current list
+        postAdapter.notifyDataSetChanged() // Notify the adapter
+
+        val direction = if (filter == "Terbaru") {
+            Query.Direction.DESCENDING
+        } else {
+            Query.Direction.ASCENDING
+        }
+
         firestore.collection("posts")
-            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .orderBy("timestamp", direction)
             .get()
             .addOnSuccessListener { documents ->
                 for (document in documents) {
