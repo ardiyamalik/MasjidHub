@@ -1,57 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:padding="26dp"
-    android:background="@drawable/stroke_gray"
-    tools:context=".Filter">
+    android:background="@color/white"
+    android:padding="16dp">
+
 
     <TextView
-        android:id="@+id/textViewHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SARING"
-        android:textColor="@color/blue"
         android:fontFamily="@font/poppins_bold"
-        android:textSize="24sp"
+        android:textColor="@color/blue"
+        android:text="SARING"
         android:textStyle="bold"
-        android:layout_gravity="center"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:paddingBottom="8dp"/>
+
+    <TextView
+        android:fontFamily="@font/poppins_medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pilih item yang ingin anda filter"
+        android:textSize="14sp"
         android:paddingBottom="16dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewFilterOptions"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="1dp"/>
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_gravity="bottom">
+        android:background="@color/grey"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="8dp">
+
+        <CheckBox
+            android:id="@+id/check_all_income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/infaq"
+            android:textColor="@color/black"
+            android:buttonTint="@color/blue"/>
+
+        <CheckBox
+            android:id="@+id/check_deposit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/kas"
+            android:textColor="@color/black"
+            android:buttonTint="@color/blue"/>
+
+        <CheckBox
+            android:id="@+id/check_dividend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pengeluaran"
+            android:textColor="@color/black"
+            android:buttonTint="@color/blue"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="16dp">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonCancel"
+            android:id="@+id/btn_cancel"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:fontFamily="@font/poppins_bold"
-            android:background="@drawable/stroke_white"
             android:text="BATAL"
-            android:textColor="@color/blue"/>
+            android:background="@drawable/sharp_white"
+            android:textColor="@color/blue"
+            android:textStyle="bold"/>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonApply"
+            android:id="@+id/btn_filter"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/rounded_button_background"
             android:text="SARING"
-            android:textColor="@color/white"/>
+            android:background="@color/blue"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
     </LinearLayout>
 </LinearLayout>
