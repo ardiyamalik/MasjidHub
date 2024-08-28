@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
+import android.view.View
 import android.widget.DatePicker
 import android.widget.RadioButton
 import android.widget.Toast
@@ -16,10 +17,21 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.midtrans.sdk.corekit.core.MidtransSDK
+import com.midtrans.sdk.corekit.models.snap.TransactionResult
+import com.midtrans.sdk.uikit.SdkUIFlowBuilder
 import org.d3if0140.masjidhub.databinding.ActivityPengisianKasBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
+import retrofit2.http.POST
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+
 
 class PengisianKasActivity : AppCompatActivity() {
 
@@ -30,8 +42,33 @@ class PengisianKasActivity : AppCompatActivity() {
     private var imageUri: Uri? = null
     private val TAG = "PengisianKasActivity"
 
+    // Variabel anggota untuk menyimpan kasId
+    private var kasId: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Inisialisasi SDK Midtrans
+        SdkUIFlowBuilder.init()
+            .setClientKey("SB-Mid-client-4dgiBpGWaRHQR25r")
+            .setContext(this)
+            .setTransactionFinishedCallback { result ->
+                // Cek hasil transaksi
+                if (result.status == TransactionResult.STATUS_SUCCESS) {
+                    kasId?.let {
+                        sendNotificationToDkm(it)
+                        startActivity(Intent(this, KeuanganDkmActivity::class.java))
+                    }
+                } else if (result.status == TransactionResult.STATUS_PENDING) {
+                    Toast.makeText(this, "Pembayaran pending, silakan cek nanti.", Toast.LENGTH_SHORT).show()
+                } else if (result.status == TransactionResult.STATUS_FAILED) {
+                    Toast.makeText(this, "Pembayaran gagal.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setMerchantBaseUrl("https://c6d2-202-46-68-250.ngrok-free.app")
+            .enableLog(true) // Untuk debugging, ganti ke false untuk production
+            .buildSDK()
+
+
         binding = ActivityPengisianKasBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -42,7 +79,7 @@ class PengisianKasActivity : AppCompatActivity() {
             showDatePickerDialog()
         }
 
-        binding.backButton.setOnClickListener{
+        binding.backButton.setOnClickListener {
             startActivity(Intent(this, DkmDashboard::class.java))
         }
 
@@ -67,11 +104,11 @@ class PengisianKasActivity : AppCompatActivity() {
         binding.radioGroupMetode.setOnCheckedChangeListener { _, checkedId ->
             val radioButton: RadioButton = findViewById(checkedId)
             if (radioButton.text == "Bank Transfer") {
-                binding.textViewRekening.visibility = android.view.View.VISIBLE
-                binding.imageViewQR.visibility = android.view.View.GONE
+                binding.textViewRekening.visibility = View.VISIBLE
+                binding.imageViewQR.visibility = View.GONE
             } else {
-                binding.textViewRekening.visibility = android.view.View.GONE
-                binding.imageViewQR.visibility = android.view.View.VISIBLE
+                binding.textViewRekening.visibility = View.GONE
+                binding.imageViewQR.visibility = View.VISIBLE
             }
         }
 
@@ -96,49 +133,84 @@ class PengisianKasActivity : AppCompatActivity() {
     }
 
     private fun submitKas() {
-            val jumlah = 50000.0 // Jumlah kas tetap
-            val metode = when (binding.radioGroupMetode.checkedRadioButtonId) {
-                R.id.radioButtonBankTransfer -> "Bank Transfer"
-                R.id.radioButtonQR -> "QR"
-                else -> ""
-            }
-
-            if (metode.isEmpty() || imageUri == null) {
-                Toast.makeText(this, "Harap isi semua data", Toast.LENGTH_SHORT).show()
-                return
-            }
-
-            val currentUser = auth.currentUser
-            val userId = currentUser?.uid ?: ""
-            val email = currentUser?.email ?: "Unknown"
-            val kasId = UUID.randomUUID().toString()
-            val tanggal = binding.editTextTanggal.text.toString()
-
-            val kasData = hashMapOf(
-                "userId" to userId,
-                "jumlah" to jumlah,
-                "metode" to metode,
-                "email" to email,
-                "status" to "pending",
-                "userId" to userId,
-                "tanggal" to tanggal,
-                "buktiPembayaranUrl" to "" // Tambahkan ini untuk bukti pembayaran URL
-            )
-
-            db.collection("kas_mingguan").document(kasId)
-                .set(kasData)
-                .addOnSuccessListener {
-                    Log.d(TAG, "Document successfully written!")
-                    uploadBuktiPembayaran(kasId)
-
-                    // Kirim notifikasi setelah data kas berhasil disimpan
-                    sendNotificationToDkm(kasId)
-                }
-                .addOnFailureListener { e ->
-                    Log.w(TAG, "Error adding document", e)
-                    Toast.makeText(this, "Gagal mengirim kas", Toast.LENGTH_SHORT).show()
-                }
+        val jumlah = 50000.0 // Jumlah kas tetap
+        val metode = when (binding.radioGroupMetode.checkedRadioButtonId) {
+            R.id.radioButtonBankTransfer -> "Bank Transfer"
+            R.id.radioButtonQR -> "QR"
+            else -> ""
         }
+
+        if (metode.isEmpty() || imageUri == null) {
+            Toast.makeText(this, "Harap isi semua data", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val currentUser = auth.currentUser
+        val userId = currentUser?.uid ?: ""
+        val email = currentUser?.email ?: "Unknown"
+        val kasId = UUID.randomUUID().toString()
+        val tanggal = binding.editTextTanggal.text.toString()
+
+        val kasData = hashMapOf(
+            "userId" to userId,
+            "jumlah" to jumlah,
+            "metode" to metode,
+            "email" to email,
+            "status" to "pending",
+            "tanggal" to tanggal,
+            "buktiPembayaranUrl" to "" // Tambahkan ini untuk bukti pembayaran URL
+        )
+
+        db.collection("kas_mingguan").document(kasId)
+            .set(kasData)
+            .addOnSuccessListener {
+                Log.d(TAG, "Document successfully written!")
+                uploadBuktiPembayaran(kasId)
+                sendNotificationToDkm(kasId)
+                getTokenFromServer(kasId, jumlah)
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error adding document", e)
+                Toast.makeText(this, "Gagal mengirim kas", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+
+    private fun getTokenFromServer(kasId: String, amount: Double) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://c6d2-202-46-68-250.ngrok-free.app")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val apiService = retrofit.create(ApiService::class.java)
+        val transactionRequest = ServerTransactionRequest(kasId, amount)
+
+        apiService.getMidtransToken(transactionRequest).enqueue(object : Callback<MidtransTokenResponse> {
+            override fun onResponse(call: Call<MidtransTokenResponse>, response: Response<MidtransTokenResponse>) {
+                if (response.isSuccessful) {
+                    val token = response.body()?.token
+                    if (token != null) {
+                        startMidtransPayment(token)
+                    } else {
+                        Log.e(TAG, "Token tidak tersedia")
+                    }
+                } else {
+                    Log.e(TAG, "Gagal mendapatkan token. Response: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<MidtransTokenResponse>, t: Throwable) {
+                Log.e(TAG, "Error requesting token", t)
+            }
+        })
+    }
+
+    private fun startMidtransPayment(token: String) {
+        Log.d(TAG, "Starting payment with token: $token")
+        MidtransSDK.getInstance().startPaymentUiFlow(this, token)
+    }
+
+
 
 
     private fun uploadBuktiPembayaran(kasId: String) {
@@ -171,13 +243,12 @@ class PengisianKasActivity : AppCompatActivity() {
         }
     }
 
-
     private fun sendNotificationToDkm(kasId: String) {
         val currentUser = auth.currentUser
-        val userId = currentUser?.uid ?: "unknown_user" // Menyimpan userId dari pengguna saat ini
+        val userId = currentUser?.uid ?: "unknown_user"
 
         val notificationData = hashMapOf(
-            "userId" to userId, // Tambahkan userId ke data notifikasi
+            "userId" to userId,
             "title" to "kas sedang diproses",
             "message" to "Kas mingguan sedang diproses oleh aplikasi.",
             "timestamp" to System.currentTimeMillis()
@@ -187,14 +258,11 @@ class PengisianKasActivity : AppCompatActivity() {
             .add(notificationData)
             .addOnSuccessListener {
                 Log.d(TAG, "Notification sent to DKM")
-
-                // Redirect to NotificationDkmActivity after sending notification
-                startActivity(Intent(this, KeuanganDkmActivity::class.java))
+                // Hanya mengirim notifikasi, tidak berpindah halaman
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "Error sending notification", e)
                 Toast.makeText(this, "Gagal mengirim notifikasi", Toast.LENGTH_SHORT).show()
-                Log.e(TAG, "Error sending notification", e)
             }
     }
 
@@ -227,3 +295,18 @@ class PengisianKasActivity : AppCompatActivity() {
         datePickerDialog.show()
     }
 }
+
+interface ApiService {
+    @POST("create-transaction")
+    fun getMidtransToken(
+        @Body transaction: ServerTransactionRequest
+    ): Call<MidtransTokenResponse>
+}
+
+data class MidtransTokenResponse(val token: String)
+
+data class ServerTransactionRequest(
+    val kasId: String,
+    val amount: Double
+)
+

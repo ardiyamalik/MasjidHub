@@ -138,12 +138,12 @@
                     android:id="@+id/radioButtonBankTransfer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:text="@string/bank_transfer" />
 
                 <RadioButton
                     android:id="@+id/radioButtonQR"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="QR" />

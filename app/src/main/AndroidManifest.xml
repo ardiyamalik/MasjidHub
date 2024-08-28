@@ -3,10 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -17,7 +22,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MasjidHub"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        android:usesCleartextTraffic="true">>
         <activity
             android:name=".LaporanKeuanganActivity"
             android:exported="true" />
@@ -26,7 +32,7 @@
             android:exported="false" />
         <activity
             android:name=".MapsUbahProfilActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".MapsActivity"
             android:exported="true" />
@@ -65,7 +71,17 @@
             android:exported="true" />
         <activity
             android:name=".KeuanganDkmActivity"
-            android:exported="true" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="c6d2-202-46-68-250.ngrok-free.app"
+                    android:pathPrefix="/payment/finish" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".LaporanPengajuanActivity"
             android:exported="true" />
@@ -85,10 +101,30 @@
             android:exported="false" />
         <activity
             android:name=".PengisianKasActivity"
-            android:exported="true" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="c6d2-202-46-68-250.ngrok-free.app"
+                    android:pathPrefix="/payment" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".NotificationDkmActivity"
-            android:exported="true" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="c6d2-202-46-68-250.ngrok-free.app"
+                    android:pathPrefix="/payment/error" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".PengajuanDanaActivity"
             android:exported="true" />
@@ -130,7 +166,17 @@
             android:exported="true" />
         <activity
             android:name=".DkmDashboard"
-            android:exported="true" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="c6d2-202-46-68-250.ngrok-free.app"
+                    android:pathPrefix="/payment/unfinish" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".UnggahActivity"
             android:exported="true" />
@@ -141,6 +187,16 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD-WYRtwI_zR34ick-8tCz8aYcVwL-nQ_k" />
+
+        <meta-data
+            android:name="com.midtrans.sdk.corekit.API_BASE_URL"
+            android:value="https://api.sandbox.midtrans.com"/>
+        <meta-data
+            android:name="com.midtrans.sdk.corekit.CLIENT_KEY"
+            android:value="SB-Mid-client-4dgiBpGWaRHQR25r"/>
+        <meta-data
+            android:name="com.midtrans.sdk.corekit.MERCHANT_ID"
+            android:value="G981359004"/>
 
         <activity
             android:name=".ProfilActivity"

@@ -70,6 +70,16 @@ dependencies {
     implementation ("com.google.firebase:firebase-appcheck-debug:18.0.0")
     implementation ("com.google.firebase:firebase-appcheck-safetynet:16.1.2")
 
+    implementation ("com.midtrans:uikit:2.0.0-SANDBOX")
+//    implementation ("com.midtrans:uikit:2.0.0")
+
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
+//    implementation ("com.midtrans:corekit:2.0.0")
+//    implementation ("com.midtrans:midtrans-android-sdk:2.0.8")
+
+
 
 
 
