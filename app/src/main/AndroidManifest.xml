@@ -78,7 +78,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
                     android:scheme="https"
-                    android:host="c6d2-202-46-68-250.ngrok-free.app"
+                    android:host="molly-hot-lioness.ngrok-free.app"
                     android:pathPrefix="/payment/finish" />
             </intent-filter>
         </activity>
@@ -108,7 +108,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
                     android:scheme="https"
-                    android:host="c6d2-202-46-68-250.ngrok-free.app"
+                    android:host="molly-hot-lioness.ngrok-free.app"
                     android:pathPrefix="/payment" />
             </intent-filter>
         </activity>
@@ -121,7 +121,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
                     android:scheme="https"
-                    android:host="c6d2-202-46-68-250.ngrok-free.app"
+                    android:host="molly-hot-lioness.ngrok-free.app"
                     android:pathPrefix="/payment/error" />
             </intent-filter>
         </activity>
@@ -173,7 +173,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
                     android:scheme="https"
-                    android:host="c6d2-202-46-68-250.ngrok-free.app"
+                    android:host="molly-hot-lioness.ngrok-free.app"
                     android:pathPrefix="/payment/unfinish" />
             </intent-filter>
         </activity>
