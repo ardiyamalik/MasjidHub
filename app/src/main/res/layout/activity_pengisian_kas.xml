@@ -124,30 +124,30 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextJumlahKas" />
 
-            <RadioGroup
-                android:id="@+id/radioGroupMetode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTanggal">
+<!--            <RadioGroup-->
+<!--                android:id="@+id/radioGroupMetode"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/editTextTanggal">-->
 
-                <RadioButton
-                    android:id="@+id/radioButtonBankTransfer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:text="@string/bank_transfer" />
+<!--                <RadioButton-->
+<!--                    android:id="@+id/radioButtonBankTransfer"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:visibility="visible"-->
+<!--                    android:text="@string/bank_transfer" />-->
 
-                <RadioButton
-                    android:id="@+id/radioButtonQR"
-                    android:visibility="visible"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="QR" />
-            </RadioGroup>
+<!--                <RadioButton-->
+<!--                    android:id="@+id/radioButtonQR"-->
+<!--                    android:visibility="visible"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="QR" />-->
+<!--            </RadioGroup>-->
 
             <TextView
                 android:id="@+id/textViewRekening"
@@ -183,23 +183,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewRekening" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/buttonPilihFoto"
-                android:layout_width="351dp"
-                android:layout_height="46dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/stroke_white"
-                android:drawableStart="@drawable/baseline_insert_photo_24"
-                android:fontFamily="@font/poppins_bold"
-                android:paddingStart="10dp"
-                android:text="@string/bukti_pembayaran"
-                android:textAllCaps="false"
-                android:textColor="@color/blue"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewBuktiPembayaran" />
+<!--            <androidx.appcompat.widget.AppCompatButton-->
+<!--                android:id="@+id/buttonPilihFoto"-->
+<!--                android:layout_width="351dp"-->
+<!--                android:layout_height="46dp"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:background="@drawable/stroke_white"-->
+<!--                android:drawableStart="@drawable/baseline_insert_photo_24"-->
+<!--                android:fontFamily="@font/poppins_bold"-->
+<!--                android:paddingStart="10dp"-->
+<!--                android:text="@string/bukti_pembayaran"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:textColor="@color/blue"-->
+<!--                android:textSize="16sp"-->
+<!--                android:textStyle="bold"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/imageViewBuktiPembayaran" />-->
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonBayar"

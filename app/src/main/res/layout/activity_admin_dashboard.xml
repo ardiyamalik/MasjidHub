@@ -1,210 +1,265 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".admin.AdminDashboard">
 
 
-    <View
-        android:id="@+id/topView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/bg_dashboard" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonBeranda"
-        android:layout_width="149dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="45dp"
-        android:layout_marginEnd="218dp"
-        android:layout_marginBottom="512dp"
-        android:background="@drawable/stroke_white"
-        android:drawableLeft="@drawable/baseline_home_black"
-        android:drawablePadding="8dp"
-        android:fontFamily="@font/poppins_bold"
-        android:paddingStart="10sp"
-        android:text="@string/home"
-        android:textColor="@color/blue"
-        android:textSize="18sp"
-        android:textStyle="bold" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonInfaqAdmin"
-        android:layout_width="149dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="45dp"
-        android:layout_marginEnd="225dp"
-        android:layout_marginBottom="261dp"
-        android:background="@drawable/stroke_white"
-        android:drawableLeft="@drawable/baseline_request_page_24"
-        android:drawablePadding="8dp"
-        android:fontFamily="@font/poppins_bold"
-        android:paddingStart="10sp"
-        android:text="@string/infaq"
-        android:textColor="@color/blue"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <!-- Frame Layout untuk Isi Konten -->
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonKasMingguan"
-        android:layout_width="149dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="219dp"
-        android:layout_marginEnd="45dp"
-        android:layout_marginBottom="263dp"
-        android:background="@drawable/stroke_white"
-        android:drawableLeft="@drawable/baseline_request_page_24"
-        android:drawablePadding="8dp"
-        android:fontFamily="@font/poppins_bold"
-        android:paddingStart="10sp"
-        android:text="@string/kas"
-        android:textColor="@color/blue"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <!-- LinearLayouts untuk tombol-tombol lainnya -->
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonMasjid"
-        android:layout_width="149dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="45dp"
-        android:layout_marginBottom="512dp"
-        android:background="@drawable/stroke_white"
-        android:drawableLeft="@drawable/baseline_mosque_black"
-        android:drawablePadding="8dp"
-        android:fontFamily="@font/poppins_bold"
-        android:paddingStart="10sp"
-        android:text="@string/masjid"
-        android:textColor="@color/blue"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <!--        <ImageView-->
+        <!--            android:id="@+id/logoImageView"-->
+        <!--            android:layout_width="109dp"-->
+        <!--            android:layout_height="102dp"-->
+        <!--            android:layout_gravity="start"-->
+        <!--            android:layout_marginTop="16dp"-->
+        <!--            android:contentDescription="Logo"-->
+        <!--            android:padding="8dp"-->
+        <!--            android:src="@drawable/masjidhub_logo"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintHorizontal_bias="0.947"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent" />-->
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonKeuangan"
-        android:layout_width="149dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="45dp"
-        android:layout_marginEnd="222dp"
-        android:layout_marginBottom="427dp"
-        android:background="@drawable/stroke_white"
-        android:drawableLeft="@drawable/baseline_finance_black"
-        android:drawablePadding="8dp"
-        android:fontFamily="@font/poppins_bold"
-        android:paddingStart="10sp"
-        android:text="@string/keuangan"
-        android:textColor="@color/blue"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <ImageButton
+            android:id="@+id/buttonLogout"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="28dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:background="@null"
+            android:src="@drawable/logout_24px"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/textView8"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonAjuan"
-        android:layout_width="149dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="45dp"
-        android:layout_marginEnd="222dp"
-        android:layout_marginBottom="341dp"
-        android:background="@drawable/stroke_white"
-        android:drawableLeft="@drawable/baseline_request_page_24"
-        android:drawablePadding="8dp"
-        android:fontFamily="@font/poppins_bold"
-        android:paddingStart="10sp"
-        android:text="@string/ajuan"
-        android:textColor="@color/blue"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <LinearLayout
+            android:id="@+id/buttonMasjid"
+            android:layout_width="wrap_content"
+            android:layout_height="131dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="32dp"
+            android:elevation="30dp"
+            android:background="@drawable/stroke_white"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView8">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonEvent"
-        android:layout_width="149dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="222dp"
-        android:layout_marginEnd="45dp"
-        android:layout_marginBottom="427dp"
-        android:background="@drawable/stroke_white"
-        android:drawableLeft="@drawable/baseline_event_24"
-        android:drawablePadding="8dp"
-        android:fontFamily="@font/poppins_bold"
-        android:paddingStart="10sp"
-        android:text="@string/agenda"
-        android:textColor="@color/blue"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+            <ImageView
+                android:layout_width="114dp"
+                android:layout_height="91dp"
+                android:src="@drawable/kubah" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonLogout"
-        android:layout_width="149dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="219dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginBottom="187dp"
-        android:background="@drawable/stroke_white"
-        android:drawableLeft="@drawable/baseline_work_off_24"
-        android:drawablePadding="8dp"
-        android:fontFamily="@font/poppins_bold"
-        android:paddingStart="10sp"
-        android:text="@string/logout"
-        android:textColor="@color/blue"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/masjid"
+                android:textColor="@color/blue"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Dashboard"
-        android:textColor="@color/white"
-        android:textSize="32sp"
-        android:fontFamily="@font/poppins_bold"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp" />
+        <LinearLayout
+            android:id="@+id/buttonKeuangan"
+            android:layout_width="wrap_content"
+            android:layout_height="131dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="32dp"
+            android:elevation="30dp"
+            android:background="@drawable/stroke_white"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.151"
+            app:layout_constraintStart_toEndOf="@id/buttonMasjid"
+            app:layout_constraintTop_toBottomOf="@+id/textView8">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonVerifAdmin"
-        android:layout_width="149dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="222dp"
-        android:layout_marginEnd="45dp"
-        android:layout_marginBottom="339dp"
-        android:background="@drawable/stroke_white"
-        android:drawableLeft="@drawable/baseline_verified_24"
-        android:drawablePadding="8dp"
-        android:fontFamily="@font/poppins_bold"
-        android:paddingStart="10sp"
-        android:text="@string/verif"
-        android:textColor="@color/blue"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+            <ImageView
+                android:layout_width="114dp"
+                android:layout_height="91dp"
+                android:src="@drawable/moneybag" />
 
-</RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/keuangan"
+                android:textColor="@color/blue"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buttonInfaqAdmin"
+            android:layout_width="wrap_content"
+            android:layout_height="131dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/stroke_white"
+            android:gravity="center"
+            android:elevation="20dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.436"
+            app:layout_constraintStart_toEndOf="@id/buttonEvent"
+            app:layout_constraintTop_toBottomOf="@id/buttonKeuangan">
+
+            <ImageView
+                android:layout_width="114dp"
+                android:layout_height="91dp"
+                android:src="@drawable/infaqnew" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/laporan_infaq"
+                android:textColor="@color/blue"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buttonEvent"
+            android:layout_width="wrap_content"
+            android:layout_height="131dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/stroke_white"
+            android:gravity="center"
+            android:elevation="20dp"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonMasjid">
+
+            <ImageView
+                android:layout_width="114dp"
+                android:layout_height="91dp"
+                android:src="@drawable/event" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/kegiatan"
+                android:textColor="@color/blue"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buttonAjuan"
+            android:layout_width="wrap_content"
+            android:layout_height="131dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="30dp"
+            android:elevation="20dp"
+
+            android:background="@drawable/stroke_white"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonEvent">
+
+            <ImageView
+                android:layout_width="114dp"
+                android:layout_height="91dp"
+                android:src="@drawable/mintauang" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/pengajuan"
+                android:textColor="@color/blue"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buttonVerifAdmin"
+            android:layout_width="wrap_content"
+            android:layout_height="131dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/stroke_white"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.436"
+            app:layout_constraintStart_toEndOf="@+id/buttonAjuan"
+            app:layout_constraintTop_toBottomOf="@+id/buttonInfaqAdmin">
+
+            <ImageView
+                android:layout_width="114dp"
+                android:layout_height="91dp"
+                android:src="@drawable/iconverif" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/verifikasi"
+                android:textColor="@color/blue"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/buttonKasMingguan"
+            android:layout_width="wrap_content"
+            android:layout_height="131dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/stroke_white"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonAjuan"
+            app:layout_constraintVertical_bias="0.0">
+
+            <ImageView
+                android:layout_width="114dp"
+                android:layout_height="91dp"
+                android:src="@drawable/iconkotribusi" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="@string/kas"
+                android:textColor="@color/blue"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Dashboard"
+            android:textColor="@color/blue"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
