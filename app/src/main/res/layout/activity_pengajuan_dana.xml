@@ -103,20 +103,37 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextAlasan" />
 
+
+        <EditText
+            android:id="@+id/nomorRekening"
+            android:layout_width="351dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/stroke_white"
+            android:fontFamily="@font/poppins_medium"
+            android:hint="@string/nomor_rekening"
+            android:inputType="phone"
+            android:paddingLeft="10dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.55"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextTanggal" />
+
         <EditText
             android:id="@+id/editTextKontak"
             android:layout_width="351dp"
             android:layout_height="46dp"
-            android:hint="@string/nomor_kontak"
-            android:paddingLeft="10dp"
-            android:inputType="phone"
-            android:textSize="14sp"
-            android:fontFamily="@font/poppins_medium"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/stroke_white"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/poppins_medium"
+            android:hint="@string/nomor_kontak"
+            android:inputType="phone"
+            android:paddingLeft="10dp"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextTanggal"
-            android:layout_marginTop="16dp" />
+            app:layout_constraintTop_toBottomOf="@+id/nomorRekening" />
 
         <EditText
             android:id="@+id/editTextLokasi"
@@ -156,8 +173,8 @@
             android:layout_width="345dp"
             android:layout_height="198dp"
             android:clipToOutline="true"
-            android:layout_marginTop="8dp"
             android:visibility="gone"
+            android:layout_marginTop="8dp"
             android:background="@drawable/rounded_image"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
