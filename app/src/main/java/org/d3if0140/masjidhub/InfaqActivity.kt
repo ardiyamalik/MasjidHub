@@ -35,7 +35,6 @@ class InfaqActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         // Inisialisasi SDK Midtrans
         SdkUIFlowBuilder.init()
             .setClientKey("SB-Mid-client-4dgiBpGWaRHQR25r")
@@ -47,11 +46,10 @@ class InfaqActivity : AppCompatActivity() {
                     when (result.status) {
                         TransactionResult.STATUS_SUCCESS -> {
                             Log.d(TAG, "Transaction successful, updating status...")
-                            updateTransactionStatus(id, "approve")
+                            updateTransactionStatus(id, "approved")
                             sendNotification(id)
-                            finish()
+                            finish() // Menutup activity setelah transaksi berhasil
                         }
-
                         TransactionResult.STATUS_PENDING -> {
                             Log.d(TAG, "Transaction pending")
                             Toast.makeText(
@@ -60,7 +58,6 @@ class InfaqActivity : AppCompatActivity() {
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
-
                         TransactionResult.STATUS_FAILED -> {
                             Log.d(TAG, "Transaction failed")
                             updateTransactionStatus(id, "failed")

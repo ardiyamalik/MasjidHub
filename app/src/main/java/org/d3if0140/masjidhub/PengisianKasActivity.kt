@@ -49,9 +49,9 @@ class PengisianKasActivity : AppCompatActivity() {
                     when (result.status) {
                         TransactionResult.STATUS_SUCCESS -> {
                             Log.d(TAG, "Transaction successful, updating status...")
-                            updateTransactionStatus(id, "approve")
+                            updateTransactionStatus(id, "approved")
                             sendNotificationToDkm(id)
-                            finish()
+                            finish() // Menutup activity setelah transaksi berhasil
                         }
                         TransactionResult.STATUS_PENDING -> {
                             Log.d(TAG, "Transaction pending")
