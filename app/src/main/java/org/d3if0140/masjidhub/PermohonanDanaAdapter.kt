@@ -31,6 +31,9 @@ class PermohonanDanaAdapter(private val permohonanDanaList: MutableList<Permohon
         val imageViewKTP: ImageView = itemView.findViewById(R.id.imageViewKTP)
         val buttonApprove: Button = itemView.findViewById(R.id.buttonApprove)
         val buttonReject: Button = itemView.findViewById(R.id.buttonReject)
+        val textNamaRekening: TextView = itemView.findViewById(R.id.textNamaRekening)
+        val textNorek: TextView = itemView.findViewById(R.id.textNorek)
+        val textNamaBank: TextView = itemView.findViewById(R.id.textNamaBank)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -48,6 +51,9 @@ class PermohonanDanaAdapter(private val permohonanDanaList: MutableList<Permohon
         holder.textKontak.text = holder.itemView.context.getString(R.string.kontak_label, permohonanDana.kontak)
         holder.textLokasi.text = holder.itemView.context.getString(R.string.lokasi_label, permohonanDana.lokasi)
         holder.textStatus.text = holder.itemView.context.getString(R.string.status_label, permohonanDana.status)
+        holder.textNamaBank.text = holder.itemView.context.getString(R.string.namabank_label, permohonanDana.namaBank)
+        holder.textNamaRekening.text = holder.itemView.context.getString(R.string.namarekekning_label, permohonanDana.namaRekening)
+        holder.textNorek.text = holder.itemView.context.getString(R.string.norek_label, permohonanDana.nomorRekening)
 
 
         // Load and display foto pendukung if available
@@ -102,7 +108,7 @@ class PermohonanDanaAdapter(private val permohonanDanaList: MutableList<Permohon
 
     private fun approvePermohonanDana(id: String, position: Int, email: String, jumlah: Double) {
         val db = FirebaseFirestore.getInstance()
-        db.collection("pengajuan_dana").document(id)
+        db.collection("transaksi_keuangan").document(id)
             .update("status", "approved")
             .addOnSuccessListener {
                 Log.d("PermohonanDanaAdapter", "Pengajuan approved for $id")
@@ -116,7 +122,7 @@ class PermohonanDanaAdapter(private val permohonanDanaList: MutableList<Permohon
 
     private fun rejectPermohonanDana(id: String, position: Int, email: String, jumlah: Double) {
         val db = FirebaseFirestore.getInstance()
-        db.collection("pengajuan_dana").document(id)
+        db.collection("transaksi_keuangan").document(id)
             .update("status", "rejected")
             .addOnSuccessListener {
                 Log.d("PermohonanDanaAdapter", "Pengajuan rejected for $id")

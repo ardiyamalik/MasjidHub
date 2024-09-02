@@ -12,5 +12,8 @@ data class PermohonanDana(
     var email: String = "",      // Email pengaju
     var nama: String = "",       // Nama pengaju
     var kontak: String = "",     // Nomor kontak untuk approval
-    var lokasi: String = ""      // Lokasi perbaikan atau penggunaan dana
+    var lokasi: String = "",      // Lokasi perbaikan atau penggunaan dana
+    var namaBank: String = "",
+    var namaRekening: String = "",
+    var nomorRekening: String = ""
 )

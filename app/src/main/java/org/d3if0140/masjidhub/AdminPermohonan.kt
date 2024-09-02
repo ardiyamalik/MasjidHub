@@ -39,8 +39,9 @@ class AdminPermohonan : AppCompatActivity() {
     }
 
     private fun fetchPermohonanDana() {
-        db.collection("pengajuan_dana")
+        db.collection("transaksi_keuangan")
             .whereEqualTo("status", "Pending") // Filter status pending
+            .whereEqualTo("tipe", "pengajuan_dana") // Filter tipe pengajuan_dana
             .get()
             .addOnSuccessListener { result ->
                 permohonanDanaList.clear()
@@ -54,8 +55,11 @@ class AdminPermohonan : AppCompatActivity() {
                     val ktpUrl = document.getString("ktpUrl") ?: ""
                     val status = document.getString("status") ?: "Pending"
                     val email = document.getString("userEmail") ?: ""
+                    val namaBank = document.getString("namaBank") ?: ""
+                    val namaRekening = document.getString("namaRekekning") ?: ""
+                    val nomorRekening = document.getString("nomorRekening") ?: ""
 
-                    val permohonanDana = PermohonanDana(id,userId, jumlah, alasan, tanggal, ktpUrl, status, email, nama)
+                    val permohonanDana = PermohonanDana(id,userId, jumlah, alasan, tanggal, ktpUrl, status, email, nama, namaBank, namaRekening, nomorRekening)
                     permohonanDanaList.add(permohonanDana)
                 }
                 adapter.updateList(permohonanDanaList)
