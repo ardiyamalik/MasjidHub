@@ -7,7 +7,6 @@
     android:background="@color/white">
 
 
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
@@ -82,6 +81,18 @@
 
     </com.google.android.material.tabs.TabLayout>
 
+
+    <TextView
+        android:id="@+id/tab_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/summary_section"
