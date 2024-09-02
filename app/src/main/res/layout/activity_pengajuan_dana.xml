@@ -43,12 +43,12 @@
             android:layout_width="351dp"
             android:layout_height="46dp"
             android:layout_marginTop="104dp"
-            android:textSize="14sp"
             android:background="@drawable/stroke_white"
+            android:fontFamily="@font/poppins_medium"
             android:hint="@string/nama"
             android:inputType="text"
-            android:fontFamily="@font/poppins_medium"
             android:paddingLeft="10dp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -58,12 +58,12 @@
             android:layout_width="351dp"
             android:layout_height="46dp"
             android:layout_marginTop="16dp"
-            android:paddingLeft="10dp"
-            android:textSize="14sp"
-            android:fontFamily="@font/poppins_medium"
             android:background="@drawable/stroke_white"
+            android:fontFamily="@font/poppins_medium"
             android:hint="@string/jumlah_pengajuan"
             android:inputType="numberDecimal"
+            android:paddingLeft="10dp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextNama" />
@@ -72,33 +72,33 @@
             android:id="@+id/editTextAlasan"
             android:layout_width="351dp"
             android:layout_height="wrap_content"
-            android:hint="Alasan Pengajuan"
+            android:layout_marginTop="16dp"
             android:background="@drawable/stroke_white"
-            android:paddingTop="10dp"
             android:fontFamily="@font/poppins_medium"
-            android:paddingLeft="10dp"
-            android:textSize="14sp"
+            android:gravity="top"
+            android:hint="Alasan Pengajuan"
             android:inputType="textMultiLine"
             android:minLines="4"
-            android:gravity="top"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextJumlah"
-            android:layout_marginTop="16dp" />
+            app:layout_constraintTop_toBottomOf="@id/editTextJumlah" />
 
         <EditText
             android:id="@+id/editTextTanggal"
             android:layout_width="351dp"
             android:layout_height="46dp"
-            android:fontFamily="@font/poppins_medium"
             android:layout_marginTop="16dp"
-            android:paddingLeft="10dp"
             android:background="@drawable/stroke_white"
-            android:textSize="14sp"
-            android:hint="@string/tanggal_pengajuan"
-            android:inputType="none"
             android:focusable="false"
             android:focusableInTouchMode="false"
+            android:fontFamily="@font/poppins_medium"
+            android:hint="@string/tanggal_pengajuan"
+            android:inputType="none"
+            android:paddingLeft="10dp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextAlasan" />
@@ -118,7 +118,37 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.55"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextTanggal" />
+            app:layout_constraintTop_toBottomOf="@id/namaBank" />
+
+        <EditText
+            android:id="@+id/namaBank"
+            android:layout_width="351dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/stroke_white"
+            android:fontFamily="@font/poppins_medium"
+            android:hint="@string/nama_bank"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTanggal" />
+
+        <EditText
+            android:id="@+id/namaRekening"
+            android:layout_width="351dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/stroke_white"
+            android:fontFamily="@font/poppins_medium"
+            android:hint="@string/nama_rekening"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nomorRekening" />
 
         <EditText
             android:id="@+id/editTextKontak"
@@ -133,22 +163,22 @@
             android:paddingLeft="10dp"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nomorRekening" />
+            app:layout_constraintTop_toBottomOf="@+id/namaRekening" />
 
         <EditText
             android:id="@+id/editTextLokasi"
             android:layout_width="351dp"
             android:layout_height="46dp"
-            android:textSize="14sp"
-            android:hint="@string/lokasi"
-            android:fontFamily="@font/poppins_medium"
-            android:paddingLeft="10dp"
-            android:inputType="text"
+            android:layout_marginTop="16dp"
             android:background="@drawable/stroke_white"
+            android:fontFamily="@font/poppins_medium"
+            android:hint="@string/lokasi"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextKontak"
-            android:layout_marginTop="16dp" />
+            app:layout_constraintTop_toBottomOf="@id/editTextKontak" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonUploadFotoPendukung"
@@ -157,30 +187,31 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/stroke_white"
             android:drawableLeft="@drawable/placeholder_image"
+            android:drawablePadding="10dp"
             android:fontFamily="@font/poppins_bold"
             android:gravity="start|center_vertical"
-            android:drawablePadding="10dp"
             android:paddingLeft="10dp"
-            android:textSize="14sp"
-            android:textColor="@color/blue"
-            android:textAllCaps="false"
             android:text="@string/pilihfoto_pendukung"
+            android:textAllCaps="false"
+            android:textColor="@color/blue"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextLokasi" />
+
         <ImageView
             android:id="@+id/imageViewFotoPendukung"
             android:layout_width="345dp"
             android:layout_height="198dp"
-            android:clipToOutline="true"
-            android:visibility="gone"
             android:layout_marginTop="8dp"
             android:background="@drawable/rounded_image"
+            android:clipToOutline="true"
             android:scaleType="centerCrop"
-            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/buttonUploadFotoPendukung"
-            app:layout_constraintVertical_bias="0.5"/>
+            app:layout_constraintVertical_bias="0.5" />
 
 
         <androidx.appcompat.widget.AppCompatButton
@@ -193,10 +224,10 @@
             android:drawablePadding="10dp"
             android:fontFamily="@font/poppins_bold"
             android:gravity="start|center_vertical"
-            android:text="@string/pilih_ktp"
             android:paddingLeft="10dp"
-            android:textColor="@color/blue"
+            android:text="@string/pilih_ktp"
             android:textAllCaps="false"
+            android:textColor="@color/blue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewFotoPendukung" />
@@ -208,8 +239,8 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/rounded_image"
             android:clipToOutline="true"
-            android:visibility="gone"
             android:scaleType="centerCrop"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/buttonUploadKTP" />

@@ -95,14 +95,14 @@ class PengajuanDanaActivity : AppCompatActivity() {
         db.collection("user").document(userId).get()
             .addOnSuccessListener { document ->
                 if (document != null) {
-                    val namaKetua = document.getString("namaKetua")
-                    val lokasi = document.getString("nama")
+                    val namaMasjid = document.getString("nama")
+//                    val lokasi = document.getString("nama")
                     val teleponKetua = document.getString("teleponKetua")
 
-                    Log.d(TAG, "User data fetched successfully: namaKetua=$namaKetua, nama=$lokasi, teleponKetua=$teleponKetua")
+                    Log.d(TAG, "User data fetched successfully: nama=$namaMasjid, teleponKetua=$teleponKetua")
 
-                    binding.editTextNama.setText(namaKetua ?: "")
-                    binding.editTextLokasi.setText(lokasi ?: "")
+                    binding.editTextNama.setText(namaMasjid ?: "")
+//                    binding.editTextLokasi.setText(lokasi ?: "")
                     binding.editTextKontak.setText(teleponKetua ?: "")
                 } else {
                     Log.d(TAG, "No such document")
@@ -120,8 +120,11 @@ class PengajuanDanaActivity : AppCompatActivity() {
         val tanggal = binding.editTextTanggal.text.toString()
         val kontak = binding.editTextKontak.text.toString()
         val lokasi = binding.editTextLokasi.text.toString()
+        val namaBank = binding.namaBank.text.toString()
+        val nomorRekening = binding.nomorRekening.text.toString()
+        val namaRekening = binding.namaRekening.text.toString()
 
-        if (nama.isEmpty() || jumlahStr.isEmpty() || alasan.isEmpty() || tanggal.isEmpty() || kontak.isEmpty() || lokasi.isEmpty() || ktpUri == null || buktiUri == null) {
+        if (nama.isEmpty() || jumlahStr.isEmpty() || alasan.isEmpty() || tanggal.isEmpty() || kontak.isEmpty() || lokasi.isEmpty() || namaBank.isEmpty() || nomorRekening.isEmpty() || namaRekening.isEmpty() || ktpUri == null || buktiUri == null) {
             Toast.makeText(this, "Semua field harus diisi", Toast.LENGTH_SHORT).show()
             Log.d(TAG, "Field validation failed")
             return
@@ -161,10 +164,14 @@ class PengajuanDanaActivity : AppCompatActivity() {
                                     "ktpUrl" to ktpUri.toString(),
                                     "buktiUrl" to buktiUri.toString(),
                                     "status" to "Pending",
-                                    "userEmail" to userEmail
+                                    "userEmail" to userEmail,
+                                    "namaBank" to namaBank,
+                                    "nomorRekening" to nomorRekening,
+                                    "namaRekening" to namaRekening,
+                                    "tipe" to "pengajuan_dana"
                                 )
 
-                                db.collection("pengajuan_dana").add(pengajuan).addOnSuccessListener {
+                                db.collection("transaksi_keuangan").add(pengajuan).addOnSuccessListener {
                                     Toast.makeText(this, "Pengajuan berhasil diajukan", Toast.LENGTH_SHORT).show()
                                     Log.d(TAG, "Pengajuan data successfully submitted")
                                     saveNotificationToFirestore(userEmail, jumlah)
@@ -201,7 +208,7 @@ class PengajuanDanaActivity : AppCompatActivity() {
         val notificationData = hashMapOf(
             "userId" to userId, // Tambahkan userId ke data notifikasi
             "title" to "Pengajuan Dana Baru",
-            "message" to "Ada pengajuan dana baru dari $userEmail sebesar Rp $jumlah. Silakan cek aplikasi untuk detail lebih lanjut.",
+            "message" to "Pengajuan sebesar Rp $jumlah. sedang diproses oleh admin",
             "timestamp" to System.currentTimeMillis()
         )
 

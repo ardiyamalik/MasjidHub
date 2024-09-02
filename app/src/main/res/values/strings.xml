@@ -145,5 +145,7 @@
         <item>Terbaru</item>
         <item>Terlama</item>
     </string-array>
-    <string name="nomor_rekening">Rekening (dengan nama dan bank)</string>
+    <string name="nomor_rekening">Nomor Rekening</string>
+    <string name="nama_bank">Nama Bank</string>
+    <string name="nama_rekening">Nama Rekening</string>
 </resources>
