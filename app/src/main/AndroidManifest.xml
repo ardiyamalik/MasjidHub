@@ -12,7 +12,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -22,8 +21,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MasjidHub"
-        tools:targetApi="31"
-        android:usesCleartextTraffic="true">>
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+        <activity
+            android:name=".LaporanKeuanganDkmActivity"
+            android:exported="true" />
         <activity
             android:name=".LaporanKeuanganActivity"
             android:exported="true" />
@@ -71,15 +73,17 @@
             android:exported="true" />
         <activity
             android:name=".KeuanganDkmActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
-                    android:scheme="https"
                     android:host="molly-hot-lioness.ngrok-free.app"
-                    android:pathPrefix="/payment/finish" />
+                    android:pathPrefix="/payment/finish"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
@@ -101,28 +105,32 @@
             android:exported="false" />
         <activity
             android:name=".PengisianKasActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
-                    android:scheme="https"
                     android:host="molly-hot-lioness.ngrok-free.app"
-                    android:pathPrefix="/payment" />
+                    android:pathPrefix="/payment"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
             android:name=".NotificationDkmActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
-                    android:scheme="https"
                     android:host="molly-hot-lioness.ngrok-free.app"
-                    android:pathPrefix="/payment/error" />
+                    android:pathPrefix="/payment/error"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
@@ -166,15 +174,17 @@
             android:exported="true" />
         <activity
             android:name=".DkmDashboard"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
-                    android:scheme="https"
                     android:host="molly-hot-lioness.ngrok-free.app"
-                    android:pathPrefix="/payment/unfinish" />
+                    android:pathPrefix="/payment/unfinish"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
@@ -187,16 +197,15 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD-WYRtwI_zR34ick-8tCz8aYcVwL-nQ_k" />
-
         <meta-data
             android:name="com.midtrans.sdk.corekit.API_BASE_URL"
-            android:value="https://api.sandbox.midtrans.com"/>
+            android:value="https://api.sandbox.midtrans.com" />
         <meta-data
             android:name="com.midtrans.sdk.corekit.CLIENT_KEY"
-            android:value="SB-Mid-client-4dgiBpGWaRHQR25r"/>
+            android:value="SB-Mid-client-4dgiBpGWaRHQR25r" />
         <meta-data
             android:name="com.midtrans.sdk.corekit.MERCHANT_ID"
-            android:value="G981359004"/>
+            android:value="G981359004" />
 
         <activity
             android:name=".ProfilActivity"
