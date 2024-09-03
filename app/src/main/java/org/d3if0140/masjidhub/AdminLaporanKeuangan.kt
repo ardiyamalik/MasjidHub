@@ -1,6 +1,5 @@
 package org.d3if0140.masjidhub
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,13 +10,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.firestore.FirebaseFirestore
-import org.d3if0140.masjidhub.databinding.ActivityLaporanKeuanganDkmBinding
+import org.d3if0140.masjidhub.databinding.ActivityAdminLaporanKeuanganBinding
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class LaporanKeuanganDkmActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityLaporanKeuanganDkmBinding
+class AdminLaporanKeuangan : AppCompatActivity() {
+    private lateinit var binding: ActivityAdminLaporanKeuanganBinding
     private lateinit var firestore: FirebaseFirestore
     private lateinit var harianAdapter: TransaksiAdapter
     private lateinit var mingguanAdapter: TransaksiMingguanAdapter
@@ -30,7 +29,7 @@ class LaporanKeuanganDkmActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLaporanKeuanganDkmBinding.inflate(layoutInflater)
+        binding = ActivityAdminLaporanKeuanganBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         firestore = FirebaseFirestore.getInstance()
@@ -46,33 +45,6 @@ class LaporanKeuanganDkmActivity : AppCompatActivity() {
 
         // Set adapter default untuk RecyclerView
         binding.recyclerView.adapter = harianAdapter
-
-        // Bottom navigation listener
-        binding.bottomNavigationDkm.selectedItemId = R.id.menu_finance
-        binding.bottomNavigationDkm.setOnItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.menu_home_dkm -> true
-                R.id.uploadEvent -> {
-                    val intent = Intent(this, UnggahActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                    true
-                }
-                R.id.menu_finance -> {
-                    val intent = Intent(this, LaporanKeuanganDkmActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                    true
-                }
-                R.id.menu_profile_dkm -> {
-                    val intent = Intent(this, ProfilDkmActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                    true
-                }
-                else -> false
-            }
-        }
 
         // Set listener untuk TabLayout
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
