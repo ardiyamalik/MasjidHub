@@ -1,7 +1,11 @@
 package org.d3if0140.masjidhub
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -19,9 +23,9 @@ class AdminVerifActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAdminVerifBinding
     private lateinit var firestore: FirebaseFirestore
-    private lateinit var masjidListAdapter: ArrayAdapter<String>
+    private lateinit var masjidListAdapter: MasjidListAdapter
     private val masjidList = mutableListOf<String>()
-    private val masjidIdList = mutableListOf<String>()
+    private val alamatList = mutableListOf<String>()
     private val masjidDataList = mutableListOf<Map<String, Any?>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +34,7 @@ class AdminVerifActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         firestore = FirebaseFirestore.getInstance()
-        masjidListAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, masjidList)
+        masjidListAdapter = MasjidListAdapter(this, masjidList, alamatList)
         binding.masjidListView.adapter = masjidListAdapter
 
         fetchMasjidData()
@@ -40,7 +44,7 @@ class AdminVerifActivity : AppCompatActivity() {
             showVerificationDialog(masjidData)
         }
 
-        binding.backButton.setOnClickListener{
+        binding.backButton.setOnClickListener {
             startActivity(Intent(this, AdminDashboard::class.java))
         }
     }
@@ -59,17 +63,33 @@ class AdminVerifActivity : AppCompatActivity() {
 
     private fun handleMasjidData(result: QuerySnapshot) {
         masjidList.clear()
-        masjidIdList.clear()
+        alamatList.clear()
         masjidDataList.clear()
         for (document in result) {
             val masjidId = document.id
             val masjidData = document.data
             val namaMasjid = masjidData["nama"] as? String ?: "Tidak diketahui"
+            val alamat = masjidData["alamat"] as? String ?: "Alamat tidak tersedia"
             masjidList.add(namaMasjid)
-            masjidIdList.add(masjidId)
+            alamatList.add(alamat)
             masjidDataList.add(masjidData)
         }
         masjidListAdapter.notifyDataSetChanged()
+    }
+
+    class MasjidListAdapter(context: Context, private val masjidList: List<String>, private val alamatList: List<String>) :
+        ArrayAdapter<String>(context, R.layout.item_masjid_list, masjidList) {
+
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+            val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.item_masjid_list, parent, false)
+            val namaMasjidTextView = view.findViewById<TextView>(R.id.text_view_nama_masjid)
+            val alamatMasjidTextView = view.findViewById<TextView>(R.id.text_view_alamat_masjid)
+
+            namaMasjidTextView.text = masjidList[position]
+            alamatMasjidTextView.text = alamatList[position]
+
+            return view
+        }
     }
 
     private fun showVerificationDialog(masjidData: Map<String, Any?>) {
@@ -85,63 +105,37 @@ class AdminVerifActivity : AppCompatActivity() {
         val longitude = masjidData["longitude"] as? String ?: ""
 
         val message = """
-            Nama : $masjidName
-            Alamat: $alamat
-            Kode Pos: $kodePos
-            Telepon Masjid: $teleponMasjid
-            Nama Ketua: $namaKetua
-            Telepon Ketua: $teleponKetua
-            Email: $email
-            latitude: $latitude
-            longitude: $longitude
-            
-            Apakah Anda yakin ingin memverifikasi masjid ini?
-            
-            Informasi Pengurus DKM:
-            Nama: ${masjidData["namaKetua"]}
-            Alamat: ${masjidData["alamat"]}
-            Telepon: ${masjidData["teleponKetua"]}
-            latitude: ${masjidData["latitude"]}
-            longitude: ${masjidData["longitude"]}
-        """.trimIndent()
+        Nama : $masjidName
+        Alamat: $alamat
+        Kode Pos: $kodePos
+        Telepon Masjid: $teleponMasjid
+        Nama Ketua: $namaKetua
+        Telepon Ketua: $teleponKetua
+        Email: $email
+        latitude: $latitude
+        longitude: $longitude
+        
+        Apakah Anda yakin ingin memverifikasi masjid ini?
+    """.trimIndent()
 
-        val dialogView = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(32, 32, 32, 32)
+        val dialogView = layoutInflater.inflate(R.layout.dialog_verif_masjid, null)
+        val messageTextView = dialogView.findViewById<TextView>(R.id.text_view_message)
+        val ktpImageView = dialogView.findViewById<ImageView>(R.id.image_view_ktp)
 
-            // Add a ScrollView to contain the message TextView
-            val scrollView = ScrollView(context).apply {
-                addView(TextView(context).apply {
-                    text = message
-                    setPadding(0, 0, 0, 16)
-                })
-            }
-            addView(scrollView)
+        messageTextView.text = message
+        if (ktpUrl.isNotEmpty()) {
+            ktpImageView.visibility = View.VISIBLE
+            Glide.with(this)
+                .load(ktpUrl)
+                .into(ktpImageView)
 
-            // Add an ImageView to display the KTP image
-            val imageView = ImageView(context).apply {
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    400
-                ).apply {
-                    setMargins(0, 16, 0, 16)
+            // Make the image clickable
+            ktpImageView.setOnClickListener {
+                val intent = Intent(this, FullScreenImageActivity::class.java).apply {
+                    putExtra("IMAGE_URL", ktpUrl)
                 }
-                if (ktpUrl.isNotEmpty()) {
-                    Glide.with(context)
-                        .load(ktpUrl)
-                        .into(this)
-
-                    // Make the image clickable
-                    setOnClickListener {
-                        val intent = Intent(context, FullScreenImageActivity::class.java).apply {
-                            putExtra("IMAGE_URL", ktpUrl)
-                        }
-                        startActivity(intent)
-                    }
-
-                }
+                startActivity(intent)
             }
-            addView(imageView)
         }
 
         AlertDialog.Builder(this)
@@ -154,6 +148,7 @@ class AdminVerifActivity : AppCompatActivity() {
             .setNegativeButton("Batal", null)
             .show()
     }
+
 
     private fun verifyMasjid(namaMasjid: String) {
         firestore.collection("user")
