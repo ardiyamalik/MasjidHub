@@ -3,6 +3,8 @@ package org.d3if0140.masjidhub
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,8 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.databinding.ActivityLaporanKeuanganBinding
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
+import java.util.*
 
 class LaporanKeuanganActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLaporanKeuanganBinding
@@ -21,6 +22,9 @@ class LaporanKeuanganActivity : AppCompatActivity() {
     private lateinit var mingguanAdapter: TransaksiMingguanAdapter
     private lateinit var bulananAdapter: TransaksiBulananAdapter
     private lateinit var tahunanAdapter: TransaksiTahunanAdapter
+
+    private var selectedYear: String = "2024"
+    private var selectedMonth: String = "Januari"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,19 +54,16 @@ class LaporanKeuanganActivity : AppCompatActivity() {
                         binding.recyclerView.adapter = harianAdapter
                         loadDataHarian()
                     }
-
                     1 -> {
                         binding.tabTextView.text = "Mingguan"
                         binding.recyclerView.adapter = mingguanAdapter
                         loadDataMingguan()
                     }
-
                     2 -> {
                         binding.tabTextView.text = "Bulanan"
                         binding.recyclerView.adapter = bulananAdapter
                         loadDataBulanan()
                     }
-
                     3 -> {
                         binding.tabTextView.text = "Tahunan"
                         binding.recyclerView.adapter = tahunanAdapter
@@ -75,11 +76,46 @@ class LaporanKeuanganActivity : AppCompatActivity() {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
 
-        binding.actionFilter.setOnClickListener {
-            Toast.makeText(this, "Filter clicked", Toast.LENGTH_SHORT).show()
+        // Setup Spinner untuk tahun
+        val tahunSpinner = binding.spinnerTahun
+        val tahunArray = resources.getStringArray(R.array.tahun_array)
+        val tahunAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, tahunArray)
+        tahunAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        tahunSpinner.adapter = tahunAdapter
+        tahunSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                selectedYear = tahunArray[position]
+                updateData()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
+        // Setup Spinner untuk bulan
+        val bulanSpinner = binding.spinnerBulan
+        val bulanArray = resources.getStringArray(R.array.bulan_array)
+        val bulanAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, bulanArray)
+        bulanAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        bulanSpinner.adapter = bulanAdapter
+        bulanSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                selectedMonth = bulanArray[position]
+                updateData()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
         loadDataKeuangan()
+    }
+
+    private fun updateData() {
+        when (binding.tabLayout.selectedTabPosition) {
+            0 -> loadDataHarian()
+            1 -> loadDataMingguan()
+            2 -> loadDataBulanan()
+            3 -> loadDataTahunan()
+        }
     }
 
     private fun loadDataKeuangan() {
@@ -123,18 +159,34 @@ class LaporanKeuanganActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { documents ->
                 val transaksiHarian = mutableMapOf<String, Pair<Long, Long>>()
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val monthFormat = SimpleDateFormat("MM", Locale.getDefault())
+                val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
+                val monthIndex = resources.getStringArray(R.array.bulan_array).indexOf(selectedMonth) + 1
+                val monthString = if (monthIndex < 10) "0$monthIndex" else monthIndex.toString()
 
                 for (document in documents) {
                     val tanggal = document.getString("tanggal") ?: continue
                     val tipe = document.getString("tipe") ?: continue
                     val jumlah = document.getLong("jumlah") ?: 0L
 
-                    val (income, expense) = transaksiHarian[tanggal] ?: Pair(0L, 0L)
-                    val updatedIncome =
-                        if (tipe == "infaq" || tipe == "kas") income + jumlah else income
-                    val updatedExpense = if (tipe == "pengajuan_dana") expense + jumlah else expense
+                    try {
+                        val date = dateFormat.parse(tanggal) ?: continue
+                        val month = monthFormat.format(date)
+                        val year = yearFormat.format(date)
 
-                    transaksiHarian[tanggal] = Pair(updatedIncome, updatedExpense)
+                        if (month == monthString && year == selectedYear) {
+                            val day = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date)
+                            val (income, expense) = transaksiHarian[day] ?: Pair(0L, 0L)
+                            val updatedIncome =
+                                if (tipe == "infaq" || tipe == "kas") income + jumlah else income
+                            val updatedExpense = if (tipe == "pengajuan_dana") expense + jumlah else expense
+
+                            transaksiHarian[day] = Pair(updatedIncome, updatedExpense)
+                        }
+                    } catch (e: ParseException) {
+                        Log.e("LaporanKeuangan", "Error parsing date: $tanggal", e)
+                    }
                 }
 
                 val dataHarian = transaksiHarian.map { (tanggal, incomeExpense) ->
@@ -161,52 +213,56 @@ class LaporanKeuanganActivity : AppCompatActivity() {
 
     private fun loadDataMingguan() {
         val calendar = Calendar.getInstance()
-        val currentMonth = calendar.get(Calendar.MONTH)
-        val currentYear = calendar.get(Calendar.YEAR)
-
         firestore.collection("transaksi_keuangan")
             .whereEqualTo("status", "approved")
             .get()
             .addOnSuccessListener { documents ->
                 val transaksiMingguan = mutableMapOf<String, Pair<Long, Long>>()
-                val dateFormat = SimpleDateFormat(
-                    "dd/MM/yyyy",
-                    Locale.getDefault()
-                ) // Sesuaikan dengan format tanggal di Firestore
+                val monthFormat = SimpleDateFormat("MM", Locale.getDefault())
+                val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
+                val monthIndex = resources.getStringArray(R.array.bulan_array).indexOf(selectedMonth) + 1
+                val monthString = if (monthIndex < 10) "0$monthIndex" else monthIndex.toString()
 
                 for (document in documents) {
                     val tanggal = document.getString("tanggal") ?: continue
                     val tipe = document.getString("tipe") ?: continue
                     val jumlah = document.getLong("jumlah") ?: 0L
 
-                    val date = try {
-                        dateFormat.parse(tanggal)
+                    try {
+                        val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(tanggal) ?: continue
+                        calendar.time = date
+                        val weekOfMonth = calendar.get(Calendar.WEEK_OF_MONTH)
+                        val year = yearFormat.format(date)
+                        val month = monthFormat.format(date)
+                        val weekKey = "$year-$month-W$weekOfMonth"
+
+                        if (month == monthString && year == selectedYear) {
+                            val (income, expense) = transaksiMingguan[weekKey] ?: Pair(0L, 0L)
+                            val updatedIncome =
+                                if (tipe == "infaq" || tipe == "kas") income + jumlah else income
+                            val updatedExpense = if (tipe == "pengajuan_dana") expense + jumlah else expense
+
+                            transaksiMingguan[weekKey] = Pair(updatedIncome, updatedExpense)
+                        }
                     } catch (e: ParseException) {
                         Log.e("LaporanKeuangan", "Error parsing date: $tanggal", e)
-                        continue
                     }
-
-                    val weekOfMonth = Calendar.getInstance().apply {
-                        time = date
-                        set(Calendar.DAY_OF_MONTH, 1)
-                        set(Calendar.DAY_OF_MONTH, get(Calendar.DAY_OF_MONTH))
-                    }.get(Calendar.WEEK_OF_MONTH)
-
-                    val mingguKey = "Minggu $weekOfMonth"
-
-                    val (income, expense) = transaksiMingguan[mingguKey] ?: Pair(0L, 0L)
-                    val updatedIncome =
-                        if (tipe == "infaq" || tipe == "kas") income + jumlah else income
-                    val updatedExpense = if (tipe == "pengajuan_dana") expense + jumlah else expense
-
-                    transaksiMingguan[mingguKey] = Pair(updatedIncome, updatedExpense)
                 }
 
                 val dataMingguan = transaksiMingguan.map { (minggu, incomeExpense) ->
                     TransaksiMingguan(minggu, incomeExpense.first, incomeExpense.second)
                 }
 
-                mingguanAdapter.updateData(dataMingguan)
+                if (dataMingguan.isNotEmpty()) {
+                    binding.recyclerView.visibility = View.VISIBLE
+                    binding.tabTextView.visibility = View.GONE
+                    mingguanAdapter.updateData(dataMingguan)
+                } else {
+                    binding.recyclerView.visibility = View.GONE
+                    binding.tabTextView.visibility = View.VISIBLE
+                    binding.tabTextView.text = "Tidak ada data mingguan"
+                }
+
                 Log.d("LaporanKeuangan", "Data Mingguan: $dataMingguan")
             }
             .addOnFailureListener { exception ->
@@ -215,17 +271,16 @@ class LaporanKeuanganActivity : AppCompatActivity() {
             }
     }
 
-
     private fun loadDataBulanan() {
-        val dateFormat =
-            SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) // Ubah format sesuai penyimpanan
-        val monthFormat = SimpleDateFormat("MMM yyyy", Locale.getDefault())
-
         firestore.collection("transaksi_keuangan")
             .whereEqualTo("status", "approved")
             .get()
             .addOnSuccessListener { documents ->
                 val transaksiBulanan = mutableMapOf<String, Pair<Long, Long>>()
+                val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
+                val monthFormat = SimpleDateFormat("MM", Locale.getDefault())
+                val monthIndex = resources.getStringArray(R.array.bulan_array).indexOf(selectedMonth) + 1
+                val monthString = if (monthIndex < 10) "0$monthIndex" else monthIndex.toString()
 
                 for (document in documents) {
                     val tanggal = document.getString("tanggal") ?: continue
@@ -233,16 +288,19 @@ class LaporanKeuanganActivity : AppCompatActivity() {
                     val jumlah = document.getLong("jumlah") ?: 0L
 
                     try {
-                        val date = dateFormat.parse(tanggal) ?: continue
-                        val monthKey = monthFormat.format(date)
+                        val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(tanggal) ?: continue
+                        val year = yearFormat.format(date)
+                        val month = monthFormat.format(date)
+                        val monthKey = "$year-$month"
 
-                        val (income, expense) = transaksiBulanan[monthKey] ?: Pair(0L, 0L)
-                        val updatedIncome =
-                            if (tipe == "infaq" || tipe == "kas") income + jumlah else income
-                        val updatedExpense =
-                            if (tipe == "pengajuan_dana") expense + jumlah else expense
+                        if (month == monthString && year == selectedYear) {
+                            val (income, expense) = transaksiBulanan[monthKey] ?: Pair(0L, 0L)
+                            val updatedIncome =
+                                if (tipe == "infaq" || tipe == "kas") income + jumlah else income
+                            val updatedExpense = if (tipe == "pengajuan_dana") expense + jumlah else expense
 
-                        transaksiBulanan[monthKey] = Pair(updatedIncome, updatedExpense)
+                            transaksiBulanan[monthKey] = Pair(updatedIncome, updatedExpense)
+                        }
                     } catch (e: ParseException) {
                         Log.e("LaporanKeuangan", "Error parsing date: $tanggal", e)
                     }
@@ -270,17 +328,13 @@ class LaporanKeuanganActivity : AppCompatActivity() {
             }
     }
 
-
     private fun loadDataTahunan() {
-        val dateFormat =
-            SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) // Ubah format sesuai penyimpanan
-        val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
-
         firestore.collection("transaksi_keuangan")
             .whereEqualTo("status", "approved")
             .get()
             .addOnSuccessListener { documents ->
                 val transaksiTahunan = mutableMapOf<String, Pair<Long, Long>>()
+                val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
 
                 for (document in documents) {
                     val tanggal = document.getString("tanggal") ?: continue
@@ -288,16 +342,18 @@ class LaporanKeuanganActivity : AppCompatActivity() {
                     val jumlah = document.getLong("jumlah") ?: 0L
 
                     try {
-                        val date = dateFormat.parse(tanggal) ?: continue
-                        val yearKey = yearFormat.format(date)
+                        val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(tanggal) ?: continue
+                        val year = yearFormat.format(date)
 
-                        val (income, expense) = transaksiTahunan[yearKey] ?: Pair(0L, 0L)
-                        val updatedIncome =
-                            if (tipe == "infaq" || tipe == "kas") income + jumlah else income
-                        val updatedExpense =
-                            if (tipe == "pengajuan_dana") expense + jumlah else expense
+                        if (year == selectedYear) {
+                            val yearKey = year
+                            val (income, expense) = transaksiTahunan[yearKey] ?: Pair(0L, 0L)
+                            val updatedIncome =
+                                if (tipe == "infaq" || tipe == "kas") income + jumlah else income
+                            val updatedExpense = if (tipe == "pengajuan_dana") expense + jumlah else expense
 
-                        transaksiTahunan[yearKey] = Pair(updatedIncome, updatedExpense)
+                            transaksiTahunan[yearKey] = Pair(updatedIncome, updatedExpense)
+                        }
                     } catch (e: ParseException) {
                         Log.e("LaporanKeuangan", "Error parsing date: $tanggal", e)
                     }

@@ -18,6 +18,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <!-- Tambahkan Spinner untuk tahun -->
+        <Spinner
+            android:id="@+id/spinnerTahun"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:entries="@array/tahun_array" />
+
+        <!-- Tambahkan Spinner untuk bulan -->
+        <Spinner
+            android:id="@+id/spinnerBulan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:entries="@array/bulan_array" />
+
+
 
         <TextView
             android:id="@+id/month_selector"
