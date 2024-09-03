@@ -19,6 +19,8 @@ class LaporanKeuanganActivity : AppCompatActivity() {
     private lateinit var firestore: FirebaseFirestore
     private lateinit var harianAdapter: TransaksiAdapter
     private lateinit var mingguanAdapter: TransaksiMingguanAdapter
+    private lateinit var bulananAdapter: TransaksiBulananAdapter
+    private lateinit var tahunanAdapter: TransaksiTahunanAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +35,8 @@ class LaporanKeuanganActivity : AppCompatActivity() {
         // Inisialisasi adapter untuk harian dan mingguan
         harianAdapter = TransaksiAdapter(emptyList())
         mingguanAdapter = TransaksiMingguanAdapter(emptyList())
+        bulananAdapter = TransaksiBulananAdapter(emptyList())
+        tahunanAdapter = TransaksiTahunanAdapter(emptyList())
 
         // Set adapter default untuk RecyclerView
         binding.recyclerView.adapter = harianAdapter
@@ -46,19 +50,22 @@ class LaporanKeuanganActivity : AppCompatActivity() {
                         binding.recyclerView.adapter = harianAdapter
                         loadDataHarian()
                     }
+
                     1 -> {
                         binding.tabTextView.text = "Mingguan"
                         binding.recyclerView.adapter = mingguanAdapter
                         loadDataMingguan()
                     }
+
                     2 -> {
                         binding.tabTextView.text = "Bulanan"
-                        binding.recyclerView.adapter = harianAdapter // Sesuaikan jika perlu
+                        binding.recyclerView.adapter = bulananAdapter
                         loadDataBulanan()
                     }
+
                     3 -> {
                         binding.tabTextView.text = "Tahunan"
-                        binding.recyclerView.adapter = harianAdapter // Sesuaikan jika perlu
+                        binding.recyclerView.adapter = tahunanAdapter
                         loadDataTahunan()
                     }
                 }
@@ -162,7 +169,10 @@ class LaporanKeuanganActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { documents ->
                 val transaksiMingguan = mutableMapOf<String, Pair<Long, Long>>()
-                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) // Sesuaikan dengan format tanggal di Firestore
+                val dateFormat = SimpleDateFormat(
+                    "dd/MM/yyyy",
+                    Locale.getDefault()
+                ) // Sesuaikan dengan format tanggal di Firestore
 
                 for (document in documents) {
                     val tanggal = document.getString("tanggal") ?: continue
@@ -185,7 +195,8 @@ class LaporanKeuanganActivity : AppCompatActivity() {
                     val mingguKey = "Minggu $weekOfMonth"
 
                     val (income, expense) = transaksiMingguan[mingguKey] ?: Pair(0L, 0L)
-                    val updatedIncome = if (tipe == "infaq" || tipe == "kas") income + jumlah else income
+                    val updatedIncome =
+                        if (tipe == "infaq" || tipe == "kas") income + jumlah else income
                     val updatedExpense = if (tipe == "pengajuan_dana") expense + jumlah else expense
 
                     transaksiMingguan[mingguKey] = Pair(updatedIncome, updatedExpense)
@@ -206,10 +217,111 @@ class LaporanKeuanganActivity : AppCompatActivity() {
 
 
     private fun loadDataBulanan() {
-        // Implementasi serupa untuk tab Bulanan
+        val dateFormat =
+            SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) // Ubah format sesuai penyimpanan
+        val monthFormat = SimpleDateFormat("MMM yyyy", Locale.getDefault())
+
+        firestore.collection("transaksi_keuangan")
+            .whereEqualTo("status", "approved")
+            .get()
+            .addOnSuccessListener { documents ->
+                val transaksiBulanan = mutableMapOf<String, Pair<Long, Long>>()
+
+                for (document in documents) {
+                    val tanggal = document.getString("tanggal") ?: continue
+                    val tipe = document.getString("tipe") ?: continue
+                    val jumlah = document.getLong("jumlah") ?: 0L
+
+                    try {
+                        val date = dateFormat.parse(tanggal) ?: continue
+                        val monthKey = monthFormat.format(date)
+
+                        val (income, expense) = transaksiBulanan[monthKey] ?: Pair(0L, 0L)
+                        val updatedIncome =
+                            if (tipe == "infaq" || tipe == "kas") income + jumlah else income
+                        val updatedExpense =
+                            if (tipe == "pengajuan_dana") expense + jumlah else expense
+
+                        transaksiBulanan[monthKey] = Pair(updatedIncome, updatedExpense)
+                    } catch (e: ParseException) {
+                        Log.e("LaporanKeuangan", "Error parsing date: $tanggal", e)
+                    }
+                }
+
+                val dataBulanan = transaksiBulanan.map { (bulan, incomeExpense) ->
+                    TransaksiBulanan(bulan, incomeExpense.first, incomeExpense.second)
+                }
+
+                if (dataBulanan.isNotEmpty()) {
+                    binding.recyclerView.visibility = View.VISIBLE
+                    binding.tabTextView.visibility = View.GONE
+                    bulananAdapter.updateData(dataBulanan)
+                } else {
+                    binding.recyclerView.visibility = View.GONE
+                    binding.tabTextView.visibility = View.VISIBLE
+                    binding.tabTextView.text = "Tidak ada data bulanan"
+                }
+
+                Log.d("LaporanKeuangan", "Data Bulanan: $dataBulanan")
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Error: ${exception.message}", Toast.LENGTH_SHORT).show()
+                Log.e("LaporanKeuangan", "Error fetching data bulanan: ${exception.message}")
+            }
     }
 
+
     private fun loadDataTahunan() {
-        // Implementasi serupa untuk tab Tahunan
+        val dateFormat =
+            SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) // Ubah format sesuai penyimpanan
+        val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
+
+        firestore.collection("transaksi_keuangan")
+            .whereEqualTo("status", "approved")
+            .get()
+            .addOnSuccessListener { documents ->
+                val transaksiTahunan = mutableMapOf<String, Pair<Long, Long>>()
+
+                for (document in documents) {
+                    val tanggal = document.getString("tanggal") ?: continue
+                    val tipe = document.getString("tipe") ?: continue
+                    val jumlah = document.getLong("jumlah") ?: 0L
+
+                    try {
+                        val date = dateFormat.parse(tanggal) ?: continue
+                        val yearKey = yearFormat.format(date)
+
+                        val (income, expense) = transaksiTahunan[yearKey] ?: Pair(0L, 0L)
+                        val updatedIncome =
+                            if (tipe == "infaq" || tipe == "kas") income + jumlah else income
+                        val updatedExpense =
+                            if (tipe == "pengajuan_dana") expense + jumlah else expense
+
+                        transaksiTahunan[yearKey] = Pair(updatedIncome, updatedExpense)
+                    } catch (e: ParseException) {
+                        Log.e("LaporanKeuangan", "Error parsing date: $tanggal", e)
+                    }
+                }
+
+                val dataTahunan = transaksiTahunan.map { (tahun, incomeExpense) ->
+                    TransaksiTahunan(tahun, incomeExpense.first, incomeExpense.second)
+                }
+
+                if (dataTahunan.isNotEmpty()) {
+                    binding.recyclerView.visibility = View.VISIBLE
+                    binding.tabTextView.visibility = View.GONE
+                    tahunanAdapter.updateData(dataTahunan)
+                } else {
+                    binding.recyclerView.visibility = View.GONE
+                    binding.tabTextView.visibility = View.VISIBLE
+                    binding.tabTextView.text = "Tidak ada data tahunan"
+                }
+
+                Log.d("LaporanKeuangan", "Data Tahunan: $dataTahunan")
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Error: ${exception.message}", Toast.LENGTH_SHORT).show()
+                Log.e("LaporanKeuangan", "Error fetching data tahunan: ${exception.message}")
+            }
     }
 }
