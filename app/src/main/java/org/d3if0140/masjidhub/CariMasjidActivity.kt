@@ -91,7 +91,7 @@ class CariMasjidActivity : AppCompatActivity() {
                     true
                 }
                 R.id.menu_finance -> {
-                    startActivity(Intent(this, KeuanganActivity::class.java))
+                    startActivity(Intent(this, LaporanKeuanganActivity::class.java))
                     finish()
                     true
                 }

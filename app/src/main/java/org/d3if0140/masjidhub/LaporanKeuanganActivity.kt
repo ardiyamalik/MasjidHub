@@ -1,5 +1,6 @@
 package org.d3if0140.masjidhub
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -45,6 +46,33 @@ class LaporanKeuanganActivity : AppCompatActivity() {
 
         // Set adapter default untuk RecyclerView
         binding.recyclerView.adapter = harianAdapter
+
+        // Bottom navigation listener
+        binding.bottomNavigation.selectedItemId = R.id.menu_finance
+        binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_finance -> true
+                R.id.search_masjid -> {
+                    val intent = Intent(this, CariMasjidActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                R.id.menu_home -> {
+                    val intent = Intent(this, HomeActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                R.id.menu_profile -> {
+                    val intent = Intent(this, ProfilActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                else -> false
+            }
+        }
 
         // Set listener untuk TabLayout
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -331,7 +359,7 @@ class LaporanKeuanganActivity : AppCompatActivity() {
                         val month = monthFormat.format(date)
                         val year = yearFormat.format(date)
 
-                        if (month == selectedMonth && year == selectedYear) {
+                        if (year == selectedYear) {
                             val monthKey = "Month $month"
                             val (income, expense) = transaksiBulanan[monthKey] ?: Pair(0L, 0L)
 
@@ -441,5 +469,6 @@ class LaporanKeuanganActivity : AppCompatActivity() {
                 Log.e("LaporanKeuangan", "Error fetching data tahunan: ${exception.message}")
             }
     }
+
 
 }
