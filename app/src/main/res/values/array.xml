@@ -23,4 +23,12 @@
         <item>2021</item>
         <item>2020</item>
     </string-array>
+
+        <string-array name="tipe_array">
+            <item>Semua</item>
+            <item>Kas</item>
+            <item>Infaq</item>
+            <item>Pengajuan</item>
+        </string-array>
+
 </resources>

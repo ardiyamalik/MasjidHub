@@ -34,31 +34,12 @@
             android:layout_margin="16dp"
             android:entries="@array/bulan_array" />
 
-
-
-        <TextView
-            android:id="@+id/month_selector"
-            android:layout_width="wrap_content"
+        <Spinner
+            android:id="@+id/spinnerTipe"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_bold"
-            android:text="Agt 2024"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:entries="@array/tipe_array"/>
 
-
-        <ImageButton
-            android:id="@+id/action_filter"
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="280dp"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:src="@drawable/tune_24px"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
 
 

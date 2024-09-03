@@ -25,6 +25,7 @@ class LaporanKeuanganActivity : AppCompatActivity() {
 
     private var selectedYear: String = "2024"
     private var selectedMonth: String = "Januari"
+    private var selectedTipe: String = "Kas" // Default tipe
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,10 +84,11 @@ class LaporanKeuanganActivity : AppCompatActivity() {
         tahunAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         tahunSpinner.adapter = tahunAdapter
         tahunSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                selectedYear = tahunArray[position]
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                selectedTipe = parent.getItemAtPosition(position).toString()
                 updateData()
             }
+
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
@@ -100,6 +102,21 @@ class LaporanKeuanganActivity : AppCompatActivity() {
         bulanSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 selectedMonth = bulanArray[position]
+                updateData()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
+        // Setup Spinner untuk tipe transaksi
+        val tipeSpinner = binding.spinnerTipe
+        val tipeArray = resources.getStringArray(R.array.tipe_array)
+        val tipeAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, tipeArray)
+        tipeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        tipeSpinner.adapter = tipeAdapter
+        tipeSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                selectedTipe = tipeArray[position]
                 updateData()
             }
 
@@ -172,15 +189,25 @@ class LaporanKeuanganActivity : AppCompatActivity() {
 
                     try {
                         val date = dateFormat.parse(tanggal) ?: continue
+                        val day = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date)
                         val month = monthFormat.format(date)
                         val year = yearFormat.format(date)
 
                         if (month == monthString && year == selectedYear) {
-                            val day = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(date)
                             val (income, expense) = transaksiHarian[day] ?: Pair(0L, 0L)
-                            val updatedIncome =
-                                if (tipe == "infaq" || tipe == "kas") income + jumlah else income
-                            val updatedExpense = if (tipe == "pengajuan_dana") expense + jumlah else expense
+
+                            val updatedIncome = when {
+                                selectedTipe == "Semua" && (tipe == "kas" || tipe == "infaq") -> income + jumlah
+                                selectedTipe == "Kas" && tipe == "kas" -> income + jumlah
+                                selectedTipe == "Infaq" && tipe == "infaq" -> income + jumlah
+                                else -> income
+                            }
+
+                            val updatedExpense = when {
+                                selectedTipe == "Semua" && tipe == "pengajuan_dana" -> expense + jumlah
+                                selectedTipe == "Pengajuan" && tipe == "pengajuan_dana" -> expense + jumlah
+                                else -> expense
+                            }
 
                             transaksiHarian[day] = Pair(updatedIncome, updatedExpense)
                         }
@@ -211,13 +238,15 @@ class LaporanKeuanganActivity : AppCompatActivity() {
             }
     }
 
+
     private fun loadDataMingguan() {
-        val calendar = Calendar.getInstance()
         firestore.collection("transaksi_keuangan")
             .whereEqualTo("status", "approved")
             .get()
             .addOnSuccessListener { documents ->
                 val transaksiMingguan = mutableMapOf<String, Pair<Long, Long>>()
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val weekFormat = SimpleDateFormat("w", Locale.getDefault())
                 val monthFormat = SimpleDateFormat("MM", Locale.getDefault())
                 val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
                 val monthIndex = resources.getStringArray(R.array.bulan_array).indexOf(selectedMonth) + 1
@@ -229,18 +258,27 @@ class LaporanKeuanganActivity : AppCompatActivity() {
                     val jumlah = document.getLong("jumlah") ?: 0L
 
                     try {
-                        val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(tanggal) ?: continue
-                        calendar.time = date
-                        val weekOfMonth = calendar.get(Calendar.WEEK_OF_MONTH)
-                        val year = yearFormat.format(date)
+                        val date = dateFormat.parse(tanggal) ?: continue
+                        val week = weekFormat.format(date)
                         val month = monthFormat.format(date)
-                        val weekKey = "$year-$month-W$weekOfMonth"
+                        val year = yearFormat.format(date)
 
                         if (month == monthString && year == selectedYear) {
+                            val weekKey = "Week $week"
                             val (income, expense) = transaksiMingguan[weekKey] ?: Pair(0L, 0L)
-                            val updatedIncome =
-                                if (tipe == "infaq" || tipe == "kas") income + jumlah else income
-                            val updatedExpense = if (tipe == "pengajuan_dana") expense + jumlah else expense
+
+                            val updatedIncome = when {
+                                selectedTipe == "Semua" && (tipe == "kas" || tipe == "infaq") -> income + jumlah
+                                selectedTipe == "Kas" && tipe == "kas" -> income + jumlah
+                                selectedTipe == "Infaq" && tipe == "infaq" -> income + jumlah
+                                else -> income
+                            }
+
+                            val updatedExpense = when {
+                                selectedTipe == "Semua" && tipe == "pengajuan_dana" -> expense + jumlah
+                                selectedTipe == "Pengajuan" && tipe == "pengajuan_dana" -> expense + jumlah
+                                else -> expense
+                            }
 
                             transaksiMingguan[weekKey] = Pair(updatedIncome, updatedExpense)
                         }
@@ -249,8 +287,8 @@ class LaporanKeuanganActivity : AppCompatActivity() {
                     }
                 }
 
-                val dataMingguan = transaksiMingguan.map { (minggu, incomeExpense) ->
-                    TransaksiMingguan(minggu, incomeExpense.first, incomeExpense.second)
+                val dataMingguan = transaksiMingguan.map { (week, incomeExpense) ->
+                    TransaksiMingguan(week, incomeExpense.first, incomeExpense.second)
                 }
 
                 if (dataMingguan.isNotEmpty()) {
@@ -271,16 +309,17 @@ class LaporanKeuanganActivity : AppCompatActivity() {
             }
     }
 
+
+
     private fun loadDataBulanan() {
         firestore.collection("transaksi_keuangan")
             .whereEqualTo("status", "approved")
             .get()
             .addOnSuccessListener { documents ->
                 val transaksiBulanan = mutableMapOf<String, Pair<Long, Long>>()
-                val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 val monthFormat = SimpleDateFormat("MM", Locale.getDefault())
-                val monthIndex = resources.getStringArray(R.array.bulan_array).indexOf(selectedMonth) + 1
-                val monthString = if (monthIndex < 10) "0$monthIndex" else monthIndex.toString()
+                val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
 
                 for (document in documents) {
                     val tanggal = document.getString("tanggal") ?: continue
@@ -288,16 +327,26 @@ class LaporanKeuanganActivity : AppCompatActivity() {
                     val jumlah = document.getLong("jumlah") ?: 0L
 
                     try {
-                        val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(tanggal) ?: continue
-                        val year = yearFormat.format(date)
+                        val date = dateFormat.parse(tanggal) ?: continue
                         val month = monthFormat.format(date)
-                        val monthKey = "$year-$month"
+                        val year = yearFormat.format(date)
 
-                        if (month == monthString && year == selectedYear) {
+                        if (month == selectedMonth && year == selectedYear) {
+                            val monthKey = "Month $month"
                             val (income, expense) = transaksiBulanan[monthKey] ?: Pair(0L, 0L)
-                            val updatedIncome =
-                                if (tipe == "infaq" || tipe == "kas") income + jumlah else income
-                            val updatedExpense = if (tipe == "pengajuan_dana") expense + jumlah else expense
+
+                            val updatedIncome = when {
+                                selectedTipe == "Semua" && (tipe == "kas" || tipe == "infaq") -> income + jumlah
+                                selectedTipe == "Kas" && tipe == "kas" -> income + jumlah
+                                selectedTipe == "Infaq" && tipe == "infaq" -> income + jumlah
+                                else -> income
+                            }
+
+                            val updatedExpense = when {
+                                selectedTipe == "Semua" && tipe == "pengajuan_dana" -> expense + jumlah
+                                selectedTipe == "Pengajuan" && tipe == "pengajuan_dana" -> expense + jumlah
+                                else -> expense
+                            }
 
                             transaksiBulanan[monthKey] = Pair(updatedIncome, updatedExpense)
                         }
@@ -306,8 +355,8 @@ class LaporanKeuanganActivity : AppCompatActivity() {
                     }
                 }
 
-                val dataBulanan = transaksiBulanan.map { (bulan, incomeExpense) ->
-                    TransaksiBulanan(bulan, incomeExpense.first, incomeExpense.second)
+                val dataBulanan = transaksiBulanan.map { (month, incomeExpense) ->
+                    TransaksiBulanan(month, incomeExpense.first, incomeExpense.second)
                 }
 
                 if (dataBulanan.isNotEmpty()) {
@@ -328,12 +377,14 @@ class LaporanKeuanganActivity : AppCompatActivity() {
             }
     }
 
+
     private fun loadDataTahunan() {
         firestore.collection("transaksi_keuangan")
             .whereEqualTo("status", "approved")
             .get()
             .addOnSuccessListener { documents ->
                 val transaksiTahunan = mutableMapOf<String, Pair<Long, Long>>()
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
 
                 for (document in documents) {
@@ -342,15 +393,25 @@ class LaporanKeuanganActivity : AppCompatActivity() {
                     val jumlah = document.getLong("jumlah") ?: 0L
 
                     try {
-                        val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(tanggal) ?: continue
+                        val date = dateFormat.parse(tanggal) ?: continue
                         val year = yearFormat.format(date)
 
                         if (year == selectedYear) {
-                            val yearKey = year
+                            val yearKey = "Year $year"
                             val (income, expense) = transaksiTahunan[yearKey] ?: Pair(0L, 0L)
-                            val updatedIncome =
-                                if (tipe == "infaq" || tipe == "kas") income + jumlah else income
-                            val updatedExpense = if (tipe == "pengajuan_dana") expense + jumlah else expense
+
+                            val updatedIncome = when {
+                                selectedTipe == "Semua" && (tipe == "kas" || tipe == "infaq") -> income + jumlah
+                                selectedTipe == "Kas" && tipe == "kas" -> income + jumlah
+                                selectedTipe == "Infaq" && tipe == "infaq" -> income + jumlah
+                                else -> income
+                            }
+
+                            val updatedExpense = when {
+                                selectedTipe == "Semua" && tipe == "pengajuan_dana" -> expense + jumlah
+                                selectedTipe == "Pengajuan" && tipe == "pengajuan_dana" -> expense + jumlah
+                                else -> expense
+                            }
 
                             transaksiTahunan[yearKey] = Pair(updatedIncome, updatedExpense)
                         }
@@ -359,8 +420,8 @@ class LaporanKeuanganActivity : AppCompatActivity() {
                     }
                 }
 
-                val dataTahunan = transaksiTahunan.map { (tahun, incomeExpense) ->
-                    TransaksiTahunan(tahun, incomeExpense.first, incomeExpense.second)
+                val dataTahunan = transaksiTahunan.map { (year, incomeExpense) ->
+                    TransaksiTahunan(year, incomeExpense.first, incomeExpense.second)
                 }
 
                 if (dataTahunan.isNotEmpty()) {
@@ -380,4 +441,5 @@ class LaporanKeuanganActivity : AppCompatActivity() {
                 Log.e("LaporanKeuangan", "Error fetching data tahunan: ${exception.message}")
             }
     }
+
 }
