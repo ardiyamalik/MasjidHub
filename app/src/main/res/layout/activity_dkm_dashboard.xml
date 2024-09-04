@@ -7,15 +7,12 @@
     android:background="@color/white">
 
     <!-- Toolbar -->
-
-    <!-- Frame Layout untuk Isi Konten -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:elevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -42,32 +39,38 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:contentDescription="Foto Profil"
-            android:src="@drawable/baseline_person_black" />
+            android:src="@drawable/baseline_person_black"
+            app:layout_constraintDimensionRatio="1:1" />
 
     </androidx.appcompat.widget.Toolbar>
+
+    <!-- Frame Layout untuk Isi Konten -->
 
     <!-- Bottom Navigation View -->
     <FrameLayout
         android:id="@+id/content_frame"
-        android:layout_width="414dp"
-        android:layout_height="164dp"
+        android:layout_width="375dp"
+        android:layout_height="161dp"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation_dkm"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.695"
+        app:layout_constraintHeight_default="wrap"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.06"
+        app:layout_constraintWidth_default="wrap">
 
         <!-- ViewPager -->
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:layout_marginLeft="20dp"
+            android:layout_width="322dp"
+            android:layout_height="125dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_weight="1" />
-
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -81,54 +84,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu_dkm" />
 
+    <!-- Content Layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="409dp"
-        android:layout_height="500dp"
-        android:layout_marginTop="1dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/content_frame"
-        app:layout_constraintVertical_bias="0.0">
-
-        <!--        <TextView-->
-        <!--            android:id="@+id/textViewProgram"-->
-        <!--            android:layout_width="93dp"-->
-        <!--            android:layout_height="27dp"-->
-        <!--            android:layout_marginTop="50dp"-->
-        <!--            android:layout_marginRight="80dp"-->
-        <!--            android:fontFamily="@font/poppins_bold"-->
-        <!--            android:text="@string/program"-->
-        <!--            android:textAlignment="center"-->
-        <!--            android:textColor="@color/blue"-->
-        <!--            android:textSize="20sp"-->
-        <!--            android:textStyle="bold"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintHorizontal_bias="0.085"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent"-->
-        <!--            app:layout_constraintVertical_bias="0.473" />-->
-
-
-        <!--        <TextView-->
-        <!--            android:id="@+id/textViewTerdekat"-->
-        <!--            android:layout_width="181dp"-->
-        <!--            android:layout_height="29dp"-->
-        <!--            android:layout_marginTop="44dp"-->
-        <!--            android:layout_marginRight="75dp"-->
-        <!--            android:fontFamily="@font/poppins_bold"-->
-        <!--            android:text="@string/masjid_terdekat"-->
-        <!--            android:textAlignment="center"-->
-        <!--            android:textColor="@color/blue"-->
-        <!--            android:textSize="20sp"-->
-        <!--            android:textStyle="bold"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintHorizontal_bias="0.07"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
+        app:layout_constraintTop_toBottomOf="@+id/content_frame">
 
         <TextView
             android:id="@+id/textView5"
@@ -137,33 +100,29 @@
             android:fontFamily="@font/poppins_bold"
             android:text="@string/menu"
             android:textColor="@color/blue"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.045"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.062" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="296dp"
             android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView5"
+            app:layout_constraintVertical_bias="0.062">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textView5">
+                android:layout_marginStart="18dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/buttonPengajuan"
