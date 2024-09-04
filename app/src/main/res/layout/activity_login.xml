@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
    <androidx.constraintlayout.widget.ConstraintLayout
        android:layout_width="match_parent"
@@ -35,28 +36,27 @@
 
       <TextView
           android:id="@+id/masuk"
-          android:layout_width="115dp"
-          android:layout_height="42dp"
-          android:layout_marginTop="188dp"
-          android:layout_marginEnd="168dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
           android:fontFamily="@font/poppins_bold"
           android:text="@string/masuk"
           android:textColor="@color/blue"
           android:textSize="32sp"
           android:textStyle="bold"
-          app:layout_constraintEnd_toEndOf="@+id/imageView2"
-          app:layout_constraintTop_toTopOf="parent" />
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="0.106"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/imageView2" />
 
-      <!-- Input Text untuk Nama -->
       <com.google.android.material.textfield.TextInputLayout
           android:id="@+id/namaInputLayout"
-          android:layout_width="380dp"
-          android:layout_height="53dp"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
           android:layout_marginStart="32dp"
-          android:layout_marginTop="48dp"
+          android:layout_marginTop="24dp"
           android:layout_marginEnd="32dp"
           app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintHorizontal_bias="0.515"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@id/masuk">
 
@@ -71,17 +71,14 @@
              android:padding="12dp" />
       </com.google.android.material.textfield.TextInputLayout>
 
-      <!-- Input Text untuk Password -->
-
       <com.google.android.material.textfield.TextInputLayout
           android:id="@+id/passwordInputLayout"
-          android:layout_width="380dp"
-          android:layout_height="53dp"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
           android:layout_marginStart="32dp"
-          android:layout_marginTop="28dp"
+          android:layout_marginTop="16dp"
           android:layout_marginEnd="32dp"
           app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintHorizontal_bias="0.515"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@id/namaInputLayout">
 
@@ -101,7 +98,7 @@
           android:id="@+id/passwordToggle"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginEnd="16dp"
+          android:layout_marginEnd="32dp"
           android:background="@null"
           android:padding="12dp"
           android:src="@drawable/baseline_visibility_off"
@@ -112,49 +109,44 @@
 
       <androidx.appcompat.widget.AppCompatButton
           android:id="@+id/loginButton"
-          android:layout_width="380dp"
-          android:layout_height="53dp"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
           android:layout_marginStart="32dp"
-          android:layout_marginTop="164dp"
+          android:layout_marginTop="84dp"
           android:layout_marginEnd="32dp"
           android:background="@drawable/rounded_button_background"
           android:fontFamily="@font/poppins_bold"
           android:text="@string/login"
-          android:textStyle="bold"
           android:textAllCaps="false"
           android:textColor="@color/white"
+          android:textStyle="bold"
           app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintHorizontal_bias="0.484"
+          app:layout_constraintHorizontal_bias="0.0"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@id/passwordInputLayout" />
 
       <TextView
           android:id="@+id/textKebijakan"
-          android:layout_width="378dp"
-          android:layout_height="36dp"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
           android:text="@string/kebijakan"
           android:fontFamily="@font/poppins_light"
-          app:layout_constraintBottom_toTopOf="@+id/loginButton"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintHorizontal_bias="0.515"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/passwordInputLayout"
-          app:layout_constraintVertical_bias="0.095" />
+          app:layout_constraintEnd_toEndOf="@id/passwordInputLayout"
+          app:layout_constraintStart_toStartOf="@id/passwordInputLayout"
+          app:layout_constraintTop_toBottomOf="@id/passwordInputLayout" />
+
 
       <TextView
           android:id="@+id/textDaftar"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginTop="21dp"
+          android:layout_marginTop="24dp"
           android:fontFamily="@font/poppins_light"
           android:text="@string/belum"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintHorizontal_bias="0.498"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/loginButton"
-          app:layout_constraintVertical_bias="0.048" />
-
-
+          app:layout_constraintTop_toBottomOf="@+id/loginButton" />
    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
