@@ -6,7 +6,6 @@
     android:orientation="horizontal"
     android:padding="8dp">
 
-
     <TextView
         android:id="@+id/textViewTahun"
         android:layout_width="0dp"
@@ -19,14 +18,15 @@
         android:text="2024"
         android:textColor="@android:color/white"
         android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginStart="16dp" /> <!-- Add margin here -->
 
     <TextView
         android:id="@+id/income_tahun"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:text="Rp0"
         android:textColor="@android:color/holo_green_dark"
         android:textSize="16sp" />
@@ -36,7 +36,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:text="Rp0"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="16sp" />
