@@ -35,12 +35,14 @@ class InfaqAdapter() : RecyclerView.Adapter<InfaqAdapter.InfaqViewHolder>() {
         private val textViewJumlahInfaq: TextView = itemView.findViewById(R.id.textViewJumlahInfaq)
         private val textViewUserEmail: TextView = itemView.findViewById(R.id.textViewUserEmail)
         private val textViewStatus: TextView = itemView.findViewById(R.id.textViewStatus)
+        private val textViewMetodePembayaran: TextView = itemView.findViewById(R.id.textViewMetodePembayaran)
 
         fun bind(infaq: Infaq) {
             textViewJumlahInfaq.text = "Rp ${infaq.jumlah}"
             textViewUserEmail.text = infaq.email
             textTanggalBayar.text = infaq.tanggal
             textViewStatus.text = infaq.status
+            textViewMetodePembayaran.text = infaq.metodePembayaran
         }
     }
 }

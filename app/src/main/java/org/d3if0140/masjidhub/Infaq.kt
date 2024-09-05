@@ -6,5 +6,6 @@ data class Infaq(
     val email: String = "",
     val jumlah: Double = 0.0,
     val tanggal: String = "",
-    val status: String = "approved"
+    val status: String = "approved",
+    val metodePembayaran: String = ""
 )

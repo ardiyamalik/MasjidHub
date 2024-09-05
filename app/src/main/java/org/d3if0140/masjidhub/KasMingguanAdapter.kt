@@ -36,12 +36,14 @@ class KasMingguanAdapter() : RecyclerView.Adapter<KasMingguanAdapter.KasViewHold
         private val textViewJumlahKas: TextView = itemView.findViewById(R.id.textViewJumlahKas)
         private val textViewUserEmail: TextView = itemView.findViewById(R.id.textViewUserEmail)
         private val textViewStatus: TextView = itemView.findViewById(R.id.textViewStatus)
+        private val textViewMetodePembayaran: TextView = itemView.findViewById(R.id.textViewMetodePembayaran)
 
         fun bind(KasMingguan: KasMingguan) {
             textViewJumlahKas.text = "Rp ${KasMingguan.jumlah}"
             textViewUserEmail.text = KasMingguan.email
             textTanggalBayar.text = KasMingguan.tanggal
             textViewStatus.text = KasMingguan.status
+            textViewMetodePembayaran.text = KasMingguan.metodePembayaran
         }
     }
 }
