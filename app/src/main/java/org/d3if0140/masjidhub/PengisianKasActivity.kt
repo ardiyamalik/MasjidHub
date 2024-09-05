@@ -44,12 +44,17 @@ class PengisianKasActivity : AppCompatActivity() {
             .setContext(this)
             .setTransactionFinishedCallback { result ->
                 Log.d(TAG, "Transaction result callback triggered")
-                Log.d(TAG, "Transaction result: ${result.status}")
+                Log.d(TAG, "Transaction result: ${result.response?.toString()}") // Log respons lengkap
+
                 transactionId?.let { id ->
-                    when (result.status) {
+                    val status = result.status
+                    // Gunakan hasil log untuk memeriksa struktur dan data yang tersedia
+                    val paymentType = result.response?.toString() ?: "unknown" // Menyimpan metode pembayaran sebagai string default
+
+                    when (status) {
                         TransactionResult.STATUS_SUCCESS -> {
                             Log.d(TAG, "Transaction successful, updating status...")
-                            updateTransactionStatus(id, "approved")
+                            updateTransactionStatus(id, "approved", paymentType)
                             sendNotificationToDkm(id)
                             finish() // Menutup activity setelah transaksi berhasil
                         }
@@ -59,7 +64,7 @@ class PengisianKasActivity : AppCompatActivity() {
                         }
                         TransactionResult.STATUS_FAILED -> {
                             Log.d(TAG, "Transaction failed")
-                            updateTransactionStatus(id, "failed")
+                            updateTransactionStatus(id, "failed", paymentType)
                             Toast.makeText(this, "Pembayaran gagal.", Toast.LENGTH_SHORT).show()
                             finish()
                         }
@@ -167,6 +172,17 @@ class PengisianKasActivity : AppCompatActivity() {
                 Log.e(TAG, "Error requesting token", t)
             }
         })
+    }
+
+    private fun updateTransactionStatus(transactionId: String, status: String, paymentType: String) {
+        db.collection("transaksi_keuangan").document(transactionId)
+            .update("status", status, "metodePembayaran", paymentType)
+            .addOnSuccessListener {
+                Log.d(TAG, "Transaction status updated to $status with paymentType $paymentType")
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error updating transaction status", e)
+            }
     }
 
 

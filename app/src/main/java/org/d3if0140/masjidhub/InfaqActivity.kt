@@ -7,7 +7,6 @@ import android.util.Log
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.android.volley.VolleyLog.TAG
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.midtrans.sdk.corekit.core.MidtransSDK
@@ -41,26 +40,27 @@ class InfaqActivity : AppCompatActivity() {
             .setContext(this)
             .setTransactionFinishedCallback { result ->
                 Log.d(TAG, "Transaction result callback triggered")
-                Log.d(TAG, "Transaction result: ${result.status}")
+                Log.d(TAG, "Transaction result: ${result.response?.toString()}") // Log respons lengkap
+
                 transactionId?.let { id ->
-                    when (result.status) {
+                    val status = result.status
+                    // Gunakan hasil log untuk memeriksa struktur dan data yang tersedia
+                    val paymentType = result.response?.toString() ?: "unknown" // Menyimpan metode pembayaran sebagai string default
+
+                    when (status) {
                         TransactionResult.STATUS_SUCCESS -> {
                             Log.d(TAG, "Transaction successful, updating status...")
-                            updateTransactionStatus(id, "approved")
+                            updateTransactionStatus(id, "approved", paymentType)
                             sendNotification(id)
                             finish() // Menutup activity setelah transaksi berhasil
                         }
                         TransactionResult.STATUS_PENDING -> {
                             Log.d(TAG, "Transaction pending")
-                            Toast.makeText(
-                                this,
-                                "Pembayaran pending, silakan cek nanti.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(this, "Pembayaran pending, silakan cek nanti.", Toast.LENGTH_SHORT).show()
                         }
                         TransactionResult.STATUS_FAILED -> {
                             Log.d(TAG, "Transaction failed")
-                            updateTransactionStatus(id, "failed")
+                            updateTransactionStatus(id, "failed", paymentType)
                             Toast.makeText(this, "Pembayaran gagal.", Toast.LENGTH_SHORT).show()
                             finish()
                         }
@@ -98,7 +98,7 @@ class InfaqActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
         val userId = currentUser?.uid ?: ""
         val email = currentUser?.email ?: "Unknown"
-        val transactionId = UUID.randomUUID().toString()
+        transactionId = UUID.randomUUID().toString()
         val tanggal = binding.editTextTanggal.text.toString()
 
         val infaqData = hashMapOf(
@@ -107,30 +107,33 @@ class InfaqActivity : AppCompatActivity() {
             "email" to email,
             "status" to "pending",
             "tanggal" to tanggal,
-            "tipe" to "infaq"
+            "tipe" to "infaq",
+            "metodePembayaran" to "unknown" // Menyimpan metode pembayaran sementara
         )
 
-        db.collection("transaksi_keuangan").document(transactionId)
-            .set(infaqData)
-            .addOnSuccessListener {
-                Log.d(TAG, "Document successfully written!")
-                sendNotification(transactionId) // Mengirim jumlah sebagai Double
-                getTokenFromServer(transactionId, jumlah)
-            }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document", e)
-                Toast.makeText(this, "Gagal mengirim infaq", Toast.LENGTH_SHORT).show()
-            }
+        transactionId?.let { id ->
+            db.collection("transaksi_keuangan").document(id)
+                .set(infaqData)
+                .addOnSuccessListener {
+                    Log.d(TAG, "Document successfully written!")
+                    sendNotification(id) // Mengirim jumlah sebagai Double
+                    getTokenFromServer(id, jumlah)
+                }
+                .addOnFailureListener { e ->
+                    Log.w(TAG, "Error adding document", e)
+                    Toast.makeText(this, "Gagal mengirim infaq", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
-    private fun getTokenFromServer(transactionId: String, amount: Double) { // amount harus bertipe Double
+    private fun getTokenFromServer(transactionId: String, amount: Double) {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://molly-hot-lioness.ngrok-free.app")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         val apiService = retrofit.create(ApiService::class.java)
-        val transactionRequest = ServerTransactionRequest(transactionId, amount) // amount harus bertipe Double
+        val transactionRequest = ServerTransactionRequest(transactionId, amount)
 
         apiService.getMidtransToken(transactionRequest).enqueue(object :
             Callback<MidtransTokenResponse> {
@@ -153,21 +156,20 @@ class InfaqActivity : AppCompatActivity() {
         })
     }
 
-    private fun startMidtransPayment(token: String) {
-        Log.d(TAG, "Starting payment with token: $token")
-        MidtransSDK.getInstance().startPaymentUiFlow(this, token)
-    }
-
-    private fun updateTransactionStatus(transactionId: String, status: String) {
-        Log.d(TAG, "Updating transaction status: transactionId=$transactionId, status=$status")
+    private fun updateTransactionStatus(transactionId: String, status: String, paymentType: String) {
         db.collection("transaksi_keuangan").document(transactionId)
-            .update("status", status)
+            .update("status", status, "metodePembayaran", paymentType)
             .addOnSuccessListener {
-                Log.d(TAG, "Transaction status updated to $status")
+                Log.d(TAG, "Transaction status updated to $status with paymentType $paymentType")
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "Error updating transaction status", e)
             }
+    }
+
+    private fun startMidtransPayment(token: String) {
+        Log.d(TAG, "Starting payment with token: $token")
+        MidtransSDK.getInstance().startPaymentUiFlow(this, token)
     }
 
     private fun sendNotification(transactionId: String) {
