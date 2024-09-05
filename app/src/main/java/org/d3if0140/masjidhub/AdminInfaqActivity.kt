@@ -22,10 +22,7 @@ class AdminInfaqActivity : AppCompatActivity() {
         binding = ActivityAdminInfaqBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val adapter = InfaqAdapter(
-            onApproveClick = { infaq -> approveInfaq(infaq) },
-            onRejectClick = { infaq -> rejectInfaq(infaq) }
-        )
+        val adapter = InfaqAdapter() // Hilangkan onApproveClick dan onRejectClick
         binding.recyclerViewInfaq.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewInfaq.adapter = adapter
 
@@ -42,8 +39,9 @@ class AdminInfaqActivity : AppCompatActivity() {
     }
 
     private fun fetchInfaqData() {
-        db.collection("infaq_masjid")
-            .whereEqualTo("status", "pending")
+        db.collection("transaksi_keuangan")
+            .whereEqualTo("tipe", "infaq") // Filter tipe infaq
+            .whereEqualTo("status", "approved")
             .get()
             .addOnSuccessListener { result ->
                 val list = result.mapNotNull { document ->
@@ -53,50 +51,6 @@ class AdminInfaqActivity : AppCompatActivity() {
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Gagal mengambil data infaq", Toast.LENGTH_SHORT).show()
-            }
-    }
-
-    private fun approveInfaq(infaq: Infaq) {
-        db.collection("infaq_masjid").document(infaq.id)
-            .update("status", "approved")
-            .addOnSuccessListener {
-                fetchInfaqData() // Refresh data
-                sendNotification(infaq, "Infaq telah disetujui")
-                Toast.makeText(this, "Infaq telah disetujui", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(this, "Gagal menyetujui infaq", Toast.LENGTH_SHORT).show()
-            }
-    }
-
-    private fun rejectInfaq(infaq: Infaq) {
-        db.collection("infaq_masjid").document(infaq.id)
-            .delete()
-            .addOnSuccessListener {
-                fetchInfaqData() // Refresh data
-                sendNotification(infaq, "Infaq telah ditolak")
-                Toast.makeText(this, "Infaq telah ditolak", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(this, "Gagal menolak infaq", Toast.LENGTH_SHORT).show()
-            }
-    }
-
-    private fun sendNotification(infaq: Infaq, message: String) {
-        val notificationData = hashMapOf(
-            "title" to "Infaq Diterima",
-            "message" to message,
-            "timestamp" to System.currentTimeMillis(),
-            "userId" to infaq.userId
-        )
-
-        db.collection("notifikasi")
-            .add(notificationData)
-            .addOnSuccessListener {
-                // Notifikasi berhasil disimpan
-            }
-            .addOnFailureListener { e ->
-                e.printStackTrace()
             }
     }
 }
