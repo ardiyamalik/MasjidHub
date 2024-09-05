@@ -9,19 +9,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
 
+        <!-- Tanggal TextView -->
         <TextView
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="tanggal"
+            android:background="@drawable/rounded_button_background"
             android:fontFamily="@font/poppins_medium"
             android:padding="10dp"
-            android:background="@drawable/rounded_button_background"
+            android:text="tanggal"
             android:textColor="@android:color/white"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp" />
 
+        <!-- Pemasukan TextView -->
         <TextView
             android:id="@+id/income_hari"
             android:layout_width="0dp"
@@ -30,8 +36,10 @@
             android:gravity="center"
             android:text="Rp50.000.000"
             android:textColor="@android:color/holo_green_dark"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:padding="8dp" />
 
+        <!-- Pengeluaran TextView -->
         <TextView
             android:id="@+id/expense_hari"
             android:layout_width="0dp"
@@ -40,7 +48,8 @@
             android:gravity="center"
             android:text="Rp75.000"
             android:textColor="@android:color/holo_red_dark"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:padding="8dp" />
     </LinearLayout>
 
 </LinearLayout>
