@@ -38,8 +38,8 @@
 
     <ImageView
         android:id="@+id/profileImageView"
-        android:layout_width="153dp"
-        android:layout_height="153dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="end"
         android:background="@drawable/circle_image"
         android:clipToOutline="true"
@@ -48,15 +48,16 @@
         android:src="@drawable/baseline_person_black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.158" />
+        app:layout_constraintVertical_bias="0.129" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonUbahFotoProfil"
-        android:layout_width="34dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="200dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="148dp"
         android:background="@drawable/baseline_edit"
         android:contentDescription="Ubah Foto Profil"
         app:layout_constraintEnd_toEndOf="parent"
@@ -90,7 +91,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.338" />
+        app:layout_constraintVertical_bias="0.273" />
 
     <TextView
         android:id="@+id/alamat_masjid"
@@ -108,6 +109,9 @@
         app:layout_constraintTop_toBottomOf="@+id/namaUser"
         app:layout_constraintVertical_bias="0.02" />
 
+    <!-- EditText untuk mengubah nama profil -->
+
+
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
@@ -118,10 +122,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.492" />
-
-    <!-- EditText untuk mengubah nama profil -->
-
+        app:layout_constraintVertical_bias="0.444" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/editTextNama"
@@ -138,8 +139,7 @@
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_dkm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.58" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/editTextAlamat"
@@ -231,9 +231,8 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonSimpan"
-        android:layout_width="351dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="28dp"
+        android:layout_width="348dp"
+        android:layout_height="49dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/rounded_button_background"
         android:fontFamily="@font/poppins_bold"
@@ -241,8 +240,10 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/selectLocationButton" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
