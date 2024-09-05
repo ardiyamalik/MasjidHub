@@ -132,7 +132,7 @@
             android:id="@+id/expense_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="28dp"
             android:fontFamily="@font/poppins_medium"
             android:paddingStart="32dp"
             android:text="Pengeluaran"
@@ -172,6 +172,7 @@
             android:textColor="@android:color/holo_red_dark"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.44"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/expense_label" />
     </androidx.constraintlayout.widget.ConstraintLayout>
