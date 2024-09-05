@@ -1,99 +1,47 @@
-package org.d3if0140.masjidhub
+package org.d3if0140.masjidhub.adapter
 
-import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.google.firebase.firestore.FirebaseFirestore
+import org.d3if0140.masjidhub.R
+import org.d3if0140.masjidhub.model.Infaq
 import org.d3if0140.masjidhub.model.KasMingguan
 
-class KasMingguanAdapter(
-    private val kasMingguanList: MutableList<KasMingguan>,
-    private val context: Context
-) : RecyclerView.Adapter<KasMingguanAdapter.ViewHolder>() {
+class KasMingguanAdapter() : RecyclerView.Adapter<KasMingguanAdapter.KasViewHolder>() {
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textNama: TextView = itemView.findViewById(R.id.textNama)
-        val textTanggalBayar: TextView = itemView.findViewById(R.id.textTanggalBayar)
-        val textMetodePembayaran: TextView = itemView.findViewById(R.id.textMetodePembayaran)
-        val imageViewBuktiPembayaran: ImageView = itemView.findViewById(R.id.imageViewBuktiPembayaran)
-        val buttonApprove: Button = itemView.findViewById(R.id.buttonApprove)
-        val buttonReject: Button = itemView.findViewById(R.id.buttonReject)
+    private var kasMingguanList = listOf<KasMingguan>()
+
+    fun submitList(list: List<KasMingguan>) {
+        kasMingguanList = list
+        notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_kas_mingguan, parent, false)
-        return ViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): KasViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_kas_mingguan, parent, false)
+        return KasViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val kasMingguan = kasMingguanList[position]
-        holder.textNama.text = context.getString(R.string.emaildkm, kasMingguan.email)
-        holder.textTanggalBayar.text = context.getString(R.string.tanggal_bayar, kasMingguan.tanggal)
-        holder.textMetodePembayaran.text = context.getString(R.string.metode_pembayaran, kasMingguan.metode)
-        Glide.with(holder.itemView.context)
-            .load(kasMingguan.buktiPembayaranUrl)
-            .into(holder.imageViewBuktiPembayaran)
+    override fun onBindViewHolder(holder: KasViewHolder, position: Int) {
+        val kas = kasMingguanList[position]
+        holder.bind(kas)
+    }
 
-        holder.buttonApprove.setOnClickListener {
-            updateKasMingguanStatus(kasMingguan.id, "approved", holder.adapterPosition)
+    override fun getItemCount() = kasMingguanList.size
+
+    class KasViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val textTanggalBayar: TextView = itemView.findViewById(R.id.textTanggalBayar)
+        private val textViewJumlahKas: TextView = itemView.findViewById(R.id.textViewJumlahKas)
+        private val textViewUserEmail: TextView = itemView.findViewById(R.id.textViewUserEmail)
+        private val textViewStatus: TextView = itemView.findViewById(R.id.textViewStatus)
+
+        fun bind(KasMingguan: KasMingguan) {
+            textViewJumlahKas.text = "Rp ${KasMingguan.jumlah}"
+            textViewUserEmail.text = KasMingguan.email
+            textTanggalBayar.text = KasMingguan.tanggal
+            textViewStatus.text = KasMingguan.status
         }
-
-        holder.buttonReject.setOnClickListener {
-            updateKasMingguanStatus(kasMingguan.id, "rejected", holder.adapterPosition)
-        }
-
-        // Set click listener for post image
-        holder.imageViewBuktiPembayaran.setOnClickListener {
-            val intent = Intent(holder.itemView.context, FullScreenImageActivity::class.java).apply {
-                putExtra("IMAGE_URL", kasMingguan.buktiPembayaranUrl)
-            }
-            holder.itemView.context.startActivity(intent)
-        }
-    }
-
-    override fun getItemCount(): Int = kasMingguanList.size
-
-    private fun updateKasMingguanStatus(id: String, status: String, position: Int) {
-        val db = FirebaseFirestore.getInstance()
-        db.collection("kas_mingguan").document(id)
-            .update("status", status)
-            .addOnSuccessListener {
-                removeItem(position)
-                sendNotification(status, id)
-            }
-            .addOnFailureListener { e ->
-                // Handle failure
-            }
-    }
-
-    private fun sendNotification(status: String, id: String) {
-        val db = FirebaseFirestore.getInstance()
-        val notification = hashMapOf(
-            "title" to "kas telah diterima",
-            "message" to "Kas mingguan dengan ID $id telah $status",
-            "timestamp" to System.currentTimeMillis()
-        )
-        db.collection("notifikasi_pengurus_dkm")
-            .add(notification)
-            .addOnSuccessListener {
-                // Handle success
-            }
-            .addOnFailureListener { e ->
-                // Handle failure
-            }
-    }
-
-    private fun removeItem(position: Int) {
-        kasMingguanList.removeAt(position)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position, itemCount)
     }
 }
-
