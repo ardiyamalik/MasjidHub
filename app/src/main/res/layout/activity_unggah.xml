@@ -14,10 +14,8 @@
         android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation_dkm"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -25,31 +23,29 @@
             android:background="@color/white"
             android:padding="16dp">
 
-
             <TextView
                 android:id="@+id/backButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="@string/batalkan"
                 android:textColor="@color/blue"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.047"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
 
             <TextView
                 android:id="@+id/submitButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="@string/kirim"
-                android:textSize="16sp"
                 android:textColor="@color/blue"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.956"
                 app:layout_constraintStart_toStartOf="parent"
@@ -70,40 +66,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!--            <TextView-->
-            <!--                android:id="@+id/opsional"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginStart="4dp"-->
-            <!--                android:layout_marginTop="18dp"-->
-            <!--                android:fontFamily="@font/poppins_light"-->
-            <!--                android:text="(Opsional)"-->
-            <!--                android:textColor="@color/grey"-->
-            <!--                android:textSize="19sp"-->
-            <!--                app:layout_constraintStart_toEndOf="@id/subHeadInsertImage"-->
-            <!--                app:layout_constraintTop_toBottomOf="@id/editDesk" />-->
-
-            <ImageView
-                android:id="@+id/profileImageView"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="end"
-                android:layout_marginTop="32dp"
-                android:background="@drawable/circle_image"
-                android:clipToOutline="true"
-                android:contentDescription="Foto Profil"
-                android:scaleType="centerCrop"
-                android:src="@drawable/baseline_person_black"
-                app:layout_constraintEnd_toStartOf="@+id/editDesk"
-                app:layout_constraintHorizontal_bias="0.533"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/backButton" />
-
             <EditText
                 android:id="@+id/editDesk"
-                android:layout_width="316dp"
-                android:layout_height="165dp"
-                android:layout_marginTop="64dp"
+                android:layout_width="284dp"
+                android:layout_height="129dp"
+                android:layout_marginTop="68dp"
+                android:layout_marginEnd="16dp"
                 android:background="@drawable/stroke_white"
                 android:gravity="left"
                 android:hint="@string/masukkan_deskripsi"
@@ -111,41 +79,44 @@
                 android:paddingLeft="9dp"
                 android:paddingTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.86"
+                app:layout_constraintHorizontal_bias="0.567"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/selectedImage"
-                android:layout_width="118dp"
-                android:layout_height="97dp"
-                android:layout_marginTop="20dp"
-                android:clipToOutline="true"
+                android:layout_width="125dp"
+                android:layout_height="96dp"
+                android:layout_marginTop="12dp"
                 android:background="@drawable/rounded_image"
+                android:clipToOutline="true"
                 android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.976"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editDesk" />
+                app:layout_constraintHorizontal_bias="0.4"
+                app:layout_constraintStart_toEndOf="@+id/insertImageButton"
+                app:layout_constraintTop_toBottomOf="@+id/editDesk"
+                app:layout_constraintVertical_bias="0.0" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/insertImageButton"
-                android:layout_width="165dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:background="@drawable/stroke_white"
                 android:drawableLeft="@drawable/placeholder_image"
                 android:fontFamily="@font/poppins_bold"
                 android:gravity="center"
+                android:padding="10dp"
                 android:paddingLeft="10dp"
                 android:text="@string/pilih_gambar"
                 android:textAllCaps="false"
                 android:textColor="@color/blue"
-                android:textSize="16sp"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.284"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/editDesk"
                 app:layout_constraintTop_toBottomOf="@+id/editDesk" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
