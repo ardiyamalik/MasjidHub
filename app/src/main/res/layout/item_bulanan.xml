@@ -1,43 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="8dp">
 
-
-    <TextView
-        android:id="@+id/textViewBulan"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:fontFamily="@font/poppins_medium"
-        android:background="@drawable/rounded_button_background"
-        android:gravity="center"
-        android:padding="8dp"
-        android:text="Jan"
-        android:textColor="@android:color/white"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
 
-    <TextView
-        android:id="@+id/income_bulan"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:gravity="center"
-        android:text="Rp0"
-        android:textColor="@android:color/holo_green_dark"
-        android:textSize="16sp" />
+        <!-- Bulan TextView -->
+        <TextView
+            android:id="@+id/textViewBulan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button_background"
+            android:fontFamily="@font/poppins_bold"
+            android:padding="15dp"
+            android:text="Jan"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp" />
 
-    <TextView
-        android:id="@+id/expense_bulan"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:gravity="center"
-        android:text="Rp0"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="16sp" />
+        <!-- Pemasukan TextView -->
+        <TextView
+            android:id="@+id/income_bulan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="Rp0"
+            android:textColor="@android:color/holo_green_dark"
+            android:textSize="14sp"
+            android:padding="8dp" />
+
+        <!-- Pengeluaran TextView -->
+        <TextView
+            android:id="@+id/expense_bulan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Rp0"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="14sp"
+            android:padding="8dp" />
+    </LinearLayout>
+
 </LinearLayout>
