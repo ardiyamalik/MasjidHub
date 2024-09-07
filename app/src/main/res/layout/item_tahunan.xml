@@ -4,40 +4,46 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
     android:padding="8dp">
 
+    <!-- Tahun TextView -->
     <TextView
         android:id="@+id/textViewTahun"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:fontFamily="@font/poppins_medium"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
         android:background="@drawable/rounded_button_background"
-        android:gravity="center"
-        android:padding="8dp"
+        android:fontFamily="@font/poppins_bold"
+        android:padding="10dp"
         android:text="2024"
         android:textColor="@android:color/white"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:layout_marginStart="16dp" /> <!-- Add margin here -->
+        android:textSize="14sp" />
 
+    <!-- Pemasukan TextView -->
     <TextView
         android:id="@+id/income_tahun"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:text="Rp0"
         android:textColor="@android:color/holo_green_dark"
-        android:textSize="16sp" />
+        android:textSize="14sp"
+        android:padding="8dp" />
 
+    <!-- Pengeluaran TextView -->
     <TextView
         android:id="@+id/expense_tahun"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:gravity="center_horizontal"
+        android:layout_weight="1"
+        android:gravity="center"
         android:text="Rp0"
         android:textColor="@android:color/holo_red_dark"
-        android:textSize="16sp" />
+        android:textSize="14sp"
+        android:padding="8dp" />
 </LinearLayout>

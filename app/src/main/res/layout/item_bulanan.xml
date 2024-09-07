@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_button_background"
             android:fontFamily="@font/poppins_bold"
-            android:padding="15dp"
+            android:padding="10dp"
             android:text="Jan"
             android:textColor="@android:color/white"
             android:textSize="14sp"
