@@ -1,5 +1,6 @@
 package org.d3if0140.masjidhub
 
+import CarouselAdapter
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -10,6 +11,7 @@ import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
@@ -17,11 +19,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.databinding.ActivityDkmDashboardBinding
 
-
 class DkmDashboard : AppCompatActivity() {
     private lateinit var binding: ActivityDkmDashboardBinding
     private lateinit var mAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var carouselAdapter: CarouselAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,14 +39,8 @@ class DkmDashboard : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
-        // Set up carousel
-        val imageList = listOf(
-            R.drawable.banner1,
-            R.drawable.banner2,
-            R.drawable.banner3
-        )
-        val adapter = CarouselAdapter(imageList)
-        binding.viewPager.adapter = adapter
+        // Setup carousel di ViewPager
+        setupCarousel()
 
         // Dapatkan ID pengguna yang saat ini masuk
         val currentUserId = mAuth.currentUser?.uid
@@ -131,6 +127,29 @@ class DkmDashboard : AppCompatActivity() {
         displayDefaultProfileImage()
     }
 
+    private fun setupCarousel() {
+        // Ambil gambar carousel dari Firestore
+        firestore.collection("carousel")
+            .orderBy("timestamp")
+            .get()
+            .addOnSuccessListener { documents ->
+                val imageList = mutableListOf<String>()
+                for (document in documents) {
+                    val imageUrl = document.getString("imageUrl")
+                    imageUrl?.let { imageList.add(it) }
+                }
+
+                // Setup ViewPager dengan CarouselAdapter
+                carouselAdapter = CarouselAdapter(imageList)
+                binding.viewPager.adapter = carouselAdapter
+            }
+            .addOnFailureListener {
+                // Handle failure
+                Toast.makeText(this, "Gagal mengambil gambar carousel: ${it.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+
     private fun loadProfileImage(imageUrl: String) {
         Glide.with(this)
             .load(imageUrl)
@@ -174,4 +193,3 @@ class DkmDashboard : AppCompatActivity() {
         ))
     }
 }
-

@@ -1,5 +1,6 @@
 package org.d3if0140.masjidhub
 
+import CarouselAdapter
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -33,6 +34,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var adapter: PengurusDkmAdapter
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var userLocation: Location? = null
+    private lateinit var carouselAdapter: CarouselAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,17 +53,8 @@ class HomeActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
-        // Set up carousel
-        val imageList = listOf(
-            R.drawable.banner1,
-            R.drawable.banner2,
-            R.drawable.banner3
-        )
-        val adapter = CarouselAdapter(imageList)
-        binding.viewPager.adapter = adapter
-
-        // Set up RecyclerView untuk pengurus_dkm
-        setupPengurusDkmRecyclerView()
+        // Setup carousel di ViewPager
+        setupCarousel()
 
         // Cek izin lokasi
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -152,6 +145,28 @@ class HomeActivity : AppCompatActivity() {
 
         // Display default profile image based on user's email
         displayDefaultProfileImage()
+    }
+
+    private fun setupCarousel() {
+        // Ambil gambar carousel dari Firestore
+        firestore.collection("carousel")
+            .orderBy("timestamp")
+            .get()
+            .addOnSuccessListener { documents ->
+                val imageList = mutableListOf<String>()
+                for (document in documents) {
+                    val imageUrl = document.getString("imageUrl")
+                    imageUrl?.let { imageList.add(it) }
+                }
+
+                // Setup ViewPager dengan CarouselAdapter
+                carouselAdapter = CarouselAdapter(imageList)
+                binding.viewPager.adapter = carouselAdapter
+            }
+            .addOnFailureListener {
+                // Handle failure
+                Toast.makeText(this, "Gagal mengambil gambar carousel: ${it.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun setupPengurusDkmRecyclerView() {
