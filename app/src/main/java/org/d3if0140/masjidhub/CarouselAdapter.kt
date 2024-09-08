@@ -1,19 +1,19 @@
-package org.d3if0140.masjidhub
-
+import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
-
 import org.d3if0140.masjidhub.databinding.CarouselItemBinding
 
-class CarouselAdapter(private val imageList: List<Int>) : RecyclerView.Adapter<CarouselAdapter.ViewHolder>() {
+class CarouselAdapter(private val imageUrls: List<String>) : RecyclerView.Adapter<CarouselAdapter.ViewHolder>() {
 
-    inner class ViewHolder(private val binding: CarouselItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(imageResId: Int) {
-            Glide.with(binding.root)
-                .load(imageResId)
-                .centerCrop()
+    class ViewHolder(private val binding: CarouselItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(imageUrl: String) {
+            // Load image using Glide
+            Glide.with(binding.imageView.context)
+                .load(imageUrl)
                 .into(binding.imageView)
         }
     }
@@ -24,11 +24,10 @@ class CarouselAdapter(private val imageList: List<Int>) : RecyclerView.Adapter<C
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val imageResId = imageList[position]
-        holder.bind(imageResId)
+        holder.bind(imageUrls[position])
     }
 
     override fun getItemCount(): Int {
-        return imageList.size
+        return imageUrls.size
     }
 }

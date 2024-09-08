@@ -232,6 +232,35 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/buttonUploadCarousel"
+                android:layout_width="wrap_content"
+                android:layout_height="131dp"
+                android:layout_marginTop="28dp"
+                android:background="@drawable/stroke_white"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.436"
+                app:layout_constraintStart_toEndOf="@+id/buttonKasMingguan"
+                app:layout_constraintTop_toBottomOf="@+id/buttonVerifAdmin"
+                app:layout_constraintVertical_bias="0.133">
+
+                <ImageView
+                    android:layout_width="114dp"
+                    android:layout_height="91dp"
+                    android:src="@drawable/iconkotribusi" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="@string/kas"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"

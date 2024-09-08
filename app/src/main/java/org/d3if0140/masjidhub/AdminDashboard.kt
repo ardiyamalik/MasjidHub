@@ -67,5 +67,9 @@ class AdminDashboard : AppCompatActivity() {
         binding.buttonVerifAdmin.setOnClickListener{
             startActivity(Intent(this, AdminVerifActivity::class.java))
         }
+
+        binding.buttonUploadCarousel.setOnClickListener{
+            startActivity(Intent(this, AdminUploadCarousel::class.java))
+        }
     }
 }
