@@ -24,6 +24,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".UploadDataInfaq"
+            android:exported="true" />
+        <activity
             android:name=".AdminUploadCarousel"
             android:exported="true" />
         <activity
