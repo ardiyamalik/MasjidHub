@@ -38,12 +38,12 @@
 
     <ImageView
         android:id="@+id/profileImageView"
-        android:layout_width="153dp"
-        android:layout_height="153dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="end"
-        android:contentDescription="Foto Profil"
         android:background="@drawable/circle_image"
         android:clipToOutline="true"
+        android:contentDescription="Foto Profil"
         android:scaleType="centerCrop"
         android:src="@drawable/baseline_person_black"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -65,21 +65,17 @@
 
     <TextView
         android:id="@+id/namaUser"
-        android:layout_width="265dp"
-        android:layout_height="55dp"
+        android:layout_width="334dp"
+        android:layout_height="31dp"
         android:fontFamily="@font/poppins_bold"
-        android:gravity="center"
-        android:paddingTop="20sp"
-        android:text="@string/nama"
+        android:text="Nama"
+        android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImageView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/profileImageView" />
 
     <TextView
         android:id="@+id/dkm"
@@ -97,6 +93,8 @@
         app:layout_constraintTop_toBottomOf="@+id/namaUser"
         app:layout_constraintVertical_bias="0.0" />
 
+
+    <!--        android:id="@+id/buttonLogout"-->
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
@@ -108,51 +106,53 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.492" />
+        app:layout_constraintVertical_bias="0.421" />
 
-
-    <!--        android:id="@+id/buttonLogout"-->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ubahProfile"
-        android:layout_width="375dp"
-        android:layout_height="52dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/stroke_white"
         android:drawableLeft="@drawable/baseline_edit_off_24"
         android:drawablePadding="8dp"
         android:fontFamily="@font/poppins_bold"
         android:gravity="start|center_vertical"
         android:paddingLeft="18dp"
-        android:textAllCaps="false"
         android:text="@string/ubah_profil"
+        android:textAllCaps="false"
         android:textColor="@color/blue"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.58" />
+        app:layout_constraintVertical_bias="0.497" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonLogout"
-        android:layout_width="375dp"
-        android:layout_height="52dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/stroke_white"
         android:drawableLeft="@drawable/baseline_logout_blue"
         android:drawablePadding="8dp"
         android:fontFamily="@font/poppins_bold"
-        android:textAllCaps="false"
         android:gravity="start|center_vertical"
         android:paddingLeft="18dp"
         android:text="@string/logout"
+        android:textAllCaps="false"
         android:textColor="@color/blue"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.677" />
+        app:layout_constraintVertical_bias="0.6" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
