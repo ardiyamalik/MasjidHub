@@ -38,12 +38,11 @@
         android:id="@+id/profileImageView"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_gravity="end"
+        android:layout_gravity="center_horizontal"
         android:background="@drawable/circle_image"
         android:clipToOutline="true"
         android:scaleType="centerCrop"
         android:contentDescription="Foto Profil"
-        android:src="@drawable/baseline_person_black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,27 +74,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
 
+    <!-- EditText untuk mengubah nama profil -->
+
     <TextView
         android:id="@+id/namaUser"
-        android:layout_width="149dp"
-        android:layout_height="37dp"
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/nama"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="32dp"
+        android:textSize="24dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
+        app:layout_constraintHorizontal_bias="0.312"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.263" />
+        app:layout_constraintVertical_bias="0.276" />
 
     <TextView
         android:id="@+id/dkm"
-        android:layout_width="351dp"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
         android:fontFamily="@font/poppins_medium"
         android:text="@string/jamaah"
         android:textAlignment="center"
@@ -103,11 +105,11 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/namaUser"
-        app:layout_constraintVertical_bias="0.02" />
+        app:layout_constraintVertical_bias="0.0" />
 
-    <!-- EditText untuk mengubah nama profil -->
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
@@ -118,31 +120,35 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.453" />
+        app:layout_constraintVertical_bias="0.426" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/editTextNama"
-        android:layout_width="351dp"
-        android:layout_height="46dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
         android:background="@drawable/stroke_white"
         android:drawablePadding="8dp"
         android:fontFamily="@font/poppins_medium"
         android:gravity="start|center_vertical"
         android:hint="@string/masukkan_namabaru"
         android:paddingLeft="18dp"
-        android:textColor="@color/blue"
+        android:textColor="@color/grey"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.522" />
+        app:layout_constraintVertical_bias="0.494" />
 
     <Spinner
         android:id="@+id/DkmSpinnerUbah"
-        android:layout_width="351dp"
-        android:layout_height="46dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/stroke_white"
         android:fontFamily="@font/poppins_light"
@@ -156,8 +162,10 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonSimpan"
-        android:layout_width="351dp"
-        android:layout_height="46dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/rounded_button_background"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/simpan"
