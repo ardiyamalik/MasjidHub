@@ -11,7 +11,9 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -36,18 +38,33 @@ class UbahProfil : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
-        // Data untuk opsi dropdown pada spinner
-        val dkmOptions = arrayOf(
-            "Jamaah Masjid",
-            "Masjid Nurul Hikmah",
-            "Masjid Al-Lathif",
-            "Masjid Al-Jabar"
-        )
+        val spinner: Spinner = binding.DkmSpinnerUbah
 
-        // Membuat adapter untuk spinner dan mengatur posisi awal ke "Jamaah Masjid"
+        // Inisialisasi adapter spinner
+        val dkmOptions = mutableListOf<String>()
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, dkmOptions)
-        binding.DkmSpinnerUbah.adapter = adapter
-        binding.DkmSpinnerUbah.setSelection(0)
+        spinner.adapter = adapter
+
+        // Ambil data dari Firestore
+        firestore.collection("user")
+            .whereEqualTo("role", "pengurus_dkm")
+            .get()
+            .addOnSuccessListener { documents ->
+                if (documents.isEmpty) {
+                    Log.d("Firestore", "No documents found")
+                    Toast.makeText(this, "Tidak ada data pengurus_dkm yang ditemukan", Toast.LENGTH_SHORT).show()
+                } else {
+                    for (document in documents) {
+                        val namaDkm = document.getString("nama")
+                        namaDkm?.let { dkmOptions.add(it) }
+                    }
+                    adapter.notifyDataSetChanged()
+                }
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Gagal mengambil data dari Firestore", Toast.LENGTH_SHORT).show()
+                Log.d("FirestoreError", "Error getting documents: ", exception)
+            }
 
         // Load current profile data
         loadUserProfile()

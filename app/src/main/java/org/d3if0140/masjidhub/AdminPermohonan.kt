@@ -52,6 +52,7 @@ class AdminPermohonan : AppCompatActivity() {
                     val jumlah = document.getDouble("jumlah") ?: 0.0
                     val alasan = document.getString("alasan") ?: ""
                     val tanggal = document.getString("tanggal") ?: ""
+                    val buktiUrl = document.getString("buktiUrl")
                     val ktpUrl = document.getString("ktpUrl") ?: ""
                     val status = document.getString("status") ?: "Pending"
                     val email = document.getString("userEmail") ?: ""
