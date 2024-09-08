@@ -49,18 +49,20 @@ class AdminPermohonan : AppCompatActivity() {
                     val id = document.id
                     val userId = document.id
                     val nama = document.getString("nama") ?: ""
+                    val userEmail = document.getString("userEmail") ?: ""
                     val jumlah = document.getDouble("jumlah") ?: 0.0
                     val alasan = document.getString("alasan") ?: ""
                     val tanggal = document.getString("tanggal") ?: ""
-                    val buktiUrl = document.getString("buktiUrl")
-                    val ktpUrl = document.getString("ktpUrl") ?: ""
-                    val status = document.getString("status") ?: "Pending"
-                    val email = document.getString("userEmail") ?: ""
+                    val kontak = document.getString("kontak") ?: ""
+                    val lokasi = document.getString("lokasi") ?: ""
+                    val status = document.getString("status") ?: ""
                     val namaBank = document.getString("namaBank") ?: ""
-                    val namaRekening = document.getString("namaRekekning") ?: ""
                     val nomorRekening = document.getString("nomorRekening") ?: ""
+                    val namaRekening = document.getString("namaRekening") ?: ""
+                    val buktiUrl = document.getString("buktiUrl") ?: ""
+                    val ktpUrl = document.getString("ktpUrl") ?: ""
 
-                    val permohonanDana = PermohonanDana(id,userId, jumlah, alasan, tanggal, ktpUrl, status, email, nama, namaBank, namaRekening, nomorRekening)
+                    val permohonanDana = PermohonanDana(id,userId, nama, userEmail, jumlah, alasan, tanggal, kontak, lokasi, status, namaBank, nomorRekening, namaRekening, buktiUrl, ktpUrl)
                     permohonanDanaList.add(permohonanDana)
                 }
                 adapter.updateList(permohonanDanaList)

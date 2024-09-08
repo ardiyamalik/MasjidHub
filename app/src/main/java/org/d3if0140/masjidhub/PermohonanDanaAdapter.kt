@@ -44,7 +44,7 @@ class PermohonanDanaAdapter(private val permohonanDanaList: MutableList<Permohon
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val permohonanDana = permohonanDanaBelumDiapprove[position]
         holder.textNama.text = holder.itemView.context.getString(R.string.nama_label, permohonanDana.nama)
-        holder.textEmail.text = holder.itemView.context.getString(R.string.email_label, permohonanDana.email)
+        holder.textEmail.text = holder.itemView.context.getString(R.string.email_label, permohonanDana.userEmail)
         holder.textJumlah.text = holder.itemView.context.getString(R.string.jumlah_label, permohonanDana.jumlah)
         holder.textAlasan.text = holder.itemView.context.getString(R.string.alasan_label, permohonanDana.alasan)
         holder.textTanggal.text = holder.itemView.context.getString(R.string.tanggal_label, permohonanDana.tanggal)
@@ -57,10 +57,10 @@ class PermohonanDanaAdapter(private val permohonanDanaList: MutableList<Permohon
 
 
         // Load and display foto pendukung if available
-        if (permohonanDana.fotoPendukungUrl.isNotEmpty()) {
+        if (permohonanDana.buktiUrl.isNotEmpty()) {
             holder.imageViewFotoPendukung.visibility = View.VISIBLE
             Glide.with(holder.itemView.context)
-                .load(permohonanDana.fotoPendukungUrl)
+                .load(permohonanDana.buktiUrl)
                 .centerCrop()
                 .into(holder.imageViewFotoPendukung)
         } else {
@@ -80,18 +80,18 @@ class PermohonanDanaAdapter(private val permohonanDanaList: MutableList<Permohon
 
         holder.buttonApprove.setOnClickListener {
             Log.d("PermohonanDanaAdapter", "Approve button clicked for ${permohonanDana.id}")
-            approvePermohonanDana(permohonanDana.id, holder.adapterPosition, permohonanDana.email, permohonanDana.jumlah)
+            approvePermohonanDana(permohonanDana.id, holder.adapterPosition, permohonanDana.userEmail, permohonanDana.jumlah)
         }
 
         holder.buttonReject.setOnClickListener {
             Log.d("PermohonanDanaAdapter", "Reject button clicked for ${permohonanDana.id}")
-            rejectPermohonanDana(permohonanDana.id, holder.adapterPosition, permohonanDana.email, permohonanDana.jumlah)
+            rejectPermohonanDana(permohonanDana.id, holder.adapterPosition, permohonanDana.userEmail, permohonanDana.jumlah)
         }
 
         // Set click listener for post image
         holder.imageViewFotoPendukung.setOnClickListener {
             val intent = Intent(holder.itemView.context, FullScreenImageActivity::class.java).apply {
-                putExtra("IMAGE_URL", permohonanDana.fotoPendukungUrl)
+                putExtra("IMAGE_URL", permohonanDana.buktiUrl)
             }
             holder.itemView.context.startActivity(intent)
         }
