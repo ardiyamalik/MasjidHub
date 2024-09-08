@@ -78,7 +78,7 @@
                 android:id="@+id/textViewTerdekat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="@string/masjid_terdekat"
                 android:textAlignment="center"
@@ -86,7 +86,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.075"
+                app:layout_constraintHorizontal_bias="0.057"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/content_frame" />
 
@@ -103,7 +103,7 @@
                 android:id="@+id/textViewProgram"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="@string/menu"
                 android:textAlignment="center"
@@ -111,7 +111,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.055"
+                app:layout_constraintHorizontal_bias="0.039"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/recyclerViewPengurus" />
 
@@ -202,28 +202,6 @@
                     </LinearLayout>
 
 
-                    <LinearLayout
-                        android:id="@+id/buttonKas"
-                        android:layout_width="wrap_content"
-                        android:layout_height="131dp"
-                        android:layout_marginStart="16dp"
-                        android:background="@drawable/stroke_white"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="114dp"
-                            android:layout_height="91dp"
-                            android:src="@drawable/baseline_notifications_active_24" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_bold"
-                            android:text="Notifikasi"
-                            android:textColor="@color/blue"
-                            android:textStyle="bold" />
-                    </LinearLayout>
                 </LinearLayout>
             </HorizontalScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
