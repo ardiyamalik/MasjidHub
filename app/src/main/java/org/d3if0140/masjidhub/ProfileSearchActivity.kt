@@ -5,18 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.google.android.material.tabs.TabLayout
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import org.d3if0140.masjidhub.databinding.ActivityProfileSearchBinding
 
 class ProfileSearchActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileSearchBinding
     private lateinit var firestore: FirebaseFirestore
-    private val postList = mutableListOf<Post>()
-    private lateinit var postAdapter: PostAdapter
+    private var userId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,17 +23,8 @@ class ProfileSearchActivity : AppCompatActivity() {
 
         firestore = FirebaseFirestore.getInstance()
 
-        binding.backButton.setOnClickListener{
-            startActivity(Intent(this, CariMasjidActivity::class.java))
-        }
-
-        // Setup RecyclerView for posts
-        postAdapter = PostAdapter(postList)
-        binding.recyclerViewPost.layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewPost.adapter = postAdapter
-
         // Get data from Intent
-        val userId = intent.getStringExtra("USER_ID")
+        userId = intent.getStringExtra("USER_ID")
         val userName = intent.getStringExtra("USER_NAME")
         val userAlamat = intent.getStringExtra("USER_ALAMAT")
         val userImageUrl = intent.getStringExtra("USER_IMAGE_URL")
@@ -53,88 +42,37 @@ class ProfileSearchActivity : AppCompatActivity() {
             binding.profileImageDkm.setImageResource(R.drawable.baseline_person_black)
         }
 
-        // Load posts related to the mosque
-        if (userId != null && userId.isNotEmpty()) {
-            // Load user profile data
-            loadUserProfile(userId)
-            // Load posts related to the user
-            loadPosts(userId)
-        } else {
-            Log.e("ProfileSearchActivity", "Invalid or missing userId")
-            Toast.makeText(this, "Invalid User ID", Toast.LENGTH_SHORT).show()
+        // Setup TabLayout
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.position) {
+                    0 -> showFragment(PostSearchFragment(), userId)
+                    1 -> showFragment(InfaqSearchFragment(), userId)
+                    2 -> showFragment(JamaahTerdaftarSerachFragment().apply {
+                        arguments = Bundle().apply {
+                            putString("nama", binding.namaUserDkm.text.toString())
+                        }
+                    }, null) // No userId needed here
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
+
+        binding.backButton.setOnClickListener {
+            startActivity(Intent(this, CariMasjidActivity::class.java))
         }
     }
 
-    private fun loadUserProfile(userId: String) {
-        firestore.collection("user").document(userId)
-            .get()
-            .addOnSuccessListener { document ->
-                if (document.exists()) {
-                    val userName = document.getString("nama") ?: "Unknown User"
-                    val userAlamat = document.getString("alamat") ?: "Unknown Address"
-                    val userImageUrl = document.getString("imageUrl") ?: ""
-
-                    // Update UI with user profile data
-                    binding.namaUserDkm.text = userName
-                    binding.alamatMasjid.text = userAlamat
-                    loadProfileImage(userImageUrl, binding.profileImageDkm)
-
-                    // Set OnClickListener to open image in full screen
-                    binding.profileImageDkm.setOnClickListener {
-                        val intent = Intent(this, FullScreenImageActivity::class.java)
-                        intent.putExtra("IMAGE_URL", userImageUrl)
-                        startActivity(intent)
-                    }
-                } else {
-                    Log.e("ProfileSearchAdmin", "User document not found for userId: $userId")
-                    Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .addOnFailureListener { e ->
-                Log.e("ProfileSearchAdmin", "Error fetching user document", e)
-                Toast.makeText(this, "Error fetching user profile: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
-    }
-
-    private fun loadPosts(userId: String) {
-        Log.d("ProfileSearchActivity", "Loading posts for userId: $userId")
-
-        firestore.collection("posts")
-            .whereEqualTo("userId", userId)
-            .orderBy("timestamp", Query.Direction.DESCENDING)
-            .get()
-            .addOnSuccessListener { documents ->
-                postList.clear()
-                Log.d("ProfileSearchActivity", "Found ${documents.size()} posts")
-                for (document in documents) {
-                    val post = document.toObject(Post::class.java)
-                    post.id = document.id // Menambahkan ID dokumen ke objek Post
-                    Log.d("ProfileSearchActivity", "Post id: ${post.id}, userId: ${post.userId}")
-
-                    firestore.collection("user").document(post.userId)
-                        .get()
-                        .addOnSuccessListener { userDocument ->
-                            if (userDocument.exists()) {
-                                post.nama = userDocument.getString("nama") ?: "Unknown User"
-                                post.userImageUrl = userDocument.getString("imageUrl") ?: ""
-                                postList.add(post)
-                                postAdapter.notifyDataSetChanged()
-
-                                // Load actual profile image
-                                loadProfileImage(post.userImageUrl, binding.profileImageDkm)
-                            } else {
-                                Log.e("ProfileSearchActivity", "User document not found for userId: ${post.userId}")
-                            }
-                        }
-                        .addOnFailureListener { e ->
-                            Log.e("ProfileSearchActivity", "Error fetching user document", e)
-                        }
-                }
-            }
-            .addOnFailureListener { e ->
-                Log.e("ProfileSearchActivity", "Error fetching posts", e)
-                Toast.makeText(this, "Error fetching posts: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+    private fun showFragment(fragment: Fragment, userId: String?) {
+        userId?.let {
+            val bundle = Bundle().apply { putString("USER_ID", it) }
+            fragment.arguments = bundle
+        }
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
     }
 
     private fun loadProfileImage(imageUrl: String, imageView: ImageView) {
@@ -145,3 +83,4 @@ class ProfileSearchActivity : AppCompatActivity() {
             .into(imageView)
     }
 }
+

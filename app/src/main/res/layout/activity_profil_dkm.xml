@@ -8,31 +8,19 @@
     android:fitsSystemWindows="true"
     tools:context=".ProfilDkmActivity">
 
-    <ImageButton
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:background="@null"
-        android:layout_marginTop="20dp"
-        android:padding="12dp"
-        android:src="@drawable/arrow_back_24px"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/profil"
         android:textColor="@color/blue"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/backButton"
+        app:layout_constraintHorizontal_bias="0.083"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
@@ -140,23 +128,24 @@
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
         android:background="@android:color/darker_gray"
-        app:layout_constraintBottom_toTopOf="@id/recyclerViewPost"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation_dkm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tabLayout" />
+        app:layout_constraintTop_toBottomOf="@id/tabLayout"
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/blue"
-        app:tabTextColor="@color/white"
-        app:tabIndicatorFullWidth="true"
-        app:tabIndicatorColor="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@id/buttonLogoutDkm"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/buttonLogoutDkm"
+        app:tabIndicatorColor="@android:color/white"
+        app:tabIndicatorFullWidth="true"
+        app:tabTextColor="@color/white">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -175,18 +164,18 @@
 
     </com.google.android.material.tabs.TabLayout>
 
-<!--    <TextView-->
-<!--        android:id="@+id/tab_text_view"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="76dp"-->
-<!--        android:textColor="@android:color/black"-->
-<!--        android:textSize="18sp"-->
-<!--        android:text="Posting"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.498"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/tabLayout" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/tab_text_view"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="76dp"-->
+    <!--        android:textColor="@android:color/black"-->
+    <!--        android:textSize="18sp"-->
+    <!--        android:text="Posting"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.498"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/tabLayout" />-->
 
     <FrameLayout
         android:id="@+id/fragment_container"
@@ -197,13 +186,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider" />
 
-<!--    <FrameLayout-->
-<!--        android:id="@+id/fragment_container"-->
-<!--        android:layout_width="409dp"-->
-<!--        android:layout_height="384dp"-->
-<!--        tools:layout_editor_absoluteX="2dp"-->
-<!--        tools:layout_editor_absoluteY="347dp" />-->
-
+    <!--    <FrameLayout-->
+    <!--        android:id="@+id/fragment_container"-->
+    <!--        android:layout_width="409dp"-->
+    <!--        android:layout_height="384dp"-->
+    <!--        tools:layout_editor_absoluteX="2dp"-->
+    <!--        tools:layout_editor_absoluteY="347dp" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
