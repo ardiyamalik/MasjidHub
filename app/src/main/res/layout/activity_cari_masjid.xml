@@ -46,9 +46,11 @@
     <!-- EditText untuk Pencarian -->
     <EditText
         android:id="@+id/editTextSearch"
-        android:layout_width="401dp"
-        android:layout_height="44dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
         android:layout_margin="8dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
         android:fontFamily="@font/poppins_medium"
         android:background="@drawable/stroke_gray"
         android:drawableLeft="@drawable/search_24px"
