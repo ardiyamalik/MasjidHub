@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
-import org.d3if0140.masjidhub.databinding.FragmentJamaahTerdaftarDkmBinding
+import org.d3if0140.masjidhub.databinding.FragmentJamaahTerdaftarSearchBinding
 
-class JamaahTerdaftarDkmFragment : Fragment() {
+class JamaahTerdaftarSerachFragment : Fragment() {
 
-    private var _binding: FragmentJamaahTerdaftarDkmBinding? = null
+    private var _binding: FragmentJamaahTerdaftarSearchBinding? = null
     private val binding get() = _binding!!
     private val jamaahList = mutableListOf<Jamaah>()
 
@@ -20,7 +20,7 @@ class JamaahTerdaftarDkmFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentJamaahTerdaftarDkmBinding.inflate(inflater, container, false)
+        _binding = FragmentJamaahTerdaftarSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
 

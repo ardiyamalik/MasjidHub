@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:fillViewport="true"
     android:background="@color/white"
-    tools:context=".InfaqDkmFragment">
+    tools:context=".InfaqSearchFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

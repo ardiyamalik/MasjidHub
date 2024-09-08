@@ -13,12 +13,12 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import org.d3if0140.masjidhub.databinding.FragmentInfaqDkmBinding
+import org.d3if0140.masjidhub.databinding.FragmentInfaqSearchBinding
 import java.io.OutputStream
 
-class InfaqDkmFragment : Fragment() {
+class InfaqSearchFragment : Fragment() {
 
-    private lateinit var binding: FragmentInfaqDkmBinding
+    private lateinit var binding: FragmentInfaqSearchBinding
     private lateinit var mAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
 
@@ -26,7 +26,7 @@ class InfaqDkmFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentInfaqDkmBinding.inflate(inflater, container, false)
+        binding = FragmentInfaqSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
 

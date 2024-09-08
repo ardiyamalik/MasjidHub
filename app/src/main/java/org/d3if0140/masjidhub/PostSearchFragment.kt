@@ -5,18 +5,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import org.d3if0140.masjidhub.databinding.FragmentPostDkmBinding
+import org.d3if0140.masjidhub.databinding.FragmentPostSearchBinding
 
-class PostDkmFragment : Fragment() {
+class PostSearchFragment : Fragment() {
 
-    private lateinit var binding: FragmentPostDkmBinding
+    private lateinit var binding: FragmentPostSearchBinding
     private lateinit var firestore: FirebaseFirestore
     private val postList = mutableListOf<Post>()
     private lateinit var postAdapter: PostAdapter
@@ -26,7 +24,7 @@ class PostDkmFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentPostDkmBinding.inflate(inflater, container, false)
+        binding = FragmentPostSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
 
