@@ -9,12 +9,15 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -24,8 +27,6 @@ class ProfilDkmActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfilDkmBinding
     private lateinit var mAuth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
-    private lateinit var dkmPostAdapter: DkmPostAdapter
-    private val postList = mutableListOf<Post>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +37,23 @@ class ProfilDkmActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
-        // Setup RecyclerView
-        dkmPostAdapter = DkmPostAdapter(postList, { post -> showEditCaptionDialog(post) }, { post -> showDeleteConfirmationDialog(post) })
-        binding.recyclerViewPost.layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewPost.adapter = dkmPostAdapter
+        // Setup TabLayout
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.position) {
+                    0 -> showFragment(PostingFragment())
+                    1 -> showFragment(InfaqFragment())
+                    2 -> showFragment(JamaahTerdaftarFragment().apply {
+                    arguments = Bundle().apply {
+                        putString("nama", binding.namaUserDkm.text.toString())
+                    }
+                })
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
 
         // Atur listener untuk tombol logout
         binding.buttonLogoutDkm.setOnClickListener {
@@ -102,17 +116,19 @@ class ProfilDkmActivity : AppCompatActivity() {
                             alamat?.let { binding.alamatMasjid.text = it }
 
                             // Tampilkan foto profil jika URL tidak null
-                            imageUrl?.let { loadProfileImage(it) } ?: run { displayDefaultProfileImage() }
+                            imageUrl?.let { loadProfileImage(it) }
+                                ?: run { displayDefaultProfileImage() }
                         }
                     }
                 }
                 .addOnFailureListener { exception ->
-                    Toast.makeText(this, "Gagal mengambil data pengguna: ${exception.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this,
+                        "Gagal mengambil data pengguna: ${exception.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
         }
-
-        // Load posts dari user yang sedang login
-        loadPosts(currentUserId)
 
         // Bottom navigation listener
         binding.bottomNavigationDkm.selectedItemId = R.id.menu_profile_dkm
@@ -125,18 +141,21 @@ class ProfilDkmActivity : AppCompatActivity() {
                     finish()
                     true
                 }
+
                 R.id.menu_finance -> {
                     val intent = Intent(this, LaporanKeuanganDkmActivity::class.java)
                     startActivity(intent)
                     finish()
                     true
                 }
+
                 R.id.unggahEvent -> {
                     val intent = Intent(this, UnggahActivity::class.java)
                     startActivity(intent)
                     finish()
                     true
                 }
+
                 else -> false
             }
         }
@@ -185,101 +204,9 @@ class ProfilDkmActivity : AppCompatActivity() {
         ))
     }
 
-    private fun loadPosts(userId: String?) {
-        firestore.collection("posts")
-            .whereEqualTo("userId", userId)
-            .orderBy("timestamp", Query.Direction.DESCENDING)
-            .get()
-            .addOnSuccessListener { documents ->
-                postList.clear()
-                for (document in documents) {
-                    val post = document.toObject(Post::class.java)
-                    post.id = document.id // Menambahkan ID dokument ke objek Post
-                    firestore.collection("user").document(post.userId)
-                        .get()
-                        .addOnSuccessListener { userDocument ->
-                            if (userDocument != null) {
-                                post.nama = userDocument.getString("nama") ?: "Unknown User"
-                                post.userImageUrl = userDocument.getString("imageUrl") ?: ""
-                                postList.add(post)
-                                dkmPostAdapter.notifyDataSetChanged()
-                            }
-                        }
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.e("ProfilDkmActivity", "Gagal mengambil postingan: ${exception.message}", exception)
-                Toast.makeText(this, "Gagal mengambil postingan: ${exception.message}", Toast.LENGTH_SHORT).show()
-            }
-    }
-
-    private fun showEditCaptionDialog(post: Post) {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_edit_caption, null)
-        val captionEditText: EditText = dialogView.findViewById(R.id.captionEditText)
-        captionEditText.setText(post.deskripsi)
-
-        Log.d("showEditCaptionDialog", "Showing dialog for post ID: ${post.id}")
-
-        AlertDialog.Builder(this)
-            .setTitle("Edit Caption")
-            .setView(dialogView)
-            .setPositiveButton("Simpan") { _, _ ->
-                val newCaption = captionEditText.text.toString()
-                if (newCaption.isNotBlank()) {
-                    updateCaption(post, newCaption)
-                } else {
-                    Toast.makeText(this, "Caption tidak boleh kosong", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .setNegativeButton("Batal", null)
-            .show()
-    }
-
-    private fun updateCaption(post: Post, newCaption: String) {
-        val postRef = firestore.collection("posts").document(post.id)
-        Log.d("updateCaption", "Updating post ID: ${post.id} with new caption: $newCaption")
-
-        postRef.update("deskripsi", newCaption)
-            .addOnSuccessListener {
-                post.deskripsi = newCaption
-                dkmPostAdapter.notifyDataSetChanged()
-                Log.d("updateCaption", "Caption updated successfully for post ID: ${post.id}")
-                Toast.makeText(this, "Caption updated", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { exception ->
-                Log.e("updateCaption", "Failed to update caption for post ID: ${post.id}", exception)
-                Toast.makeText(this, "Gagal mengupdate caption: ${exception.message}", Toast.LENGTH_SHORT).show()
-            }
-    }
-
-    private fun showDeleteConfirmationDialog(post: Post) {
-        AlertDialog.Builder(this)
-            .setTitle("Hapus Postingan")
-            .setMessage("Apakah Anda yakin ingin menghapus postingan ini?")
-            .setPositiveButton("Hapus") { _, _ ->
-                deletePost(post)
-            }
-            .setNegativeButton("Batal", null)
-            .show()
-    }
-
-    private fun deletePost(post: Post) {
-        if (post.id.isNullOrEmpty()) {
-            Log.e("AdminEvent", "Post ID is null or empty")
-            Toast.makeText(this, "Invalid post ID", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        Log.d("AdminEvent", "Attempting to delete post with ID: ${post.id}")
-        firestore.collection("posts").document(post.id)
-            .delete()
-            .addOnSuccessListener {
-                postList.remove(post)
-                dkmPostAdapter.notifyDataSetChanged()
-                Toast.makeText(this, "Post deleted", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(this, "Failed to delete post", Toast.LENGTH_SHORT).show()
-            }
+    private fun showFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
     }
 }
