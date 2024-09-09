@@ -6,17 +6,15 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.google.android.material.tabs.TabLayout
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import org.d3if0140.masjidhub.databinding.ActivityProfileSearchAdminBinding
 
 class ProfileSearchAdmin : AppCompatActivity() {
     private lateinit var binding: ActivityProfileSearchAdminBinding
     private lateinit var firestore: FirebaseFirestore
-    private val postList = mutableListOf<Post>()
-    private lateinit var adminPostAdapter: AdminPostAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,13 +22,6 @@ class ProfileSearchAdmin : AppCompatActivity() {
         setContentView(binding.root)
 
         firestore = FirebaseFirestore.getInstance()
-
-        // Setup RecyclerView for posts
-        adminPostAdapter = AdminPostAdapter(postList) { post ->
-            deletePost(post)
-        }
-        binding.recyclerViewPost.layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewPost.adapter = adminPostAdapter
 
         // Get userId from Intent
         val userId = intent.getStringExtra("USER_ID")
@@ -41,15 +32,31 @@ class ProfileSearchAdmin : AppCompatActivity() {
         if (userId != null && userId.isNotEmpty()) {
             // Load user profile data
             loadUserProfile(userId)
-            // Load posts related to the user
-            loadPosts(userId)
         } else {
             Log.e("ProfileSearchAdmin", "Invalid or missing userId")
             Toast.makeText(this, "Invalid User ID", Toast.LENGTH_SHORT).show()
         }
 
+        // Setup TabLayout for fragments
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.position) {
+                    0 -> showFragment(PostAdminFragment(), userId) // Load PostAdminFragment
+                    1 -> showFragment(InfaqAdminFragment(), userId) // Load InfaqAdminFragment
+                    2 -> showFragment(JamaahTerdaftarAdminFragment().apply {
+                        arguments = Bundle().apply {
+                            putString("nama", binding.namaUserDkm.text.toString())
+                        }
+                    }, null) // Load JamaahTerdaftarSearchFragment without userId
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
+
         binding.backButton.setOnClickListener {
-            finish() // Kembali ke aktivitas sebelumnya
+            finish() // Return to previous activity
         }
 
         binding.jamaahYangTerdaftar.setOnClickListener {
@@ -90,32 +97,6 @@ class ProfileSearchAdmin : AppCompatActivity() {
             }
     }
 
-    private fun loadPosts(userId: String) {
-        Log.d("ProfileSearchAdmin", "Loading posts for userId: $userId")
-
-        firestore.collection("posts")
-            .whereEqualTo("userId", userId)
-            .orderBy("timestamp", Query.Direction.DESCENDING)
-            .get()
-            .addOnSuccessListener { documents ->
-                postList.clear()
-                Log.d("ProfileSearchAdmin", "Found ${documents.size()} posts")
-                for (document in documents) {
-                    val post = document.toObject(Post::class.java).apply {
-                        id = document.id // Menambahkan ID dokumen ke objek Post
-                        nama = binding.namaUserDkm.text.toString() // Menambahkan nama pengguna ke Post
-                        userImageUrl = document.getString("imageUrl") ?: ""
-                    }
-                    postList.add(post)
-                }
-                adminPostAdapter.notifyDataSetChanged()
-            }
-            .addOnFailureListener { e ->
-                Log.e("ProfileSearchAdmin", "Error fetching posts", e)
-                Toast.makeText(this, "Error fetching posts: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
-    }
-
     private fun loadProfileImage(imageUrl: String, imageView: ImageView) {
         Glide.with(this)
             .load(imageUrl)
@@ -124,16 +105,13 @@ class ProfileSearchAdmin : AppCompatActivity() {
             .into(imageView)
     }
 
-    private fun deletePost(post: Post) {
-        firestore.collection("posts").document(post.id)
-            .delete()
-            .addOnSuccessListener {
-                postList.remove(post)
-                adminPostAdapter.notifyDataSetChanged()
-                Log.d("ProfileSearchAdmin", "Post deleted successfully")
-            }
-            .addOnFailureListener { exception ->
-                Log.e("ProfileSearchAdmin", "Error deleting post: ", exception)
-            }
+    private fun showFragment(fragment: Fragment, userId: String?) {
+        userId?.let {
+            val bundle = Bundle().apply { putString("USER_ID", it) }
+            fragment.arguments = bundle
+        }
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
     }
 }
