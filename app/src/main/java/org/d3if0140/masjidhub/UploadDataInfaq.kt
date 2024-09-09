@@ -2,7 +2,6 @@ package org.d3if0140.masjidhub
 
 import android.app.ProgressDialog
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
@@ -10,13 +9,13 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.VolleyLog.TAG
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import org.d3if0140.masjidhub.databinding.ActivityUploadDataInfaqBinding
-import java.io.ByteArrayOutputStream
 import java.io.InputStream
 
 class UploadDataInfaq : AppCompatActivity() {
@@ -26,6 +25,8 @@ class UploadDataInfaq : AppCompatActivity() {
     private lateinit var firestore: FirebaseFirestore
     private lateinit var storage: FirebaseStorage
     private lateinit var storageReference: StorageReference
+    private val db = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
     private val PICK_IMAGE_REQUEST = 1
     private var imageUri: Uri? = null
@@ -50,6 +51,52 @@ class UploadDataInfaq : AppCompatActivity() {
         binding.uploadButton.setOnClickListener {
             uploadData()
         }
+
+        binding.backButton.setOnClickListener{
+            startActivity(Intent(this, ProfilDkmActivity::class.java))
+        }
+
+        // Fetch user data and populate fields
+        fetchUserData()
+    }
+
+    private fun fetchUserData() {
+        val userId = auth.currentUser?.uid
+        if (userId == null) {
+            Log.d(TAG, "User ID is null")
+            return
+        }
+
+        Log.d(TAG, "Fetching user data for user ID: $userId")
+
+        db.collection("user").document(userId).get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    val nomorRekening = document.getString("nomorRekening")
+                    val namaRekening = document.getString("namaRekening")
+                    val namaBank = document.getString("namaBank")
+                    val qrImageUrl = document.getString("qrImageUrl")
+
+                    Log.d(TAG, "User data fetched successfully")
+
+                    binding.norekEditText.setText(nomorRekening ?: "")
+                    binding.namaRekening.setText(namaRekening ?: "")
+                    binding.namaBank.setText(namaBank ?: "")
+                    // Load QR image using Glide
+                    qrImageUrl?.let {
+                        Glide.with(this)
+                            .load(it)
+                            .into(binding.qrImageView)
+                    }
+
+
+                } else {
+                    Log.d(TAG, "No such document")
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e(TAG, "Error getting user data: ${e.message}", e)
+            }
     }
 
     private fun openImageChooser() {

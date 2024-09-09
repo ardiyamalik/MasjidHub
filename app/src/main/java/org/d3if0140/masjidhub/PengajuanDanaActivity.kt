@@ -96,14 +96,20 @@ class PengajuanDanaActivity : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 if (document != null) {
                     val namaMasjid = document.getString("nama")
-//                    val lokasi = document.getString("nama")
+                    val lokasi = document.getString("alamat")
                     val teleponKetua = document.getString("teleponKetua")
+                    val namaBank = document.getString("namaBank")
+                    val nomorRekening = document.getString("nomorRekening")
+                    val namaRekening = document.getString("namaRekening")
 
                     Log.d(TAG, "User data fetched successfully: nama=$namaMasjid, teleponKetua=$teleponKetua")
 
                     binding.editTextNama.setText(namaMasjid ?: "")
-//                    binding.editTextLokasi.setText(lokasi ?: "")
+                    binding.editTextLokasi.setText(lokasi ?: "")
                     binding.editTextKontak.setText(teleponKetua ?: "")
+                    binding.namaBank.setText(namaBank ?: "")
+                    binding.namaRekening.setText(namaRekening ?: "")
+                    binding.nomorRekening.setText(nomorRekening ?: "")
                 } else {
                     Log.d(TAG, "No such document")
                 }
