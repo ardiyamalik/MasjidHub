@@ -7,39 +7,51 @@
     android:background="@color/white"
     android:padding="16dp">
 
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="20dp"
+        android:background="@null"
+        android:padding="12dp"
+        android:src="@drawable/arrow_back_24px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/qrImageView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
-        android:scaleType="centerCrop"
         android:contentDescription="qr image"
-        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/backButton" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/selectImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rounded_button_background"
+        android:padding="15dp"
         android:text="Select Image"
         android:textAllCaps="false"
-        android:padding="15dp"
-        android:background="@drawable/rounded_button_background"
         android:textColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/qrImageView"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/qrImageView" />
 
     <EditText
         android:id="@+id/norekEditText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:paddingLeft="10dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/stroke_white"
         android:hint="Nomor Rekening"
+        android:paddingLeft="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/selectImageButton" />
@@ -48,10 +60,10 @@
         android:id="@+id/namaRekening"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/stroke_white"
         android:layout_marginTop="10dp"
-        android:paddingLeft="10dp"
+        android:background="@drawable/stroke_white"
         android:hint="Nama di Rekening"
+        android:paddingLeft="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/norekEditText" />
@@ -60,25 +72,25 @@
         android:id="@+id/namaBank"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/stroke_white"
         android:hint="Nama Bank"
         android:paddingLeft="10dp"
-        android:background="@drawable/stroke_white"
-        app:layout_constraintTop_toBottomOf="@+id/namaRekening"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/namaRekening" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/uploadButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Upload"
+        android:layout_marginTop="16dp"
         android:background="@drawable/rounded_button_background"
-        android:textColor="@color/white"
         android:fontFamily="@font/poppins_bold"
+        android:text="Upload"
         android:textAllCaps="false"
-        app:layout_constraintTop_toBottomOf="@+id/namaBank"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/namaBank" />
 </androidx.constraintlayout.widget.ConstraintLayout>
