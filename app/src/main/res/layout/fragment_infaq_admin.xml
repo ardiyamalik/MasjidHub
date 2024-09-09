@@ -1,8 +1,9 @@
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:fillViewport="true"
     android:background="@color/white"
     tools:context=".InfaqAdminFragment">
@@ -16,60 +17,96 @@
             android:id="@+id/qrImageView"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_marginTop="32dp"
+            android:background="@drawable/circle_image"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="12dp"
             android:contentDescription="qr image"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:id="@+id/nameTextView"
-            android:layout_width="wrap_content"
+        <!-- Mulai CardView -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nama"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.011"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:layout_constraintTop_toBottomOf="@id/qrImageView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/qrImageView" />
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:id="@+id/namaRekening"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nama Rekening"
-            android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@id/nameTextView"
-            app:layout_constraintStart_toStartOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="4dp"
+                android:background="@drawable/stroke_gray"
+                android:padding="16dp">
 
-        <TextView
-            android:id="@+id/norekTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Norek"
-            android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@id/namaRekening"
-            app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/nameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Nama"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/namaBank"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nama Bank"
-            android:textSize="18sp"
-            app:layout_constraintTop_toBottomOf="@id/norekTextView"
-            app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/namaRekening"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Nama Rekening"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nameTextView" />
 
+                <TextView
+                    android:id="@+id/norekTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Norek"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/namaRekening" />
 
-        <Button
+                <TextView
+                    android:id="@+id/namaBank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="Nama Bank"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/norekTextView" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+        <!-- Selesai CardView -->
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/downloadQrButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Download QR"
-            app:layout_constraintTop_toBottomOf="@id/namaBank"
+            android:background="@drawable/rounded_button_background"
+            android:textColor="@color/white"
+            android:padding="10dp"
+            android:textAllCaps="false"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Unduh QR"
+            app:layout_constraintTop_toBottomOf="@id/cardView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

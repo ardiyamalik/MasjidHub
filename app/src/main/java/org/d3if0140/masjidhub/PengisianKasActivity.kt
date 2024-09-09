@@ -91,23 +91,23 @@ class PengisianKasActivity : AppCompatActivity() {
             startActivity(Intent(this, DkmDashboard::class.java))
         }
 
-        // Mengatur countdown timer selama 7 hari
-        val countdownMillis = TimeUnit.DAYS.toMillis(7)
-        val textViewCountdown = binding.textViewCountdown
-        object : CountDownTimer(countdownMillis, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                val days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished)
-                val hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished % TimeUnit.DAYS.toMillis(1))
-                val minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished % TimeUnit.HOURS.toMillis(1))
-                val seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished % TimeUnit.MINUTES.toMillis(1))
-
-                textViewCountdown.text = String.format("%02d days %02d:%02d:%02d", days, hours, minutes, seconds)
-            }
-
-            override fun onFinish() {
-                textViewCountdown.text = "Countdown finished"
-            }
-        }.start()
+//        // Mengatur countdown timer selama 7 hari
+//        val countdownMillis = TimeUnit.DAYS.toMillis(7)
+//        val textViewCountdown = binding.textViewCountdown
+//        object : CountDownTimer(countdownMillis, 1000) {
+//            override fun onTick(millisUntilFinished: Long) {
+//                val days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished)
+//                val hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished % TimeUnit.DAYS.toMillis(1))
+//                val minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished % TimeUnit.HOURS.toMillis(1))
+//                val seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished % TimeUnit.MINUTES.toMillis(1))
+//
+//                textViewCountdown.text = String.format("%02d days %02d:%02d:%02d", days, hours, minutes, seconds)
+//            }
+//
+//            override fun onFinish() {
+//                textViewCountdown.text = "Countdown finished"
+//            }
+//        }.start()
 
         binding.buttonBayar.setOnClickListener {
             submitKas()

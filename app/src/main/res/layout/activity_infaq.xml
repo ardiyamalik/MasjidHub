@@ -21,8 +21,8 @@
                 android:id="@+id/editTextJumlahInfaq"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="176dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="132dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/stroke_gray"
                 android:fontFamily="@font/poppins_medium"
@@ -31,6 +31,7 @@
                 android:padding="12dp"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.686"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,40 +63,40 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="221dp"
-                android:layout_height="78dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/stroke_gray"
-                app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.152"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView4">
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:layout_width="221dp"-->
+<!--                android:layout_height="78dp"-->
+<!--                android:layout_marginTop="12dp"-->
+<!--                android:background="@drawable/stroke_gray"-->
+<!--                app:cardBackgroundColor="@android:color/white"-->
+<!--                app:cardCornerRadius="8dp"-->
+<!--                app:cardElevation="8dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.152"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/textView4">-->
 
-                <TextView
-                    android:id="@+id/norek"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="13200123456"
-                    android:textColor="@color/blue"
-                    android:textSize="18sp" />
+<!--                <TextView-->
+<!--                    android:id="@+id/norek"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="10dp"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:fontFamily="@font/poppins_bold"-->
+<!--                    android:text="13200123456"-->
+<!--                    android:textColor="@color/blue"-->
+<!--                    android:textSize="18sp" />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="34dp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:text="Bank Mandiri a/n Lorem Ipsum"
-                    android:textSize="12sp" />
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="10dp"-->
+<!--                    android:layout_marginTop="34dp"-->
+<!--                    android:fontFamily="@font/poppins_medium"-->
+<!--                    android:text="Bank Mandiri a/n Lorem Ipsum"-->
+<!--                    android:textSize="12sp" />-->
 
-            </androidx.cardview.widget.CardView>
+<!--            </androidx.cardview.widget.CardView>-->
 
             <EditText
                 android:id="@+id/editTextTanggal"
@@ -116,30 +117,30 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextJumlahInfaq" />
 
-            <RadioGroup
-                android:id="@+id/radioGroupMetode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextTanggal">
+<!--            <RadioGroup-->
+<!--                android:id="@+id/radioGroupMetode"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/editTextTanggal">-->
 
-                <RadioButton
-                    android:id="@+id/radioButtonBankTransfer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:text="@string/bank_transfer" />
+<!--                <RadioButton-->
+<!--                    android:id="@+id/radioButtonBankTransfer"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:visibility="gone"-->
+<!--                    android:text="@string/bank_transfer" />-->
 
-                <RadioButton
-                    android:id="@+id/radioButtonQR"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:text="QR" />
-            </RadioGroup>
+<!--                <RadioButton-->
+<!--                    android:id="@+id/radioButtonQR"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:visibility="gone"-->
+<!--                    android:text="QR" />-->
+<!--            </RadioGroup>-->
 
             <TextView
                 android:id="@+id/textViewRekening"
@@ -175,35 +176,34 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewRekening" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/buttonPilihFoto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/stroke_white"
-                android:drawableLeft="@drawable/baseline_insert_photo_24"
-                android:fontFamily="@font/poppins_medium"
-                android:paddingStart="10dp"
-                android:paddingRight="17dp"
-                android:text="@string/bukti_pembayaran"
-                android:textAllCaps="false"
-                android:textColor="@color/blue"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewBuktiPembayaran" />
+<!--            <androidx.appcompat.widget.AppCompatButton-->
+<!--                android:id="@+id/buttonPilihFoto"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:layout_marginLeft="10dp"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:background="@drawable/stroke_white"-->
+<!--                android:drawableLeft="@drawable/baseline_insert_photo_24"-->
+<!--                android:fontFamily="@font/poppins_medium"-->
+<!--                android:paddingStart="10dp"-->
+<!--                android:paddingRight="17dp"-->
+<!--                android:text="@string/bukti_pembayaran"-->
+<!--                android:textAllCaps="false"-->
+<!--                android:textColor="@color/blue"-->
+<!--                android:textSize="14sp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/imageViewBuktiPembayaran" />-->
 
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/buttonBayar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginBottom="72dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/rounded_button_background"
                 android:fontFamily="@font/poppins_bold"
                 android:text="@string/kirim"
@@ -213,9 +213,10 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.509"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonPilihFoto"
-                app:layout_constraintVertical_bias="0.017" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextTanggal"
+                app:layout_constraintVertical_bias="0.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
