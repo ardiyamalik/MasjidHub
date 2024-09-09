@@ -1,0 +1,75 @@
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
+    android:background="@color/white"
+    tools:context=".InfaqAdminFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/qrImageView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="32dp"
+            android:contentDescription="qr image"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.011"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/qrImageView" />
+
+        <TextView
+            android:id="@+id/namaRekening"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama Rekening"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/nameTextView"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/norekTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Norek"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/namaRekening"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/namaBank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama Bank"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/norekTextView"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <Button
+            android:id="@+id/downloadQrButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Download QR"
+            app:layout_constraintTop_toBottomOf="@id/namaBank"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
