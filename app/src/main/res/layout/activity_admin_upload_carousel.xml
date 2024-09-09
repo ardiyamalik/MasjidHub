@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@color/white">
 
     <!-- RecyclerView untuk menampilkan preview beberapa gambar -->
     <androidx.recyclerview.widget.RecyclerView
@@ -15,20 +16,31 @@
         android:scrollbars="horizontal" />
 
     <!-- Tombol untuk memilih gambar dari galeri -->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonSelectImages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pilih Gambar"
+        android:fontFamily="@font/poppins_semibold"
+        android:textAllCaps="false"
+        android:background="@drawable/stroke_white"
+        android:padding="10dp"
         android:layout_gravity="center"
         android:layout_marginTop="16dp" />
 
     <!-- Tombol untuk mengupload semua gambar -->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/buttonUploadImages"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Upload Gambar"
+        android:text="Unggah Gambar"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/rounded_button_background"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/poppins_bold"
+        android:textAllCaps="false"
         android:layout_gravity="center"
         android:enabled="false"
         android:layout_marginTop="16dp" />
