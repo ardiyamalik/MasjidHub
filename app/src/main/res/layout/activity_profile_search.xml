@@ -65,13 +65,13 @@
 
     <TextView
         android:id="@+id/namaUserDkm"
-        android:layout_width="340dp"
-        android:layout_height="38dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/nama_dkm"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="24dp"
+        android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,13 +82,13 @@
 
     <TextView
         android:id="@+id/alamat_masjid"
-        android:layout_width="327dp"
-        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_medium"
         android:text="@string/alamat"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,13 +99,13 @@
         android:id="@+id/tabLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/blue"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/alamat_masjid"
-        app:tabIndicatorColor="@android:color/white"
+        app:tabIndicatorColor="@color/blue"
         app:tabIndicatorFullWidth="true"
-        app:tabTextColor="@color/white">
+        app:tabTextColor="@color/blue">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -128,6 +128,7 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:visibility="gone"
         android:background="@android:color/darker_gray"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_dkm"
         app:layout_constraintEnd_toEndOf="parent"
@@ -138,12 +139,12 @@
 
     <FrameLayout
         android:id="@+id/fragment_container"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation_dkm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider" />
+        app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

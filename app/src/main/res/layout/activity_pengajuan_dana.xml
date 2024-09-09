@@ -38,9 +38,11 @@
 
         <EditText
             android:id="@+id/editTextNama"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
             android:background="@drawable/stroke_white"
             android:hint="@string/nama"
             android:padding="10dp"
@@ -52,8 +54,10 @@
 
         <EditText
             android:id="@+id/editTextJumlah"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/stroke_white"
             android:hint="@string/jumlah_pengajuan"
@@ -67,9 +71,11 @@
 
         <EditText
             android:id="@+id/editTextAlasan"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
             android:background="@drawable/stroke_white"
             android:hint="Alasan Pengajuan"
             android:inputType="textMultiLine"
@@ -84,9 +90,11 @@
 
         <EditText
             android:id="@+id/editTextTanggal"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
             android:background="@drawable/stroke_white"
             android:hint="@string/tanggal_pengajuan"
             android:padding="10dp"
@@ -100,11 +108,13 @@
 
         <EditText
             android:id="@+id/namaBank"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/stroke_white"
             android:hint="@string/nama_bank"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:padding="10dp"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -114,9 +124,11 @@
 
         <EditText
             android:id="@+id/nomorRekening"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
             android:background="@drawable/stroke_white"
             android:hint="@string/nomor_rekening"
             android:inputType="phone"
@@ -129,12 +141,14 @@
 
         <EditText
             android:id="@+id/namaRekening"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/stroke_white"
             android:hint="@string/nama_rekening"
             android:padding="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -143,12 +157,14 @@
 
         <EditText
             android:id="@+id/editTextKontak"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/stroke_white"
             android:hint="@string/nomor_kontak"
             android:inputType="phone"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
             android:padding="10dp"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -158,11 +174,13 @@
 
         <EditText
             android:id="@+id/editTextLokasi"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/stroke_white"
             android:hint="@string/lokasi"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:padding="10dp"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -177,6 +195,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:background="@drawable/stroke_white"
             android:drawableLeft="@drawable/placeholder_image"
             android:drawablePadding="10dp"
@@ -193,13 +213,15 @@
 
         <ImageView
             android:id="@+id/imageViewFotoPendukung"
-            android:layout_width="345dp"
+            android:layout_width="match_parent"
             android:layout_height="198dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/rounded_image"
             android:clipToOutline="true"
-            android:scaleType="centerCrop"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
             android:visibility="gone"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/buttonUploadFotoPendukung"
@@ -208,12 +230,14 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonUploadKTP"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/stroke_white"
             android:drawableLeft="@drawable/placeholder_image"
             android:drawablePadding="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:fontFamily="@font/poppins_bold"
             android:gravity="start|center_vertical"
             android:paddingLeft="10dp"
@@ -226,22 +250,26 @@
 
         <ImageView
             android:id="@+id/imageViewKTP"
-            android:layout_width="345dp"
+            android:layout_width="match_parent"
             android:layout_height="198dp"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
             android:background="@drawable/rounded_image"
             android:clipToOutline="true"
-            android:scaleType="centerCrop"
             android:visibility="gone"
+            android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/buttonUploadKTP" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonSubmit"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:background="@drawable/rounded_button_background"
             android:fontFamily="@font/poppins_bold"
             android:text="@string/kirim"
