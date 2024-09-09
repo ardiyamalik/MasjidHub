@@ -24,6 +24,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".InformasiKasAdminActivity"
+            android:exported="true" />
+        <activity
+            android:name=".InformasiKasSearchActivity"
+            android:exported="true" />
+        <activity
+            android:name=".InformasiKasDkmActivity"
+            android:exported="true" />
+        <activity
             android:name=".UploadDataInfaq"
             android:exported="true" />
         <activity
@@ -43,7 +52,7 @@
             android:exported="true" />
         <activity
             android:name=".Filter"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".MapsUbahProfilActivity"
             android:exported="true" />
@@ -63,49 +72,7 @@
             android:name=".ProfileSearchAdmin"
             android:exported="true" />
         <activity
-            android:name=".LaporanPengajuanDkm"
-            android:exported="true" />
-        <activity
-            android:name=".LaporanKasDkm"
-            android:exported="true" />
-        <activity
-            android:name=".LaporanInfaqDkm"
-            android:exported="true" />
-        <activity
-            android:name=".LaporanPengajuanJamaah"
-            android:exported="true" />
-        <activity
-            android:name=".LaporanKasJamaah"
-            android:exported="true" />
-        <activity
-            android:name=".LaporanInfaqJamaah"
-            android:exported="true" />
-        <activity
             android:name=".ProfileSearchActivity"
-            android:exported="true" />
-        <activity
-            android:name=".KeuanganDkmActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="molly-hot-lioness.ngrok-free.app"
-                    android:pathPrefix="/payment/finish"
-                    android:scheme="https" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".LaporanPengajuanActivity"
-            android:exported="true" />
-        <activity
-            android:name=".LaporanKasActivity"
-            android:exported="true" />
-        <activity
-            android:name=".LaporanInfaqActivity"
             android:exported="true" />
 
         <receiver
@@ -159,9 +126,6 @@
             android:exported="true" />
         <activity
             android:name=".FullScreenImageActivity"
-            android:exported="true" />
-        <activity
-            android:name=".AdminKeuangan"
             android:exported="true" />
         <activity
             android:name=".AdminPermohonan"
@@ -221,9 +185,6 @@
 
         <activity
             android:name=".ProfilActivity"
-            android:exported="true" />
-        <activity
-            android:name=".KeuanganActivity"
             android:exported="true" />
         <activity
             android:name=".CariMasjidActivity"

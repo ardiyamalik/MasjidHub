@@ -63,6 +63,13 @@ class ProfileSearchActivity : AppCompatActivity() {
         binding.backButton.setOnClickListener {
             startActivity(Intent(this, CariMasjidActivity::class.java))
         }
+
+        binding.infoKas.setOnClickListener {
+            val intent = Intent(this, InformasiKasSearchActivity::class.java)
+            intent.putExtra("userId", userId) // Ganti dengan nilai userId yang benar
+            startActivity(intent)
+        }
+
     }
 
     private fun showFragment(fragment: Fragment, userId: String?) {

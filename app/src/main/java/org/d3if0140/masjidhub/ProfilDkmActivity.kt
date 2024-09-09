@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
@@ -55,22 +56,41 @@ class ProfilDkmActivity : AppCompatActivity() {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
 
-        // Atur listener untuk tombol logout
-        binding.buttonLogoutDkm.setOnClickListener {
-            val builder = AlertDialog.Builder(this)
-            builder.setMessage("Apakah Anda yakin ingin logout?")
-                .setCancelable(false)
-                .setPositiveButton("Ya") { dialog, id ->
-                    mAuth.signOut()
-                    val intent = Intent(this, WelcomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
+        // Atur listener untuk tombol jamaahYangTerdaftar menjadi PopupMenu
+        binding.menu.setOnClickListener { view ->
+            val popupMenu = androidx.appcompat.widget.PopupMenu(this, view)
+            popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
+
+            popupMenu.setOnMenuItemClickListener { menuItem: MenuItem ->
+                when (menuItem.itemId) {
+                    R.id.logout -> {
+                        // Handle logout
+                        val builder = AlertDialog.Builder(this)
+                        builder.setMessage("Apakah Anda yakin ingin logout?")
+                            .setCancelable(false)
+                            .setPositiveButton("Ya") { dialog, id ->
+                                mAuth.signOut()
+                                val intent = Intent(this, WelcomeActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            .setNegativeButton("Tidak") { dialog, id ->
+                                dialog.dismiss()
+                            }
+                        val alert = builder.create()
+                        alert.show()
+                        true
+                    }
+                    R.id.informasiKas -> {
+                        // Arahkan ke halaman Informasi Kas
+                        val intent = Intent(this, InformasiKasDkmActivity::class.java)
+                        startActivity(intent)
+                        true
+                    }
+                    else -> false
                 }
-                .setNegativeButton("Tidak") { dialog, id ->
-                    dialog.dismiss()
-                }
-            val alert = builder.create()
-            alert.show()
+            }
+            popupMenu.show()
         }
 
         // Atur listener untuk tombol ubah profil
@@ -78,13 +98,6 @@ class ProfilDkmActivity : AppCompatActivity() {
             val intent = Intent(this, UbahProfilDkm::class.java)
             startActivity(intent)
         }
-
-        binding.jamaahYangTerdaftar.setOnClickListener {
-            val intent = Intent(this, JamaahTerdaftar::class.java)
-            intent.putExtra("nama", binding.namaUserDkm.text.toString())
-            startActivity(intent)
-        }
-
 
         // Dapatkan ID pengguna yang saat ini masuk
         val currentUserId = mAuth.currentUser?.uid

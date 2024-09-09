@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
     <string name="app_name">MasjidHub</string>
     <string name="masuk">Masuk</string>
@@ -152,4 +151,5 @@
     <string name="nomor_rekening">Nomor Rekening</string>
     <string name="nama_bank">Nama Bank</string>
     <string name="nama_rekening">Nama Rekening</string>
+    <string name="tanggal">Tanggal:</string>
 </resources>

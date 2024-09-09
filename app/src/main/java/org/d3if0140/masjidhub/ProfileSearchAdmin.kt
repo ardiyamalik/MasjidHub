@@ -59,9 +59,9 @@ class ProfileSearchAdmin : AppCompatActivity() {
             finish() // Return to previous activity
         }
 
-        binding.jamaahYangTerdaftar.setOnClickListener {
-            val intent = Intent(this, AdminJamaahTerdaftar::class.java)
-            intent.putExtra("nama", binding.namaUserDkm.text.toString())
+        binding.infoKas.setOnClickListener {
+            val intent = Intent(this, InformasiKasSearchActivity::class.java)
+            intent.putExtra("userId", userId) // Ganti dengan nilai userId yang benar
             startActivity(intent)
         }
     }

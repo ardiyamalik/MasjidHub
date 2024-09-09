@@ -7,8 +7,6 @@
     android:background="@color/white"
     tools:context=".ProfileSearchActivity">
 
-
-
     <ImageView
         android:id="@+id/profileImageDkm"
         android:layout_width="100dp"
@@ -24,6 +22,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.131" />
+
+    <ImageButton
+        android:id="@+id/infoKas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="16dp"
+        android:background="@null"
+        android:src="@drawable/info_24px"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_dkm"
