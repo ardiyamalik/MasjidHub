@@ -121,7 +121,7 @@ class UbahProfilDkm : AppCompatActivity() {
                     true
                 }
                 R.id.menu_finance -> {
-                    val intent = Intent(this, KeuanganDkmActivity::class.java)
+                    val intent = Intent(this, LaporanKeuanganDkmActivity::class.java)
                     startActivity(intent)
                     finish()
                     true

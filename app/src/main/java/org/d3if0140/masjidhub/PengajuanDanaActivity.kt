@@ -181,7 +181,7 @@ class PengajuanDanaActivity : AppCompatActivity() {
                                     Toast.makeText(this, "Pengajuan berhasil diajukan", Toast.LENGTH_SHORT).show()
                                     Log.d(TAG, "Pengajuan data successfully submitted")
                                     saveNotificationToFirestore(userEmail, jumlah)
-                                    val intent = Intent(this, KeuanganDkmActivity::class.java)
+                                    val intent = Intent(this, NotificationDkmActivity::class.java)
                                     startActivity(intent)
                                 }.addOnFailureListener { e ->
                                     Toast.makeText(this, "Gagal mengajukan dana: ${e.message}", Toast.LENGTH_SHORT).show()
