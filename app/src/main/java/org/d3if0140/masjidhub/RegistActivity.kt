@@ -105,6 +105,8 @@ class RegistActivity : AppCompatActivity() {
                         val namaDkm = document.getString("nama")
                         namaDkm?.let { dkmOptions.add(it) }
                     }
+                    // Tambahkan opsi "Masjid tidak ada" di akhir daftar
+                    dkmOptions.add("Masjid tidak ada")
                     adapter.notifyDataSetChanged()
                 }
             }
@@ -119,6 +121,12 @@ class RegistActivity : AppCompatActivity() {
             val password = passwordEditText.text.toString()
             val nama = namaEditText.text.toString()
             val dkm = spinner.selectedItem.toString()
+
+            if (email.isEmpty() || password.isEmpty() || nama.isEmpty() || dkm.isEmpty()) {
+                Toast.makeText(this, "Harap isi semua field dan pilih masjid.", Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
+            }
 
             mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
@@ -156,6 +164,8 @@ class RegistActivity : AppCompatActivity() {
                             .document(user!!.uid)
                             .set(userData)
                             .addOnSuccessListener {
+                                // Hapus sesi pengguna jika ada
+                                mAuth.signOut()
                                 val intent = Intent(this, KonfirmasiActivity::class.java)
                                 startActivity(intent)
                             }

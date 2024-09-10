@@ -71,6 +71,10 @@ class RegisterDkmActivity : AppCompatActivity() {
             val intent = Intent(this, MapsActivity::class.java)
             mapsResultLauncher.launch(intent)
         }
+
+        binding.backButton.setOnClickListener{
+            startActivity(Intent(this, WelcomeActivity::class.java))
+        }
     }
 
     private fun selectKtpImage() {
@@ -178,6 +182,12 @@ class RegisterDkmActivity : AppCompatActivity() {
                                                 "Registrasi berhasil, menunggu verifikasi admin",
                                                 Toast.LENGTH_SHORT
                                             ).show()
+                                            // Hapus sesi pengguna jika ada
+                                            mAuth.signOut()
+
+                                            // Arahkan ke halaman KonfirmasiActivity setelah registrasi berhasil
+                                            val intent = Intent(this, KonfirmasiActivity::class.java)
+                                            startActivity(intent)
                                         }
                                         .addOnFailureListener { e ->
                                             Log.e(
