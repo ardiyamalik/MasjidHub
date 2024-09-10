@@ -108,7 +108,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                 } else {
                     Log.e("LoginActivity", "Login failed: ${task.exception?.message}")
-                    Toast.makeText(this, "Login gagal, silakan coba lagi", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Email atau Password salah", Toast.LENGTH_SHORT).show()
                 }
             }
     }
