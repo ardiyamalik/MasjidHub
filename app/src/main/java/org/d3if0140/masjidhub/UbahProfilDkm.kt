@@ -69,6 +69,10 @@ class UbahProfilDkm : AppCompatActivity() {
             val alamat = binding.editTextAlamat.text.toString().trim()
             val lat = latitude
             val lon = longitude
+            val nomor = binding.editTextNomor.text.toString().trim()
+            val namaKetua = binding.editTextNamaKetua.text.toString().trim()
+            val nomorKetua = binding.editTextNomorPengurus.text.toString().trim()
+
 
             if (nama.isNotEmpty()) {
                 val currentUserId = mAuth.currentUser?.uid
@@ -77,6 +81,9 @@ class UbahProfilDkm : AppCompatActivity() {
                         "nama" to nama
                     )
                     if (alamat.isNotEmpty()) updateData["alamat"] = alamat
+                    if (nomor.isNotEmpty()) updateData["teleponMasjid"] = nomor
+                    if (namaKetua.isNotEmpty()) updateData["namaKetua"] = namaKetua
+                    if (nomorKetua.isNotEmpty()) updateData["teleponKetua"] = nomorKetua
                     lat?.let { updateData["latitude"] = it }
                     lon?.let { updateData["longitude"] = it }
 
@@ -200,18 +207,28 @@ class UbahProfilDkm : AppCompatActivity() {
                 if (document != null && document.exists()) {
                     val userData = document.data
                     if (userData != null) {
+                        val namaAtas = userData["nama"] as? String
+                        val alamatAtas = userData["alamat"] as? String
                         val nama = userData["nama"] as? String
                         val alamat = userData["alamat"] as? String
                         val latitude = userData["latitude"] as? Double
                         val longitude = userData["longitude"] as? Double
                         val imageUrl = userData["imageUrl"] as? String
+                        val nomor = userData["teleponMasjid"] as? String
+                        val namaKetua = userData["namaKetua"] as? String
+                        val nomorKetua = userData["teleponKetua"] as? String
 
                         // Update UI
+                        namaAtas?.let { binding.namaUser.setText(it) }
+                        alamatAtas?.let { binding.alamatMasjid.setText(it) }
                         nama?.let { binding.editTextNama.setText(it) }
                         alamat?.let { binding.editTextAlamat.setText(it) }
                         latitude?.let { this.latitude = it; binding.latitudeEditText.setText(it.toString()) }
                         longitude?.let { this.longitude = it; binding.longitudeEditText.setText(it.toString()) }
                         imageUrl?.let { loadProfileImage(it) } ?: run { displayDefaultProfileImage() }
+                        nomor?.let { binding.editTextNomor.setText(it) }
+                        namaKetua?.let { binding.editTextNamaKetua.setText(it) }
+                        nomorKetua?.let { binding.editTextNomorPengurus.setText(it) }
                     }
                 }
             }
