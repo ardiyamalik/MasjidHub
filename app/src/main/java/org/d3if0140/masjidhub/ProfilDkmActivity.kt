@@ -8,20 +8,15 @@ import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
-import android.view.View
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import org.d3if0140.masjidhub.databinding.ActivityProfilDkmBinding
 
 class ProfilDkmActivity : AppCompatActivity() {
@@ -58,10 +53,10 @@ class ProfilDkmActivity : AppCompatActivity() {
 
         // Atur listener untuk tombol jamaahYangTerdaftar menjadi PopupMenu
         binding.menu.setOnClickListener { view ->
-            val popupMenu = androidx.appcompat.widget.PopupMenu(this, view)
-            popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
+            val popupMenuDkm = androidx.appcompat.widget.PopupMenu(this, view)
+            popupMenuDkm.menuInflater.inflate(R.menu.popup_menu_dkm, popupMenuDkm.menu)
 
-            popupMenu.setOnMenuItemClickListener { menuItem: MenuItem ->
+            popupMenuDkm.setOnMenuItemClickListener { menuItem: MenuItem ->
                 when (menuItem.itemId) {
                     R.id.logout -> {
                         // Handle logout
@@ -90,7 +85,7 @@ class ProfilDkmActivity : AppCompatActivity() {
                     else -> false
                 }
             }
-            popupMenu.show()
+            popupMenuDkm.show()
         }
 
         // Atur listener untuk tombol ubah profil
