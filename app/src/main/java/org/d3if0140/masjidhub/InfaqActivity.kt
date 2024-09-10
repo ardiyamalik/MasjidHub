@@ -51,7 +51,7 @@ class InfaqActivity : AppCompatActivity() {
                         TransactionResult.STATUS_SUCCESS -> {
                             Log.d(TAG, "Transaction successful, updating status...")
                             updateTransactionStatus(id, "approved", paymentType)
-                            sendNotification(id)
+                            sendNotification(id, jumlah = 0.0)
                             finish() // Menutup activity setelah transaksi berhasil
                         }
                         TransactionResult.STATUS_PENDING -> {
@@ -116,7 +116,7 @@ class InfaqActivity : AppCompatActivity() {
                 .set(infaqData)
                 .addOnSuccessListener {
                     Log.d(TAG, "Document successfully written!")
-                    sendNotification(id) // Mengirim jumlah sebagai Double
+                    sendNotification(id, jumlah) // Mengirim jumlah sebagai Double
                     getTokenFromServer(id, jumlah)
                 }
                 .addOnFailureListener { e ->
@@ -172,16 +172,14 @@ class InfaqActivity : AppCompatActivity() {
         MidtransSDK.getInstance().startPaymentUiFlow(this, token)
     }
 
-    private fun sendNotification(transactionId: String) {
+    private fun sendNotification(transactionId: String, jumlah: Double) {
         val currentUser = auth.currentUser
         val userId = currentUser?.uid ?: "unknown_user"
-
-        val jumlah = 0.0
 
         val notificationData = hashMapOf(
             "userId" to userId,
             "title" to "Infaq sedang diproses",
-            "message" to "Infaq sebesar Rp $jumlah sedang diproses oleh aplikasi.", // $jumlah harus bertipe Double
+            "message" to "Infaq sebesar Rp $jumlah telah diterima oleh aplikasi.", // $jumlah harus bertipe Double
             "timestamp" to System.currentTimeMillis()
         )
 

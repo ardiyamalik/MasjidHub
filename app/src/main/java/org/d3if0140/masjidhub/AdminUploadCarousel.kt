@@ -44,6 +44,11 @@ class AdminUploadCarousel : AppCompatActivity() {
                 uploadAllImagesToFirebase()
             }
         }
+
+        // Menambahkan onClickListener untuk button backButton
+        binding.backButton.setOnClickListener {
+            startActivity(Intent(this, AdminDashboard::class.java))
+        }
     }
 
     // Mengambil beberapa gambar dari galeri

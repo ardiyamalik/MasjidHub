@@ -46,6 +46,11 @@ class AdminLaporanKeuangan : AppCompatActivity() {
         // Set adapter default untuk RecyclerView
         binding.recyclerView.adapter = harianAdapter
 
+        // Menggunakan binding untuk mengakses toolbar
+        binding.toolbar.setNavigationOnClickListener {
+            onBackPressed() // Handle back action
+        }
+
         // Set listener untuk TabLayout
         binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {

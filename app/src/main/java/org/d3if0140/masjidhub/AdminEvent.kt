@@ -8,7 +8,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import org.d3if0140.masjidhub.databinding.ActivityAdminEventBinding
@@ -68,29 +71,41 @@ class AdminEvent : AppCompatActivity() {
             .orderBy("timestamp", sortOrder)
             .get()
             .addOnSuccessListener { documents ->
+                // List to hold posts with user data
+                val postsWithUserData = mutableListOf<Post>()
+
+                // Use a batch to fetch user data
+                val userFetchTasks = mutableListOf<Task<DocumentSnapshot>>()
                 for (document in documents) {
                     val post = document.toObject(Post::class.java).apply {
                         id = document.id  // Set the document ID
                     }
-                    // Ambil data user berdasarkan userId dari postingan
-                    firestore.collection("user").document(post.userId)
-                        .get()
-                        .addOnSuccessListener { userDocument ->
-                            if (userDocument != null) {
-                                post.nama = userDocument.getString("nama") ?: ""
-                                post.userImageUrl = userDocument.getString("imageUrl") ?: ""
-                                Log.d(
-                                    "AdminEvent",
-                                    "User data: ${post.nama}, ${post.userImageUrl}"
-                                )
+                    // Queue the user data fetch task
+                    userFetchTasks.add(
+                        firestore.collection("user").document(post.userId).get()
+                            .addOnSuccessListener { userDocument ->
+                                if (userDocument != null) {
+                                    post.nama = userDocument.getString("nama") ?: ""
+                                    post.userImageUrl = userDocument.getString("imageUrl") ?: ""
+                                    Log.d("AdminEvent", "User data: ${post.nama}, ${post.userImageUrl}")
+                                }
+                                postsWithUserData.add(post)
                             }
-                            postList.add(post)
-                            adminPostAdapter.notifyDataSetChanged()
-                        }
-                        .addOnFailureListener { exception ->
-                            Log.e("AdminEvent", "Error fetching user data", exception)
-                        }
+                            .addOnFailureListener { exception ->
+                                Log.e("AdminEvent", "Error fetching user data", exception)
+                            }
+                    )
                 }
+
+                // Wait until all user data has been fetched
+                Tasks.whenAllSuccess<DocumentSnapshot>(*userFetchTasks.toTypedArray())
+                    .addOnSuccessListener {
+                        postList.addAll(postsWithUserData)
+                        adminPostAdapter.notifyDataSetChanged()
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.e("AdminEvent", "Error fetching user data", exception)
+                    }
             }
             .addOnFailureListener { exception ->
                 Log.e("AdminEvent", "Error fetching posts", exception)

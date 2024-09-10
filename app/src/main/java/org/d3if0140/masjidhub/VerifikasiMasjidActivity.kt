@@ -60,6 +60,11 @@ class VerifikasiMasjidActivity : AppCompatActivity() {
             binding.imageViewKtp.visibility = View.GONE
         }
 
+        // Menggunakan ViewBinding untuk icon close
+        binding.closeIcon.setOnClickListener {
+            finish()
+        }
+
         // Setel tombol Batal
         binding.buttonCancel.setOnClickListener {
             finish() // Tutup activity ini
