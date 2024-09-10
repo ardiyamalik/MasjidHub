@@ -159,4 +159,5 @@
     <string name="ganti">Ubah Kata sandi</string>
     <string name="deskripsi_passsword">Kata sandi Anda minimal harus 6 karakter dan harus mencakup kombinasi angka dan huruf.</string>
     <string name="info_kas">Informasi kas</string>
+    <string name="uppload_carousel">Unggah Carousel</string>
 </resources>
