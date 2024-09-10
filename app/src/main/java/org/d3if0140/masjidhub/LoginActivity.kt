@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.text.SpannableString
-import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.View
@@ -34,29 +33,37 @@ class LoginActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
+        // Mengatur tombol kembali ke halaman WelcomeActivity
         binding.backButton.setOnClickListener {
             val intent = Intent(this, WelcomeActivity::class.java)
             startActivity(intent)
         }
 
-        val text = "Belum punya akun? Daftar"
+        // Mengatur TextView "Lupa Kata sandi? Klik disini"
+        val text = "Lupa Kata sandi? Klik disini"
         val spannableString = SpannableString(text)
-        val startIndex = text.indexOf("Daftar")
+        val startIndex = text.indexOf("Klik disini")
         val clickableSpan = object : ClickableSpan() {
             override fun onClick(view: View) {
-                val intent = Intent(this@LoginActivity, RegistActivity::class.java)
-                startActivity(intent)
+                // Mengambil email dari EditText untuk dikirimkan email reset password
+                val email = binding.namaEditText.text.toString().trim()
+                if (email.isEmpty()) {
+                    Toast.makeText(this@LoginActivity, "Masukkan email terlebih dahulu", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                sendPasswordResetEmail(email)
             }
         }
         spannableString.setSpan(
             clickableSpan,
             startIndex,
-            startIndex + 4,
+            startIndex + 10, // "Klik disini" memiliki panjang 10 karakter
             SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        binding.textDaftar.text = spannableString
-        binding.textDaftar.movementMethod = LinkMovementMethod.getInstance()
+        binding.textLupa.text = spannableString
+        binding.textLupa.movementMethod = android.text.method.LinkMovementMethod.getInstance()
 
+        // Toggle visibility password
         binding.passwordToggle.setOnClickListener {
             val inputType = binding.passwordEditText.inputType
             if (inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
@@ -70,14 +77,26 @@ class LoginActivity : AppCompatActivity() {
             binding.passwordEditText.setSelection(binding.passwordEditText.text?.length ?: 0)
         }
 
+        // Implementasi login
         binding.loginButton.setOnClickListener {
             val email = binding.namaEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
             Log.d("LoginActivity", "Attempting to log in with email: $email")
             loginUser(email, password)
         }
+
+        // Implementasi Lupa Password
+        binding.textLupa.setOnClickListener {
+            val email = binding.namaEditText.text.toString()
+            if (email.isEmpty()) {
+                Toast.makeText(this, "Silakan masukkan email Anda", Toast.LENGTH_SHORT).show()
+            } else {
+                sendPasswordResetEmail(email)
+            }
+        }
     }
 
+    // Fungsi untuk login
     private fun loginUser(email: String, password: String) {
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
@@ -94,6 +113,19 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
+    // Fungsi untuk mengirim email reset password
+    private fun sendPasswordResetEmail(email: String) {
+        mAuth.sendPasswordResetEmail(email)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Email reset password berhasil dikirim", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Gagal mengirim email reset password: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    // Fungsi untuk memeriksa role pengguna setelah login
     private fun checkUserRole(userId: String) {
         Log.d("LoginActivity", "Checking role for user: $userId")
         firestore.collection("user")
@@ -109,10 +141,8 @@ class LoginActivity : AppCompatActivity() {
                         Log.d("LoginActivity", "User role: $role, Verified: $verified")
 
                         if (role == "pengurus_dkm" && verified == false) {
-                            // Akun pengurus_dkm yang belum diverifikasi
                             Toast.makeText(this, "Akun Anda belum diverifikasi oleh admin", Toast.LENGTH_SHORT).show()
                         } else {
-                            // Akun telah diverifikasi atau bukan pengurus_dkm, arahkan sesuai role
                             when (role) {
                                 "admin" -> {
                                     val intent = Intent(this, AdminDashboard::class.java)
@@ -131,7 +161,6 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
                 } else {
-                    // Jika tidak ada data pengguna atau dokumen tidak ada, arahkan ke WelcomeActivity
                     Log.d("LoginActivity", "No user data found, redirecting to WelcomeActivity")
                     val intent = Intent(this, WelcomeActivity::class.java)
                     startActivity(intent)
@@ -140,16 +169,10 @@ class LoginActivity : AppCompatActivity() {
             }
             .addOnFailureListener { exception ->
                 Log.e("LoginActivity", "Failed to check user role: ${exception.message}")
-                Toast.makeText(
-                    this,
-                    "Gagal memeriksa peran pengguna: ${exception.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
-                // Jika gagal, arahkan ke halaman default (biasanya HomeActivity)
-                val intent = Intent(this, HomeActivity::class.java)
+                Toast.makeText(this, "Gagal memeriksa peran pengguna: ${exception.message}", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, WelcomeActivity::class.java)
                 startActivity(intent)
                 finish()
             }
     }
-
 }
