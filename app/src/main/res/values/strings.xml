@@ -152,4 +152,11 @@
     <string name="nama_bank">Nama Bank</string>
     <string name="nama_rekening">Nama Rekening</string>
     <string name="tanggal">Tanggal:</string>
+    <string name="password_sekarang">Kata Sandi saat ini</string>
+    <string name="password_baru">Kata sandi baru</string>
+    <string name="password_baru2">Masukan ulang Kata sandi baru</string>
+    <string name="lupa_password">Lupa Kata sandi?</string>
+    <string name="ganti">Ubah Kata sandi</string>
+    <string name="deskripsi_passsword">Kata sandi Anda minimal harus 6 karakter dan harus mencakup kombinasi angka dan huruf.</string>
+    <string name="info_kas">Informasi kas</string>
 </resources>

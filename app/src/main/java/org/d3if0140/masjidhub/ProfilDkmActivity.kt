@@ -82,6 +82,11 @@ class ProfilDkmActivity : AppCompatActivity() {
                         startActivity(intent)
                         true
                     }
+                    R.id.gantiPassword -> {
+                        val intent = Intent(this, GantiPasswordDkmActivity::class.java)
+                        startActivity(intent)
+                        true
+                    }
                     else -> false
                 }
             }

@@ -24,6 +24,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".GantiPasswordDkmActivity"
+            android:exported="true" />
+        <activity
+            android:name=".GantiPasswordActivity"
+            android:exported="true" />
+        <activity
             android:name=".InformasiKasAdminActivity"
             android:exported="true" />
         <activity
@@ -81,7 +87,7 @@
 
         <activity
             android:name=".AdminVerifActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".PengisianKasActivity"
             android:exported="true">
