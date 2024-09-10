@@ -8,6 +8,7 @@ import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -30,22 +31,41 @@ class ProfilActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
-        // Atur listener untuk tombol logout
-        binding.buttonLogout.setOnClickListener {
-            val builder = AlertDialog.Builder(this)
-            builder.setMessage("Apakah Anda yakin ingin logout?")
-                .setCancelable(false)
-                .setPositiveButton("Ya") { dialog, id ->
-                    mAuth.signOut()
-                    val intent = Intent(this, WelcomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
+        // Atur listener untuk tombol logout dan ganti password menjadi PopupMenu
+        binding.menu.setOnClickListener { view ->
+            val popupMenu = androidx.appcompat.widget.PopupMenu(this, view)
+            popupMenu.menuInflater.inflate(R.menu.popup_menu, popupMenu.menu)
+
+            popupMenu.setOnMenuItemClickListener { menuItem: MenuItem ->
+                when (menuItem.itemId) {
+                    R.id.logout -> {
+                        // Handle logout
+                        val builder = AlertDialog.Builder(this)
+                        builder.setMessage("Apakah Anda yakin ingin logout?")
+                            .setCancelable(false)
+                            .setPositiveButton("Ya") { dialog, id ->
+                                mAuth.signOut()
+                                val intent = Intent(this, WelcomeActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            .setNegativeButton("Tidak") { dialog, id ->
+                                dialog.dismiss()
+                            }
+                        val alert = builder.create()
+                        alert.show()
+                        true
+                    }
+                    R.id.gantiPassword -> {
+                        // Arahkan ke halaman Informasi Kas
+                        val intent = Intent(this, GantiPasswordActivity::class.java)
+                        startActivity(intent)
+                        true
+                    }
+                    else -> false
                 }
-                .setNegativeButton("Tidak") { dialog, id ->
-                    dialog.dismiss()
-                }
-            val alert = builder.create()
-            alert.show()
+            }
+            popupMenu.show()
         }
 
         // Atur listener untuk tombol ubah profil
@@ -53,6 +73,7 @@ class ProfilActivity : AppCompatActivity() {
             val intent = Intent(this, UbahProfil::class.java)
             startActivity(intent)
         }
+
 
         // Dapatkan ID pengguna yang saat ini masuk
         val currentUserId = mAuth.currentUser?.uid
