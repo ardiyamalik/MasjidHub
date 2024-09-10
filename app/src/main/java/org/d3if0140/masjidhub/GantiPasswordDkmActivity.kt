@@ -1,8 +1,11 @@
 package org.d3if0140.masjidhub
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.ClickableSpan
+import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.databinding.ActivityGantiPasswordDkmBinding
@@ -44,10 +47,23 @@ class GantiPasswordDkmActivity : AppCompatActivity() {
                 finish()
             }
 
-            // Kirim email reset password jika tombol Lupa Password ditekan
-            binding.LupaPassword.setOnClickListener {
-                sendPasswordResetEmail()
+            // Mengatur TextView "Lupa Kata sandi? Klik disini"
+            val text = "Lupa Kata sandi? Klik disini"
+            val spannableString = SpannableString(text)
+            val startIndex = text.indexOf("Klik disini")
+            val clickableSpan = object : ClickableSpan() {
+                override fun onClick(view: View) {
+                    sendPasswordResetEmail()
+                }
             }
+            spannableString.setSpan(
+                clickableSpan,
+                startIndex,
+                startIndex + 10, // "Klik disini" memiliki panjang 10 karakter
+                SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            binding.LupaPassword.text = spannableString
+            binding.LupaPassword.movementMethod = android.text.method.LinkMovementMethod.getInstance()
 
             // Menangani perubahan password saat tombol Simpan ditekan
             binding.buttonSimpan.setOnClickListener {
