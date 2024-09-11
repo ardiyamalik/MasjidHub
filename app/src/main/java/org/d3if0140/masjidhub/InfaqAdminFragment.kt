@@ -1,6 +1,10 @@
 package org.d3if0140.masjidhub
 
+import android.content.ContentValues
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +13,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.databinding.FragmentInfaqAdminBinding
+import java.io.OutputStream
 
 class InfaqAdminFragment : Fragment() {
 
@@ -33,6 +38,10 @@ class InfaqAdminFragment : Fragment() {
         userId = arguments?.getString("USER_ID")
         userId?.let {
             loadInfaqData(it)
+        }
+        // Set download QR button listener
+        binding.downloadQrButton.setOnClickListener {
+            downloadQrImage()
         }
     }
 
@@ -60,5 +69,28 @@ class InfaqAdminFragment : Fragment() {
             .addOnFailureListener { e ->
                 Toast.makeText(context, "Error loading infaq data: ${e.message}", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun downloadQrImage() {
+        val drawable = binding.qrImageView.drawable as? BitmapDrawable
+        val bitmap = drawable?.bitmap
+        if (bitmap != null) {
+            val contentValues = ContentValues().apply {
+                put(MediaStore.Images.Media.DISPLAY_NAME, "QR_Code_${System.currentTimeMillis()}.jpg")
+                put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/QR Codes")
+            }
+
+            val resolver = requireActivity().contentResolver
+            val imageUri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+            val outputStream: OutputStream? = imageUri?.let { resolver.openOutputStream(it) }
+
+            outputStream?.use {
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it)
+                Toast.makeText(context, "QR berhasil diunduh", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(context, "Gambar QR tidak tersedia", Toast.LENGTH_SHORT).show()
+        }
     }
 }
