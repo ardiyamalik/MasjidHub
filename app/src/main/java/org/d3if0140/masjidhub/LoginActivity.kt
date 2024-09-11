@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Inisialisasi Firebase App Check
+        // Initialize Firebase App Check
         FirebaseAppCheck.getInstance().installAppCheckProviderFactory(
             PlayIntegrityAppCheckProviderFactory.getInstance()
         )
@@ -34,19 +34,19 @@ class LoginActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
-        // Mengatur tombol kembali ke halaman WelcomeActivity
+        // Back button to WelcomeActivity
         binding.backButton.setOnClickListener {
             val intent = Intent(this, WelcomeActivity::class.java)
             startActivity(intent)
         }
 
-        // Mengatur TextView "Lupa Kata sandi? Klik disini"
+        // Setup "Forgot Password?" clickable text
         val text = "Lupa Kata sandi? Klik disini"
         val spannableString = SpannableString(text)
         val startIndex = text.indexOf("Klik disini")
         val clickableSpan = object : ClickableSpan() {
             override fun onClick(view: View) {
-                // Mengambil email dari EditText untuk dikirimkan email reset password
+                // Send password reset email
                 val email = binding.namaEditText.text.toString().trim()
                 if (email.isEmpty()) {
                     Toast.makeText(this@LoginActivity, "Masukkan email terlebih dahulu", Toast.LENGTH_SHORT).show()
@@ -58,13 +58,13 @@ class LoginActivity : AppCompatActivity() {
         spannableString.setSpan(
             clickableSpan,
             startIndex,
-            startIndex + 10, // "Klik disini" memiliki panjang 10 karakter
+            startIndex + 10, // "Klik disini" has a length of 10 characters
             SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         binding.textLupa.text = spannableString
         binding.textLupa.movementMethod = android.text.method.LinkMovementMethod.getInstance()
 
-        // Toggle visibility password
+        // Toggle password visibility
         binding.passwordToggle.setOnClickListener {
             val inputType = binding.passwordEditText.inputType
             if (inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
@@ -78,7 +78,7 @@ class LoginActivity : AppCompatActivity() {
             binding.passwordEditText.setSelection(binding.passwordEditText.text?.length ?: 0)
         }
 
-        // Implementasi login
+        // Implement login
         binding.loginButton.setOnClickListener {
             val email = binding.namaEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
@@ -87,7 +87,7 @@ class LoginActivity : AppCompatActivity() {
             loginUser(email, password)
         }
 
-        // Implementasi Lupa Password
+        // Implement password reset
         binding.textLupa.setOnClickListener {
             val email = binding.namaEditText.text.toString()
             if (email.isEmpty()) {
@@ -98,7 +98,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    // Fungsi untuk login
+    // Function for login
     private fun loginUser(email: String, password: String) {
         val progressDialog = ProgressDialog(this)
         progressDialog.setMessage("Harap Tunggu...")
@@ -106,7 +106,7 @@ class LoginActivity : AppCompatActivity() {
 
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
-                progressDialog.dismiss() // Tutup dialog setelah login selesai (baik berhasil atau gagal)
+                progressDialog.dismiss() // Close dialog after login completes
                 if (task.isSuccessful) {
                     val user = mAuth.currentUser
                     if (user != null) {
@@ -120,7 +120,7 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    // Fungsi untuk mengirim email reset password
+    // Function to send password reset email
     private fun sendPasswordResetEmail(email: String) {
         mAuth.sendPasswordResetEmail(email)
             .addOnCompleteListener(this) { task ->
@@ -132,7 +132,7 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    // Fungsi untuk memeriksa role pengguna setelah login
+    // Function to check user role and verification status
     private fun checkUserRole(userId: String) {
         Log.d("LoginActivity", "Checking role for user: $userId")
         firestore.collection("user")
@@ -147,24 +147,38 @@ class LoginActivity : AppCompatActivity() {
 
                         Log.d("LoginActivity", "User role: $role, Verified: $verified")
 
-                        if (role == "pengurus_dkm" && verified == false) {
-                            Toast.makeText(this, "Akun Anda belum diverifikasi oleh admin", Toast.LENGTH_SHORT).show()
-                        } else {
-                            when (role) {
-                                "admin" -> {
-                                    val intent = Intent(this, AdminDashboard::class.java)
-                                    startActivity(intent)
-                                }
-                                "pengurus_dkm" -> {
-                                    val intent = Intent(this, DkmDashboard::class.java)
-                                    startActivity(intent)
-                                }
-                                else -> {
-                                    val intent = Intent(this, HomeActivity::class.java)
-                                    startActivity(intent)
+                        when {
+                            role == "pengurus_dkm" && verified == false -> {
+                                Toast.makeText(this, "Akun Anda belum diverifikasi oleh admin", Toast.LENGTH_SHORT).show()
+                                // Log out the user
+                                mAuth.signOut()
+                            }
+                            role == "jamaah" && verified == false -> {
+                                // Check if email is verified
+                                val user = mAuth.currentUser
+                                if (user != null && !user.isEmailVerified) {
+                                    Toast.makeText(this, "Silakan verifikasi email Anda terlebih dahulu", Toast.LENGTH_SHORT).show()
+                                    // Log out the user
+                                    mAuth.signOut()
                                 }
                             }
-                            finish()
+                            else -> {
+                                when (role) {
+                                    "admin" -> {
+                                        val intent = Intent(this, AdminDashboard::class.java)
+                                        startActivity(intent)
+                                    }
+                                    "pengurus_dkm" -> {
+                                        val intent = Intent(this, DkmDashboard::class.java)
+                                        startActivity(intent)
+                                    }
+                                    else -> {
+                                        val intent = Intent(this, HomeActivity::class.java)
+                                        startActivity(intent)
+                                    }
+                                }
+                                finish()
+                            }
                         }
                     }
                 } else {
