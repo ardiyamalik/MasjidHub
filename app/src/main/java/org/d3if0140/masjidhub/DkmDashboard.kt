@@ -17,6 +17,7 @@ import com.google.firebase.appcheck.FirebaseAppCheck
 import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import org.d3if0140.masjidhub.databinding.ActivityDkmDashboardBinding
 
 class DkmDashboard : AppCompatActivity() {
@@ -128,9 +129,10 @@ class DkmDashboard : AppCompatActivity() {
     }
 
     private fun setupCarousel() {
-        // Ambil gambar carousel dari Firestore
+        // Ambil gambar carousel dari Firestore, urutkan berdasarkan timestamp menurun dan batasi hasil menjadi 5
         firestore.collection("carousel")
-            .orderBy("timestamp")
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .limit(5)
             .get()
             .addOnSuccessListener { documents ->
                 val imageList = mutableListOf<String>()
@@ -148,6 +150,7 @@ class DkmDashboard : AppCompatActivity() {
                 Toast.makeText(this, "Gagal mengambil gambar carousel: ${it.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
 
 
     private fun loadProfileImage(imageUrl: String) {

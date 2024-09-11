@@ -26,6 +26,7 @@ import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderF
 import com.google.firebase.firestore.FirebaseFirestore
 import org.d3if0140.masjidhub.databinding.ActivityHomeBinding
 import android.Manifest
+import com.google.firebase.firestore.Query
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -148,9 +149,10 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupCarousel() {
-        // Ambil gambar carousel dari Firestore
+        // Ambil gambar carousel dari Firestore, urutkan berdasarkan timestamp menurun dan batasi hasil menjadi 5
         firestore.collection("carousel")
-            .orderBy("timestamp")
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .limit(5)
             .get()
             .addOnSuccessListener { documents ->
                 val imageList = mutableListOf<String>()
@@ -168,6 +170,7 @@ class HomeActivity : AppCompatActivity() {
                 Toast.makeText(this, "Gagal mengambil gambar carousel: ${it.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
 
     private fun setupPengurusDkmRecyclerView() {
         binding.recyclerViewPengurus.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
