@@ -248,7 +248,7 @@
                 <ImageView
                     android:layout_width="114dp"
                     android:layout_height="91dp"
-                    android:src="@drawable/iconkotribusi" />
+                    android:src="@drawable/uploadcrousel" />
 
                 <TextView
                     android:layout_width="87dp"
