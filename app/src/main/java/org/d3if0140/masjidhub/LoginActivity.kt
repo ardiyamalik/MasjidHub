@@ -162,7 +162,7 @@ class LoginActivity : AppCompatActivity() {
 
                         when {
                             role == "pengurus_dkm" && verified == false -> {
-                                Toast.makeText(this, "Akun Anda belum diverifikasi oleh admin", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, "Akun Anda belum diverifikasi atau ditolak oleh admin", Toast.LENGTH_SHORT).show()
                                 // Log out the user
                                 mAuth.signOut()
                             }
