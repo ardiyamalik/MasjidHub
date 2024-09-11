@@ -176,10 +176,13 @@ class InfaqActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
         val userId = currentUser?.uid ?: "unknown_user"
 
+        // Format jumlah tanpa desimal
+        val formattedJumlah = jumlah.toInt().toString()
+
         val notificationData = hashMapOf(
             "userId" to userId,
             "title" to "Infaq sedang diproses",
-            "message" to "Infaq sebesar Rp $jumlah telah diterima oleh aplikasi.", // $jumlah harus bertipe Double
+            "message" to "Infaq sebesar Rp $formattedJumlah telah diterima oleh aplikasi.", // $jumlah harus bertipe Double
             "timestamp" to System.currentTimeMillis()
         )
 

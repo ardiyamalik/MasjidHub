@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
@@ -80,12 +81,12 @@ class PermohonanDanaAdapter(private val permohonanDanaList: MutableList<Permohon
 
         holder.buttonApprove.setOnClickListener {
             Log.d("PermohonanDanaAdapter", "Approve button clicked for ${permohonanDana.id}")
-            approvePermohonanDana(permohonanDana.id, holder.adapterPosition, permohonanDana.userEmail, permohonanDana.jumlah)
+            approvePermohonanDana(permohonanDana.id, holder.adapterPosition, permohonanDana.userEmail, permohonanDana.jumlah, holder)
         }
 
         holder.buttonReject.setOnClickListener {
             Log.d("PermohonanDanaAdapter", "Reject button clicked for ${permohonanDana.id}")
-            rejectPermohonanDana(permohonanDana.id, holder.adapterPosition, permohonanDana.userEmail, permohonanDana.jumlah)
+            rejectPermohonanDana(permohonanDana.id, holder.adapterPosition, permohonanDana.userEmail, permohonanDana.jumlah, holder)
         }
 
         // Set click listener for post image
@@ -106,7 +107,7 @@ class PermohonanDanaAdapter(private val permohonanDanaList: MutableList<Permohon
 
     override fun getItemCount(): Int = permohonanDanaBelumDiapprove.size
 
-    private fun approvePermohonanDana(id: String, position: Int, email: String, jumlah: Double) {
+    private fun approvePermohonanDana(id: String, position: Int, email: String, jumlah: Double, holder: ViewHolder) {
         val db = FirebaseFirestore.getInstance()
         db.collection("transaksi_keuangan").document(id)
             .update("status", "approved")
@@ -114,13 +115,21 @@ class PermohonanDanaAdapter(private val permohonanDanaList: MutableList<Permohon
                 Log.d("PermohonanDanaAdapter", "Pengajuan approved for $id")
                 removeItem(position)
                 sendApprovalNotification(email, jumlah)
+
+                // Menampilkan Toast untuk approve sukses
+                Toast.makeText(
+                    holder.itemView.context, // Gunakan holder.itemView.context untuk mendapatkan context
+                    "Permohonan Dana Berhasil di-Approve",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             .addOnFailureListener { e ->
                 Log.e("PermohonanDanaAdapter", "Error approving pengajuan: ${e.message}", e)
             }
     }
 
-    private fun rejectPermohonanDana(id: String, position: Int, email: String, jumlah: Double) {
+
+    private fun rejectPermohonanDana(id: String, position: Int, email: String, jumlah: Double, holder: ViewHolder) {
         val db = FirebaseFirestore.getInstance()
         db.collection("transaksi_keuangan").document(id)
             .update("status", "rejected")
@@ -128,11 +137,20 @@ class PermohonanDanaAdapter(private val permohonanDanaList: MutableList<Permohon
                 Log.d("PermohonanDanaAdapter", "Pengajuan rejected for $id")
                 removeItem(position)
                 sendRejectionNotification(email, jumlah)
+
+                // Menampilkan Toast untuk reject sukses
+                Toast.makeText(
+                    holder.itemView.context, // Gunakan holder.itemView.context untuk mendapatkan context
+                    "Permohonan Dana Ditolak",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             .addOnFailureListener { e ->
                 Log.e("PermohonanDanaAdapter", "Error rejecting pengajuan: ${e.message}", e)
             }
     }
+
+
 
     private fun removeItem(position: Int) {
         permohonanDanaBelumDiapprove.removeAt(position)
