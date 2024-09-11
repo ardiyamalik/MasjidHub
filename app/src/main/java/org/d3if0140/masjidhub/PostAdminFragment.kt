@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
@@ -34,7 +35,7 @@ class PostAdminFragment : Fragment() {
         firestore = FirebaseFirestore.getInstance()
 
         // Initialize RecyclerView
-        postAdapter = AdminPostAdapter(postList) { post -> deletePost(post) }
+        postAdapter = AdminPostAdapter(postList) { post -> showDeleteConfirmationDialog(post) }
         binding.recyclerViewPost.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewPost.adapter = postAdapter
 
@@ -86,6 +87,21 @@ class PostAdminFragment : Fragment() {
             }
     }
 
+    private fun showDeleteConfirmationDialog(post: Post) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Hapus Postingan")
+            .setMessage("Apakah Anda yakin ingin menghapus postingan ini?")
+            .setPositiveButton("Hapus") { dialog, _ ->
+                deletePost(post)
+                dialog.dismiss()
+            }
+            .setNegativeButton("Batal") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
+
     private fun deletePost(post: Post) {
         firestore.collection("posts").document(post.id)
             .delete()
@@ -98,4 +114,5 @@ class PostAdminFragment : Fragment() {
                 Log.e("PostAdminFragment", "Error deleting post", e)
             }
     }
+
 }
