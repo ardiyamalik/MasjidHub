@@ -29,11 +29,6 @@ class JamaahTerdaftarAdminFragment : Fragment() {
 
         binding.recyclerViewJamaah.layoutManager = LinearLayoutManager(context)
 
-        binding.backButton.setOnClickListener {
-            // Handle back button action
-            requireActivity().supportFragmentManager.popBackStack()
-        }
-
         val masjidName = arguments?.getString("nama")?.trim()
         Log.d("JamaahTerdaftarFragment", "Masjid Name: $masjidName")
         masjidName?.let {
