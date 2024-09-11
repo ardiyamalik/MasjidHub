@@ -1,7 +1,10 @@
 package org.d3if0140.masjidhub
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.StyleSpan
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -33,16 +36,28 @@ class VerifikasiMasjidActivity : AppCompatActivity() {
         val longitude = intent.getStringExtra("LONGITUDE") ?: "Tidak tersedia"
         val ktpUrl = intent.getStringExtra("KTP_URL") ?: ""
 
+        // Fungsi untuk membuat bagian dari teks menjadi bold
+        fun makeBold(text: String, label: String): SpannableString {
+            val spannableString = SpannableString(label + text)
+            spannableString.setSpan(
+                StyleSpan(Typeface.BOLD),
+                0,
+                label.length,
+                SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            return spannableString
+        }
+
         // Setel data ke TextView dan ImageView
-        binding.textViewMasjidName.text = masjidName
-        binding.textViewAlamat.text = alamat
-        binding.textViewKodePos.text = kodePos
-        binding.textViewTeleponMasjid.text = teleponMasjid
-        binding.textViewNamaKetua.text = namaKetua
-        binding.textViewTeleponKetua.text = teleponKetua
-        binding.textViewEmail.text = email
-        binding.textViewLatitude.text = latitude
-        binding.textViewLongitude.text = longitude
+        binding.textViewMasjidName.text = makeBold(masjidName, "Nama: ")
+        binding.textViewAlamat.text = makeBold(alamat, "Alamat: ")
+        binding.textViewKodePos.text = makeBold(kodePos, "Kode Pos: ")
+        binding.textViewTeleponMasjid.text = makeBold(teleponMasjid, "Telepon Masjid: ")
+        binding.textViewNamaKetua.text = makeBold(namaKetua, "Nama Ketua: ")
+        binding.textViewTeleponKetua.text = makeBold(teleponKetua, "Telepon Ketua: ")
+        binding.textViewEmail.text = makeBold(email, "Email: ")
+        binding.textViewLatitude.text = makeBold(latitude, "Titik Koordinat: ")
+        binding.textViewLongitude.text = makeBold(longitude, "Titik Koordinat: ")
 
         if (ktpUrl.isNotEmpty()) {
             binding.imageViewKtp.visibility = View.VISIBLE
