@@ -40,7 +40,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        val defaultLocation = LatLng(-7.026074081265786, 107.5426824824841) // Example coordinates
+        val defaultLocation = LatLng(-6.91946128193482, 107.62118006373258) // Example coordinates
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 15.0f))
 
         mMap.setOnMapClickListener { latLng ->
