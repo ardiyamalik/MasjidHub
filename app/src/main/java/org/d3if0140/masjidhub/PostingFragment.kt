@@ -1,5 +1,6 @@
 package org.d3if0140.masjidhub
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -100,14 +101,20 @@ class PostingFragment : Fragment() {
     }
 
     private fun updateCaption(post: Post, newCaption: String) {
+        val progressDialog = ProgressDialog(requireContext())
+        progressDialog.setMessage("Mengupdate caption...")
+        progressDialog.show()
+
         val postRef = firestore.collection("posts").document(post.id)
         postRef.update("deskripsi", newCaption)
             .addOnSuccessListener {
+                progressDialog.dismiss()
                 post.deskripsi = newCaption
                 dkmPostAdapter.notifyDataSetChanged()
                 Toast.makeText(requireContext(), "Caption updated", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { exception ->
+                progressDialog.dismiss()
                 Log.e("PostingFragment", "Failed to update caption for post ID: ${post.id}", exception)
                 Toast.makeText(requireContext(), "Gagal mengupdate caption: ${exception.message}", Toast.LENGTH_SHORT).show()
             }
@@ -125,6 +132,10 @@ class PostingFragment : Fragment() {
     }
 
     private fun deletePost(post: Post) {
+        val progressDialog = ProgressDialog(requireContext())
+        progressDialog.setMessage("Menghapus postingan...")
+        progressDialog.show()
+
         if (post.id.isNullOrEmpty()) {
             Log.e("PostingFragment", "Post ID is null or empty")
             Toast.makeText(requireContext(), "Invalid post ID", Toast.LENGTH_SHORT).show()
@@ -134,11 +145,13 @@ class PostingFragment : Fragment() {
         firestore.collection("posts").document(post.id)
             .delete()
             .addOnSuccessListener {
+                progressDialog.dismiss()
                 postList.remove(post)
                 dkmPostAdapter.notifyDataSetChanged()
                 Toast.makeText(requireContext(), "Post deleted", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { exception ->
+                progressDialog.dismiss()
                 Toast.makeText(requireContext(), "Failed to delete post", Toast.LENGTH_SHORT).show()
             }
     }
