@@ -2,6 +2,7 @@ package org.d3if0140.masjidhub
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -22,16 +23,12 @@ class AdminEvent : AppCompatActivity() {
     private lateinit var firestore: FirebaseFirestore
     private lateinit var adminPostAdapter: AdminPostAdapter
     private val postList = mutableListOf<Post>()
+    private var currentSortOrder: Query.Direction = Query.Direction.DESCENDING // Track the current sort order
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminEventBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // Menambahkan onClickListener pada button backButton untuk kembali ke WelcomeActivity
-        binding.backButton.setOnClickListener {
-            finish()
-        }
 
         // Inisialisasi Firebase
         mAuth = FirebaseAuth.getInstance()
@@ -42,6 +39,11 @@ class AdminEvent : AppCompatActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adminPostAdapter
 
+        // Menambahkan onClickListener pada button backButton untuk kembali ke WelcomeActivity
+        binding.backButton.setOnClickListener {
+            finish()
+        }
+
         // Inisialisasi Spinner
         val sortOptions = resources.getStringArray(R.array.sort_options)
         val spinnerAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, sortOptions)
@@ -49,9 +51,12 @@ class AdminEvent : AppCompatActivity() {
         binding.spinnerSort.adapter = spinnerAdapter
 
         binding.spinnerSort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 val sortOrder = if (position == 0) Query.Direction.DESCENDING else Query.Direction.ASCENDING
-                fetchPosts(sortOrder)
+                if (sortOrder != currentSortOrder) {
+                    currentSortOrder = sortOrder
+                    fetchPosts(sortOrder)
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -60,12 +65,12 @@ class AdminEvent : AppCompatActivity() {
         }
 
         // Initial fetch with default sort order (Terbaru)
-        fetchPosts(Query.Direction.DESCENDING)
+        fetchPosts(currentSortOrder)
     }
 
     private fun fetchPosts(sortOrder: Query.Direction) {
-        postList.clear()
-        adminPostAdapter.notifyDataSetChanged()
+        postList.clear() // Clear the current list
+        adminPostAdapter.notifyDataSetChanged() // Notify the adapter that the data set has changed
 
         firestore.collection("posts")
             .orderBy("timestamp", sortOrder)
@@ -100,6 +105,7 @@ class AdminEvent : AppCompatActivity() {
                 // Wait until all user data has been fetched
                 Tasks.whenAllSuccess<DocumentSnapshot>(*userFetchTasks.toTypedArray())
                     .addOnSuccessListener {
+                        // Update post list and notify adapter
                         postList.addAll(postsWithUserData)
                         adminPostAdapter.notifyDataSetChanged()
                     }

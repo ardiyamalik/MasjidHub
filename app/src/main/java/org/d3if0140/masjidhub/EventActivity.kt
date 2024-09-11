@@ -1,6 +1,5 @@
 package org.d3if0140.masjidhub
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -22,6 +21,7 @@ class EventActivity : AppCompatActivity() {
     private lateinit var firestore: FirebaseFirestore
     private lateinit var postAdapter: PostAdapter
     private val postList = mutableListOf<Post>()
+    private var currentFilter: String = "Terbaru" // Track the current filter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +55,10 @@ class EventActivity : AppCompatActivity() {
                 id: Long
             ) {
                 val selectedFilter = filterOptions[position]
-                loadPosts(selectedFilter)
+                if (selectedFilter != currentFilter) {
+                    currentFilter = selectedFilter
+                    loadPosts(selectedFilter)
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -64,11 +67,12 @@ class EventActivity : AppCompatActivity() {
         }
 
         // Initial load
-        loadPosts(filterOptions[0]) // Load posts with the default filter
+        loadPosts("Terbaru") // Load posts with the default filter
     }
 
     private fun loadPosts(filter: String) {
         postList.clear() // Clear the current list
+        postAdapter.notifyDataSetChanged() // Notify the adapter that the data set has changed
 
         val direction = if (filter == "Terbaru") {
             Query.Direction.DESCENDING
@@ -107,6 +111,7 @@ class EventActivity : AppCompatActivity() {
                 // Wait until all user data has been fetched
                 Tasks.whenAllSuccess<DocumentSnapshot>(*userFetchTasks.toTypedArray())
                     .addOnSuccessListener {
+                        // Update post list and notify adapter
                         postList.addAll(postsWithUserData)
                         postAdapter.notifyDataSetChanged()
                     }
@@ -119,4 +124,3 @@ class EventActivity : AppCompatActivity() {
             }
     }
 }
-
