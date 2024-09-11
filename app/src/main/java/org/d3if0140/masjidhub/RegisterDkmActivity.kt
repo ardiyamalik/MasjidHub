@@ -1,6 +1,7 @@
 package org.d3if0140.masjidhub
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -119,11 +120,16 @@ class RegisterDkmActivity : AppCompatActivity() {
         val latitudeString = binding.latitudeEditText.text.toString()
         val longitudeString = binding.longitudeEditText.text.toString()
 
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("Harap Tunggu...")
+        progressDialog.show()
+
         // Validasi data
         if (nama.isEmpty() || alamat.isEmpty() || kodePos.isEmpty() || teleponMasjid.isEmpty() ||
             namaKetua.isEmpty() || teleponKetua.isEmpty() || email.isEmpty() || password.isEmpty() ||
             latitudeString == null || longitudeString == null
         ) {
+            progressDialog.dismiss() // Tutup dialog jika ada field kosong
             Log.w("RegisterDkmActivity", "Validation failed: Some fields are empty or location is not set")
             Toast.makeText(this, "Harap isi semua field dan pilih lokasi", Toast.LENGTH_SHORT).show()
             return
@@ -134,6 +140,7 @@ class RegisterDkmActivity : AppCompatActivity() {
         val longitude = longitudeString.toDoubleOrNull()
 
         if (ktpUri == null) {
+            progressDialog.dismiss() // Tutup dialog jika ada field kosong
             Log.w("RegisterDkmActivity", "Validation failed: KTP image not selected")
             Toast.makeText(this, "Harap unggah foto KTP Ketua DKM", Toast.LENGTH_SHORT).show()
             return
@@ -142,6 +149,7 @@ class RegisterDkmActivity : AppCompatActivity() {
         // Register ke Firebase Authentication
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { authTask ->
+                progressDialog.dismiss()
                 if (authTask.isSuccessful) {
                     val user = mAuth.currentUser
                     if (user != null) {

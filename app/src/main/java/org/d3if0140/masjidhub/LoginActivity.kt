@@ -1,5 +1,6 @@
 package org.d3if0140.masjidhub
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
@@ -81,6 +82,7 @@ class LoginActivity : AppCompatActivity() {
         binding.loginButton.setOnClickListener {
             val email = binding.namaEditText.text.toString()
             val password = binding.passwordEditText.text.toString()
+
             Log.d("LoginActivity", "Attempting to log in with email: $email")
             loginUser(email, password)
         }
@@ -98,8 +100,13 @@ class LoginActivity : AppCompatActivity() {
 
     // Fungsi untuk login
     private fun loginUser(email: String, password: String) {
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("Harap Tunggu...")
+        progressDialog.show()
+
         mAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
+                progressDialog.dismiss() // Tutup dialog setelah login selesai (baik berhasil atau gagal)
                 if (task.isSuccessful) {
                     val user = mAuth.currentUser
                     if (user != null) {

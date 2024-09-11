@@ -1,6 +1,7 @@
 package org.d3if0140.masjidhub
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -83,6 +84,18 @@ class AdminUploadCarousel : AppCompatActivity() {
 
     // Fungsi untuk mengupload semua gambar ke Firebase Storage
     private fun uploadAllImagesToFirebase() {
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("Mengunggah...")
+        progressDialog.show()
+
+        val totalImages = imageUriList.size
+        var uploadCount = 0
+
+        if (totalImages == 0) {
+            progressDialog.dismiss() // Jika tidak ada gambar untuk di-upload, langsung tutup dialog
+            return
+        }
+
         for (imageUri in imageUriList) {
             val fileName = UUID.randomUUID().toString() + ".jpg"
             val ref = storageReference.child("carousel/$fileName")
@@ -92,9 +105,14 @@ class AdminUploadCarousel : AppCompatActivity() {
                     ref.downloadUrl.addOnSuccessListener { uri ->
                         saveImageToFirestore(uri.toString())
                     }
+                    uploadCount++
+                    if (uploadCount == totalImages) {
+                        progressDialog.dismiss()
+                    }
                 }
                 .addOnFailureListener {
                     Toast.makeText(this, "Upload gagal: ${it.message}", Toast.LENGTH_SHORT).show()
+                    progressDialog.dismiss()
                 }
         }
     }

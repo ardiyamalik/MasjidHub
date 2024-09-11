@@ -1,5 +1,6 @@
 package org.d3if0140.masjidhub
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -92,6 +93,10 @@ class UnggahActivity : AppCompatActivity() {
     private fun uploadImage() {
         val fileName = UUID.randomUUID().toString()
         val imageRef = storageReference.child("images/$fileName")
+
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("Mengunggah...")
+        progressDialog.show()
 
         selectedImageUri?.let { uri ->
             imageRef.putFile(uri)

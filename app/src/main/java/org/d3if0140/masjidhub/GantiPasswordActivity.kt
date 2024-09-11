@@ -1,5 +1,6 @@
 package org.d3if0140.masjidhub
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.ClickableSpan
@@ -67,16 +68,22 @@ class GantiPasswordActivity : AppCompatActivity() {
 
             // Menangani perubahan password saat tombol Simpan ditekan
             binding.buttonSimpan.setOnClickListener {
+                val progressDialog = ProgressDialog(this)
+                progressDialog.setMessage("Harap Tunggu...")
+                progressDialog.show()
+
                 val currentPassword = binding.passwordEditText.text.toString().trim()
                 val newPassword = binding.passwordEditText2.text.toString().trim()
                 val confirmPassword = binding.passwordEditText3.text.toString().trim()
 
                 if (newPassword != confirmPassword) {
+                    progressDialog.dismiss()
                     Toast.makeText(this, "Password baru tidak cocok", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
                 if (currentPassword.isEmpty() || newPassword.isEmpty()) {
+                    progressDialog.dismiss()
                     Toast.makeText(this, "Semua field harus diisi", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
@@ -91,6 +98,7 @@ class GantiPasswordActivity : AppCompatActivity() {
                                 // Jika password saat ini benar, update password di Firebase Authentication
                                 currentUser?.updatePassword(newPassword)
                                     ?.addOnCompleteListener { task ->
+                                        progressDialog.dismiss()
                                         if (task.isSuccessful) {
                                             // Update juga password di Firestore untuk menyimpan perubahan
                                             firestore.collection("user").document(userId)

@@ -1,5 +1,6 @@
 package org.d3if0140.masjidhub
 
+import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -122,7 +123,12 @@ class RegistActivity : AppCompatActivity() {
             val nama = namaEditText.text.toString()
             val dkm = spinner.selectedItem.toString()
 
+            val progressDialog = ProgressDialog(this)
+            progressDialog.setMessage("Harap Tunggu...")
+            progressDialog.show()
+
             if (email.isEmpty() || password.isEmpty() || nama.isEmpty() || dkm.isEmpty()) {
+                progressDialog.dismiss() // Tutup dialog jika ada field kosong
                 Toast.makeText(this, "Harap isi semua field dan pilih masjid.", Toast.LENGTH_SHORT)
                     .show()
                 return@setOnClickListener
@@ -130,6 +136,7 @@ class RegistActivity : AppCompatActivity() {
 
             mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
+                    progressDialog.dismiss()
                     if (task.isSuccessful) {
                         val user: FirebaseUser? = mAuth.currentUser
                         val profileUpdates = UserProfileChangeRequest.Builder()

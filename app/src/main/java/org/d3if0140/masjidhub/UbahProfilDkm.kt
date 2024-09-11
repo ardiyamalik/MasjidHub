@@ -1,6 +1,7 @@
 package org.d3if0140.masjidhub
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -65,6 +66,10 @@ class UbahProfilDkm : AppCompatActivity() {
         }
 
         binding.buttonSimpan.setOnClickListener {
+            val progressDialog = ProgressDialog(this)
+            progressDialog.setMessage("Harap Tunggu...")
+            progressDialog.show()
+
             val nama = binding.editTextNama.text.toString().trim()
             val alamat = binding.editTextAlamat.text.toString().trim()
             val lat = latitude
@@ -91,16 +96,19 @@ class UbahProfilDkm : AppCompatActivity() {
                         .document(it)
                         .update(updateData)
                         .addOnSuccessListener {
+                            progressDialog.dismiss()
                             Toast.makeText(this, "Profil berhasil diubah", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this, ProfilDkmActivity::class.java)
                             startActivity(intent)
                             finish()
                         }
                         .addOnFailureListener { exception ->
+                            progressDialog.dismiss()
                             Toast.makeText(this, "Gagal mengubah profil: ${exception.message}", Toast.LENGTH_SHORT).show()
                         }
                 }
             } else {
+                progressDialog.dismiss()
                 Toast.makeText(this, "Nama harus diisi", Toast.LENGTH_SHORT).show()
             }
         }

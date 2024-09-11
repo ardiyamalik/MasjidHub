@@ -1,6 +1,7 @@
 package org.d3if0140.masjidhub
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -70,6 +71,10 @@ class UbahProfil : AppCompatActivity() {
         loadUserProfile()
 
         binding.buttonSimpan.setOnClickListener {
+            val progressDialog = ProgressDialog(this)
+            progressDialog.setMessage("Harap Tunggu...")
+            progressDialog.show()
+
             val nama = binding.editTextNama.text.toString().trim()
             val dkm = binding.DkmSpinnerUbah.selectedItem.toString() // Ambil nilai yang dipilih dari spinner
 
@@ -87,6 +92,7 @@ class UbahProfil : AppCompatActivity() {
                         .document(it)
                         .update(updateData)
                         .addOnSuccessListener {
+                            progressDialog.dismiss()
                             Toast.makeText(this, "Profil berhasil diubah", Toast.LENGTH_SHORT).show()
                             // Arahkan ke ProfilActivity
                             val intent = Intent(this, ProfilActivity::class.java)
@@ -94,10 +100,12 @@ class UbahProfil : AppCompatActivity() {
                             finish()
                         }
                         .addOnFailureListener { exception ->
+                            progressDialog.dismiss()
                             Toast.makeText(this, "Gagal mengubah profil: ${exception.message}", Toast.LENGTH_SHORT).show()
                         }
                 }
             } else {
+                progressDialog.dismiss()
                 Toast.makeText(this, "Nama harus diisi", Toast.LENGTH_SHORT).show()
             }
         }

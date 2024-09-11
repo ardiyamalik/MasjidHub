@@ -127,7 +127,7 @@ class UploadDataInfaq : AppCompatActivity() {
         }
 
         val progressDialog = ProgressDialog(this)
-        progressDialog.setMessage("Uploading...")
+        progressDialog.setMessage("Mengunggah...")
         progressDialog.show()
 
         // Upload image

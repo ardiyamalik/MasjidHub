@@ -1,6 +1,7 @@
 package org.d3if0140.masjidhub
 
 import android.app.DatePickerDialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -130,7 +131,14 @@ class PengajuanDanaActivity : AppCompatActivity() {
         val nomorRekening = binding.nomorRekening.text.toString()
         val namaRekening = binding.namaRekening.text.toString()
 
-        if (nama.isEmpty() || jumlahStr.isEmpty() || alasan.isEmpty() || tanggal.isEmpty() || kontak.isEmpty() || lokasi.isEmpty() || namaBank.isEmpty() || nomorRekening.isEmpty() || namaRekening.isEmpty() || ktpUri == null || buktiUri == null) {
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("Harap Tunggu...")
+        progressDialog.show()
+
+        if (nama.isEmpty() || jumlahStr.isEmpty() || alasan.isEmpty() || tanggal.isEmpty() ||
+            kontak.isEmpty() || lokasi.isEmpty() || namaBank.isEmpty() || nomorRekening.isEmpty() ||
+            namaRekening.isEmpty() || ktpUri == null || buktiUri == null) {
+            progressDialog.dismiss() // Tutup dialog jika ada field kosong
             Toast.makeText(this, "Semua field harus diisi", Toast.LENGTH_SHORT).show()
             Log.d(TAG, "Field validation failed")
             return
@@ -148,12 +156,14 @@ class PengajuanDanaActivity : AppCompatActivity() {
         ktpStorageRef.putFile(ktpUri!!)
             .addOnSuccessListener {
                 ktpStorageRef.downloadUrl.addOnSuccessListener { ktpUri ->
+                    progressDialog.dismiss() // Tutup dialog jika ada field kosong
                     Log.d(TAG, "KTP file upload successful, download URL: $ktpUri")
 
                     // Upload Bukti
                     buktiStorageRef.putFile(buktiUri!!)
                         .addOnSuccessListener {
                             buktiStorageRef.downloadUrl.addOnSuccessListener { buktiUri ->
+                                progressDialog.dismiss() // Tutup dialog jika ada field kosong
                                 Log.d(TAG, "Bukti file upload successful, download URL: $buktiUri")
 
                                 val userId = auth.currentUser?.uid ?: return@addOnSuccessListener
@@ -211,10 +221,13 @@ class PengajuanDanaActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
         val userId = currentUser?.uid ?: "unknown_user" // Menyimpan userId dari pengguna saat ini
 
+        // Format jumlah tanpa desimal
+        val formattedJumlah = jumlah.toInt().toString()
+
         val notificationData = hashMapOf(
             "userId" to userId, // Tambahkan userId ke data notifikasi
             "title" to "Pengajuan Dana Baru",
-            "message" to "Pengajuan sebesar Rp $jumlah. sedang diproses oleh admin",
+            "message" to "Pengajuan sebesar Rp $formattedJumlah sedang diproses oleh admin",
             "timestamp" to System.currentTimeMillis()
         )
 
