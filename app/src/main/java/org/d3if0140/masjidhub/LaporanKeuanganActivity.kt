@@ -368,7 +368,7 @@ class LaporanKeuanganActivity : AppCompatActivity() {
                         val year = yearFormat.format(date)
 
                         if (year == selectedYear) {
-                            val monthKey = "Month $month"
+                            val monthKey = "Bulan $month"
                             val (income, expense) = transaksiBulanan[monthKey] ?: Pair(0L, 0L)
 
                             val updatedIncome = when {
