@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -88,11 +89,20 @@ class PostAdminFragment : Fragment() {
     }
 
     private fun showDeleteConfirmationDialog(post: Post) {
+        val input = EditText(requireContext())
+        input.hint = "Masukkan alasan penghapusan"
+
         AlertDialog.Builder(requireContext())
             .setTitle("Hapus Postingan")
             .setMessage("Apakah Anda yakin ingin menghapus postingan ini?")
+            .setView(input)
             .setPositiveButton("Hapus") { dialog, _ ->
-                deletePost(post)
+                val reason = input.text.toString()
+                if (reason.isNotBlank()) {
+                    deletePost(post, reason)
+                } else {
+                    Toast.makeText(requireContext(), "Alasan penghapusan tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                }
                 dialog.dismiss()
             }
             .setNegativeButton("Batal") { dialog, _ ->
@@ -102,17 +112,44 @@ class PostAdminFragment : Fragment() {
             .show()
     }
 
-    private fun deletePost(post: Post) {
+    private fun deletePost(post: Post, reason: String) {
+        if (post.id.isNullOrEmpty()) {
+            Log.e("PostAdminFragment", "Post ID is null or empty")
+            Toast.makeText(requireContext(), "Invalid post ID", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         firestore.collection("posts").document(post.id)
             .delete()
             .addOnSuccessListener {
                 postList.remove(post)
                 postAdapter.notifyDataSetChanged()
                 Log.d("PostAdminFragment", "Post deleted successfully")
+                Toast.makeText(requireContext(), "Post deleted", Toast.LENGTH_SHORT).show()
+
+                // Save notification to Firestore
+                saveNotification(post.userId, reason)
             }
             .addOnFailureListener { e ->
                 Log.e("PostAdminFragment", "Error deleting post", e)
+                Toast.makeText(requireContext(), "Failed to delete post", Toast.LENGTH_SHORT).show()
             }
     }
 
+    private fun saveNotification(userId: String, reason: String) {
+        val notification = hashMapOf(
+            "userId" to userId,
+            "message" to "Postingan Anda telah dihapus karena: $reason",
+            "timestamp" to System.currentTimeMillis()
+        )
+
+        firestore.collection("notifikasi_pengurus_dkm")
+            .add(notification)
+            .addOnSuccessListener {
+                Log.d("PostAdminFragment", "Notification saved successfully")
+            }
+            .addOnFailureListener { e ->
+                Log.e("PostAdminFragment", "Error saving notification", e)
+            }
+    }
 }

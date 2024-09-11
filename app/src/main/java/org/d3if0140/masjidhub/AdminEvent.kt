@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -119,17 +120,27 @@ class AdminEvent : AppCompatActivity() {
     }
 
     private fun showDeleteConfirmationDialog(post: Post) {
+        val input = EditText(this)
+        input.hint = "Masukkan alasan penghapusan"
+
         AlertDialog.Builder(this)
             .setTitle("Hapus Postingan")
             .setMessage("Apakah Anda yakin ingin menghapus postingan ini?")
+            .setView(input)
             .setPositiveButton("Hapus") { _, _ ->
-                deletePost(post)
+                val reason = input.text.toString()
+                if (reason.isNotBlank()) {
+                    deletePost(post, reason)
+                } else {
+                    Toast.makeText(this, "Alasan penghapusan tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                }
             }
             .setNegativeButton("Batal", null)
             .show()
     }
 
-    private fun deletePost(post: Post) {
+
+    private fun deletePost(post: Post, reason: String) {
         if (post.id.isNullOrEmpty()) {
             Log.e("AdminEvent", "Post ID is null or empty")
             Toast.makeText(this, "Invalid post ID", Toast.LENGTH_SHORT).show()
@@ -137,6 +148,8 @@ class AdminEvent : AppCompatActivity() {
         }
 
         Log.d("AdminEvent", "Attempting to delete post with ID: ${post.id}")
+
+        // Delete the post
         firestore.collection("posts").document(post.id)
             .delete()
             .addOnSuccessListener {
@@ -144,10 +157,32 @@ class AdminEvent : AppCompatActivity() {
                 adminPostAdapter.notifyDataSetChanged()
                 Log.d("AdminEvent", "Post deleted successfully: ${post.id}")
                 Toast.makeText(this, "Post deleted", Toast.LENGTH_SHORT).show()
+
+                // Save notification to Firestore
+                saveNotification(post.userId, reason)
             }
             .addOnFailureListener { exception ->
                 Log.e("AdminEvent", "Error deleting post: ${post.id}", exception)
                 Toast.makeText(this, "Failed to delete post", Toast.LENGTH_SHORT).show()
             }
     }
+
+    private fun saveNotification(userId: String, reason: String) {
+        val notification = hashMapOf(
+            "userId" to userId,
+            "tittle" to "Postingan anda telah di hapus",
+            "message" to "Postingan Anda telah dihapus karena: $reason",
+            "timestamp" to System.currentTimeMillis()
+        )
+
+        firestore.collection("notifikasi_pengurus_dkm")
+            .add(notification)
+            .addOnSuccessListener {
+                Log.d("AdminEvent", "Notification saved successfully")
+            }
+            .addOnFailureListener { exception ->
+                Log.e("AdminEvent", "Error saving notification", exception)
+            }
+    }
+
 }
