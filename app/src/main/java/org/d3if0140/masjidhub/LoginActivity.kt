@@ -111,7 +111,7 @@ class LoginActivity : AppCompatActivity() {
                     val user = mAuth.currentUser
                     if (user != null) {
                         Log.d("LoginActivity", "Login successful for user: ${user.uid}")
-                        checkUserRole(user.uid)
+                        checkUserRole(user.uid, password)
                     }
                 } else {
                     Log.e("LoginActivity", "Login failed: ${task.exception?.message}")
@@ -133,7 +133,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // Function to check user role and verification status
-    private fun checkUserRole(userId: String) {
+    private fun checkUserRole(userId: String, inputPassword: String) {
         Log.d("LoginActivity", "Checking role for user: $userId")
         firestore.collection("user")
             .document(userId)
@@ -144,8 +144,21 @@ class LoginActivity : AppCompatActivity() {
                     if (userData != null) {
                         val role = userData["role"] as? String
                         val verified = userData["verified"] as? Boolean
+                        val storedPassword = userData["password"] as? String
 
                         Log.d("LoginActivity", "User role: $role, Verified: $verified")
+
+                        // Check if the input password is different from the stored one in Firestore
+                        if (storedPassword != inputPassword) {
+                            firestore.collection("user").document(userId)
+                                .update("password", inputPassword)
+                                .addOnSuccessListener {
+                                    Log.d("LoginActivity", "Password updated in Firestore")
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.e("LoginActivity", "Failed to update password in Firestore: ${e.message}")
+                                }
+                        }
 
                         when {
                             role == "pengurus_dkm" && verified == false -> {
