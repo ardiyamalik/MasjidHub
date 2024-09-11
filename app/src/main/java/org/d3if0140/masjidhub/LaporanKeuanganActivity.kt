@@ -26,7 +26,7 @@ class LaporanKeuanganActivity : AppCompatActivity() {
 
     private var selectedYear: String = "2024"
     private var selectedMonth: String = "Januari"
-    private var selectedTipe: String = "Kas" // Default tipe
+    private var selectedTipe: String = "Semua" // Default tipe
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -274,7 +274,6 @@ class LaporanKeuanganActivity : AppCompatActivity() {
             .addOnSuccessListener { documents ->
                 val transaksiMingguan = mutableMapOf<String, Pair<Long, Long>>()
                 val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val weekFormat = SimpleDateFormat("w", Locale.getDefault())
                 val monthFormat = SimpleDateFormat("MM", Locale.getDefault())
                 val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
                 val monthIndex = resources.getStringArray(R.array.bulan_array).indexOf(selectedMonth) + 1
@@ -287,12 +286,20 @@ class LaporanKeuanganActivity : AppCompatActivity() {
 
                     try {
                         val date = dateFormat.parse(tanggal) ?: continue
-                        val week = weekFormat.format(date)
+                        val calendar = Calendar.getInstance()
+                        calendar.time = date
                         val month = monthFormat.format(date)
                         val year = yearFormat.format(date)
 
+                        // Pastikan hanya data dari bulan dan tahun yang dipilih
                         if (month == monthString && year == selectedYear) {
-                            val weekKey = "Week $week"
+                            // Hitung minggu dari awal bulan yang dipilih
+                            calendar.firstDayOfWeek = Calendar.MONDAY
+                            calendar.set(Calendar.DAY_OF_MONTH, 1)
+                            val firstDayOfMonth = calendar.time
+                            val currentWeekOfMonth = calendar.get(Calendar.WEEK_OF_MONTH)
+
+                            val weekKey = "Minggu $currentWeekOfMonth"
                             val (income, expense) = transaksiMingguan[weekKey] ?: Pair(0L, 0L)
 
                             val updatedIncome = when {
@@ -336,6 +343,7 @@ class LaporanKeuanganActivity : AppCompatActivity() {
                 Log.e("LaporanKeuangan", "Error fetching data mingguan: ${exception.message}")
             }
     }
+
 
 
 
