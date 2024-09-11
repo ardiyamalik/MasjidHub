@@ -84,7 +84,18 @@ class AdminVerifActivity : AppCompatActivity() {
             putExtra("LONGITUDE", masjidData["longitude"] as? String ?: "Tidak tersedia")
             putExtra("KTP_URL", masjidData["ktpKetuaUrl"] as? String ?: "")
         }
-        startActivity(intent)
+        startActivityForResult(intent, REQUEST_CODE_VERIFY)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_VERIFY && resultCode == RESULT_OK) {
+            fetchMasjidData()
+        }
+    }
+
+    companion object {
+        private const val REQUEST_CODE_VERIFY = 1
     }
 
     class MasjidListAdapter(context: Context, private val masjidList: List<String>, private val alamatList: List<String>) :

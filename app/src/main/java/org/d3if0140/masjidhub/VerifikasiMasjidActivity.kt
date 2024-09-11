@@ -90,6 +90,7 @@ class VerifikasiMasjidActivity : AppCompatActivity() {
                         .addOnSuccessListener {
                             Toast.makeText(this, "Masjid berhasil diverifikasi", Toast.LENGTH_SHORT)
                                 .show()
+                            setResult(RESULT_OK) // Set result OK
                             finish() // Tutup activity setelah verifikasi selesai
                         }
                         .addOnFailureListener { e ->
@@ -107,4 +108,5 @@ class VerifikasiMasjidActivity : AppCompatActivity() {
                 Toast.makeText(this, "Gagal mencari masjid: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
 }
