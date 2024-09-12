@@ -25,61 +25,61 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".GantiPasswordDkmActivity"
+            android:name=".ui.view.GantiPasswordDkmActivity"
             android:exported="true" />
         <activity
-            android:name=".GantiPasswordActivity"
+            android:name=".ui.view.GantiPasswordActivity"
             android:exported="true" />
         <activity
-            android:name=".InformasiKasAdminActivity"
+            android:name=".ui.view.InformasiKasAdminActivity"
             android:exported="true" />
         <activity
-            android:name=".InformasiKasSearchActivity"
+            android:name=".ui.view.InformasiKasSearchActivity"
             android:exported="true" />
         <activity
-            android:name=".InformasiKasDkmActivity"
+            android:name=".ui.view.InformasiKasDkmActivity"
             android:exported="true" />
         <activity
-            android:name=".UploadDataInfaq"
+            android:name=".ui.view.UploadDataInfaq"
             android:exported="true" />
         <activity
-            android:name=".AdminUploadCarousel"
+            android:name=".ui.view.AdminUploadCarousel"
             android:exported="true" />
         <activity
-            android:name=".VerifikasiMasjidActivity"
+            android:name=".ui.view.VerifikasiMasjidActivity"
             android:exported="true" />
         <activity
-            android:name=".AdminLaporanKeuangan"
+            android:name=".ui.view.AdminLaporanKeuangan"
             android:exported="true" />
         <activity
-            android:name=".LaporanKeuanganDkmActivity"
+            android:name=".ui.view.LaporanKeuanganDkmActivity"
             android:exported="true" />
         <activity
-            android:name=".LaporanKeuanganActivity"
+            android:name=".ui.view.LaporanKeuanganActivity"
             android:exported="true" />
         <activity
-            android:name=".Filter"
+            android:name=".ui.view.Filter"
             android:exported="true" />
         <activity
-            android:name=".MapsUbahProfilActivity"
+            android:name=".ui.view.MapsUbahProfilActivity"
             android:exported="true" />
         <activity
-            android:name=".MapsActivity"
+            android:name=".ui.view.MapsActivity"
             android:exported="true" />
         <activity
-            android:name=".KasMingguanActivity"
+            android:name=".ui.view.KasMingguanActivity"
             android:exported="true" />
         <activity
-            android:name=".AdminJamaahTerdaftar"
+            android:name=".ui.view.AdminJamaahTerdaftar"
             android:exported="true" />
         <activity
-            android:name=".JamaahTerdaftar"
+            android:name=".ui.view.JamaahTerdaftar"
             android:exported="true" />
         <activity
-            android:name=".ProfileSearchAdmin"
+            android:name=".ui.view.ProfileSearchAdmin"
             android:exported="true" />
         <activity
-            android:name=".ProfileSearchActivity"
+            android:name=".ui.view.ProfileSearchActivity"
             android:exported="true" />
 
         <receiver
@@ -87,10 +87,10 @@
             android:exported="true" />
 
         <activity
-            android:name=".AdminVerifActivity"
+            android:name=".ui.view.AdminVerifActivity"
             android:exported="true" />
         <activity
-            android:name=".PengisianKasActivity"
+            android:name=".ui.adapter.PengisianKasActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -105,7 +105,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NotificationDkmActivity"
+            android:name=".ui.view.NotificationDkmActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -120,43 +120,43 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PengajuanDanaActivity"
+            android:name=".ui.view.PengajuanDanaActivity"
             android:exported="true" />
         <activity
-            android:name=".AdminInfaqActivity"
+            android:name=".ui.view.AdminInfaqActivity"
             android:exported="true" />
         <activity
-            android:name=".NotificationActivity"
+            android:name=".ui.view.NotificationActivity"
             android:exported="true" />
         <activity
-            android:name=".InfaqActivity"
+            android:name=".ui.view.InfaqActivity"
             android:exported="true" />
         <activity
-            android:name=".FullScreenImageActivity"
+            android:name=".ui.view.FullScreenImageActivity"
             android:exported="true" />
         <activity
-            android:name=".AdminPermohonan"
+            android:name=".ui.view.AdminPermohonan"
             android:exported="true" />
         <activity
-            android:name=".AdminEvent"
+            android:name=".ui.view.AdminEvent"
             android:exported="true" />
         <activity
-            android:name=".AdminListMasjid"
+            android:name=".ui.view.AdminListMasjid"
             android:exported="true" />
         <activity
-            android:name=".UbahProfilDkm"
+            android:name=".ui.view.UbahProfilDkm"
             android:exported="true" />
         <activity
-            android:name=".ProfilDkmActivity"
+            android:name=".ui.view.ProfilDkmActivity"
             android:exported="true" />
         <activity
-            android:name=".EventActivity"
+            android:name=".ui.view.EventActivity"
             android:exported="true" />
         <activity
-            android:name=".UbahProfil"
+            android:name=".ui.view.UbahProfil"
             android:exported="true" />
         <activity
-            android:name=".DkmDashboard"
+            android:name=".ui.view.DkmDashboard"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -171,10 +171,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UnggahActivity"
+            android:name=".ui.view.UnggahActivity"
             android:exported="true" />
         <activity
-            android:name=".AdminDashboard"
+            android:name=".ui.view.AdminDashboard"
             android:exported="true" />
 
         <meta-data
@@ -191,25 +191,25 @@
             android:value="G981359004" />
 
         <activity
-            android:name=".ProfilActivity"
+            android:name=".ui.view.ProfilActivity"
             android:exported="true" />
         <activity
-            android:name=".CariMasjidActivity"
+            android:name=".ui.view.CariMasjidActivity"
             android:exported="true" />
         <activity
-            android:name=".KonfirmasiActivity"
+            android:name=".ui.view.KonfirmasiActivity"
             android:exported="true" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".ui.view.HomeActivity"
             android:exported="true" />
         <activity
-            android:name=".RegisterDkmActivity"
+            android:name=".ui.view.RegisterDkmActivity"
             android:exported="true" />
         <activity
-            android:name=".RegistActivity"
+            android:name=".ui.view.RegistActivity"
             android:exported="true" />
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".ui.view.WelcomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -218,7 +218,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.view.LoginActivity"
             android:exported="true" />
 
         <meta-data

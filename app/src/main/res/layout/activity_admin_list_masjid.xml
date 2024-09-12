@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".AdminListMasjid">
+    tools:context=".ui.view.AdminListMasjid">
 
     <ImageButton
         android:id="@+id/backButton"

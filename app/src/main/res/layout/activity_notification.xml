@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".NotificationActivity">
+    tools:context=".ui.view.NotificationActivity">
 
     <ImageButton
         android:id="@+id/backButton"
