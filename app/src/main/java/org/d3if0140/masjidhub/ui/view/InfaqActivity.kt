@@ -184,7 +184,7 @@ class InfaqActivity : AppCompatActivity() {
 
         val notificationData = hashMapOf(
             "userId" to userId,
-            "title" to "Infaq sedang diproses",
+            "title" to "Infaq telah diterima",
             "message" to "Infaq sebesar Rp $formattedJumlah telah diterima oleh aplikasi.", // $jumlah harus bertipe Double
             "timestamp" to System.currentTimeMillis()
         )

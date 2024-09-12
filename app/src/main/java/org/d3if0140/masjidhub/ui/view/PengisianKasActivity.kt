@@ -1,4 +1,4 @@
-package org.d3if0140.masjidhub.ui.adapter
+package org.d3if0140.masjidhub.ui.view
 
 import android.app.DatePickerDialog
 import android.content.Intent
@@ -89,24 +89,6 @@ class PengisianKasActivity : AppCompatActivity() {
         binding.backButton.setOnClickListener {
             startActivity(Intent(this, DkmDashboard::class.java))
         }
-
-//        // Mengatur countdown timer selama 7 hari
-//        val countdownMillis = TimeUnit.DAYS.toMillis(7)
-//        val textViewCountdown = binding.textViewCountdown
-//        object : CountDownTimer(countdownMillis, 1000) {
-//            override fun onTick(millisUntilFinished: Long) {
-//                val days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished)
-//                val hours = TimeUnit.MILLISECONDS.toHours(millisUntilFinished % TimeUnit.DAYS.toMillis(1))
-//                val minutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished % TimeUnit.HOURS.toMillis(1))
-//                val seconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished % TimeUnit.MINUTES.toMillis(1))
-//
-//                textViewCountdown.text = String.format("%02d days %02d:%02d:%02d", days, hours, minutes, seconds)
-//            }
-//
-//            override fun onFinish() {
-//                textViewCountdown.text = "Countdown finished"
-//            }
-//        }.start()
 
         binding.buttonBayar.setOnClickListener {
             submitKas()
@@ -203,16 +185,24 @@ class PengisianKasActivity : AppCompatActivity() {
     }
 
 
-
-
     private fun sendNotificationToDkm(transactionId: String) {
         val currentUser = auth.currentUser
         val userId = currentUser?.uid ?: "unknown_user"
 
+        // Hitung tanggal satu minggu ke depan
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.WEEK_OF_YEAR, 1)
+        val futureDate = calendar.time
+
+        // Format tanggal menjadi string
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val formattedDate = dateFormat.format(futureDate)
+
+        // Data notifikasi
         val notificationData = hashMapOf(
             "userId" to userId,
-            "title" to "kas sedang diproses",
-            "message" to "Kas mingguan sedang diproses oleh aplikasi.",
+            "title" to "Kas Telah Diterima",
+            "message" to "Kas mingguan telah diterima. Silakan bayar kas lagi pada tanggal $formattedDate.",
             "timestamp" to System.currentTimeMillis()
         )
 

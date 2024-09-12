@@ -60,6 +60,8 @@ class UbahProfil : AppCompatActivity() {
                         val namaDkm = document.getString("nama")
                         namaDkm?.let { dkmOptions.add(it) }
                     }
+                    // Tambahkan opsi "Masjid tidak ada" di akhir daftar
+                    dkmOptions.add("Masjid tidak ada")
                     adapter.notifyDataSetChanged()
                 }
             }
@@ -212,16 +214,9 @@ class UbahProfil : AppCompatActivity() {
                         val imageUrl = userData["imageUrl"] as? String
 
                         // Update UI
-                        binding.editTextNama.setText(nama ?: "") // Set text or empty string if null
+                        nama?.let { binding.namaUser.setText(it) }
 
-                        dkm?.let { dkmValue ->
-                            // Set default spinner value if necessary
-                            val adapter = binding.DkmSpinnerUbah.adapter as? ArrayAdapter<String>
-                            val position = adapter?.getPosition(dkmValue) ?: -1
-                            if (position != -1) {
-                                binding.DkmSpinnerUbah.setSelection(position)
-                            }
-                        }
+                        dkm?.let { binding.dkm.setText(it) }
 
                         imageUrl?.let { loadProfileImage(it) } ?: run { displayDefaultProfileImage() }
                     }

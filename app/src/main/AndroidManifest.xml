@@ -90,7 +90,7 @@
             android:name=".ui.view.AdminVerifActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.adapter.PengisianKasActivity"
+            android:name=".ui.view.PengisianKasActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

@@ -17,7 +17,6 @@ import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderF
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import org.d3if0140.masjidhub.ui.adapter.PengisianKasActivity
 import org.d3if0140.masjidhub.R
 import org.d3if0140.masjidhub.databinding.ActivityDkmDashboardBinding
 

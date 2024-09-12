@@ -442,7 +442,7 @@ class LaporanKeuanganDkmActivity : AppCompatActivity() {
                         val year = yearFormat.format(date)
 
                         if (year == selectedYear) {
-                            val yearKey = "$year"
+                            val yearKey = "Tahun $year"
                             val (income, expense) = transaksiTahunan[yearKey] ?: Pair(0L, 0L)
 
                             val updatedIncome = when {
