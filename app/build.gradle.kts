@@ -58,34 +58,15 @@ dependencies {
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
     implementation ("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
-
     implementation ("com.google.android.gms:play-services-location:21.3.0")
-
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:$1.5.31"))
     implementation("com.google.android.libraries.places:places:3.5.0")
-
     implementation ("com.android.volley:volley:1.2.1")
-
     implementation ("com.google.firebase:firebase-appcheck-playintegrity:18.0.0")
     implementation ("com.google.firebase:firebase-appcheck-debug:18.0.0")
     implementation ("com.google.firebase:firebase-appcheck-safetynet:16.1.2")
-
     implementation ("com.midtrans:uikit:2.0.0-SANDBOX")
-//    implementation ("com.midtrans:uikit:2.0.0")
-
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
-
-//    implementation ("com.midtrans:corekit:2.0.0")
-//    implementation ("com.midtrans:midtrans-android-sdk:2.0.8")
-
-
-
-
-
-
-
-
-
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
 
 }
