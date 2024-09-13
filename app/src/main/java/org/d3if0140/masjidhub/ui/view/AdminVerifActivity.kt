@@ -81,8 +81,8 @@ class AdminVerifActivity : AppCompatActivity() {
             putExtra("NAMA_KETUA", masjidData["namaKetua"] as? String ?: "Nama Ketua tidak tersedia")
             putExtra("TELEPON_KETUA", masjidData["teleponKetua"] as? String ?: "Telepon Ketua tidak tersedia")
             putExtra("EMAIL", masjidData["email"] as? String ?: "Email tidak tersedia")
-            putExtra("LATITUDE", masjidData["latitude"] as? String ?: "Tidak tersedia")
-            putExtra("LONGITUDE", masjidData["longitude"] as? String ?: "Tidak tersedia")
+            putExtra("LATITUDE", (masjidData["latitude"] as? Double)?.toString() ?: "Tidak tersedia")
+            putExtra("LONGITUDE", (masjidData["longitude"] as? Double)?.toString() ?: "Tidak tersedia")
             putExtra("KTP_URL", masjidData["ktpKetuaUrl"] as? String ?: "")
         }
         startActivityForResult(intent, REQUEST_CODE_VERIFY)
