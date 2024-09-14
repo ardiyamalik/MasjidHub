@@ -1,10 +1,12 @@
 package org.d3if0140.masjidhub.ui.view
 
+import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -68,6 +70,13 @@ class UnggahActivity : AppCompatActivity() {
             }
         }
 
+        val currentDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+        binding.editTanggal.setText(currentDate)
+
+        binding.editTanggal.setOnClickListener {
+            showDatePickerDialog()
+        }
+
         binding.insertImageButton.setOnClickListener {
             openFileChooser()
         }
@@ -121,8 +130,12 @@ class UnggahActivity : AppCompatActivity() {
 
 
     private fun submitPost(imageUrl: String?) {
+        val namaEvent = binding.editNamaEvent.text.toString()
+        val tanggalEvent = binding.editTanggal.text.toString()
+        val lokasiEvent = binding.editLokasi.text.toString()
+        val linkEvent = binding.editLink.text.toString()
         val deskripsi = binding.editDesk.text.toString()
-        if (deskripsi.isBlank()) {
+        if (namaEvent.isBlank() || tanggalEvent.isBlank() || lokasiEvent.isBlank() ||linkEvent.isBlank()||deskripsi.isBlank()) {
             Toast.makeText(this, "Deskripsi tidak boleh kosong", Toast.LENGTH_SHORT).show()
             return
         }
@@ -135,6 +148,10 @@ class UnggahActivity : AppCompatActivity() {
 
         val timestamp = System.currentTimeMillis()
         val postData = hashMapOf(
+            "namaEvent" to namaEvent,
+            "tanggalEvent" to tanggalEvent,
+            "lokasiEvent" to lokasiEvent,
+            "linkEvent" to linkEvent,
             "deskripsi" to deskripsi,
             "imageUrl" to imageUrl,
             "userId" to currentUser.uid,
@@ -146,6 +163,10 @@ class UnggahActivity : AppCompatActivity() {
             .add(postData)
             .addOnSuccessListener { documentReference ->
                 val intent = Intent(this, EventActivity::class.java).apply {
+                    putExtra("namaEvent", namaEvent)
+                    putExtra("tanggalEvent", tanggalEvent)
+                    putExtra("lokasiEvent", lokasiEvent)
+                    putExtra("linkEvent", linkEvent)
                     putExtra("deskripsi", deskripsi)
                     putExtra("imageUrl", imageUrl)
                     putExtra("timestamp", timestamp) // Kirim timestamp ke Activity berikutnya
@@ -156,5 +177,22 @@ class UnggahActivity : AppCompatActivity() {
                 Log.e("UnggahActivity", "Error adding document", e)
                 Toast.makeText(this, "Gagal menyimpan postingan", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun showDatePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _: DatePicker, year: Int, month: Int, day: Int ->
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(year, month, day)
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                binding.editTanggal.setText(dateFormat.format(selectedDate.time))
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+        datePickerDialog.show()
     }
 }

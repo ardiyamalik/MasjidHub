@@ -67,11 +67,73 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
+                android:id="@+id/editNamaEvent"
+                android:layout_width="285dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/stroke_white"
+                android:gravity="left"
+                android:hint="@string/nama_event"
+                android:inputType="textMultiLine"
+                android:paddingLeft="9dp"
+                android:paddingTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.572"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/editTanggal"
+                android:layout_width="285dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/stroke_white"
+                android:gravity="left"
+                android:hint="@string/tanggal_event"
+                android:inputType="textMultiLine"
+                android:paddingLeft="9dp"
+                android:paddingTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editNamaEvent" />
+
+            <EditText
+                android:id="@+id/editLokasi"
+                android:layout_width="285dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/stroke_white"
+                android:gravity="left"
+                android:hint="@string/lokasi_event"
+                android:inputType="textMultiLine"
+                android:paddingLeft="9dp"
+                android:paddingTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTanggal" />
+
+            <EditText
+                android:id="@+id/editLink"
+                android:layout_width="285dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/stroke_white"
+                android:gravity="left"
+                android:hint="@string/link_event"
+                android:inputType="textMultiLine"
+                android:paddingLeft="9dp"
+                android:paddingTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.484"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editLokasi" />
+
+            <EditText
                 android:id="@+id/editDesk"
                 android:layout_width="284dp"
                 android:layout_height="129dp"
-                android:layout_marginTop="68dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/stroke_white"
                 android:gravity="left"
                 android:hint="@string/masukkan_deskripsi"
@@ -79,9 +141,9 @@
                 android:paddingLeft="9dp"
                 android:paddingTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.567"
+                app:layout_constraintHorizontal_bias="0.496"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/editLink" />
 
             <ImageView
                 android:id="@+id/selectedImage"
