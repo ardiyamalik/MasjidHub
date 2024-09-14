@@ -14,6 +14,7 @@ import com.google.firebase.storage.FirebaseStorage
 import org.d3if0140.masjidhub.databinding.ActivityRegistDkmBinding
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import java.security.MessageDigest
 
 class RegisterDkmActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegistDkmBinding
@@ -26,7 +27,7 @@ class RegisterDkmActivity : AppCompatActivity() {
     private var longitude: Double? = null
 
     companion object {
-        private val MAPS_REQUEST_CODE = 1001
+        private const val MAPS_REQUEST_CODE = 1001
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,10 +74,15 @@ class RegisterDkmActivity : AppCompatActivity() {
             mapsResultLauncher.launch(intent)
         }
 
-        binding.backButton.setOnClickListener{
+        binding.backButton.setOnClickListener {
             startActivity(Intent(this, WelcomeActivity::class.java))
         }
     }
+
+    private fun isKtpImageViewEmpty(): Boolean {
+        return binding.ktpImageView.drawable == null
+    }
+
 
     private fun selectKtpImage() {
         val intent = Intent(Intent.ACTION_PICK)
@@ -91,19 +97,70 @@ class RegisterDkmActivity : AppCompatActivity() {
                 1000 -> {
                     ktpUri = data?.data
                     binding.ktpImageView.setImageURI(ktpUri)
-                    Toast.makeText(this, "Foto KTP berhasil dipilih", Toast.LENGTH_SHORT).show()
-                }
-                MAPS_REQUEST_CODE -> {
-                    val latitudeResult = data?.getDoubleExtra("latitude", 0.0)
-                    val longitudeResult = data?.getDoubleExtra("longitude", 0.0)
-                    if (latitudeResult != null && longitudeResult != null) {
-                        latitude = latitudeResult
-                        longitude = longitudeResult
-                        binding.latitudeEditText.setText(latitude.toString())
-                        binding.longitudeEditText.setText(longitude.toString())
+                    ktpUri?.let { uri ->
+                        contentResolver.openInputStream(uri)?.let { inputStream ->
+                            val fileBytes = inputStream.readBytes()
+                            val ktpHash = generateHash(fileBytes)
+
+                            // Cek apakah hash sudah ada di Firestore
+                            checkKtpHashInFirestore(ktpHash)
+                        }
                     }
                 }
             }
+        }
+    }
+
+    private fun checkKtpHashInFirestore(ktpHash: String) {
+        firestore.collection("user")
+            .whereEqualTo("ktpHash", ktpHash)
+            .get()
+            .addOnSuccessListener { documents ->
+                if (!documents.isEmpty) {
+                    // Hash KTP sudah digunakan
+                    Toast.makeText(this, "KTP ini sudah digunakan sebelumnya.", Toast.LENGTH_SHORT).show()
+                    // Kosongkan ImageView jika KTP sudah digunakan
+                    binding.ktpImageView.setImageURI(null)
+                } else {
+                    // Hash KTP belum digunakan, lanjutkan pendaftaran
+                    Toast.makeText(this, "KTP valid, lanjutkan pendaftaran.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("RegisterDkmActivity", "Error checking KTP hash", e)
+                Toast.makeText(this, "Gagal memeriksa KTP: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    // Fungsi untuk membuat hash dari file byte
+    private fun generateHash(fileBytes: ByteArray): String {
+        val md = MessageDigest.getInstance("MD5")
+        val digest = md.digest(fileBytes)
+        return digest.fold("", { str, it -> str + "%02x".format(it) })
+    }
+
+    // Tambahkan fungsi ini di luar onCreate untuk menghitung hash dari file URI
+    private fun getFileHash(uri: Uri): String? {
+        return try {
+            val inputStream = contentResolver.openInputStream(uri)
+            val md = MessageDigest.getInstance("MD5")
+            val buffer = ByteArray(1024)
+            var bytesRead: Int
+
+            while (inputStream?.read(buffer).also { bytesRead = it ?: -1 } != -1) {
+                md.update(buffer, 0, bytesRead)
+            }
+
+            val digest = md.digest()
+            val sb = StringBuilder()
+            for (b in digest) {
+                sb.append(String.format("%02x", b))
+            }
+
+            sb.toString()
+        } catch (e: Exception) {
+            Log.e("RegisterDkmActivity", "Error calculating hash", e)
+            null
         }
     }
 
@@ -127,7 +184,7 @@ class RegisterDkmActivity : AppCompatActivity() {
         // Validasi data
         if (nama.isEmpty() || alamat.isEmpty() || kodePos.isEmpty() || teleponMasjid.isEmpty() ||
             namaKetua.isEmpty() || teleponKetua.isEmpty() || email.isEmpty() || password.isEmpty() ||
-            latitudeString == null || longitudeString == null
+            latitudeString.isEmpty() || longitudeString.isEmpty() || isKtpImageViewEmpty()
         ) {
             progressDialog.dismiss() // Tutup dialog jika ada field kosong
             Log.w("RegisterDkmActivity", "Validation failed: Some fields are empty or location is not set")
@@ -143,6 +200,14 @@ class RegisterDkmActivity : AppCompatActivity() {
             progressDialog.dismiss() // Tutup dialog jika ada field kosong
             Log.w("RegisterDkmActivity", "Validation failed: KTP image not selected")
             Toast.makeText(this, "Harap unggah foto KTP Ketua DKM", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Hitung hash dari file KTP
+        val ktpHash = getFileHash(ktpUri!!)
+        if (ktpHash == null) {
+            progressDialog.dismiss()
+            Toast.makeText(this, "Gagal menghitung hash KTP", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -172,69 +237,40 @@ class RegisterDkmActivity : AppCompatActivity() {
                                         "role" to "pengurus_dkm",
                                         "verified" to false,  // Awalnya belum terverifikasi
                                         "ktpKetuaUrl" to uri.toString(),
+                                        "ktpHash" to ktpHash,  // Simpan hash KTP
                                         "password" to password,
                                         "latitude" to (latitude ?: 0.0),
                                         "longitude" to (longitude ?: 0.0)
                                     )
-
-                                    Log.d("RegisterDkmActivity", "Data prepared for Firestore: $masjidData")
 
                                     // Simpan data ke Firestore dengan UID sebagai ID dokumen
                                     firestore.collection("user")
                                         .document(uid)
                                         .set(masjidData)
                                         .addOnSuccessListener {
-                                            Log.i("RegisterDkmActivity", "Registration successful")
                                             Toast.makeText(
                                                 this,
                                                 "Registrasi berhasil, menunggu verifikasi admin",
                                                 Toast.LENGTH_SHORT
                                             ).show()
-                                            // Hapus sesi pengguna jika ada
                                             mAuth.signOut()
-
-                                            // Arahkan ke halaman KonfirmasiActivity setelah registrasi berhasil
-                                            val intent = Intent(this, KonfirmasiActivity::class.java)
-                                            startActivity(intent)
+                                            startActivity(Intent(this, KonfirmasiActivity::class.java))
                                         }
                                         .addOnFailureListener { e ->
-                                            Log.e(
-                                                "RegisterDkmActivity",
-                                                "Failed to save user data to Firestore",
-                                                e
-                                            )
-                                            Toast.makeText(
-                                                this,
-                                                "Registrasi gagal: ${e.message}",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
+                                            Log.e("RegisterDkmActivity", "Failed to save user data to Firestore", e)
+                                            Toast.makeText(this, "Registrasi gagal: ${e.message}", Toast.LENGTH_SHORT).show()
                                         }
                                 }
                             }
                             .addOnFailureListener { e ->
                                 Log.e("RegisterDkmActivity", "Failed to upload KTP image", e)
-                                Toast.makeText(
-                                    this,
-                                    "Gagal mengunggah foto KTP: ${e.message}",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                Toast.makeText(this, "Gagal mengunggah foto KTP: ${e.message}", Toast.LENGTH_SHORT).show()
                             }
                     } else {
-                        Log.e("RegisterDkmActivity", "User is null after registration")
-                        Toast.makeText(this, "Registrasi gagal: user null", Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(this, "Registrasi gagal: user null", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Log.e(
-                        "RegisterDkmActivity",
-                        "User registration with FirebaseAuth failed",
-                        authTask.exception
-                    )
-                    Toast.makeText(
-                        this,
-                        "Registrasi gagal: ${authTask.exception?.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this, "Registrasi gagal: ${authTask.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
     }
