@@ -6,11 +6,12 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.StyleSpan
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import org.d3if0140.masjidhub.databinding.DialogVerifMasjidBinding
 import com.google.firebase.firestore.FirebaseFirestore
-import android.widget.Toast
+import org.d3if0140.masjidhub.databinding.DialogVerifMasjidBinding
 
 class VerifikasiMasjidActivity : AppCompatActivity() {
 
@@ -32,8 +33,8 @@ class VerifikasiMasjidActivity : AppCompatActivity() {
         val namaKetua = intent.getStringExtra("NAMA_KETUA") ?: "Nama Ketua tidak tersedia"
         val teleponKetua = intent.getStringExtra("TELEPON_KETUA") ?: "Telepon Ketua tidak tersedia"
         val email = intent.getStringExtra("EMAIL") ?: "Email tidak tersedia"
-        val latitude = intent.getStringExtra("LATITUDE") ?: "Tidak tersedia"
-        val longitude = intent.getStringExtra("LONGITUDE") ?: "Tidak tersedia"
+        val latitude = intent.getStringExtra("LATITUDE")?.toDoubleOrNull() ?: 0.0
+        val longitude = intent.getStringExtra("LONGITUDE")?.toDoubleOrNull() ?: 0.0
         val ktpUrl = intent.getStringExtra("KTP_URL") ?: ""
 
         // Fungsi untuk membuat bagian dari teks menjadi bold
@@ -56,8 +57,8 @@ class VerifikasiMasjidActivity : AppCompatActivity() {
         binding.textViewNamaKetua.text = makeBold(namaKetua, "Nama Ketua: ")
         binding.textViewTeleponKetua.text = makeBold(teleponKetua, "Telepon Ketua: ")
         binding.textViewEmail.text = makeBold(email, "Email: ")
-        binding.textViewLatitude.text = makeBold(latitude, "Titik Koordinat: ")
-        binding.textViewLongitude.text = makeBold(longitude, "Titik Koordinat: ")
+        binding.textViewLatitude.text = makeBold(latitude.toString(), "Titik Koordinat: ")
+        binding.textViewLongitude.text = makeBold(longitude.toString(), "Titik Koordinat: ")
 
         if (ktpUrl.isNotEmpty()) {
             binding.imageViewKtp.visibility = View.VISIBLE
@@ -87,36 +88,66 @@ class VerifikasiMasjidActivity : AppCompatActivity() {
 
         // Setel tombol Verifikasi
         binding.buttonVerify.setOnClickListener {
-            verifyMasjid(masjidName)
+            verifyMasjid(masjidName, latitude, longitude)
         }
     }
 
-    private fun verifyMasjid(namaMasjid: String) {
+    private fun calculateDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+        val earthRadius = 6371.0 // Radius Bumi dalam kilometer
+        val dLat = Math.toRadians(lat2 - lat1)
+        val dLon = Math.toRadians(lon2 - lon1)
+        val a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2)
+        val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+        return earthRadius * c
+    }
+
+    private fun verifyMasjid(namaMasjid: String, latitude: Double, longitude: Double) {
         firestore.collection("user")
-            .whereEqualTo("nama", namaMasjid)
             .get()
             .addOnSuccessListener { result ->
-                if (!result.isEmpty) {
-                    val doc = result.documents.first()
-                    val masjidId = doc.id
+                var isNearby = false
+                for (document in result.documents) {
+                    val docLatitude = document.getDouble("latitude") ?: continue
+                    val docLongitude = document.getDouble("longitude") ?: continue
+
+                    val distance = calculateDistance(latitude, longitude, docLatitude, docLongitude)
+                    if (distance < 0.5) { // Jarak dalam kilometer (misalnya, 0.5 km)
+                        isNearby = true
+                        break
+                    }
+                }
+
+                if (isNearby) {
+                    showConfirmationDialog(namaMasjid, latitude, longitude)
+                } else {
+                    // Proses verifikasi jika lokasi tidak ada yang sama atau dekat
                     firestore.collection("user")
-                        .document(masjidId)
-                        .update("verified", true)
-                        .addOnSuccessListener {
-                            Toast.makeText(this, "Masjid berhasil diverifikasi", Toast.LENGTH_SHORT)
-                                .show()
-                            setResult(RESULT_OK) // Set result OK
-                            finish() // Tutup activity setelah verifikasi selesai
+                        .whereEqualTo("nama", namaMasjid)
+                        .get()
+                        .addOnSuccessListener { result ->
+                            if (!result.isEmpty) {
+                                val doc = result.documents.first()
+                                val masjidId = doc.id
+                                firestore.collection("user")
+                                    .document(masjidId)
+                                    .update("verified", true)
+                                    .addOnSuccessListener {
+                                        Toast.makeText(this, "Masjid berhasil diverifikasi", Toast.LENGTH_SHORT).show()
+                                        setResult(RESULT_OK) // Set result OK
+                                        finish() // Tutup activity setelah verifikasi selesai
+                                    }
+                                    .addOnFailureListener { e ->
+                                        Toast.makeText(this, "Gagal memverifikasi masjid: ${e.message}", Toast.LENGTH_SHORT).show()
+                                    }
+                            } else {
+                                Toast.makeText(this, "Masjid tidak ditemukan", Toast.LENGTH_SHORT).show()
+                            }
                         }
                         .addOnFailureListener { e ->
-                            Toast.makeText(
-                                this,
-                                "Gagal memverifikasi masjid: ${e.message}",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(this, "Gagal mencari masjid: ${e.message}", Toast.LENGTH_SHORT).show()
                         }
-                } else {
-                    Toast.makeText(this, "Masjid tidak ditemukan", Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener { e ->
@@ -124,4 +155,42 @@ class VerifikasiMasjidActivity : AppCompatActivity() {
             }
     }
 
+    private fun showConfirmationDialog(namaMasjid: String, latitude: Double, longitude: Double) {
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("Konfirmasi Verifikasi")
+            .setMessage("Titik lokasi masjid ini sangat dekat dengan lokasi masjid lain. Apakah Anda yakin ingin memverifikasi masjid ini?")
+            .setPositiveButton("OK") { _, _ ->
+                // Lanjutkan proses verifikasi
+                firestore.collection("user")
+                    .whereEqualTo("nama", namaMasjid)
+                    .get()
+                    .addOnSuccessListener { result ->
+                        if (!result.isEmpty) {
+                            val doc = result.documents.first()
+                            val masjidId = doc.id
+                            firestore.collection("user")
+                                .document(masjidId)
+                                .update("verified", true)
+                                .addOnSuccessListener {
+                                    Toast.makeText(this, "Masjid berhasil diverifikasi", Toast.LENGTH_SHORT).show()
+                                    setResult(RESULT_OK) // Set result OK
+                                    finish() // Tutup activity setelah verifikasi selesai
+                                }
+                                .addOnFailureListener { e ->
+                                    Toast.makeText(this, "Gagal memverifikasi masjid: ${e.message}", Toast.LENGTH_SHORT).show()
+                                }
+                        } else {
+                            Toast.makeText(this, "Masjid tidak ditemukan", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this, "Gagal mencari masjid: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            }
+            .setNegativeButton("Batal") { dialog, _ ->
+                dialog.dismiss() // Tutup dialog
+            }
+            .create()
+        dialog.show()
+    }
 }
