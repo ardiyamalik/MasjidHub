@@ -44,8 +44,10 @@ class CariMasjidActivity : AppCompatActivity() {
                 putExtra("USER_NAME", user.nama)
                 putExtra("USER_ALAMAT", user.alamat)
                 putExtra("USER_IMAGE_URL", user.imageUrl)
+                putExtra("USER_LATITUDE", user.longitude)
+                putExtra("USER_LONGITUDE", user.latitude)
             }
-            Log.d("CariMasjidActivity", "Sending userId: ${user.userId}, userImageUrl: ${user.imageUrl}")
+            Log.d("CariMasjidActivity", "Sending userId: ${user.userId}, userImageUrl: ${user.imageUrl}, lat: ${user.latitude}, long: ${user.longitude}")
             startActivity(intent)
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -131,7 +133,6 @@ class CariMasjidActivity : AppCompatActivity() {
                 userList.clear()
                 for (document in documents) {
                     val user = document.toObject(User::class.java)
-                    user.userId = document.id // Tambahkan ini jika userId tidak ada di dalam objek User
                     Log.d("CariMasjidActivity", "User found: ${user.nama}, ID: ${document.id}, Image URL: ${user.imageUrl}")
                     userList.add(user)
                 }

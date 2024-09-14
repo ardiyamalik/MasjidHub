@@ -4,5 +4,7 @@ data class PengurusDkm(
     val nama: String,
     val alamat: String,
     val imageUrl: String,
-    val userId: String
+    val userId: String,
+    val longitude: Double,
+    val latitude: Double
 )

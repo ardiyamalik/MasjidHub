@@ -1,6 +1,5 @@
 package org.d3if0140.masjidhub.ui.view
 
-import org.d3if0140.masjidhub.ui.adapter.CarouselAdapter
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -11,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +30,7 @@ import com.google.firebase.firestore.Query
 import org.d3if0140.masjidhub.ui.adapter.PengurusDkmAdapter
 import org.d3if0140.masjidhub.R
 import org.d3if0140.masjidhub.model.PengurusDkm
+import org.d3if0140.masjidhub.ui.adapter.CarouselAdapter
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
@@ -70,30 +71,6 @@ class HomeActivity : AppCompatActivity() {
             })
         } else {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
-        }
-
-        // Dapatkan ID pengguna yang saat ini masuk
-        val currentUserId = mAuth.currentUser?.uid
-
-        // Ambil data pengguna dari Firestore berdasarkan ID
-        if (currentUserId != null) {
-            firestore.collection("user")
-                .document(currentUserId)
-                .get()
-                .addOnSuccessListener { document ->
-                    if (document != null && document.exists()) {
-                        val userData = document.data
-                        if (userData != null) {
-                            val imageUrl = userData["imageUrl"] as? String
-
-                            // Tampilkan foto profil jika URL tidak null
-                            imageUrl?.let { loadProfileImage(it) } ?: run { displayDefaultProfileImage() }
-                        }
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Toast.makeText(this, "Gagal mengambil data pengguna: ${exception.message}", Toast.LENGTH_SHORT).show()
-                }
         }
 
         // Bottom navigation listener
@@ -152,7 +129,6 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupCarousel() {
-        // Ambil gambar carousel dari Firestore, urutkan berdasarkan timestamp menurun dan batasi hasil menjadi 5
         firestore.collection("carousel")
             .orderBy("timestamp", Query.Direction.DESCENDING)
             .limit(5)
@@ -164,16 +140,14 @@ class HomeActivity : AppCompatActivity() {
                     imageUrl?.let { imageList.add(it) }
                 }
 
-                // Setup ViewPager dengan org.d3if0140.masjidhub.ui.adapter.CarouselAdapter
+                // Setup ViewPager dengan CarouselAdapter
                 carouselAdapter = CarouselAdapter(imageList)
                 binding.viewPager.adapter = carouselAdapter
             }
             .addOnFailureListener {
-                // Handle failure
                 Toast.makeText(this, "Gagal mengambil gambar carousel: ${it.message}", Toast.LENGTH_SHORT).show()
             }
     }
-
 
     private fun setupPengurusDkmRecyclerView() {
         binding.recyclerViewPengurus.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -184,6 +158,8 @@ class HomeActivity : AppCompatActivity() {
             intent.putExtra("USER_NAME", pengurusDkm.nama)
             intent.putExtra("USER_ALAMAT", pengurusDkm.alamat)
             intent.putExtra("USER_IMAGE_URL", pengurusDkm.imageUrl)
+            intent.putExtra("USER_LONGITUDE", pengurusDkm.longitude) // Longitude
+            intent.putExtra("USER_LATITUDE", pengurusDkm.latitude) // Latitude
             startActivity(intent)
         }
 
@@ -213,7 +189,7 @@ class HomeActivity : AppCompatActivity() {
 
                     // Jika jarak kurang dari 10km, tambahkan ke daftar
                     if (distanceInMeters <= 10000) {
-                        pengurusDkmList.add(PengurusDkm(nama, alamat, imageUrl, userId))
+                        pengurusDkmList.add(PengurusDkm(nama, alamat, imageUrl, userId, latitude, longitude))
                     }
                 }
                 adapter.setData(pengurusDkmList)
@@ -226,8 +202,6 @@ class HomeActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Toast.makeText(this, "Gagal mengambil data pengurus_dkm: ${exception.message}", Toast.LENGTH_SHORT).show()
             }
-
-
     }
 
     private fun loadProfileImage(imageUrl: String) {
