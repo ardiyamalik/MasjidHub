@@ -27,6 +27,10 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
         val post = postList[position]
         holder.descriptionTextView.text = post.deskripsi
         holder.usernameTextView.text = post.nama
+        holder.namaEventTextView.text = "Nama Event: ${post.namaEvent}"
+        holder.tanggalEventTextView.text = "Tanggal: ${post.tanggalEvent}"
+        holder.lokasiEventTextView.text = "Lokasi: ${post.lokasiEvent}"
+        holder.linkEventTextView.text = "Link Pendaftaran: ${post.linkEvent}"
 
         // Format timestamp to a readable date string
         val formattedDate = formatTimestamp(post.timestamp)
@@ -70,6 +74,10 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
     }
 
     class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val namaEventTextView: TextView = itemView.findViewById(R.id.namaEventTextView)
+        val tanggalEventTextView: TextView = itemView.findViewById(R.id.tanggalEventTextView)
+        val lokasiEventTextView: TextView = itemView.findViewById(R.id.lokasiEventTextView)
+        val linkEventTextView: TextView = itemView.findViewById(R.id.linkEventTextView)
         val descriptionTextView: TextView = itemView.findViewById(R.id.descriptionTextView)
         val postImageView: ImageView = itemView.findViewById(R.id.postImageView)
         val userProfileImageView: ImageView = itemView.findViewById(R.id.profileImageDkm)
