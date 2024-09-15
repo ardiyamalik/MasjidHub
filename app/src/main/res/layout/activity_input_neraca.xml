@@ -1,0 +1,201 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:padding="12dp"
+            android:src="@drawable/arrow_back_24px"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textNeraca"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Input Laporan Keuangan"
+            android:textColor="@color/blue"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.282"
+            app:layout_constraintStart_toEndOf="@id/backButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.8" />
+
+        <EditText
+            android:id="@+id/editTextTanggalMulai"
+            android:layout_width="126dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/stroke_white"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:hint="tanggal"
+            android:padding="10dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.081"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textNeraca"
+            app:layout_constraintWidth_percent="1" />
+
+        <TextView
+            android:id="@+id/textSampai"
+            android:layout_width="20dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="44dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="-"
+            android:textColor="@color/blue"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/editTextTanggalSelesai"
+            app:layout_constraintHorizontal_bias="0.551"
+            app:layout_constraintStart_toEndOf="@+id/editTextTanggalMulai"
+            app:layout_constraintTop_toBottomOf="@+id/textNeraca"
+            app:layout_constraintWidth_percent="0.8" />
+
+        <EditText
+            android:id="@+id/editTextTanggalSelesai"
+            android:layout_width="126dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/stroke_white"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:hint="tanggal"
+            android:padding="10dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.887"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textNeraca"
+            app:layout_constraintWidth_percent="1" />
+
+        <TextView
+            android:id="@+id/textInfaq"
+            android:layout_width="89dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Infaq"
+            android:textColor="@color/blue"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.09"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTanggalSelesai"
+            app:layout_constraintWidth_percent="0.8" />
+
+        <EditText
+            android:id="@+id/editTextJumlahInfaq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/stroke_white"
+            android:hint="jumlah infaq"
+            android:inputType="phone"
+            android:padding="10dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textInfaq"
+            app:layout_constraintWidth_percent="1" />
+
+        <TextView
+            android:id="@+id/textKas"
+            android:layout_width="89dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Kas"
+            android:textColor="@color/blue"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.114"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextJumlahInfaq"
+            app:layout_constraintWidth_percent="0.8" />
+
+        <EditText
+            android:id="@+id/editTextJumlahKas"
+            android:layout_width="337dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/stroke_white"
+            android:hint="jumlah kas"
+            android:inputType="phone"
+            android:padding="10dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textKas"
+            app:layout_constraintWidth_percent="1" />
+
+        <TextView
+            android:id="@+id/textPengeluaran"
+            android:layout_width="89dp"
+            android:layout_height="38dp"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Pengeluaran"
+            android:textColor="@color/blue"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.13"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextJumlahKas"
+            app:layout_constraintWidth_percent="0.8" />
+
+        <EditText
+            android:id="@+id/editTextJumlahPengeluaran"
+            android:layout_width="337dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/stroke_white"
+            android:hint="total pengeluaran"
+            android:inputType="phone"
+            android:padding="10dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textPengeluaran"
+            app:layout_constraintWidth_percent="1" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/rounded_button_background"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@string/kirim"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextJumlahPengeluaran" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
