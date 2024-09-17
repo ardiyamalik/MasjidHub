@@ -129,6 +129,11 @@ class DkmDashboard : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.buttonTampilkanNeraca.setOnClickListener{
+            val intent = Intent(this, TampilkanNeracaActivity::class.java)
+            startActivity(intent)
+        }
+
         // Display default profile image based on user's email
         displayDefaultProfileImage()
     }

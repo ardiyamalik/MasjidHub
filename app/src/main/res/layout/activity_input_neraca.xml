@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
+        <!-- Tombol Kembali -->
         <ImageButton
             android:id="@+id/backButton"
             android:layout_width="wrap_content"
@@ -20,6 +21,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Judul -->
         <TextView
             android:id="@+id/textNeraca"
             android:layout_width="0dp"
@@ -31,61 +33,27 @@
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.282"
             app:layout_constraintStart_toEndOf="@id/backButton"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.8" />
 
+        <!-- Input Tanggal -->
         <EditText
-            android:id="@+id/editTextTanggalMulai"
+            android:id="@+id/editTextTanggal"
             android:layout_width="126dp"
             android:layout_height="54dp"
             android:layout_marginTop="36dp"
             android:background="@drawable/stroke_white"
             android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:hint="tanggal"
+            android:hint="Pilih Tanggal"
             android:padding="10dp"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.081"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textNeraca"
             app:layout_constraintWidth_percent="1" />
 
-        <TextView
-            android:id="@+id/textSampai"
-            android:layout_width="20dp"
-            android:layout_height="46dp"
-            android:layout_marginTop="44dp"
-            android:fontFamily="@font/poppins_bold"
-            android:text="-"
-            android:textColor="@color/blue"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/editTextTanggalSelesai"
-            app:layout_constraintHorizontal_bias="0.551"
-            app:layout_constraintStart_toEndOf="@+id/editTextTanggalMulai"
-            app:layout_constraintTop_toBottomOf="@+id/textNeraca"
-            app:layout_constraintWidth_percent="0.8" />
-
-        <EditText
-            android:id="@+id/editTextTanggalSelesai"
-            android:layout_width="126dp"
-            android:layout_height="54dp"
-            android:layout_marginTop="36dp"
-            android:background="@drawable/stroke_white"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:hint="tanggal"
-            android:padding="10dp"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.887"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textNeraca"
-            app:layout_constraintWidth_percent="1" />
-
+        <!-- Infaq -->
         <TextView
             android:id="@+id/textInfaq"
             android:layout_width="89dp"
@@ -97,9 +65,8 @@
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.09"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTanggalSelesai"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTanggal"
             app:layout_constraintWidth_percent="0.8" />
 
         <EditText
@@ -110,8 +77,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/stroke_white"
-            android:hint="jumlah infaq"
-            android:inputType="phone"
+            android:hint="Jumlah Infaq"
+            android:inputType="numberDecimal"
             android:padding="10dp"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -119,6 +86,7 @@
             app:layout_constraintTop_toBottomOf="@id/textInfaq"
             app:layout_constraintWidth_percent="1" />
 
+        <!-- Kas -->
         <TextView
             android:id="@+id/textKas"
             android:layout_width="89dp"
@@ -130,62 +98,126 @@
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.114"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextJumlahInfaq"
             app:layout_constraintWidth_percent="0.8" />
 
         <EditText
             android:id="@+id/editTextJumlahKas"
-            android:layout_width="337dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="15dp"
             android:background="@drawable/stroke_white"
-            android:hint="jumlah kas"
-            android:inputType="phone"
+            android:hint="Jumlah Kas"
+            android:inputType="numberDecimal"
             android:padding="10dp"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textKas"
+            app:layout_constraintTop_toBottomOf="@id/textKas"
             app:layout_constraintWidth_percent="1" />
 
+        <!-- Pengeluaran -->
         <TextView
             android:id="@+id/textPengeluaran"
             android:layout_width="89dp"
             android:layout_height="38dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:fontFamily="@font/poppins_bold"
             android:text="Pengeluaran"
             android:textColor="@color/blue"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.13"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextJumlahKas"
             app:layout_constraintWidth_percent="0.8" />
 
         <EditText
             android:id="@+id/editTextJumlahPengeluaran"
-            android:layout_width="337dp"
-            android:layout_height="45dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:layout_marginTop="16dp"
+            android:layout_marginRight="15dp"
             android:background="@drawable/stroke_white"
-            android:hint="total pengeluaran"
-            android:inputType="phone"
+            android:hint="Jumlah Pengeluaran"
+            android:inputType="numberDecimal"
             android:padding="10dp"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textPengeluaran"
+            app:layout_constraintTop_toBottomOf="@id/textPengeluaran"
+            app:layout_constraintWidth_percent="1" />
+
+        <!-- Tombol Submit -->
+
+        <EditText
+            android:id="@+id/OprasionalMasjid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/stroke_white"
+            android:hint="Kosongkan bila tidak ada"
+            android:inputType="numberDecimal"
+            android:padding="10dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintWidth_percent="1" />
+
+        <EditText
+            android:id="@+id/Renov"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/stroke_white"
+            android:hint="Kosongkan bila tidak ada"
+            android:inputType="numberDecimal"
+            android:padding="10dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewRenov"
+            app:layout_constraintWidth_percent="1" />
+
+        <EditText
+            android:id="@+id/kegiatanSosial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/stroke_white"
+            android:hint="Kosongkan bila tidak ada"
+            android:inputType="numberDecimal"
+            android:padding="10dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewKegiatan"
+            app:layout_constraintWidth_percent="1" />
+
+        <EditText
+            android:id="@+id/GajiPengurus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/stroke_white"
+            android:hint="Kosongkan bila tidak ada"
+            android:inputType="numberDecimal"
+            android:padding="10dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewGaji"
             app:layout_constraintWidth_percent="1" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonSubmit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/rounded_button_background"
             android:fontFamily="@font/poppins_bold"
             android:text="@string/kirim"
@@ -194,8 +226,51 @@
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.156"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextJumlahPengeluaran" />
+            app:layout_constraintTop_toBottomOf="@+id/GajiPengurus" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="83dp"
+            android:text="Oprasional Masjid"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textPengeluaran" />
+
+        <TextView
+            android:id="@+id/textViewRenov"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Renov atau Pembangunan"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/OprasionalMasjid" />
+
+        <TextView
+            android:id="@+id/textViewKegiatan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Kegaiatan Sosial"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Renov" />
+
+        <TextView
+            android:id="@+id/textViewGaji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Gaji Pengurus"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/kegiatanSosial" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
