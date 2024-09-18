@@ -5,12 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import org.d3if0140.masjidhub.databinding.ItemLaporanBinding
 import org.d3if0140.masjidhub.model.LaporanKeuangan
+import java.text.DecimalFormat
 
 class LaporanAdapter(private val laporanList: List<LaporanKeuangan>) :
     RecyclerView.Adapter<LaporanAdapter.LaporanViewHolder>() {
 
     inner class LaporanViewHolder(val binding: ItemLaporanBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        private val decimalFormat = DecimalFormat("#,###") // Format angka dengan pemisah ribuan
 
         fun bind(laporan: LaporanKeuangan) {
             // Hitung total pengeluaran
@@ -24,16 +27,16 @@ class LaporanAdapter(private val laporanList: List<LaporanKeuangan>) :
 
             // Bind data ke UI
             binding.textViewTanggalLaporan.text = laporan.tanggalLaporan
-            binding.textViewJumlahInfaq.text = "Infaq: Rp. ${laporan.jumlahInfaq}"
-            binding.textViewJumlahKas.text = "Kas: Rp. ${laporan.jumlahKas}"
-            binding.textViewJumlahOprasional.text = "Oprasional: Rp. ${laporan.oprasionalMasjid}"
-            binding.textViewJumlahRenov.text = "Renovasi: Rp. ${laporan.renovasi}"
-            binding.textViewJumlahKegiatanSosial.text = "Kegiatan Sosial: Rp. ${laporan.kegiatanSosial}"
-            binding.textViewJumlahGaji.text = "Gaji Pengurus: Rp. ${laporan.gajiPengurus}"
+            binding.textViewJumlahInfaq.text = "Infaq: Rp. ${decimalFormat.format(laporan.jumlahInfaq ?: 0.0)}"
+            binding.textViewJumlahKas.text = "Kas: Rp. ${decimalFormat.format(laporan.jumlahKas ?: 0.0)}"
+            binding.textViewJumlahOprasional.text = "Oprasional: Rp. ${decimalFormat.format(laporan.oprasionalMasjid ?: 0.0)}"
+            binding.textViewJumlahRenov.text = "Renovasi: Rp. ${decimalFormat.format(laporan.renovasi ?: 0.0)}"
+            binding.textViewJumlahKegiatanSosial.text = "Kegiatan Sosial: Rp. ${decimalFormat.format(laporan.kegiatanSosial ?: 0.0)}"
+            binding.textViewJumlahGaji.text = "Gaji Pengurus: Rp. ${decimalFormat.format(laporan.gajiPengurus ?: 0.0)}"
 
             // Tampilkan total pengeluaran dan saldo
-            binding.textViewTotalPengeluaran.text = "Total Pengeluaran: Rp. $totalPengeluaran"
-            binding.textViewTotalSaldo.text = "Total Saldo: Rp. $totalSaldo"
+            binding.textViewTotalPengeluaran.text = "Total Pengeluaran: Rp. ${decimalFormat.format(totalPengeluaran)}"
+            binding.textViewTotalSaldo.text = "Total Saldo: Rp. ${decimalFormat.format(totalSaldo)}"
         }
     }
 

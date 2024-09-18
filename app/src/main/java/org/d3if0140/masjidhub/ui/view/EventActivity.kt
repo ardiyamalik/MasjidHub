@@ -94,21 +94,30 @@ class EventActivity : AppCompatActivity() {
                 val userFetchTasks = mutableListOf<Task<DocumentSnapshot>>()
                 for (document in documents) {
                     val post = document.toObject(Post::class.java)
-                    // Queue the user data fetch task
-                    userFetchTasks.add(
-                        firestore.collection("user").document(post.userId).get()
-                            .addOnSuccessListener { userDocument ->
-                                if (userDocument != null) {
-                                    post.nama = userDocument.getString("nama") ?: ""
-                                    post.userImageUrl = userDocument.getString("imageUrl") ?: ""
-                                    Log.d("EventActivity", "User data: ${post.nama}, ${post.userImageUrl}")
+
+                    // Check if post has required fields (besides imageUrl and timestamp)
+                    if (!post.imageUrl.isNullOrEmpty()) {
+                        // If other essential fields are missing, skip adding this post
+                        if (post.namaEvent.isNullOrEmpty() || post.deskripsi.isNullOrEmpty()) {
+                            continue
+                        }
+
+                        // Queue the user data fetch task
+                        userFetchTasks.add(
+                            firestore.collection("user").document(post.userId).get()
+                                .addOnSuccessListener { userDocument ->
+                                    if (userDocument != null) {
+                                        post.nama = userDocument.getString("nama") ?: ""
+                                        post.userImageUrl = userDocument.getString("imageUrl") ?: ""
+                                        Log.d("EventActivity", "User data: ${post.nama}, ${post.userImageUrl}")
+                                    }
+                                    postsWithUserData.add(post)
                                 }
-                                postsWithUserData.add(post)
-                            }
-                            .addOnFailureListener { exception ->
-                                Log.e("EventActivity", "Error fetching user data", exception)
-                            }
-                    )
+                                .addOnFailureListener { exception ->
+                                    Log.e("EventActivity", "Error fetching user data", exception)
+                                }
+                        )
+                    }
                 }
 
                 // Wait until all user data has been fetched

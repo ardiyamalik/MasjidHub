@@ -89,21 +89,30 @@ class AdminEvent : AppCompatActivity() {
                     val post = document.toObject(Post::class.java).apply {
                         id = document.id  // Set the document ID
                     }
-                    // Queue the user data fetch task
-                    userFetchTasks.add(
-                        firestore.collection("user").document(post.userId).get()
-                            .addOnSuccessListener { userDocument ->
-                                if (userDocument != null) {
-                                    post.nama = userDocument.getString("nama") ?: ""
-                                    post.userImageUrl = userDocument.getString("imageUrl") ?: ""
-                                    Log.d("AdminEvent", "User data: ${post.nama}, ${post.userImageUrl}")
+
+                    // Check if post has required fields (besides imageUrl and timestamp)
+                    if (!post.imageUrl.isNullOrEmpty()) {
+                        // If other essential fields are missing, skip adding this post
+                        if (post.namaEvent.isNullOrEmpty() || post.deskripsi.isNullOrEmpty()) {
+                            continue
+                        }
+
+                        // Queue the user data fetch task
+                        userFetchTasks.add(
+                            firestore.collection("user").document(post.userId).get()
+                                .addOnSuccessListener { userDocument ->
+                                    if (userDocument != null) {
+                                        post.nama = userDocument.getString("nama") ?: ""
+                                        post.userImageUrl = userDocument.getString("imageUrl") ?: ""
+                                        Log.d("AdminEvent", "User data: ${post.nama}, ${post.userImageUrl}")
+                                    }
+                                    postsWithUserData.add(post)
                                 }
-                                postsWithUserData.add(post)
-                            }
-                            .addOnFailureListener { exception ->
-                                Log.e("AdminEvent", "Error fetching user data", exception)
-                            }
-                    )
+                                .addOnFailureListener { exception ->
+                                    Log.e("AdminEvent", "Error fetching user data", exception)
+                                }
+                        )
+                    }
                 }
 
                 // Wait until all user data has been fetched
@@ -121,6 +130,7 @@ class AdminEvent : AppCompatActivity() {
                 Log.e("AdminEvent", "Error fetching posts", exception)
             }
     }
+
 
     private fun showDeleteConfirmationDialog(post: Post) {
         val input = EditText(this)

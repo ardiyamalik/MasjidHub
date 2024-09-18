@@ -125,7 +125,7 @@ class AdminUploadCarousel : AppCompatActivity() {
             "timestamp" to System.currentTimeMillis()
         )
 
-        firestore.collection("carousel").add(carouselData)
+        firestore.collection("posts").add(carouselData)
             .addOnSuccessListener {
                 Toast.makeText(this, "Gambar berhasil diupload", Toast.LENGTH_SHORT).show()
             }

@@ -150,7 +150,7 @@ class DkmDashboard : AppCompatActivity() {
 
     private fun setupCarousel() {
         // Ambil gambar carousel dari Firestore, urutkan berdasarkan timestamp menurun dan batasi hasil menjadi 5
-        firestore.collection("carousel")
+        firestore.collection("posts")
             .orderBy("timestamp", Query.Direction.DESCENDING)
             .limit(5)
             .get()
