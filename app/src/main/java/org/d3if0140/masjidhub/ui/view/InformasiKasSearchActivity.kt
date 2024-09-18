@@ -34,7 +34,7 @@ class InformasiKasSearchActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
 
         // Mendapatkan userId dari Intent
-        val visitedUserId = intent.getStringExtra("userId")
+        val visitedUserId = intent.getStringExtra("USER_ID")
         Log.d("InformasiKasSearch", "Visited User ID: $visitedUserId")
 
         if (visitedUserId != null) {
