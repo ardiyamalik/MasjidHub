@@ -13,6 +13,7 @@ class InputNeracaActivity : AppCompatActivity() {
     private lateinit var binding: ActivityInputNeracaBinding
     private lateinit var db: FirebaseFirestore
     private var tanggalLaporan: String? = null
+    private var userId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +21,9 @@ class InputNeracaActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         db = FirebaseFirestore.getInstance()
+
+        // Ambil userId dari Intent
+        userId = intent.getStringExtra("userId")
 
         // Membuka dialog kalender saat editTextTanggal ditekan
         binding.editTextTanggal.setOnClickListener {
@@ -33,14 +37,13 @@ class InputNeracaActivity : AppCompatActivity() {
         binding.buttonSubmit.setOnClickListener {
             val jumlahInfaq = binding.editTextJumlahInfaq.text.toString().toDoubleOrNull()
             val jumlahKas = binding.editTextJumlahKas.text.toString().toDoubleOrNull()
-            val jumlahPengeluaran = binding.editTextJumlahPengeluaran.text.toString().toDoubleOrNull()
             val oprasionalMasjid = binding.OprasionalMasjid.text.toString().toDoubleOrNull()
             val renov = binding.Renov.text.toString().toDoubleOrNull()
             val kegiatan = binding.kegiatanSosial.text.toString().toDoubleOrNull()
             val gaji = binding.GajiPengurus.text.toString().toDoubleOrNull()
 
-            if (validateInput(jumlahInfaq, jumlahKas, jumlahPengeluaran, oprasionalMasjid, renov, kegiatan, gaji)) {
-                submitLaporan(jumlahInfaq!!, jumlahKas!!, jumlahPengeluaran!!, oprasionalMasjid!!, renov!!, kegiatan!!, gaji!!)
+            if (validateInput(jumlahInfaq, jumlahKas, oprasionalMasjid, renov, kegiatan, gaji)) {
+                submitLaporan(jumlahInfaq!!, jumlahKas!!, oprasionalMasjid!!, renov!!, kegiatan!!, gaji!!)
             }
         }
 
@@ -76,13 +79,13 @@ class InputNeracaActivity : AppCompatActivity() {
         datePickerDialog.show()
     }
 
-    private fun validateInput(jumlahInfaq: Double?, jumlahKas: Double?, jumlahPengeluaran: Double?, oprasionalMasjid: Double?, renov: Double?, kegiatan: Double?, gaji: Double?): Boolean {
+    private fun validateInput(jumlahInfaq: Double?, jumlahKas: Double?, oprasionalMasjid: Double?, renov: Double?, kegiatan: Double?, gaji: Double?): Boolean {
         return when {
             tanggalLaporan == null -> {
                 Toast.makeText(this, "Silakan pilih tanggal laporan.", Toast.LENGTH_SHORT).show()
                 false
             }
-            jumlahInfaq == null || jumlahKas == null || jumlahPengeluaran == null || oprasionalMasjid == null || renov == null || kegiatan == null || gaji == null -> {
+            jumlahInfaq == null || jumlahKas == null || oprasionalMasjid == null || renov == null || kegiatan == null || gaji == null -> {
                 Toast.makeText(this, "Silakan masukkan semua jumlah.", Toast.LENGTH_SHORT).show()
                 false
             }
@@ -90,16 +93,16 @@ class InputNeracaActivity : AppCompatActivity() {
         }
     }
 
-    private fun submitLaporan(jumlahInfaq: Double, jumlahKas: Double, jumlahPengeluaran: Double, oprasionalMasjid: Double, renov: Double, kegiatan: Double, gaji: Double) {
+    private fun submitLaporan(jumlahInfaq: Double, jumlahKas: Double, oprasionalMasjid: Double, renov: Double, kegiatan: Double, gaji: Double) {
         val laporan = hashMapOf(
             "tanggalLaporan" to tanggalLaporan,
             "jumlahInfaq" to jumlahInfaq,
             "jumlahKas" to jumlahKas,
-            "jumlahPengeluaran" to jumlahPengeluaran,
             "oprasionalMasjid" to oprasionalMasjid,
             "renovasi" to renov,
             "kegiatanSosial" to kegiatan,
             "gajiPengurus" to gaji,
+            "userId" to userId, // Tambahkan userId ke laporan
             "timestamp" to FieldValue.serverTimestamp()
         )
 

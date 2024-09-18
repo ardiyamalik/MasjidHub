@@ -5,8 +5,8 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
@@ -17,9 +17,6 @@ import org.d3if0140.masjidhub.databinding.ActivityProfileSearchBinding
 class ProfileSearchActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileSearchBinding
     private lateinit var firestore: FirebaseFirestore
-    private var userId: String? = null
-//    private var longitude: Double = 0.0
-//    private var latitude: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +26,9 @@ class ProfileSearchActivity : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
 
         // Get data from Intent
-        userId = intent.getStringExtra("USER_ID")
+        val userId = intent.getStringExtra("USER_ID")
+        Log.d("ProfileSearchActivity", "Received userId: $userId")
+
         val userName = intent.getStringExtra("USER_NAME")
         val userAlamat = intent.getStringExtra("USER_ALAMAT")
         val userImageUrl = intent.getStringExtra("USER_IMAGE_URL")
@@ -70,14 +69,35 @@ class ProfileSearchActivity : AppCompatActivity() {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
 
-        binding.backButton.setOnClickListener {
-            startActivity(Intent(this, CariMasjidActivity::class.java))
+        // Atur listener untuk tombol jamaahYangTerdaftar menjadi PopupMenu
+        binding.menu.setOnClickListener { view ->
+            val popupMenuDkm = androidx.appcompat.widget.PopupMenu(this, view)
+            popupMenuDkm.menuInflater.inflate(R.menu.popup_menu_search, popupMenuDkm.menu)
+
+            popupMenuDkm.setOnMenuItemClickListener { menuItem: MenuItem ->
+                when (menuItem.itemId) {
+                    R.id.infoKas -> {
+                        // Arahkan ke halaman Informasi Kas
+                        val intent = Intent(this, InformasiKasSearchActivity::class.java)
+                        intent.putExtra("USER_ID", userId) // Ganti dengan nilai userId yang benar
+                        startActivity(intent)
+                        true
+                    }
+                    R.id.keuanganMasjid -> {
+                        val intent = Intent(this, TampilkanNeracaSearchActivity::class.java)
+                        intent.putExtra("USER_ID", userId)
+                        Log.d("ProfileSearchActivity", "Sending userId to TampilkanNeracaSearchActivity: $userId")
+                        startActivity(intent)
+                        true
+                    }
+                    else -> false
+                }
+            }
+            popupMenuDkm.show()
         }
 
-        binding.infoKas.setOnClickListener {
-            val intent = Intent(this, InformasiKasSearchActivity::class.java)
-            intent.putExtra("userId", userId) // Ganti dengan nilai userId yang benar
-            startActivity(intent)
+        binding.backButton.setOnClickListener {
+            startActivity(Intent(this, CariMasjidActivity::class.java))
         }
 
         // Tombol untuk membuka Google Maps dengan koordinat
@@ -112,7 +132,7 @@ class ProfileSearchActivity : AppCompatActivity() {
             val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
             mapIntent.setPackage("com.google.android.apps.maps")
 
-                startActivity(mapIntent)
+            startActivity(mapIntent)
         }
 
     }

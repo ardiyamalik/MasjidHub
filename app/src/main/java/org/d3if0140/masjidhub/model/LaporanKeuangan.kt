@@ -1,6 +1,7 @@
 package org.d3if0140.masjidhub.model
 
 data class LaporanKeuangan(
+    val userId: String = "",
     val tanggalLaporan: String = "",
     val jumlahInfaq: Double = 0.0,
     val jumlahKas: Double = 0.0,

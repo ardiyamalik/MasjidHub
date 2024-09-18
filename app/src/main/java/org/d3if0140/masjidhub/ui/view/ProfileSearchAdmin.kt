@@ -3,6 +3,7 @@ package org.d3if0140.masjidhub.ui.view
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -56,14 +57,35 @@ class ProfileSearchAdmin : AppCompatActivity() {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
 
-        binding.backButton.setOnClickListener {
-            finish() // Return to previous activity
+        // Atur listener untuk tombol jamaahYangTerdaftar menjadi PopupMenu
+        binding.menu.setOnClickListener { view ->
+            val popupMenuDkm = androidx.appcompat.widget.PopupMenu(this, view)
+            popupMenuDkm.menuInflater.inflate(R.menu.popup_menu_search, popupMenuDkm.menu)
+
+            popupMenuDkm.setOnMenuItemClickListener { menuItem: MenuItem ->
+                when (menuItem.itemId) {
+                    R.id.infoKas -> {
+                        // Arahkan ke halaman Informasi Kas
+                        val intent = Intent(this, InformasiKasAdminActivity::class.java)
+                        intent.putExtra("USER_ID", userId) // Ganti dengan nilai userId yang benar
+                        startActivity(intent)
+                        true
+                    }
+                    R.id.keuanganMasjid -> {
+                        val intent = Intent(this, AdminTampilkanNeracaActivity::class.java)
+                        intent.putExtra("USER_ID", userId)
+                        Log.d("ProfileSearchActivity", "Sending userId to TampilkanNeracaSearchActivity: $userId")
+                        startActivity(intent)
+                        true
+                    }
+                    else -> false
+                }
+            }
+            popupMenuDkm.show()
         }
 
-        binding.infoKas.setOnClickListener {
-            val intent = Intent(this, InformasiKasSearchActivity::class.java)
-            intent.putExtra("userId", userId) // Ganti dengan nilai userId yang benar
-            startActivity(intent)
+        binding.backButton.setOnClickListener {
+            finish() // Return to previous activity
         }
     }
 

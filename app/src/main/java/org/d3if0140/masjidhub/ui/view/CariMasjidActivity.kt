@@ -132,7 +132,7 @@ class CariMasjidActivity : AppCompatActivity() {
                 Log.d("CariMasjidActivity", "Successfully fetched users")
                 userList.clear()
                 for (document in documents) {
-                    val user = document.toObject(User::class.java)
+                    val user = document.toObject(User::class.java).copy(userId = document.id)
                     Log.d("CariMasjidActivity", "User found: ${user.nama}, ID: ${document.id}, Image URL: ${user.imageUrl}")
                     userList.add(user)
                 }

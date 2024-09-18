@@ -31,7 +31,7 @@ class UserAdapter(private val userList: List<User>, private val onUserClick: (Us
 
         Log.d("UserAdapter", "Loading image for user: ${user.nama}, URL: ${user.imageUrl}")
 
-        if (user.imageUrl.isNotEmpty()) {
+        if (!user.imageUrl.isNullOrEmpty()) {
             Glide.with(holder.itemView.context)
                 .load(user.imageUrl)
                 .apply(RequestOptions()

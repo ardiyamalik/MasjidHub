@@ -57,6 +57,7 @@ class DkmDashboard : AppCompatActivity() {
                         if (userData != null) {
                             val imageUrl = userData["imageUrl"] as? String
 
+
                             // Tampilkan foto profil jika URL tidak null
                             imageUrl?.let { loadProfileImage(it) } ?: run { displayDefaultProfileImage() }
                         }
@@ -124,13 +125,22 @@ class DkmDashboard : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // Gunakan masjidId di sini saat menavigasi ke aktivitas lain
+        binding.buttonPengajuan.setOnClickListener {
+            val intent = Intent(this, PengajuanDanaActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.buttonInputNeraca.setOnClickListener{
             val intent = Intent(this, InputNeracaActivity::class.java)
+            intent.putExtra("userId", currentUserId)
             startActivity(intent)
+
         }
 
         binding.buttonTampilkanNeraca.setOnClickListener{
             val intent = Intent(this, TampilkanNeracaActivity::class.java)
+            intent.putExtra("userId", currentUserId) // Kirim userId
             startActivity(intent)
         }
 

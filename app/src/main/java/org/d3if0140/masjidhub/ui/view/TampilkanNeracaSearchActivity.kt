@@ -2,19 +2,19 @@ package org.d3if0140.masjidhub.ui.view
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import org.d3if0140.masjidhub.databinding.ActivityTampilkanNeracaBinding
+import org.d3if0140.masjidhub.databinding.ActivityTampilkanNeracaSearchBinding
 import org.d3if0140.masjidhub.model.LaporanKeuangan
 import org.d3if0140.masjidhub.ui.adapter.LaporanAdapter
 import java.util.Calendar
 
-class TampilkanNeracaActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityTampilkanNeracaBinding
+class TampilkanNeracaSearchActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityTampilkanNeracaSearchBinding
     private lateinit var db: FirebaseFirestore
     private lateinit var laporanAdapter: LaporanAdapter
     private val laporanList = mutableListOf<LaporanKeuangan>()
@@ -22,13 +22,14 @@ class TampilkanNeracaActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTampilkanNeracaBinding.inflate(layoutInflater)
+        binding = ActivityTampilkanNeracaSearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         db = FirebaseFirestore.getInstance()
 
         // Ambil userId dari Intent
-        userId = intent.getStringExtra("userId")
+        userId = intent.getStringExtra("USER_ID")
+        Log.d("TampilkanNeracaSearch", "Received userId: $userId")  // Log untuk userId
 
         laporanAdapter = LaporanAdapter(laporanList)
         binding.recyclerViewNeraca.adapter = laporanAdapter
@@ -37,6 +38,7 @@ class TampilkanNeracaActivity : AppCompatActivity() {
         // Menampilkan dialog filter tanggal/bulan
         binding.editTextFilterBulan.setOnClickListener {
             showMonthPicker { month, year ->
+                Log.d("TampilkanNeracaSearch", "Selected Month: $month, Year: $year")  // Log bulan dan tahun yang dipilih
                 fetchLaporanKeuanganBulan(month, year)
             }
         }
@@ -46,27 +48,41 @@ class TampilkanNeracaActivity : AppCompatActivity() {
     }
 
     private fun fetchLaporanKeuangan() {
+        if (userId == null) {
+            Log.e("TampilkanNeracaSearch", "userId is null, cannot fetch data.")
+            return
+        }
+
         // Masukkan query filter untuk masjidId
+        Log.d("TampilkanNeracaSearch", "Fetching laporan keuangan for userId: $userId")  // Log query Firestore
         db.collection("laporan_keuangan_masjid")
             .whereEqualTo("userId", userId) // Filter berdasarkan userId
             .orderBy("timestamp", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { snapshot ->
+                if (snapshot.isEmpty) {
+                    Log.d("TampilkanNeracaSearch", "No laporan keuangan found for userId: $userId")  // Log jika tidak ada data
+                } else {
+                    Log.d("TampilkanNeracaSearch", "Found ${snapshot.size()} laporan keuangan for userId: $userId")  // Log jumlah data
+                }
+
                 laporanList.clear()
                 for (document in snapshot.documents) {
                     val laporan = document.toObject(LaporanKeuangan::class.java)
-                    laporan?.let { laporanList.add(it) }
+                    if (laporan != null) {
+                        Log.d("TampilkanNeracaSearch", "Laporan: $laporan")  // Log setiap item laporan
+                        laporanList.add(laporan)
+                    }
                 }
                 laporanAdapter.notifyDataSetChanged()
             }
             .addOnFailureListener { e ->
+                Log.e("TampilkanNeracaSearch", "Error fetching data: ${e.message}")  // Log error saat mengambil data
                 Toast.makeText(this, "Gagal memuat data: ${e.message}", Toast.LENGTH_LONG).show()
             }
     }
 
-
     private fun fetchLaporanKeuanganBulan(month: Int, year: Int) {
-        // Mengambil laporan keuangan berdasarkan bulan dan tahun tertentu
         val startOfMonth = Calendar.getInstance().apply {
             set(Calendar.YEAR, year)
             set(Calendar.MONTH, month)
@@ -79,22 +95,33 @@ class TampilkanNeracaActivity : AppCompatActivity() {
             set(Calendar.DAY_OF_MONTH, getActualMaximum(Calendar.DAY_OF_MONTH))
         }.time
 
-        // Masukkan query filter untuk masjidId dan rentang waktu
+        Log.d("TampilkanNeracaSearch", "Fetching laporan keuangan for userId: $userId, Month: $month, Year: $year")  // Log query Firestore berdasarkan bulan
+
         db.collection("laporan_keuangan_masjid")
-            .whereEqualTo("userId", userId) // Filter berdasarkan userId
+            .whereEqualTo("userId", userId)
             .whereGreaterThanOrEqualTo("timestamp", startOfMonth)
             .whereLessThanOrEqualTo("timestamp", endOfMonth)
             .orderBy("timestamp", Query.Direction.ASCENDING)
             .get()
             .addOnSuccessListener { snapshot ->
+                if (snapshot.isEmpty) {
+                    Log.d("TampilkanNeracaSearch", "No laporan keuangan found for userId: $userId in month $month, year $year")  // Log jika tidak ada data
+                } else {
+                    Log.d("TampilkanNeracaSearch", "Found ${snapshot.size()} laporan keuangan for userId: $userId in month $month, year $year")  // Log jumlah data
+                }
+
                 laporanList.clear()
                 for (document in snapshot.documents) {
                     val laporan = document.toObject(LaporanKeuangan::class.java)
-                    laporan?.let { laporanList.add(it) }
+                    if (laporan != null) {
+                        Log.d("TampilkanNeracaSearch", "Laporan: $laporan")  // Log setiap item laporan
+                        laporanList.add(laporan)
+                    }
                 }
                 laporanAdapter.notifyDataSetChanged()
             }
             .addOnFailureListener { e ->
+                Log.e("TampilkanNeracaSearch", "Error fetching data: ${e.message}")  // Log error saat mengambil data
                 Toast.makeText(this, "Gagal memuat data: ${e.message}", Toast.LENGTH_LONG).show()
             }
     }
@@ -105,6 +132,7 @@ class TampilkanNeracaActivity : AppCompatActivity() {
         val month = calendar.get(Calendar.MONTH)
 
         val datePickerDialog = DatePickerDialog(this, { _, selectedYear, selectedMonth, _ ->
+            Log.d("TampilkanNeracaSearch", "Month picker selected: $selectedMonth, Year: $selectedYear")  // Log bulan dan tahun yang dipilih dari DatePicker
             onMonthSelected(selectedMonth, selectedYear)
         }, year, month, calendar.get(Calendar.DAY_OF_MONTH))
 

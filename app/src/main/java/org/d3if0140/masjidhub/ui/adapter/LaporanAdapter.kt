@@ -15,7 +15,10 @@ class LaporanAdapter(private val laporanList: List<LaporanKeuangan>) :
             binding.textViewTanggalLaporan.text = laporan.tanggalLaporan
             binding.textViewJumlahInfaq.text = "Infaq: Rp. ${laporan.jumlahInfaq}"
             binding.textViewJumlahKas.text = "Kas: Rp. ${laporan.jumlahKas}"
-            binding.textViewJumlahPengeluaran.text = "Pengeluaran: Rp. ${laporan.jumlahPengeluaran}"
+            binding.textViewJumlahOprasional.text = "Oprasional: Rp. ${laporan.oprasionalMasjid}"
+            binding.textViewJumlahRenov.text = "Renovasi: Rp. ${laporan.renovasi}"
+            binding.textViewJumlahKegiatanSosial.text = "Kegiatan Sosial: Rp. ${laporan.kegiatanSosial}"
+            binding.textViewJumlahGaji.text = "Gaji Pengurus: ${laporan.gajiPengurus}"
             // Bind other fields here
         }
     }

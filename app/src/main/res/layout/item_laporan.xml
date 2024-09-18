@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp">
@@ -18,22 +19,56 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Infaq: Rp. 0"
-        app:layout_constraintTop_toBottomOf="@id/textViewTanggalLaporan"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewTanggalLaporan" />
 
     <TextView
         android:id="@+id/textViewJumlahKas"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Kas: Rp. 0"
-        app:layout_constraintTop_toBottomOf="@id/textViewJumlahInfaq"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewJumlahInfaq" />
 
     <TextView
-        android:id="@+id/textViewJumlahPengeluaran"
+        android:id="@+id/textViewJumlahOprasional"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Pengeluaran: Rp. 0"
-        app:layout_constraintTop_toBottomOf="@id/textViewJumlahKas"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="Oprasional Masjid: Rp. 0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewJumlahKas" />
+
+    <TextView
+        android:id="@+id/textViewJumlahRenov"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Renovasi atau Pembangunan: Rp. 0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewJumlahOprasional" />
+
+    <TextView
+        android:id="@+id/textViewJumlahKegiatanSosial"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Kegiatan Sosial: Rp. 0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewJumlahRenov" />
+
+    <TextView
+        android:id="@+id/textViewJumlahGaji"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Gaji Pengurus: Rp. 0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewJumlahRenov" />
+
+    <TextView
+        android:id="@+id/textViewTotalBalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Balance: Rp. 0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewJumlahGaji" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
