@@ -1,6 +1,7 @@
 package org.d3if0140.masjidhub.ui.view
 
 import android.app.DatePickerDialog
+import android.app.ProgressDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -35,15 +36,30 @@ class InputNeracaActivity : AppCompatActivity() {
 
         // Saat tombol Submit ditekan
         binding.buttonSubmit.setOnClickListener {
+
+            val progressDialog = ProgressDialog(this)
+            progressDialog.setMessage("Mengunggah...")
+            progressDialog.show()
+
             val jumlahInfaq = binding.editTextJumlahInfaq.text.toString().toDoubleOrNull()
             val jumlahKas = binding.editTextJumlahKas.text.toString().toDoubleOrNull()
-            val oprasionalMasjid = binding.OprasionalMasjid.text.toString().toDoubleOrNull()
-            val renov = binding.Renov.text.toString().toDoubleOrNull()
-            val kegiatan = binding.kegiatanSosial.text.toString().toDoubleOrNull()
-            val gaji = binding.GajiPengurus.text.toString().toDoubleOrNull()
+            val oprasionalMasjid = binding.OprasionalMasjid.text.toString().toDoubleOrNull() ?: 0.0
+            val renov = binding.Renov.text.toString().toDoubleOrNull() ?: 0.0
+            val kegiatan = binding.kegiatanSosial.text.toString().toDoubleOrNull() ?: 0.0
+            val gaji = binding.GajiPengurus.text.toString().toDoubleOrNull() ?: 0.0
 
-            if (validateInput(jumlahInfaq, jumlahKas, oprasionalMasjid, renov, kegiatan, gaji)) {
-                submitLaporan(jumlahInfaq!!, jumlahKas!!, oprasionalMasjid!!, renov!!, kegiatan!!, gaji!!)
+            if (validateInput(jumlahInfaq, jumlahKas)) {
+                // Pastikan untuk tidak menggunakan nilai null
+                submitLaporan(
+                    jumlahInfaq ?: 0.0,
+                    jumlahKas ?: 0.0,
+                    oprasionalMasjid,
+                    renov,
+                    kegiatan,
+                    gaji
+                )
+            } else {
+                progressDialog.dismiss()
             }
         }
 
@@ -79,14 +95,18 @@ class InputNeracaActivity : AppCompatActivity() {
         datePickerDialog.show()
     }
 
-    private fun validateInput(jumlahInfaq: Double?, jumlahKas: Double?, oprasionalMasjid: Double?, renov: Double?, kegiatan: Double?, gaji: Double?): Boolean {
+    private fun validateInput(jumlahInfaq: Double?, jumlahKas: Double?): Boolean {
         return when {
             tanggalLaporan == null -> {
                 Toast.makeText(this, "Silakan pilih tanggal laporan.", Toast.LENGTH_SHORT).show()
                 false
             }
-            jumlahInfaq == null || jumlahKas == null || oprasionalMasjid == null || renov == null || kegiatan == null || gaji == null -> {
-                Toast.makeText(this, "Silakan masukkan semua jumlah.", Toast.LENGTH_SHORT).show()
+            jumlahInfaq == null -> {
+                Toast.makeText(this, "Silakan masukkan jumlah infaq.", Toast.LENGTH_SHORT).show()
+                false
+            }
+            jumlahKas == null -> {
+                Toast.makeText(this, "Silakan masukkan jumlah kas.", Toast.LENGTH_SHORT).show()
                 false
             }
             else -> true
