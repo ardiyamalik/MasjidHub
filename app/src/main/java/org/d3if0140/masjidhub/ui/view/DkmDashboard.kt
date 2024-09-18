@@ -149,7 +149,6 @@ class DkmDashboard : AppCompatActivity() {
     }
 
     private fun setupCarousel() {
-        // Ambil gambar carousel dari Firestore, urutkan berdasarkan timestamp menurun dan batasi hasil menjadi 5
         firestore.collection("posts")
             .orderBy("timestamp", Query.Direction.DESCENDING)
             .limit(5)
@@ -161,13 +160,68 @@ class DkmDashboard : AppCompatActivity() {
                     imageUrl?.let { imageList.add(it) }
                 }
 
-                // Setup ViewPager dengan org.d3if0140.masjidhub.ui.adapter.CarouselAdapter
+                // Setup ViewPager dengan CarouselAdapter
                 carouselAdapter = CarouselAdapter(imageList)
                 binding.viewPager.adapter = carouselAdapter
+
+                carouselAdapter.onItemClick = { imageUrl ->
+                    checkImageInEventActivity(imageUrl)
+                }
             }
             .addOnFailureListener {
-                // Handle failure
                 Toast.makeText(this, "Gagal mengambil gambar carousel: ${it.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun checkImageInEventActivity(imageUrl: String) {
+        firestore.collection("posts")
+            .whereEqualTo("imageUrl", imageUrl)
+            .get()
+            .addOnSuccessListener { snapshot ->
+                if (snapshot.isEmpty) {
+                    // Data tidak ditemukan, arahkan ke FullScreenImageActivity
+                    val intent = Intent(this, FullScreenImageActivity::class.java)
+                    intent.putExtra("IMAGE_URL", imageUrl)
+                    startActivity(intent)
+                } else {
+                    // Periksa setiap dokumen dalam hasil
+                    var hasAllFields = false
+                    for (document in snapshot) {
+                        val docImageUrl = document.getString("imageUrl")
+                        val timestamp = document.getLong("timestamp")
+                        val namaEvent = document.getString("namaEvent")
+                        val deskripsi = document.getString("deskripsi")
+                        val formattedDate = document.getString("formattedDate")
+                        val linkEvent = document.getString("linkEvent")
+                        val lokasiEvent = document.getString("lokasiEvent")
+                        val tanggalEvent = document.getString("tanggalEvent")
+                        val userId = document.getString("userId")
+
+                        // Cek jika semua field yang dibutuhkan ada
+                        if (docImageUrl != null && timestamp != null &&
+                            namaEvent != null && deskripsi != null &&
+                            formattedDate != null && linkEvent != null &&
+                            lokasiEvent != null && tanggalEvent != null &&
+                            userId != null) {
+                            hasAllFields = true
+                            break
+                        }
+                    }
+
+                    if (hasAllFields) {
+                        // Data ditemukan dengan semua field di EventActivity
+                        val intent = Intent(this, EventActivity::class.java)
+                        startActivity(intent)
+                    } else {
+                        // Data ditemukan tetapi tidak memiliki semua field, arahkan ke FullScreenImageActivity
+                        val intent = Intent(this, FullScreenImageActivity::class.java)
+                        intent.putExtra("IMAGE_URL", imageUrl)
+                        startActivity(intent)
+                    }
+                }
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Gagal memeriksa gambar: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 
