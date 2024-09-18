@@ -76,6 +76,10 @@ class ProfileSearchActivity : AppCompatActivity() {
 
             popupMenuDkm.setOnMenuItemClickListener { menuItem: MenuItem ->
                 when (menuItem.itemId) {
+                    R.id.lokasiMasjid -> {
+                        openGoogleMaps(latitude, longitude)
+                        true
+                    }
                     R.id.infoKas -> {
                         // Arahkan ke halaman Informasi Kas
                         val intent = Intent(this, InformasiKasSearchActivity::class.java)
@@ -96,13 +100,31 @@ class ProfileSearchActivity : AppCompatActivity() {
             popupMenuDkm.show()
         }
 
-        binding.backButton.setOnClickListener {
-            startActivity(Intent(this, CariMasjidActivity::class.java))
+        binding.bottomNavigation.selectedItemId = R.id.search_masjid
+        binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.search_masjid -> true
+                R.id.menu_home -> {
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    finish()
+                    true
+                }
+                R.id.menu_finance -> {
+                    startActivity(Intent(this, LaporanKeuanganActivity::class.java))
+                    finish()
+                    true
+                }
+                R.id.menu_profile -> {
+                    startActivity(Intent(this, ProfilActivity::class.java))
+                    finish()
+                    true
+                }
+                else -> false
+            }
         }
 
-        // Tombol untuk membuka Google Maps dengan koordinat
-        binding.buttonDirectMaps.setOnClickListener {
-            openGoogleMaps(latitude, longitude)
+        binding.backButton.setOnClickListener {
+            startActivity(Intent(this, CariMasjidActivity::class.java))
         }
 
     }
