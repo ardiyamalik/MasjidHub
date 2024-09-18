@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_marginTop="10dp"
     android:layout_height="wrap_content"
     android:background="@drawable/stroke_white"
-    android:padding="16dp">
+    android:padding="16dp"
+    tools:ignore="ExtraText">
 
     <TextView
         android:id="@+id/textViewTanggalLaporan"
@@ -73,13 +75,21 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewJumlahRenov" />
 
     <TextView
-        android:id="@+id/textViewTotalBalance"
+        android:id="@+id/textViewTotalPengeluaran"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Pengeluaran: Rp. 0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewJumlahGaji" />
+
+    <TextView
+        android:id="@+id/textViewTotalSaldo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_bold"
-        android:text="Total: Rp. 0"
         android:textColor="@color/blue"
+        android:text="Total Saldo: Rp. 0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewJumlahGaji" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewTotalPengeluaran"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

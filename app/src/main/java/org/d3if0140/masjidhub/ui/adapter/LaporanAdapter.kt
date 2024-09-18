@@ -31,9 +31,9 @@ class LaporanAdapter(private val laporanList: List<LaporanKeuangan>) :
             binding.textViewJumlahKegiatanSosial.text = "Kegiatan Sosial: Rp. ${laporan.kegiatanSosial}"
             binding.textViewJumlahGaji.text = "Gaji Pengurus: Rp. ${laporan.gajiPengurus}"
 
-//            // Tampilkan total pengeluaran dan saldo
-//            binding.textViewTotalPengeluaran.text = "Total Pengeluaran: Rp. $totalPengeluaran"
-//            binding.textViewTotalSaldo.text = "Total Saldo: Rp. $totalSaldo"
+            // Tampilkan total pengeluaran dan saldo
+            binding.textViewTotalPengeluaran.text = "Total Pengeluaran: Rp. $totalPengeluaran"
+            binding.textViewTotalSaldo.text = "Total Saldo: Rp. $totalSaldo"
         }
     }
 
