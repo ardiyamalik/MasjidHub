@@ -64,11 +64,21 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewJumlahRenov" />
 
     <TextView
-        android:id="@+id/textViewTotalBalance"
+        android:id="@+id/textViewTotalPengeluaran"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Total Balance: Rp. 0"
+        android:text="Total Pengeluaran: Rp. 0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewJumlahGaji" />
+
+    <TextView
+        android:id="@+id/textViewTotalSaldo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:text="Total Saldo: Rp. 0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTotalPengeluaran" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
