@@ -30,7 +30,7 @@
             android:fontFamily="@font/poppins_bold"
             android:text="Input Laporan Keuangan"
             android:textColor="@color/blue"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/backButton"
@@ -40,12 +40,16 @@
         <!-- Input Tanggal -->
         <EditText
             android:id="@+id/editTextTanggal"
-            android:layout_width="126dp"
+            android:layout_width="150dp"
             android:layout_height="54dp"
             android:layout_marginTop="36dp"
+            android:drawableLeft="@drawable/baseline_calendar_month_24"
             android:background="@drawable/stroke_white"
             android:focusable="false"
-            android:hint="Pilih Tanggal"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Pilih Tanggal"
+            android:drawablePadding="5dp"
+            android:textColor="@color/blue"
             android:padding="10dp"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +60,7 @@
         <!-- Infaq -->
         <TextView
             android:id="@+id/textInfaq"
-            android:layout_width="89dp"
+            android:layout_width="match_parent"
             android:layout_height="38dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins_bold"
@@ -72,10 +76,8 @@
         <EditText
             android:id="@+id/editTextJumlahInfaq"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_height="50dp"
             android:layout_marginTop="16dp"
-            android:layout_marginRight="15dp"
             android:background="@drawable/stroke_white"
             android:hint="Jumlah Infaq"
             android:inputType="numberDecimal"
@@ -89,9 +91,9 @@
         <!-- Kas -->
         <TextView
             android:id="@+id/textKas"
-            android:layout_width="89dp"
+            android:layout_width="match_parent"
             android:layout_height="38dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins_bold"
             android:text="Kas"
             android:textColor="@color/blue"
@@ -105,10 +107,8 @@
         <EditText
             android:id="@+id/editTextJumlahKas"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_height="50dp"
             android:layout_marginTop="16dp"
-            android:layout_marginRight="15dp"
             android:background="@drawable/stroke_white"
             android:hint="Jumlah Kas"
             android:inputType="numberDecimal"
@@ -122,9 +122,9 @@
         <!-- Pengeluaran -->
         <TextView
             android:id="@+id/textPengeluaran"
-            android:layout_width="89dp"
-            android:layout_height="38dp"
-            android:layout_marginTop="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins_bold"
             android:text="Pengeluaran"
             android:textColor="@color/blue"
@@ -140,7 +140,7 @@
         <EditText
             android:id="@+id/OprasionalMasjid"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/stroke_white"
             android:hint="Kosongkan bila tidak ada"
@@ -155,7 +155,7 @@
         <EditText
             android:id="@+id/Renov"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/stroke_white"
             android:hint="Kosongkan bila tidak ada"
@@ -170,11 +170,12 @@
         <EditText
             android:id="@+id/kegiatanSosial"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@drawable/stroke_white"
             android:hint="Kosongkan bila tidak ada"
             android:inputType="numberDecimal"
             android:padding="10dp"
+            android:layout_marginTop="16dp"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -184,8 +185,8 @@
         <EditText
             android:id="@+id/GajiPengurus"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/stroke_white"
             android:hint="Kosongkan bila tidak ada"
             android:inputType="numberDecimal"
@@ -215,9 +216,9 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:text="Oprasional Masjid"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -225,7 +226,7 @@
 
         <TextView
             android:id="@+id/textViewRenov"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Renov atau Pembangunan"
@@ -235,10 +236,10 @@
 
         <TextView
             android:id="@+id/textViewKegiatan"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="Kegaiatan Sosial"
+            android:layout_marginTop="16dp"
+            android:text="Kegiatan Sosial"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
@@ -246,9 +247,9 @@
 
         <TextView
             android:id="@+id/textViewGaji"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:text="Gaji Pengurus"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"

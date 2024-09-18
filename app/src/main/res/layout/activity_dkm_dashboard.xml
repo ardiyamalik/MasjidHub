@@ -126,6 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="18dp"
+                android:layout_margin="13dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -219,28 +220,56 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/buttonInputNeraca"
+                    android:layout_width="wrap_content"
+                    android:layout_height="131dp"
+                    android:layout_marginStart="13dp"
+                    android:background="@drawable/stroke_white"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="114dp"
+                        android:layout_height="91dp"
+                        android:src="@drawable/neraca" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="Input Neraca"
+                        android:textColor="@color/blue"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/buttonTampilkanNeraca"
+                    android:layout_width="wrap_content"
+                    android:layout_height="131dp"
+                    android:layout_marginStart="13dp"
+                    android:background="@drawable/stroke_white"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="114dp"
+                        android:layout_height="91dp"
+                        android:src="@drawable/lihatneraca" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="Lihat Neraca"
+                        android:textColor="@color/blue"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
             </LinearLayout>
         </HorizontalScrollView>
 
-        <Button
-            android:id="@+id/buttonInputNeraca"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="33dp"
-            android:text="input"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
-        <Button
-            android:id="@+id/buttonTampilkanNeraca"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="tampil"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonInputNeraca" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

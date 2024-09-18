@@ -49,49 +49,41 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageView2" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/namaInputLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/namaEditText"
+            android:layout_width="match_parent"
+            android:background="@drawable/stroke_gray"
+            android:layout_height="50dp"
+            android:hint="@string/nama"
+            android:padding="12dp"
+            android:fontFamily="@font/poppins_light"
+            android:layout_margin="20dp"
             android:layout_marginTop="24dp"
             app:layout_constraintWidth_percent="0.9"
             app:layout_constraintTop_toBottomOf="@id/masuk"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/namaEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/stroke_gray"
-                android:fontFamily="@font/poppins_medium"
-                android:hint="@string/nama"
-                android:inputType="text"
-                android:padding="12dp" />
 
-        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailInputLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/stroke_gray"
+            android:layout_margin="20dp"
+            android:hint="Email"
+            android:padding="12dp"
+            android:fontFamily="@font/poppins_light"
             android:layout_marginTop="20dp"
             app:layout_constraintWidth_percent="0.9"
-            app:layout_constraintTop_toBottomOf="@id/namaInputLayout"
+            app:layout_constraintTop_toBottomOf="@id/namaEditText"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/emailEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/stroke_gray"
-                android:fontFamily="@font/poppins_medium"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress"
-                android:padding="12dp" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/jenisKelaminInputLayout"
@@ -99,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:layout_constraintWidth_percent="0.9"
-            app:layout_constraintTop_toBottomOf="@id/emailInputLayout"
+            app:layout_constraintTop_toBottomOf="@id/emailEditText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -113,27 +105,23 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passwordInputLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/stroke_gray"
+            android:layout_margin="20dp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:fontFamily="@font/poppins_light"
             android:layout_marginTop="20dp"
             app:layout_constraintWidth_percent="0.9"
             app:layout_constraintTop_toBottomOf="@id/jenisKelaminInputLayout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/passwordEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/stroke_gray"
-                android:fontFamily="@font/poppins_medium"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                android:padding="12dp" />
 
-        </com.google.android.material.textfield.TextInputLayout>
 
         <ImageButton
             android:id="@+id/passwordToggle"
@@ -144,9 +132,9 @@
             android:padding="12dp"
             android:src="@drawable/baseline_visibility_off"
             android:contentDescription="@string/password_toggle_description"
-            app:layout_constraintBottom_toBottomOf="@id/passwordInputLayout"
+            app:layout_constraintBottom_toBottomOf="@id/passwordEditText"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/passwordInputLayout" />
+            app:layout_constraintTop_toTopOf="@id/passwordEditText" />
 
         <TextView
             android:id="@+id/textKebijakan"
@@ -156,7 +144,7 @@
             android:fontFamily="@font/poppins_light"
             android:text="@string/kebijakan"
             app:layout_constraintWidth_percent="0.9"
-            app:layout_constraintTop_toBottomOf="@id/passwordInputLayout"
+            app:layout_constraintTop_toBottomOf="@id/passwordEditText"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
