@@ -23,8 +23,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:padding="16dp">
 
             <ImageView
                 android:id="@+id/profileImageDkm"
@@ -33,26 +33,25 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/circle_image"
                 android:clipToOutline="true"
-                android:scaleType="centerCrop"
                 android:contentDescription="Foto Profil"
+                android:scaleType="centerCrop"
                 android:src="@drawable/baseline_person_black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="@+id/usernameTextView" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/usernameTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_width="247dp"
+                android:layout_height="31dp"
+                android:layout_marginStart="8dp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="Username"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@id/profileImageDkm"
-                app:layout_constraintEnd_toStartOf="@+id/editButton"
-                app:layout_constraintTop_toTopOf="@id/profileImageDkm"
-                app:layout_constraintBottom_toBottomOf="@id/profileImageDkm" />
+                app:layout_constraintBottom_toBottomOf="@+id/profileImageDkm"
+                app:layout_constraintStart_toEndOf="@+id/profileImageDkm"
+                app:layout_constraintTop_toTopOf="@+id/profileImageDkm"
+                app:layout_constraintVertical_bias="0.647" />
 
             <ImageButton
                 android:id="@+id/editButton"
@@ -62,56 +61,55 @@
                 android:background="@null"
                 android:contentDescription="Edit Caption"
                 android:src="@drawable/edit_24px"
-                app:layout_constraintStart_toEndOf="@id/usernameTextView"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/profileImageDkm"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/usernameTextView"
+                app:layout_constraintTop_toTopOf="@id/profileImageDkm" />
 
             <TextView
                 android:id="@+id/namaEventTextView"
-                android:layout_width="347dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/poppins_light"
                 android:text="nama"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.531"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/usernameTextView" />
+                app:layout_constraintTop_toBottomOf="@id/usernameTextView" />
 
             <TextView
                 android:id="@+id/tanggalEventTextView"
-                android:layout_width="347dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_light"
                 android:text="tgl"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/namaEventTextView" />
+                app:layout_constraintTop_toBottomOf="@id/namaEventTextView" />
 
             <TextView
                 android:id="@+id/lokasiEventTextView"
-                android:layout_width="347dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_light"
                 android:text="lok"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tanggalEventTextView" />
+                app:layout_constraintTop_toBottomOf="@id/tanggalEventTextView" />
 
             <TextView
                 android:id="@+id/linkEventTextView"
-                android:layout_width="347dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_light"
                 android:text="link"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lokasiEventTextView" />
+                app:layout_constraintTop_toBottomOf="@id/lokasiEventTextView" />
 
             <TextView
                 android:id="@+id/descriptionTextView"
@@ -135,9 +133,9 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/placeholder_image"
                 app:layout_constraintDimensionRatio="H,16:9"
-                app:layout_constraintTop_toBottomOf="@id/descriptionTextView"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/descriptionTextView" />
 
             <TextView
                 android:id="@+id/timestampTextView"
@@ -147,8 +145,8 @@
                 android:fontFamily="@font/poppins_medium"
                 android:textColor="@android:color/black"
                 android:textSize="12sp"
-                app:layout_constraintTop_toBottomOf="@id/postImageView"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/postImageView" />
 
             <LinearLayout
                 android:id="@+id/buttonLayout"
@@ -156,10 +154,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/timestampTextView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-            </LinearLayout>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/timestampTextView" />
 
             <ImageView
                 android:id="@+id/deleteButton"
