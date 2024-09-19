@@ -1,5 +1,6 @@
 package org.d3if0140.masjidhub.ui.view
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
@@ -114,9 +115,15 @@ class RegistActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            // Tampilkan loading
+            val progressDialog = ProgressDialog(this)
+            progressDialog.setMessage("Harap Tunggu...")
+            progressDialog.show()
+
             // Register user with Firebase Authentication
             mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
+                    progressDialog.dismiss() // Tutup loading setelah proses selesai
                     if (task.isSuccessful) {
                         val user: FirebaseUser? = mAuth.currentUser
                         val profileUpdates = UserProfileChangeRequest.Builder()
